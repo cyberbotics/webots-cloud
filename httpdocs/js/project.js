@@ -1,6 +1,6 @@
 import ModalDialog from './modal_dialog.js';
 
-export default class Project extends User {
+export default class Project extends Router {
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
     return Project.current;
