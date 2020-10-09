@@ -1,5 +1,5 @@
-// import Project from './project.js';
-// import Simulation from './simulation.js';
+import Project from './project.js';
+import Simulation from './simulation.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
