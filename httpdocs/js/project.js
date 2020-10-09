@@ -1,4 +1,5 @@
 import ModalDialog from './modal_dialog.js';
+import Router from './router.js';
 
 export default class Project extends Router {
   static run(title, footer, routes) {
