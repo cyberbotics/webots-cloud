@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <h1 class="title">Overview</h1>
   </div>
 </section>`;
-    // project.setup('home', ['Overview', 'Simulations', 'Partners'], template.content);
+    project.setup('home', ['Overview', 'Simulations', 'Partners'], template.content);
   }
 
   function simulationPage(project) {
-    // project.setup('simulation', [], simulation.content(), true);
-    // simulation.run();
+    project.setup('simulation', [], simulation.content(), true);
+    simulation.run();
   }
 });
