@@ -1,6 +1,10 @@
-body footer {
+body footer.footer {
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);
 }
 body section.hero {
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 90%);
+}
+
+body footer .has-text-centered {
+  width:100%;
 }

@@ -2,11 +2,16 @@ import ModalDialog from './modal_dialog.js';
 import Router from './router.js';
 
 export default class Project extends Router {
+  constructor(title, footer, routes) {
+    super(title, footer, routes);
+    this.load();
+  }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
+    console.log('project.dynamicPage()');
     let that = this;
     let promise = new Promise((resolve, reject) => {
       const username = url.pathname.substring(1);
@@ -18,6 +23,7 @@ export default class Project extends Router {
           username: username
         })
       };
+      console.log('fetch /ajax/project/user.php');
       fetch('/ajax/project/user.php', content)
         .then(function(response) {
           return response.json();

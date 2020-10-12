@@ -132,6 +132,7 @@ export default class Router {
     }
   }
   setup(title, anchors, content, fullpage = false) {
+    console.log('router.setup()');
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
     let menu = '';
     for (let i = 0; i < anchors.length; i++)
