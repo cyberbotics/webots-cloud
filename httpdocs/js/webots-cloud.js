@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('homePage()');
     const template = document.createElement('template');
     template.innerHTML =
-`<section>
+`<section class="section">
   <div class="container">
     <table class="table">
       <thead>
@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </tbody>
     </table>
     <button class="button" id="add-a-new-project">Add a new entry</button>
-    <hr>
   </div>
 </section>`;
     project.setup('home', [], template.content);
@@ -98,8 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
             url: url
           })
         };
+        console.log('url=' + url);
         fetch('/ajax/create.php', content)
           .then(function(response) {
+            console.log(response);
             return response.json();
           })
           .then(function(data) {
