@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function footer() {
     let template = document.createElement('template');
     template.innerHTML =
-`<footer class="footer" style="background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);">
+`<footer class="footer">
   <div class="content has-text-centered">
     <p><strong><a class="has-text-white" href="/">webots.cloud</a></strong></p>
     <p class="has-text-white">webots simulations running in the cloud.</p>
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     const template = document.createElement('template');
     template.innerHTML =
-`<section class="hero" style="background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 90%);">
+`<section class="hero">
   <div class="hero-body">
     <div class="container">
       <h1 class="title has-text-white">webots.cloud</h1>
