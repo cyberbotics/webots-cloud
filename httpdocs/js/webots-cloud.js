@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 `<footer class="footer" style="background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);">
   <div class="content has-text-centered">
     <p><strong><a class="has-text-white" href="/">webots.cloud</a></strong></p>
-    <p class="has-text-white">Run webots simulations in the cloud.</p>
+    <p class="has-text-white">webots simulations running in the cloud.</p>
   </div>
 </footer>`;
     return template.content.firstChild;
