@@ -38,8 +38,11 @@
   $language = $info->{'language'};
   $parent = 0;
   $title = substr($world_content, $n, $m - $n);
-  $query = "INSERT INTO project(url, stars, parent, title, language) VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
+  $query = "INSERT IGNORE INTO project(url, stars, parent, title, language) "
+          ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
   $mysqli->query($query) or error($mysqli->error);
+  if ($mysqli->affected_rows != 1)
+    error("This simulation already exists");
   $answer = array();
   $answer['id'] = $mysqli->insert_id;
   $answer['url'] = $url;
@@ -48,6 +51,5 @@
   $answer['title'] = $title;
   $answer['language'] = $language;
   $answer['updated'] = date("Y-m-d H:i:s");
-  $answer['status'] = 'success';
   die(json_encode($answer));
  ?>
