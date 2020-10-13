@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const words = data.url.substring(20).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}`;
-      const row = `<tr>` +
+      const row =
         `<td><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td>${data.title}</td>` +
@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // `<td><i title="Playback simulation movie" class="fas fa-film"></i></td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback simulation 3D animation" class="fas fa-play has-text-dark"></i></a></td>` +
-        `<td><i title="Run interactive 3D simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>` +
-        `</tr>`;
+        `<td><i title="Run interactive 3D simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>`;
       return row;
     }
     console.log('homePage()');
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else {
           let line = ``;
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
-            line += simulationRow(data[i]);
+            line += '<tr>' + simulationRow(data[i]) + '</tr>';
           project.content.querySelector('section > div > table > tbody').innerHTML = line;
         }
       });
@@ -152,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(data.error);
             } else {
               modal.close();
-              const tr = simulationRow(data);
+              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section > div > table > tbody').insertAdjacentHTML('beforeend', tr);
             }
           });
