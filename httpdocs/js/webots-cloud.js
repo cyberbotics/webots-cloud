@@ -27,6 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    function simulationRow(data) {
+      const words = data.url.substring(20).split('/');
+      const repository = `https://github.com/${words[0]}/${words[1]}`;
+      const animation = `https://${words[0]}.github.io/${words[1]}`;
+      const row = `<tr>` +
+        `<td><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
+        `${data.stars}</a></td>` +
+        `<td>${data.title}</td>` +
+        `<td>${data.language}</td>` +
+        `<td title="Last synchronization with GitHub">${data.updated}</td>` +
+        `<td title="GitHub synchronization"><i class="fas fa-sync"></i></td>` +
+        `<td><a href="${repository}" target="_blank" title="GitHub repository">` +
+        `<i class="has-text-dark fab fa-github"></i></a></td>` +
+        // `<td><i title="Playback simulation movie" class="fas fa-film"></i></td>` +
+        `<td><a href="${animation}" target="_blank">` +
+        `<i title="Playback simulation 3D animation" class="fas fa-play has-text-dark"></i></a></td>` +
+        `<td><i title="Run interactive 3D simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>` +
+        `</tr>`;
+      return row;
+    }
     console.log('homePage()');
     const template = document.createElement('template');
     template.innerHTML =
@@ -37,12 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <tr>
           <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
           <th title="Title of the simulation">Title</th>
+          <th title="Main programming language">Language</th>
           <th title="Last update time">Updated</th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          <th colspan="4"></th>
         </tr>
       </thead>
       <tbody>
@@ -65,34 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.json();
       })
       .then(function(data) {
-        if (data.error) {
+        if (data.error)
           console.log(data.error);
-          modal.error(data.error);
-        } else {
+        else {
           let line = ``;
-          for (let i = 0; i < data.length; i++) {
-            let url = 'https' + data[i].url.substring(6);
-            let count = 0;
-            for (let j = 9; j < url.length; j++) {
-              if (url[j] === '/') {
-                count++;
-                if (count === 3) {
-                  url = url.substring(0, j);
-                  break;
-                }
-              }
-            }
-            line += `<tr>` +
-              `<td><a class="has-text-dark" href="${url}/stargazers" target="_blank" title="GitHub stars">${data[i].stars}</a></td>` +
-              `<td>${data[i].title}</td>` +
-              `<td title="Last synchronization with GitHub">${data[i].updated}</td>` +
-              `<td title="GitHub synchronization"><i class="fas fa-sync"></i></td>` +
-              `<td><a href="${url}" target="_blank" title="GitHub repository"><i class="has-text-dark fab fa-github"></i></a></td>` +
-              `<td><i title="Playback simulation movie" class="fas fa-film"></i></td>` +
-              `<td><i title="Playback simulation 3D animation" class="fas fa-play"></i></td>` +
-              `<td><i title="Run interactive 3D simulation" class="fas fa-robot"></i></td>` +
-              `</tr>`;
-          }
+          for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
+            line += simulationRow(data[i]);
           project.content.querySelector('section > div > table > tbody').innerHTML = line;
         }
       });
@@ -157,31 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(data.error);
             } else {
               modal.close();
-              let project = {};
-              project.id = data.id;
-              project.title = data.title;
-              project.url = url;
-              let template = document.createElement('template');
-              template.innerHTML = addProject(project);
-              that.content.querySelector('#project-table').appendChild(template.content.firstChild);
-              that.content.querySelector('#delete-' + project.id).addEventListener('click', deleteProject);
-              that.content.querySelector('#run-x3d---' + project.id).addEventListener('click', runProject);
-              that.content.querySelector('#run-mjpeg-' + project.id).addEventListener('click', runProject);
-              projectCount++;
-              updateProjectCount();
+              const tr = simulationRow(data);
+              document.querySelector('section > div > table > tbody').insertAdjacentHTML('beforeend', tr);
             }
           });
       });
     });
-    /*
-    if (data.projects && data.projects.length > 0) {
-      data.projects.forEach(function(project, index) {
-        that.content.querySelector('#delete-' + project.id).addEventListener('click', deleteProject);
-        that.content.querySelector('#run-x3d---' + project.id).addEventListener('click', runProject);
-        that.content.querySelector('#run-mjpeg-' + project.id).addEventListener('click', runProject);
-      });
-    }
-    */
   }
 
   function simulationPage(project) {

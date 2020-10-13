@@ -42,10 +42,12 @@
   $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   $answer['id'] = $mysqli->insert_id;
+  $answer['url'] = $url;
   $answer['stars'] = $stars;
   $answer['parent'] = $parent;
   $answer['title'] = $title;
   $answer['language'] = $language;
+  $answer['updated'] = date("Y-m-d H:i:s");
   $answer['status'] = 'success';
   die(json_encode($answer));
  ?>
