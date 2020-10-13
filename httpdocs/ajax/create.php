@@ -32,12 +32,21 @@
   $m = strpos($world_content, "\"\n", $n);
   if ($m === false)
     error("Missing closing double quote for WorldInfo.title in $world world file");
+  $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP']]]);
+  $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
+  $info = json_decode($info_json);
+  $stars = $info->{'stargazers_count'};
+  $language = $info->{'language'};
+  $parent = 0;
   $title = substr($world_content, $n, $m - $n);
-  $query = "INSERT INTO project(title, user, url, public) VALUES(\"$title\", $user[id], \"$url\", 0)";
+  $query = "INSERT INTO project(url, stars, parent, title, language) VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
   $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   $answer['id'] = $mysqli->insert_id;
+  $answer['stars'] = $stars;
+  $answer['parent'] = $parent;
   $answer['title'] = $title;
+  $answer['language'] = $language;
   $answer['status'] = 'success';
   die(json_encode($answer));
  ?>
