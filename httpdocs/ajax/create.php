@@ -1,5 +1,4 @@
-<?php
-  // This script initializes a new project
+<?php # This script initializes a new project
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
@@ -12,7 +11,7 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  $url = $mysqli->escape_string($data->{'url'});
+  $url = $mysqli->escape_string($data->url);
   $check_url = simulation_check_url($url);
   if (!is_array($check_url))
     error($check_url);
