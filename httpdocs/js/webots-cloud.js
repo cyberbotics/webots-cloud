@@ -37,16 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td>${data.title}</td>` +
         `<td>${data.language}</td>` +
         `<td title="Last synchronization with GitHub">${data.updated}</td>` +
-        `<td title="GitHub synchronization"><i class="fas fa-sync"></i></td>` +
+        `<td title="GitHub synchronization"><i class="fas fa-sync" onclick="synchronize(${data.id})"></i></td>` +
         `<td><a href="${repository}" target="_blank" title="GitHub repository">` +
         `<i class="has-text-dark fab fa-github"></i></a></td>` +
-        // `<td><i title="Playback simulation movie" class="fas fa-film"></i></td>` +
         `<td><a href="${animation}" target="_blank">` +
-        `<i title="Playback simulation 3D animation" class="fas fa-play has-text-dark"></i></a></td>` +
-        `<td><i title="Run interactive 3D simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>`;
+        `<i title="Playback saved simulation run" class="fas fa-film has-text-dark"></i></a></td>` +
+        `<td><i title="Run interactive simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>`;
       return row;
     }
-    console.log('homePage()');
     const template = document.createElement('template');
     template.innerHTML =
       `<section class="section">
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     fetch('/ajax/list.php', content)
       .then(function(response) {
-        console.log(response);
         return response.json();
       })
       .then(function(data) {
@@ -146,10 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
           })
           .then(function(data) {
-            if (data.error) {
-              console.log(data.error);
+            if (data.error)
               modal.error(data.error);
-            } else {
+            else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section > div > table > tbody').insertAdjacentHTML('beforeend', tr);
