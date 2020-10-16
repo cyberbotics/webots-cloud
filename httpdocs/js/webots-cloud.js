@@ -34,17 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}`;
       const row =
-        `<td><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
+        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td>${data.title}</td>` +
-        `<td>${data.language}</td>` +
-        `<td title="Last synchronization with GitHub">${data.updated}</td>` +
-        `<td title="GitHub synchronization"><i class="fas fa-sync" onclick="synchronize(${data.id})"></i></td>` +
-        `<td><a href="${repository}" target="_blank" title="GitHub repository">` +
-        `<i class="has-text-dark fab fa-github"></i></a></td>` +
+        `<td><a class="has-text-dark" href="${repository}" target="_blank">${data.title}</a></td>` +
+        `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
+        `<td title="Last synchronization with GitHub"><i class="fas fa-sync fa-xs fa-spin"></i> ${data.updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
-        `<i title="Playback saved simulation run" class="fas fa-film has-text-dark"></i></a></td>` +
-        `<td><i title="Run interactive simulation (not available)" class="fas fa-robot has-text-grey-light"></i></td>`;
+        `<i title="Playback saved simulation run" class="fas fa-film fa-lg has-text-dark"></i></a></td>` +
+        `<td><i title="Run interactive simulation (not available)" class="fas fa-robot fa-lg has-text-grey-light"></i></td>`;
       return row;
     }
     const template = document.createElement('template');
@@ -58,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <th title="Title of the simulation">Title</th>
           <th title="Main programming language">Language</th>
           <th title="Last update time">Updated</th>
-          <th colspan="4"></th>
+          <th colspan="2"></th>
         </tr>
       </thead>
       <tbody>
