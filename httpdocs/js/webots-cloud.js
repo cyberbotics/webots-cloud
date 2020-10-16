@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
       `<footer class="footer">
   <div class="content has-text-centered">
     <p><strong><a class="has-text-white" href="/">webots.cloud</a></strong></p>
-    <p class="has-text-white">webots simulations running in the cloud.</p>
+    <p class="has-text-white">webots simulations running in the cloud</p>
+    <p><a class="has-text-white" href="https://github.com/cyberbotics/webots-cloud" target="_blank">
+    <i class="fab fa-github"></i> 100% free and open source software</a></p>
   </div>
 </footer>`;
     return template.content.firstChild;
@@ -62,7 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
       <tbody>
       </tbody>
     </table>
-    <button class="button" id="add-a-new-project">Add a new simulation</button>
+    <div class="buttons">
+      <button class="button" id="add-a-new-project">Add a new simulation</button>
+      <button class="button" id="add-a-new-server" disabled>Add a new server</button>
+    </div>
   </div>
 </section>`;
     project.setup('home', [], template.content);
