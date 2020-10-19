@@ -33,12 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const words = data.url.substring(20).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}`;
+      const updated = data.updated.replace(' ', `<br><i class="is-clickable fas fa-sync" id='sync-${data.id}' title="Re-synchronize now"></i> `);
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}" target="_blank">${data.title}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
-        `<td title="Last synchronization with GitHub"><i class="fas fa-sync fa-xs fa-spin"></i> ${data.updated}</td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run" class="fas fa-film fa-lg has-text-dark"></i></a></td>` +
         `<td><i title="Run interactive simulation (not available)" class="fas fa-robot fa-lg has-text-grey-light"></i></td>`;
@@ -87,6 +88,29 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data[i]) + '</tr>';
           project.content.querySelector('section > div > table > tbody').innerHTML = line;
+          for (let i = 0; i < data.length; i++) {
+            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', function(event) {
+              console.log('#sync ' + data[i].id);
+              event.target.classList.add('fa-spin');
+              const content = {
+                method: 'post',
+                body: JSON.stringify({
+                  id: data.id,
+                  url: data.url
+                })
+              };
+              fetch('ajax/create.php', content)
+                .then(function(response) {
+                  return response.json();
+                })
+                .then(function(data) {
+                  event.target.classList.remove('fa-spin');
+                  if (data.error)
+                    console.log(data.error);
+                  console.log('received: ' + data);
+                });
+            });
+          }
         }
       });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {

@@ -12,6 +12,7 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   $url = $mysqli->escape_string($data->url);
+  $id = isset($data->id) ? intval($data->id) : 0;
   $check_url = simulation_check_url($url);
   if (!is_array($check_url))
     error($check_url);
@@ -38,11 +39,18 @@
   $language = $info->{'language'};
   $parent = 0;
   $title = substr($world_content, $n, $m - $n);
-  $query = "INSERT IGNORE INTO project(url, stars, parent, title, language) "
-          ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
+  if ($id === 0)
+    $query = "INSERT IGNORE INTO project(url, stars, parent, title, language) "
+            ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
+  else
+    $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", language=\"$language\" WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows != 1)
-    error("This simulation already exists");
+  if ($mysqli->affected_rows != 1) {
+    if ($id === 0)
+      error("This simulation already exists");
+    else
+      error("Unable to synchronize simulation");
+  }
   $answer = array();
   $answer['id'] = $mysqli->insert_id;
   $answer['url'] = $url;
