@@ -33,7 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const words = data.url.substring(20).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}`;
-      const updated = data.updated.replace(' ', `<br><i class="is-clickable fas fa-sync" id='sync-${data.id}' title="Re-synchronize now"></i> `);
+      const updated = data.updated.replace(' ',
+        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+      );
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
@@ -76,6 +78,37 @@ document.addEventListener('DOMContentLoaded', function() {
         limit: 10
       })
     };
+
+    function synchronize(event) {
+      const id = event.target.id.substring(5);
+      event.target.classList.add('fa-spin');
+      const url = event.target.getAttribute('data-url');
+      let content = {
+        method: 'post',
+        body: JSON.stringify({
+          url: url,
+          id: id
+        })
+      };
+      fetch('ajax/create.php', content)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
+          const parent = old.parentNode;
+          if (data.error) {
+            console.log(data.error);
+            parent.removeChild(old);
+          } else {
+            let tr = document.createElement('tr');
+            tr.innerHTML = simulationRow(data);
+            parent.replaceChild(tr, old);
+            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
+            event.target.classList.remove('fa-spin');
+          }
+        });
+    }
     fetch('/ajax/list.php', content)
       .then(function(response) {
         return response.json();
@@ -88,29 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data[i]) + '</tr>';
           project.content.querySelector('section > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.length; i++) {
-            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', function(event) {
-              console.log('#sync ' + data[i].id);
-              event.target.classList.add('fa-spin');
-              const content = {
-                method: 'post',
-                body: JSON.stringify({
-                  id: data.id,
-                  url: data.url
-                })
-              };
-              fetch('ajax/create.php', content)
-                .then(function(response) {
-                  return response.json();
-                })
-                .then(function(data) {
-                  event.target.classList.remove('fa-spin');
-                  if (data.error)
-                    console.log(data.error);
-                  console.log('received: ' + data);
-                });
-            });
-          }
+          for (let i = 0; i < data.length; i++)
+            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
       });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {

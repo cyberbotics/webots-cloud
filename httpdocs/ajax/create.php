@@ -43,16 +43,17 @@
     $query = "INSERT IGNORE INTO project(url, stars, parent, title, language) "
             ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$language\")";
   else
-    $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", language=\"$language\" WHERE id=$id";
+    $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", language=\"$language\", updated=NOW() "
+            ."WHERE url=\"$url\" AND id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows != 1) {
     if ($id === 0)
       error("This simulation already exists");
     else
-      error("Unable to synchronize simulation");
+      error("Failed to update the simulation");
   }
   $answer = array();
-  $answer['id'] = $mysqli->insert_id;
+  $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
   $answer['stars'] = $stars;
   $answer['parent'] = $parent;
