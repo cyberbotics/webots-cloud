@@ -16,7 +16,7 @@ body:after{
   line-height: 27px;
   transform:rotate(45deg);
   z-index: 100;
-  box-shadow: 5px 5px 5px #740f00;
+  box-shadow: 2px 2px 5px #740f00;
 }
 
 body footer.footer {
