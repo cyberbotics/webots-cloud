@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     function simulationRow(data) {
       const words = data.url.substring(20).split('/');
-      const repository = `https://github.com/${words[0]}/${words[1]}`;
-      const animation = `https://${words[0]}.github.io/${words[1]}`;
+      const repository = `https://github.com/${words[0]}/${words[1]}/tree/${words[3]}`;
+      const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
