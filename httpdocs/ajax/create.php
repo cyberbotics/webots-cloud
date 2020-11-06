@@ -35,7 +35,7 @@
     error("Missing closing double quote for WorldInfo.title in $world world file");
   $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
   $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
-  $info_json = file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
+  $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
   $info = json_decode($info_json);
   $stars = intval($info->{'stargazers_count'});
   $language = $info->{'language'};
