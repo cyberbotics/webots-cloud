@@ -35,7 +35,7 @@
   $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP']]]);
   $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
   $info = json_decode($info_json);
-  $stars = $info->{'stargazers_count'};
+  $stars = intval($info->{'stargazers_count'});
   $language = $info->{'language'};
   $parent = 0;
   $title = substr($world_content, $n, $m - $n);
