@@ -45,7 +45,7 @@
   else
     $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", language=\"$language\", updated=NOW() "
             ."WHERE url=\"$url\" AND id=$id";
-  $mysqli->query($query) or error($mysqli->error);
+  $mysqli->query($query) or error($query . " " . $mysqli->error);
   if ($mysqli->affected_rows != 1) {
     if ($id === 0)
       error("This simulation already exists");
