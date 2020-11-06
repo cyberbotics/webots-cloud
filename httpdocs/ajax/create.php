@@ -5,6 +5,7 @@
   header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
+  require '../../php/github_oauth.php';
   require '../../php/database.php';
   require '../../php/simulation.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
@@ -32,7 +33,8 @@
   $m = strpos($world_content, "\"\n", $n);
   if ($m === false)
     error("Missing closing double quote for WorldInfo.title in $world world file");
-  $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP']]]);
+  $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
+  $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
   $info_json = file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
   $info = json_decode($info_json);
   $stars = intval($info->{'stargazers_count'});
