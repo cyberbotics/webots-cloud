@@ -33,7 +33,7 @@
   if ($m === false)
     error("Missing closing double quote for WorldInfo.title in $world world file");
   $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP']]]);
-  $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
+  $info_json = file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
   $info = json_decode($info_json);
   $stars = intval($info->{'stargazers_count'});
   $language = $info->{'language'};
