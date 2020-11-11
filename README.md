@@ -1,5 +1,15 @@
-# webots-cloud
+# webots.cloud
+
 Contents of https://webots.cloud and https://beta.webots.cloud
+
+The main purpose of webots.cloud is to maintain a listing of GitHub repositories corresponding to various Webots simulations.
+
+## database
+
+| id | url | parent | title | stars | language |
+|----|-----|--------|-------|-------|----------|
+|  1 | https://github.com/cyberbotics/ratslife | | Rat's Life contest | 943 | C |
+|  2 | https://github.com/me/my_entry | https://github.com/cyberbotics/ratslife | My Super Rat | 2 | Python |
 
 ## webots.yaml
 
