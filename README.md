@@ -3,17 +3,20 @@ Contents of https://webots.cloud and https://beta.webots.cloud
 
 ## webots.yaml
 
-webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required version of Webots, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
+webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required host, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
 
-### Version
+### Uses
 
 The version information specified in the `webots.yaml` file indicates which version of Webots is required to run the simulation.
+The format is inherited from the GitHub action format: `uses: docker://{host}/{image}:{tag}`.
+
+For example:
 
 ```yaml
-version: R2020b-rev1
+uses: docker://cyberbotics/webots:R2020b-rev1-ubuntu20.04
 ```
 
-### Type of Repository
+### Type
 
 Currently, we support 3 different types of repositories:
 
@@ -57,7 +60,7 @@ type: competitor
 competition: https://github.com/username/competition
 ```
 
-### Dependencies
+### Init
 
 Dependencies can be specified in the `init` section of the `webots.yaml` file:
 
@@ -67,3 +70,7 @@ init: |
     python3-numpy \
     python3-opencv
 ```
+
+Specifying dependencies may not be allowed for competitor repositories (depending on the corresponding competition repository).
+In such a case, the init section will be simply ignored.
+
