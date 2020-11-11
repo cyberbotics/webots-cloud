@@ -44,6 +44,7 @@ animation:
     - file: worlds/tutorial_1.wbt
       duration: 10
 simulation:
+  worlds:
     - file: worlds/tutorial_2.wbt
       duration: 120
 ```
@@ -57,6 +58,7 @@ This type of repository should contain the scenario of a competition, including 
 
 ```yaml
 type: competition
+world: worlds/tutorial_2.wbt
 ```
 
 #### Competitor
