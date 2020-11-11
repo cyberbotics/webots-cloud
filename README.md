@@ -35,6 +35,9 @@ simulation:
       duration: 120
 ```
 
+The files specified in the `animation` section are used by the CI to generate the corresponding animation on each push.
+The files specified in the `simulation` section are used by webots.cloud to list the various simulations available for interactive run sessions.
+
 #### Competition
 
 This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s).
