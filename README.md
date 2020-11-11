@@ -3,10 +3,13 @@ Contents of https://webots.cloud and https://beta.webots.cloud
 
 ## webots.yaml
 
-webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the type of Webots repository.
+webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
+
+### Type of Repository
+
 Currently, we support 3 different types of repositories:
 
-### Demo
+#### Demo
 
 This is a simple demonstration that can be run as an interactive simulation or viewed as an animation.
 The `webots.yaml` file should contain references to the animations and simulations, for example:
@@ -24,7 +27,7 @@ simulation:
       duration: 120
 ```
 
-### Competition
+#### Competition
 
 This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s).
 
@@ -32,7 +35,7 @@ This type of repository should contain the scenario of a competition, including 
 type: competition
 ```
 
-### Competitor
+#### Competitor
 
 This type of repository should contain an entry to a competition scenario.
 It should typically contain only the source code of one robot controller.
@@ -41,4 +44,15 @@ Eventually, it may contain also more controllers, PROTO files and other files, s
 ```yaml
 type: competitor
 competition: https://github.com/username/competition
+```
+
+### Dependencies
+
+Dependencies can be specified in the `init` section of the `webots.yaml` file:
+
+```yaml
+init: |
+  apt install -y \
+    python3-numpy \
+    python3-opencv
 ```
