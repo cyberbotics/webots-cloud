@@ -3,7 +3,15 @@ Contents of https://webots.cloud and https://beta.webots.cloud
 
 ## webots.yaml
 
-webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
+webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required version of Webots, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
+
+### Version
+
+The version information specified in the `webots.yaml` file indicates which version of Webots is required to run the simulation.
+
+```yaml
+version: R2020b-rev1
+```
 
 ### Type of Repository
 
