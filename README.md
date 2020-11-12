@@ -136,7 +136,7 @@ In such a case, the init section will be simply ignored.
 
 ## Behind the Scene
 
-The template competitor repository should contain a GitHub action that perform the following:
+The template competitor repository should contain a GitHub action that performs the following:
 
 1. Check that the competitor has all the necessary files and information in the repository.
 2. Register a [deploy key](https://docs.github.com/en/free-pro-team@latest/developers/overview/managing-deploy-keys) with the public key of the competition so that the competition can clone the private repository of the competitor.
