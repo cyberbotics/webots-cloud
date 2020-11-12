@@ -47,7 +47,7 @@ To setup a Webots repository holding a competition scenario, you should create i
 
 To setup a Webots repository aimed at participating in a competition, you should create it from the competition template repository, that is provided on the competion repository.
 
-## database
+## Database
 
 webots.cloud holds a database of GitHub repositories containing a Webots simulation:
 
