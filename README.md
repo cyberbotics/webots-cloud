@@ -46,6 +46,8 @@ To setup a Webots repository holding a competition scenario, you should create i
 ### Competitor
 
 To setup a Webots repository aimed at participating in a competition, you should create it from the competition template repository, that is provided on the competion repository.
+It may be a public or a private repository.
+You should choose to create a private repository if you don't want that other competitors see your source code.
 
 ## Database
 
