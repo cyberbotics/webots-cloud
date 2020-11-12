@@ -133,3 +133,11 @@ init: |
 
 Specifying dependencies may not be allowed for competitor repositories (depending on the corresponding competition repository).
 In such a case, the init section will be simply ignored.
+
+## Behind the Scene
+
+The template competitor repository should contain a GitHub action that perform the following:
+
+1. Check that the competitor has all the necessary files and information in the repository.
+2. Registers a deploy key with the public key of the competition so that the competition can clone the private repository of the competitor.
+3. Register the competitor so that it is known by the competition.
