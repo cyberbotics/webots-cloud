@@ -2,9 +2,11 @@
 
 Contents of https://webots.cloud and https://beta.webots.cloud
 
-The main purpose of webots.cloud is to maintain a listing of GitHub repositories corresponding to various Webots simulations.
+The main purpose of webots.cloud is to maintain a listing of GitHub repositories corresponding to various online Webots simulations.
 
-## Setup of a GitHub repository containing a Webots simulation
+## Setup of a Online Webots Simulation
+
+To setup an online Webots simulation, you will have to choose what kind of simulation you want to create:
 
 ### demo
 
