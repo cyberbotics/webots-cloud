@@ -19,7 +19,11 @@ Then, you should commit your specific files: worlds, controllers, protos, robot 
 
 ### Competition
 
-A competition is a simulation scenario which defines the rules of a challenge. There are basically two kinds of competitions: benchmarks and contests.
+A competition is a simulation scenario which defines the rules of a challenge.
+Competitors can participate to a competition by submitting a entry (generally a Webots controller, but it could also include some PROTO files).
+The competitors are evaluated and ranked in the leader board of the competition which is displayed on the web.
+The performance of the competitors can be visualized as 3D animations.
+There are basically two kinds of competitions: benchmarks and contests.
 
 #### Benchmark
 
