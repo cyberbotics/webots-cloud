@@ -31,6 +31,9 @@ Several examples of benchmarks are provided on the [robotbenchmark website](http
 #### Contest
 
 A contest is a simulation scenario involving several participants (generally two participants).
+It could be a soccer match between two teams of robots like RoboCup, or a survival game like Rat's Life, or a wrestling competition like Roboka, etc.
+The performance metrics is a ranking between the competitors.
+It may be implemented as a [round robin](https://en.wikipedia.org/wiki/Round-robin_tournament) tournanent, or with a series of quater finals, semi finals and finals, or using a bubble sort ranking algorithm, or with any other ranking system ([ELO](https://en.wikipedia.org/wiki/Elo_rating_system), [ATP](https://en.wikipedia.org/wiki/ATP_Rankings), etc.).
 
 To setup a Webots repository holding a competition scenario, you should create it from the https://github.com/cyberbotics/webots-competition-template repository.
 
