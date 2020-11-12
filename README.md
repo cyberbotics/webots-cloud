@@ -8,17 +8,35 @@ The main purpose of webots.cloud is to maintain a listing of GitHub repositories
 
 To setup an online Webots simulation, you will have to choose what kind of simulation you want to create:
 
-### demo
+### Demo
 
+A demo is a simulation demonstrating some research achievement: a robot solving a problem or demonstrating some interesting capabilities.
+It may include some robot window displaying sensor data or other data representing the internal state of the robot.
+The robot window may also include the possibility for the user to interact with the simulation while it is running.
+For example there could be some buttons to ask the robot to perform some speficic actions, or a slider to apply a force to the robot, or a checkbox to open or close a door, etc.
 To setup a Webots repository that contains a demo, you should create it from the https://github.com/cyberbotics/webots-demo-template template repository.
+Then, you should commit your specific files: worlds, controllers, protos, robot windows, etc.
 
-### competitor
+### Competition
 
-To setup a Webots repository aimed at participating in a competition, you should create it from the competition template repository, that is provided on the competion repository
+A competition is a simulation scenario which defines the rules of a challenge. There are basically two kinds of competitions: benchmarks and contests.
 
-### competition
+#### Benchmark
+
+A benchmark is a simulation scenario which proposes a challenge involving a single participant.
+A robot has to address a problem and its behavior is evaluated against a performance metrics.
+This performance metrics is a scalar value which allows to compare the performance of different participant against the same challenge.
+Several examples of benchmarks are provided on the [robotbenchmark website](https://robotbenchmark.net).
+
+#### Contest
+
+A contest is a simulation scenario involving several participants (generally two participants).
 
 To setup a Webots repository holding a competition scenario, you should create it from the https://github.com/cyberbotics/webots-competition-template repository.
+
+### Competitor
+
+To setup a Webots repository aimed at participating in a competition, you should create it from the competition template repository, that is provided on the competion repository
 
 ## database
 
