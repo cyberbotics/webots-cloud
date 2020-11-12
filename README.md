@@ -6,10 +6,11 @@ The main purpose of webots.cloud is to maintain a listing of GitHub repositories
 
 ## database
 
-| id | url | parent | title | stars | language |
-|----|-----|--------|-------|-------|----------|
-|  1 | https://github.com/cyberbotics/ratslife | | Rat's Life contest | 943 | C |
-|  2 | https://github.com/me/my_entry | https://github.com/cyberbotics/ratslife | My Super Rat | 2 | Python |
+| id | type        | url                                     | parent | title              | stars | language |
+|----|-------------|-----------------------------------------|--------|--------------------|-------|----------|
+|  1 | competition | https://github.com/cyberbotics/ratslife |      0 | Rat's Life contest |   943 |        C |
+|  2 | competitor  | https://github.com/me/my_entry          |      1 | My Super Rat       |     3 |   Python |
+|  3 | demo        | https://github.com/me/my_demo           |      0 | My Webots demo     |    12 |      C++ |
 
 ## webots.yaml
 
