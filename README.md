@@ -39,6 +39,8 @@ It could be a soccer match between two teams of robots like RoboCup, or a surviv
 The performance metrics is a ranking between the competitors.
 It may be implemented as a [round robin](https://en.wikipedia.org/wiki/Round-robin_tournament) tournanent, or with a series of quater finals, semi finals and finals, or using a bubble sort ranking algorithm, or with any other ranking system ([ELO](https://en.wikipedia.org/wiki/Elo_rating_system), [ATP](https://en.wikipedia.org/wiki/ATP_Rankings), etc.).
 
+#### Setup
+
 To setup a Webots repository holding a competition scenario, you should create it from the https://github.com/cyberbotics/webots-competition-template repository.
 
 ### Competitor
