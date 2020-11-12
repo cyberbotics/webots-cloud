@@ -4,7 +4,23 @@ Contents of https://webots.cloud and https://beta.webots.cloud
 
 The main purpose of webots.cloud is to maintain a listing of GitHub repositories corresponding to various Webots simulations.
 
+## Setup of a GitHub repository containing a Webots simulation
+
+### demo
+
+To setup a Webots repository that contains a demo, you should create it from the https://github.com/cyberbotics/webots-demo-template template repository.
+
+### competitor
+
+To setup a Webots repository aimed at participating in a competition, you should create it from the competition template repository, that is provided on the competion repository
+
+### competition
+
+To setup a Webots repository holding a competition scenario, you should create it from the https://github.com/cyberbotics/webots-competition-template repository.
+
 ## database
+
+webots.cloud holds a database of GitHub repositories containing a Webots simulation:
 
 | id | type        | url                                     | parent | title              | stars | language |
 |----|-------------|-----------------------------------------|--------|--------------------|-------|----------|
@@ -86,4 +102,3 @@ init: |
 
 Specifying dependencies may not be allowed for competitor repositories (depending on the corresponding competition repository).
 In such a case, the init section will be simply ignored.
-
