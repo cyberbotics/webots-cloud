@@ -152,5 +152,6 @@ A recent computer equiped A recent CPU with a large number of cores and a NVIDIA
 
 1. Install Ubuntu 20.04
 2. Install ssh: `apt install ssh`.
+3. Install apache2: `apt install apache2`.
 3. Install [docker](https://docs.docker.com/engine/install/ubuntu/).
 
