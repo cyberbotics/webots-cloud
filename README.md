@@ -144,4 +144,4 @@ The template competitor repository should contain a GitHub action that performs 
 
 ## Setup of a Simulation Server Infrastructure
 
-Follow the instructions [here](https://github.com/cyberbotics/webots-cloud/wiki)
+Follow the instructions [here](https://github.com/cyberbotics/webots-cloud/wiki).
