@@ -29,3 +29,11 @@ body section.hero {
 body footer .has-text-centered {
   width:100%;
 }
+
+#tab-content section {
+  display: none;
+}
+
+#tab-content section.is-active {
+  display: block;
+}
