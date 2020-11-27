@@ -5,9 +5,9 @@
   header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
-  require '../../php/github_oauth.php';
-  require '../../php/database.php';
-  require '../../php/simulation.php';
+  require '../../../php/github_oauth.php';
+  require '../../../php/database.php';
+  require '../../../php/simulation.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
@@ -47,7 +47,7 @@
   else
     $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", language=\"$language\", updated=NOW() "
             ."WHERE url=\"$url\" AND id=$id";
-  $mysqli->query($query) or error($query . " " . $mysqli->error);
+  $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows != 1) {
     if ($id === 0)
       error("This simulation already exists");

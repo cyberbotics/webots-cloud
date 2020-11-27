@@ -47,30 +47,90 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><i title="Run interactive simulation (not available)" class="fas fa-robot fa-lg has-text-grey-light"></i></td>`;
       return row;
     }
+    function serverRow(data) {
+      const updated = data.updated.replace(' ',
+        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+      );
+      const row =
+        `<td><a class="has-text-dark" href="${data.url}" target="_blank">${data.url.substring(8)}</a></td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td class="has-text-centered"><a href="${data.url}/monitor" target="_blank">` +
+        `<i title="Check server status details" class="fas fa-server fa-lg has-text-dark"></i></a></td>`;
+      return row;
+    }
     const template = document.createElement('template');
     template.innerHTML =
-      `<section class="section">
-  <div class="container">
-    <table class="table">
-      <thead>
-        <tr>
-          <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-          <th title="Title of the simulation">Title</th>
-          <th title="Main programming language">Language</th>
-          <th title="Last update time">Updated</th>
-          <th colspan="2"></th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-    <div class="buttons">
-      <button class="button" id="add-a-new-project">Add a new simulation</button>
-      <button class="button" id="add-a-new-server" disabled>Add a new server</button>
+      `<div id="tabs" class="panel-tabs">
+  <a class="is-active" data-tab="demos">Demos</a>
+  <a data-tab="servers">Servers</a>
+</div>
+<div id="tab-content">
+  <section class="section is-active" data-content="demos">
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
+            <th title="Title of the simulation">Title</th>
+            <th title="Main programming language">Language</th>
+            <th title="Last update time">Updated</th>
+            <th colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="button" id="add-a-new-project">Add a new simulation</button>
+      </div>
     </div>
-  </div>
-</section>`;
+  </section>
+  <section class="section" data-content="servers">
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th title="Fully qualified domain name of server">Server</th>
+            <th title="Last update time">Updated</th>
+            <th style="text-align:center" title="Server status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="button" id="add-a-new-server">Add a new server</button>
+      </div>
+    </div>
+  </section>
+</div>`;
     project.setup('home', [], template.content);
+
+    function initTabs() {
+      const TABS = [...document.querySelectorAll('#tabs a')];
+      const CONTENT = [...document.querySelectorAll('#tab-content section')];
+      const ACTIVE_CLASS = 'is-active';
+      TABS.forEach((tab) => {
+        tab.addEventListener('click', (e) => {
+          let selected = tab.getAttribute('data-tab');
+          TABS.forEach((t) => {
+            if (t && t.classList.contains(ACTIVE_CLASS))
+              t.classList.remove(ACTIVE_CLASS);
+          });
+          tab.classList.add(ACTIVE_CLASS);
+          CONTENT.forEach((item) => {
+            if (item && item.classList.contains(ACTIVE_CLASS))
+              item.classList.remove(ACTIVE_CLASS);
+            let data = item.getAttribute('data-content');
+            if (data === selected)
+              item.classList.add(ACTIVE_CLASS);
+          });
+        });
+      });
+    }
+
+    initTabs();
+
     const content = {
       method: 'post',
       body: JSON.stringify({
@@ -90,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
           id: id
         })
       };
-      fetch('ajax/create.php', content)
+      fetch('ajax/project/create.php', content)
         .then(function(response) {
           return response.json();
         })
@@ -109,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    fetch('/ajax/list.php', content)
+    fetch('/ajax/project/list.php', content)
       .then(function(response) {
         return response.json();
       })
@@ -120,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let line = ``;
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data[i]) + '</tr>';
-          project.content.querySelector('section > div > table > tbody').innerHTML = line;
+          project.content.querySelector('section[data-content="demos"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
@@ -176,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url: url
           })
         };
-        fetch('/ajax/create.php', content)
+        fetch('/ajax/project/create.php', content)
           .then(function(response) {
             return response.json();
           })
@@ -186,7 +246,75 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
-              document.querySelector('section > div > table > tbody').insertAdjacentHTML('beforeend', tr);
+              document.querySelector('section[data-content="demos"] > div > table > tbody').insertAdjacentHTML('beforeend', tr);
+            }
+          });
+      });
+    });
+
+    fetch('/ajax/server/list.php', content)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.error)
+          console.log(data.error);
+        else {
+          let line = ``;
+          for (let i = 0; i < data.length; i++)
+            line += '<tr>' + serverRow(data[i]) + '</tr>';
+          project.content.querySelector('section[data-content="servers"] > div > table > tbody').innerHTML = line;
+          for (let i = 0; i < data.length; i++)
+            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
+        }
+      });
+
+    project.content.querySelector('#add-a-new-server').addEventListener('click', function(event) {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+  <label class="label">Server URL</label>
+  <div class="control has-icons-left">
+    <input id="server-url" class="input" type="url" required placeholder="https://cyberbotics1.epfl.ch" value="">
+    <span class="icon is-small is-left">
+      <i class="fas fa-server"></i>
+    </span>
+  </div>
+  <div class="help">URL of the machine running a session server for Webots simulations, for example:<br>
+    <a target="_blank" href="https://cyberbotics1.epfl.ch">
+      https://cyberbotics1.epfl.ch
+    </a>
+  </div>
+</div>`;
+      let modal = ModalDialog.run('Add a simulation server', content.innerHTML, 'Cancel', 'Add');
+      let input = modal.querySelector('#server-url');
+      input.focus();
+      input.selectionStart = input.selectionEnd = input.value.length;
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        const serverUrl = input.value.trim();
+        if (!serverUrl.startsWith('https://')) {
+          modal.error('The server URL should start with "https://".');
+          return;
+        }
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            url: serverUrl
+          })
+        };
+        fetch('/ajax/server/create.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.error)
+              modal.error(data.error);
+            else {
+              modal.close();
+              const tr = '<tr class="has-background-warning-light">' + serverRow(data) + '</tr>';
+              document.querySelector('section[data-content="servers"] > div > table > tbody').insertAdjacentHTML('beforeend', tr);
             }
           });
       });
