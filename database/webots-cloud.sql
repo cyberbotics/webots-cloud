@@ -1,3 +1,13 @@
+CREATE TABLE `server` (
+  `id` int(11) NOT NULL,
+  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL
+)
+
+ALTER TABLE `server`
+  ADD PRIMARY KEY (`id`)
+  ADD UNIQUE KEY `url` (`url`)
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
