@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
       <div class="buttons">
-        <button class="button" id="add-a-new-project">Add a new simulation</button>
+        <button class="button" id="add-a-new-project">Add a new demo</button>
       </div>
     </div>
   </section>
