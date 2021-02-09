@@ -11,7 +11,7 @@ export default class ModalDialog extends HTMLElement {
       actionButton = '';
     }
     this.innerHTML =
-`<div class="modal-background"></div>
+      `<div class="modal-background"></div>
 <form>
   <div class="modal-card">
     <header class="modal-card-head">
@@ -34,7 +34,9 @@ export default class ModalDialog extends HTMLElement {
     document.querySelector('html').classList.add('is-clipped');
     this.classList.add('is-active');
     ModalDialog.current = this;
-    this.querySelectorAll('p.help').forEach(function(p) { p.innerHTML = '&nbsp;'; });
+    this.querySelectorAll('p.help').forEach(function(p) {
+      p.innerHTML = '&nbsp;';
+    });
     document.addEventListener('keydown', ModalDialog.closeEvent);
     let submit = this.querySelector('button[type="submit"]');
     if (submit)

@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><i title="Run interactive simulation (not available)" class="fas fa-robot fa-lg has-text-grey-light"></i></td>`;
       return row;
     }
+
     function serverRow(data) {
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
@@ -205,6 +206,55 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
       });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+  <label class="label">Webots animation</label>
+  <div class="control has-icons-left">
+    <input id="animation-file" class="input" type="file" required accept=".json">
+    <span class="icon is-small is-left">
+      <i class="fas fa-upload"></i>
+    </span>
+  </div>
+  <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
+</div>
+<div class="field">
+  <label class="label">Webots model</label>
+  <div class="control has-icons-left">
+    <input id="model-file" class="input" type="file" required accept=".x3d">
+    <span class="icon is-small is-left">
+      <i class="fas fa-upload"></i>
+    </span>
+  </div>
+  <div class="help">Upload the Webots X3D model file: <em>model.x3d</em></div>
+</div>
+<div class="field">
+  <label class="label">Texture files</label>
+  <div class="control has-icons-left">
+    <input id="texture-files" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+    <span class="icon is-small is-left">
+      <i class="fas fa-upload"></i>
+    </span>
+  </div>
+  <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+</div>`;
+      let modal = ModalDialog.run('Add an animation', content.innerHTML, 'Cancel', 'Add');
+      let input = modal.querySelector('#animation-file');
+      input.focus();
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        const textures = modal.querySelector('#texture-files');
+        const fileList = textures.files;
+        const numFiles = fileList.length;
+        console.log('uploaded ' + numFiles + ' files');
+        for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
+          const file = fileList[i];
+          console.log('file[' + i + '] = ' + file.name + ' - ' + file.size + ' - ' + file.type);
+        }
+      });
+    });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
@@ -266,7 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
-              document.querySelector('section[data-content="demos"] > div > table > tbody').insertAdjacentHTML('beforeend', tr);
+              document.querySelector('section[data-content="demos"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
             }
           });
       });
@@ -334,7 +385,8 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + serverRow(data) + '</tr>';
-              document.querySelector('section[data-content="servers"] > div > table > tbody').insertAdjacentHTML('beforeend', tr);
+              document.querySelector('section[data-content="servers"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
             }
           });
       });
