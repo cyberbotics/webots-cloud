@@ -61,11 +61,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const template = document.createElement('template');
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a class="is-active" data-tab="demos">Demos</a>
+  <a class="is-active" data-tab="animations">Animations</a>
+  <a data-tab="demos">Demos</a>
   <a data-tab="servers">Servers</a>
 </div>
 <div id="tab-content">
-  <section class="section is-active" data-content="demos">
+  <section class="section is-active" data-content="animations">
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="text-align:center" title="Number of Stars"><i class="far fa-star"></i></th>
+            <th title="Title of the simulation">Title</th>
+            <th title="Last update time">Updated</th>
+            <th colspan="1"></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="button" id="add-a-new-animation">Add a new animation</button>
+      </div>
+    </div>
+  </section>
+  <section class="section" data-content="demos">
     <div class="container">
       <table class="table">
         <thead>
