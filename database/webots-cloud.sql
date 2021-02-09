@@ -1,3 +1,18 @@
+CREATE TABLE `animation` (
+  `id` int(11) NOT NULL,
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `size` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `animation`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `animation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `server` (
   `id` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
