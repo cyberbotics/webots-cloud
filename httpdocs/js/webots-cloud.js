@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<div class="field">
   <label class="label">Webots animation</label>
   <div class="control has-icons-left">
-    <input id="animation-file" class="input" type="file" required accept=".json">
+    <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
     <span class="icon is-small is-left">
       <i class="fas fa-upload"></i>
     </span>
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="field">
   <label class="label">Webots model</label>
   <div class="control has-icons-left">
-    <input id="model-file" class="input" type="file" required accept=".x3d">
+    <input id="model-file" name="model-file" class="input" type="file" required accept=".x3d">
     <span class="icon is-small is-left">
       <i class="fas fa-upload"></i>
     </span>
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="field">
   <label class="label">Texture files</label>
   <div class="control has-icons-left">
-    <input id="texture-files" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+    <input id="texture-files" name="texture[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
     <span class="icon is-small is-left">
       <i class="fas fa-upload"></i>
     </span>
@@ -245,14 +245,26 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        const textures = modal.querySelector('#texture-files');
-        const fileList = textures.files;
-        const numFiles = fileList.length;
-        console.log('uploaded ' + numFiles + ' files');
-        for (let i = 0, numFiles = fileList.length; i < numFiles; i++) {
-          const file = fileList[i];
-          console.log('file[' + i + '] = ' + file.name + ' - ' + file.size + ' - ' + file.type);
-        }
+        fetch('/ajax/animation/create.php', {
+          method: 'post',
+          body: new FormData(modal.querySelector('form'))
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.error)
+              modal.error(data.error);
+            else {
+              console.log('answer: ' + JSON.stringify(data));
+              modal.close();
+              /*
+              const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
+              document.querySelector('section[data-content="aninations"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
+              */
+            }
+          });
       });
     });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
