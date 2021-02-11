@@ -29,6 +29,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    function animationRow(data) {
+      let size = data.size;
+      let unit;
+      if (size < 1024)
+        unit = 'bytes';
+      else if (size < 1024 * 1014) {
+        size = size / 1024;
+        unit = 'K';
+      } else if (size < 1024 * 1024 * 1024) {
+        size = size / (1024 * 1024);
+        unit = 'M';
+      } else {
+        size = size / (1024 * 1024 * 1024);
+        unit = 'G';
+      }
+      if (size < 100)
+        size = Math.round(10 * size) / 10;
+      else
+        size = Math.round(size);
+      size += ' <small>' + unit + '</small>';
+      let millisecond = data.duration % 1000;
+      let second = Math.trunc(data.duration / 1000) % 60;
+      let minute = Math.trunc(data.duration / 60000) % 60;
+      let hour = Math.trunc(data.duration / 3600000);
+      if (millisecond < 10)
+        millisecond = '00' + millisecond;
+      else if (millisecond < 100)
+        millisecond = '0' + millisecond;
+      let duration = second + ':' + millisecond;
+      if (data.duration >= 60000) {
+        if (second < 10)
+          duration = '0' + duration;
+        duration = minute + ':' + duration;
+        if (data.duration > 3600000) {
+          if (minute < 10)
+            duration = '0' + duration;
+          duration = hour + duration;
+        }
+      }
+      const row =
+        `<td class="has-text-centered"></td>` +
+        `<td><a class="has-text-dark" href="${data.url}">${data.title}</a></td>` +
+        `<td class="has-text-right">${duration}</td>` +
+        `<td class="has-text-right">${size}</td>` +
+        `<td>${data.updated}</td>`;
+      return row;
+    }
+
     function simulationRow(data) {
       const words = data.url.substring(20).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}/tree/${words[3]}`;
@@ -73,7 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <thead>
           <tr>
             <th style="text-align:center" title="Number of Stars"><i class="far fa-star"></i></th>
-            <th title="Title of the simulation">Title</th>
+            <th title="Title of the animation">Title</th>
+            <th title="Duration of the animation">Duration</th>
+            <th title="Total size of the animation files">Size</th>
             <th title="Last update time">Updated</th>
             <th colspan="1"></th>
           </tr>
@@ -232,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="field">
   <label class="label">Texture files</label>
   <div class="control has-icons-left">
-    <input id="texture-files" name="texture[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+    <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
     <span class="icon is-small is-left">
       <i class="fas fa-upload"></i>
     </span>
@@ -245,10 +295,11 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('/ajax/animation/create.php', {
+        const content = {
           method: 'post',
           body: new FormData(modal.querySelector('form'))
-        })
+        };
+        fetch('/ajax/animation/create.php', content)
           .then(function(response) {
             return response.json();
           })
@@ -258,15 +309,28 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               console.log('answer: ' + JSON.stringify(data));
               modal.close();
-              /*
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
-              document.querySelector('section[data-content="aninations"] > div > table > tbody').insertAdjacentHTML(
+              document.querySelector('section[data-content="animations"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              */
             }
           });
       });
     });
+    fetch('/ajax/animation/list.php', content)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.error)
+          console.log(data.error);
+        else {
+          let line = ``;
+          for (let i = 0; i < data.length; i++)
+            line += '<tr>' + animationRow(data[i]) + '</tr>';
+          project.content.querySelector('section[data-content="animations"] > div > table > tbody').innerHTML = line;
+        }
+      });
+
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
