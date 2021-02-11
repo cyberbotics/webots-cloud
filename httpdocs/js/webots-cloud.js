@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <table class="table">
         <thead>
           <tr>
-            <th style="text-align:center" title="Number of Stars"><i class="far fa-star"></i></th>
+            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
             <th title="Title of the animation">Title</th>
             <th title="Duration of the animation">Duration</th>
             <th title="Total size of the animation files">Size</th>
