@@ -15,19 +15,50 @@
     }
     return $random_string;
   }
-  $animation_filename = $_FILES['animation-file']['name'];
-  $model_filename = $_FILES['model-file']['name'];
   $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
-  $total = count($_FILES['texture']['name']);
-  for($i = 0; $i < $total; $i++) {
-    $size += $_FILES['texture']['size'][$i];
-  }
+  $total = count($_FILES['textures']['name']);
+  for($i = 0; $i < $total; $i++)
+    $size += $_FILES['textures']['size'][$i];
   header('Content-Type: application/json');
-  require '../../../php/database.php';
-  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-  if ($mysqli->connect_errno)
-    error("Can't connect to MySQL database: $mysqli->connect_error");
-  $mysqli->set_charset('utf8');
+
+  // determine title
+  $file = fopen($_FILES['model-file']['tmp_name'], 'r') or error('Unable to open model file');
+  $count = 0;
+  $title = false;
+  while (!feof($file)) {
+    $line = fgets($file);
+    if (substr($line, 0, 15) === "<WorldInfo id='") {
+      $start = strpos($line, ' title="', 15);
+      if ($start !== false) {
+        $start += 7;
+        $end = $start;
+        do { // skip escaped double quotes
+          $end += 1;
+          $end = strpos($line, '"', $end);
+        } while ($line[$end - 1] == '\\' && $end !== false);
+        if ($end !== false)
+          $title = str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1));
+      }
+    }
+  }
+  fclose($file);
+  if ($title === false)
+    error('Missing WorldInfo title in x3d file');
+
+  // determine duration
+  $duration = false;
+  $content = file_get_contents($_FILES['animation-file']['tmp_name']);
+  $start = strrpos($content, '{"time":');
+  if ($start !== false) {
+    $start += 8;
+    $end = strpos($content, ',', $start);
+    if ($end !== false)
+      $duration = intval(substr($content, $start, $end - $start));
+  }
+  if ($duration === false)
+    error('Missing duration');
+
+  // save files in new folder
   do $folder = '../../animations/' . generate_random_string(); while(file_exists($folder));
   mkdir($folder);
   if (!move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
@@ -36,30 +67,26 @@
     error('Cannot move model file.');
   mkdir("$folder/textures");
   for($i = 0; $i < $total; $i++) {
-    $target = $_FILES['textures']['name'][$i];
+    $target = basename($_FILES['textures']['name'][$i]);
     if ($target == '')
       continue;
-    if (!move_uploaded_file($_FILES['texture']['tmp_name'][$i], "$folder/textures/$target"))
+    if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
       error("Cannot move $total $target");
   }
-  $url = "https://webots.cloud/animations/$folder/";
-  $title = 'noname';
-  $duration = 0;
-  /*
-  if ($id === 0)
-    $query = "INSERT IGNORE INTO animation(url, title, duration, size) "
-            ."VALUES(\"$url\", \"$title\", $duration, $size)";
-  else
-    $query = "UPDATE animation SET title=\"$title\", duration=$duration, size=$size, updated=NOW() "
-            ."WHERE url=\"$url\" AND id=$id";
+
+  // save entry in database
+  require '../../../php/database.php';
+  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+  if ($mysqli->connect_errno)
+    error("Can't connect to MySQL database: $mysqli->connect_error");
+  $mysqli->set_charset('utf8');
+  $url = 'https://webots.cloud/' . substr($folder, 6); // skip '../../'
+  $escaped_title = $mysqli->escape_string($title);
+  $query = "INSERT INTO animation(url, title, duration, size) VALUES(\"$url\", \"$escaped_title\", $duration, $size)";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows != 1) {
-    if ($id === 0)
-      error("This animation already exists");
-    else
-      error("Failed to update the animation");
-  }
-  */
+  if ($mysqli->affected_rows != 1)
+    error("This animation already exists");
+
   $answer = array();
   // $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;

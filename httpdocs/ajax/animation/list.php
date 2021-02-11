@@ -1,4 +1,4 @@
-<?php # This script list available servers
+<?php # This script list available animations
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query = "SELECT * FROM server LIMIT $limit OFFSET $offset";
+  $query = "SELECT * FROM animation LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC))
