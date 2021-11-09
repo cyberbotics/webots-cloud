@@ -47,7 +47,7 @@ export default class Project extends Router {
   animationPage(data) {
     let that = this;
     let template = document.createElement('template');
-    const reference = data.url.substring(data.url.search('/animations/'));
+    const reference = data.url.substring(data.url.search('/animations/') + 1);
     console.log('reference = ' + reference);
     template.innerHTML =
 `<section class="section">
