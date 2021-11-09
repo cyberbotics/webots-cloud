@@ -32,6 +32,7 @@ export default class Project extends Router {
         .then(function(data) {
           if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
+          console.log(data);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
@@ -49,7 +50,7 @@ export default class Project extends Router {
     template.innerHTML =
 `<section class="section">
   <div class="container">
-    <h1 class="title">Animation</h1>
+    <h1 class="title">${data.title}</h1>
     <p>Hello world!</p>
   </div>
 </section>`;
