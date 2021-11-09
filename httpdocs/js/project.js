@@ -11,7 +11,7 @@ export default class Project extends Router {
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
-    console.log('project.dynamicPage()');
+    console.log('project.dynamicPage(): ' + url.pathname);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       const username = url.pathname.substring(1);
