@@ -46,10 +46,11 @@ export default class Project extends Router {
   animationPage(data) {
     let that = this;
     let template = document.createElement('template');
-    template.innerHTML = `
-<section class="section">
+    template.innerHTML =
+`<section class="section">
   <div class="container">
     <h1 class="title">Animation</h1>
+    <p>Hello world!</p>
   </div>
 </section>`;
     that.setup('animation', [], template.content);
