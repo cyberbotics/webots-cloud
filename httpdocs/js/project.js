@@ -37,7 +37,7 @@ export default class Project extends Router {
             that.notFound();
             resolve();
           } else {
-            that.animationPage(data);
+            that.animationPage(data[0]);
             resolve();
           }
         });
