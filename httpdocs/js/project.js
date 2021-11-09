@@ -47,11 +47,13 @@ export default class Project extends Router {
   animationPage(data) {
     let that = this;
     let template = document.createElement('template');
+    const reference = data.url.substring(data.url.find('/animations/'));
+    console.log('reference = ' + reference);
     template.innerHTML =
 `<section class="section">
   <div class="container">
     <h1 class="title">${data.title}</h1>
-    <webots-animation style="height:80%; display:block;" title="animations/n5OZIhw_QWz/animation"></webots-animation>
+    <webots-animation style="height:80%; display:block;" title="${reference}/animation"></webots-animation>
   </div>
 </section>`;
     that.setup('animation', [], template.content);
