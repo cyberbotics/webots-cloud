@@ -53,7 +53,7 @@ export default class Project extends Router {
 `<section class="section">
   <div class="container" style="height:400px">
     <h1 class="title">${data.title}</h1>
-    <webots-animation style="height:80%; display:block;" title="${reference}/animation" playWhenReady=true></webots-animation>
+    <webots-animation style="display:block;" title="${reference}/animation" playWhenReady=true></webots-animation>
   </div>
 </section>`;
     that.setup('animation', [], template.content);
