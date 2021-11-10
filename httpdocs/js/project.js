@@ -50,7 +50,7 @@ export default class Project extends Router {
     const reference = data.url.substring(data.url.search('/animations/') + 12);
     console.log('reference = ' + reference);
     template.innerHTML =
-`<section class="section">
+`<section class="section" style="padding-top:20px">
   <div class="container" style="height:540px">
     <webots-animation style="height:90%; display:block;" title="${reference}/animation" playWhenReady=true></webots-animation>
     <h1 class="title">${data.title}</h1>
