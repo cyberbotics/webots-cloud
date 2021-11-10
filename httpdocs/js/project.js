@@ -52,7 +52,7 @@ export default class Project extends Router {
     template.innerHTML =
 `<section class="section" style="padding-top:20px">
   <div class="container" style="height:540px">
-    <webots-animation style="height:95%; display:block;" title="${reference}/animation" playWhenReady=true></webots-animation>
+    <webots-animation style="height:100%; display:block;" title="${reference}/animation" playWhenReady=true></webots-animation>
   </div>
   <div>
     <h1 class="subtitle" style="margin:10px 0">${data.title}</h1>
