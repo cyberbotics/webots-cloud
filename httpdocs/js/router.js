@@ -100,6 +100,7 @@ export default class Router {
     } else {
       console.log('pathname = ' + window.location.pathname);
       const pathname = (window.location.search.startsWith('?pathname=') ? window.location.search.substring(10) : '/404');
+      console.log('new pathname = ' + pathname);
       const url = window.location.origin + pathname;
       window.history.pushState(null, '404 Not Found', url);
       const hostname = document.location.hostname;
