@@ -39,7 +39,7 @@ export default class Router {
 `<nav class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="images/logo-28.png" /> &nbsp; ${this.title}
+      <img src="/images/logo-28.png" /> &nbsp; ${this.title}
     </a>
   </div>
   <div id="router-navbar" class="navbar-menu">
