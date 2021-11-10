@@ -51,9 +51,9 @@ export default class Project extends Router {
     console.log('reference = ' + reference);
     template.innerHTML =
 `<section class="section">
-  <div class="container">
+  <div class="container" style="height:400px">
     <h1 class="title">${data.title}</h1>
-    <webots-animation style="height:400%" title="${reference}/animation" playWhenReady=true></webots-animation>
+    <webots-animation style="height:80%" title="${reference}/animation" playWhenReady=true></webots-animation>
   </div>
 </section>`;
     that.setup('animation', [], template.content);
