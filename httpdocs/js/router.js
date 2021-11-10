@@ -103,12 +103,12 @@ export default class Router {
       const hostname = document.location.hostname;
       let template = document.createElement('template');
       template.innerHTML =
-`<section class="hero is-danger">
+`<section>
 <div class="hero-body">
 <div class="container">
 <h1 class="title"><i class="fas fa-exclamation-triangle"></i> Page not found (404 error)</h1>
 <p>The requested page: <a href="${url}">${url}</a> was not found.</p>
-<p>Please report any bug to <a class="has-text-white" href="mailto:webmaster@${hostname}">webmaster@${hostname}</a></p>
+<p>Please report any bug to <a href="mailto:webmaster@${hostname}">webmaster@${hostname}</a></p>
 </div>
 </div>
 </section>`;
