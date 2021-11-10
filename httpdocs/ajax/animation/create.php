@@ -1,8 +1,8 @@
-<?php # This script initializes a new project
+<?php # This script creates a new animation entry in the database
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
-  function generate_random_string($length = 11) {
+  function generate_random_string($length = 10) {
     $characters = '_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $random_string = '';
     $end = strlen($characters) - 1;
@@ -80,7 +80,7 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  $url = 'https://webots.cloud/' . substr($folder, 6); // skip '../../'
+  $url = 'https://webots.cloud/a' . substr($folder, 17); // skip '../../animations/'
   $escaped_title = $mysqli->escape_string($title);
   $query = "INSERT INTO animation(url, title, duration, size) VALUES(\"$url\", \"$escaped_title\", $duration, $size)";
   $mysqli->query($query) or error($mysqli->error);
@@ -88,7 +88,6 @@
     error("This animation already exists");
 
   $answer = array();
-  // $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
   $answer['title'] = $title;
   $answer['duration'] = $duration;
