@@ -95,10 +95,10 @@ export default class Router {
   }
   notFound() {
     if (window.location.pathname !== '/404.php') {
-      console.log('pathname = ' + window.location.pathname);
+      console.log('pathname1 = ' + window.location.pathname);
       window.location.replace('/404.php?pathname=' + window.location.pathname);
     } else {
-      console.log('pathname = ' + window.location.pathname);
+      console.log('pathname2 = ' + window.location.pathname);
       const pathname = (window.location.search.startsWith('?pathname=') ? window.location.search.substring(10) : '/404');
       console.log('new pathname = ' + pathname);
       const url = window.location.origin + pathname;
