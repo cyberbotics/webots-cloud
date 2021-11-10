@@ -13,7 +13,7 @@
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   if (isset($data->id))
-    $query = 'SELECT * FROM animation WHERE id="' + $mysqli->escape_string($data->id) + '"';
+    $query = 'SELECT * FROM animation WHERE id="' . $mysqli->escape_string($data->id) . '"';
   else
     $query = "SELECT * FROM animation LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
