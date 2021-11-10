@@ -15,7 +15,6 @@ export default class Project extends Router {
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (!url.pathname.startsWith('/animations/')) {
-        print('url.pathname = ' + url.pathname);
         that.notFound();
         resolve();
       }
