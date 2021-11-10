@@ -33,7 +33,7 @@ export default class Project extends Router {
           if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
           console.log(data);
-          if (data.error) { // no such animation
+          if (data.length == 0) { // no such animation
             that.notFound();
             resolve();
           } else {
