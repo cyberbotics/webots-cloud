@@ -1,10 +1,14 @@
 CREATE TABLE `animation` (
   `id` int(11) NOT NULL,
+  `uploaded` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `last_view` timestamp NOT NULL DEFAULT current_timestamp(),
   `title` varchar(256) NOT NULL,
+  `description` varchar(2048) NOT NULL,
   `duration` int(11) NOT NULL,
-  `size` int(11) NOT NULL
+  `size` int(11) NOT NULL,
+  `view_counter` int (11) NOT NULL,
+  `owner` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `animation`
