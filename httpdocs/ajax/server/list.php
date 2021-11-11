@@ -15,7 +15,9 @@
   $query = "SELECT * FROM server LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $answer = array();
-  while($row = $result->fetch_array(MYSQLI_ASSOC))
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    settype($row['id'], 'integer');
     array_push($answer, $row);
+  }
   die(json_encode($answer));
  ?>
