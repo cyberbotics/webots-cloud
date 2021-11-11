@@ -14,14 +14,14 @@ export default class Project extends Router {
     console.log('project.dynamicPage(): ' + url.pathname);
     let that = this;
     let promise = new Promise((resolve, reject) => {
-      if (!url.pathname.startsWith('/a') && url.pathname.length != 12) {
+      if (!url.pathname.startsWith('/A') && url.pathname.length != 8) {
         that.notFound();
         resolve();
       }
       const content = {
         method: 'post',
         body: JSON.stringify({
-          id: url.pathname.substring(2)
+          url: url
         })
       };
       console.log('fetch /ajax/animation/list.php');
