@@ -47,7 +47,7 @@ export default class Project extends Router {
   animationPage(data) {
     let that = this;
     let template = document.createElement('template');
-    const reference = data.url.substring(data.url.lastIndexOf('/') + 1);
+    const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
     console.log('reference = ' + reference);
     template.innerHTML =
 `<section class="section" style="padding-top:20px">
