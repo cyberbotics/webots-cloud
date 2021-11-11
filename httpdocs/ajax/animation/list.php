@@ -23,7 +23,7 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $uri = '/A' . mysql_id_to_string(intval($row['id']));
+    $uri = '/A' . mysql_id_to_string($row['id']);
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($answer, $row);
   }
