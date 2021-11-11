@@ -1,6 +1,6 @@
 <?php
-if ($_SERVER['REQUEST_URI'][1] == 'a')
-  $found = file_exists('animations/' . substr($_SERVER['REQUEST_URI'], 2));
+if (strlen($_SERVER['REQUEST_URI']) == 8 && $_SERVER['REQUEST_URI'][1] == 'A')
+  $found = file_exists('storage/' . substr($_SERVER['REQUEST_URI'], 1));
 else
   $found = false;
 http_response_code($found ? 200 : 404);
