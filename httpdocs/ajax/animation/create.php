@@ -2,19 +2,6 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
-  function generate_random_string($length = 10) {
-    $characters = '_-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $random_string = '';
-    $end = strlen($characters) - 1;
-    for ($i = 0; $i < $length; $i++) {
-      if ($i == 0 || $i == $length - 1)
-        $start = 2;
-      else
-        $start = 0;
-      $random_string .= $characters[rand($start, $end)];
-    }
-    return $random_string;
-  }
   $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
   $total = count($_FILES['textures']['name']);
   for($i = 0; $i < $total; $i++)
@@ -58,8 +45,20 @@
   if ($duration === false)
     error('Missing duration');
 
+  // save entry in database
+  require '../../../php/database.php';
+  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+  if ($mysqli->connect_errno)
+    error("Can't connect to MySQL database: $mysqli->connect_error");
+  $mysqli->set_charset('utf8');
+  $escaped_title = $mysqli->escape_string($title);
+  $query = "INSERT INTO animation(title, duration, size) VALUES(\"$escaped_title\", $duration, $size)";
+  $mysqli->query($query) or error($mysqli->error);
+
   // save files in new folder
-  do $folder = '../../animations/' . generate_random_string(); while(file_exists($folder));
+  require '../../../php/mysql_id_string.php';
+  $uri = '/A' . mysql_id_to_string($mysqli->last_id);
+  $folder = "../../storage$uri";
   mkdir($folder);
   if (!move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
     error('Cannot move animation file.');
@@ -74,21 +73,8 @@
       error("Cannot move $total $target");
   }
 
-  // save entry in database
-  require '../../../php/database.php';
-  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-  if ($mysqli->connect_errno)
-    error("Can't connect to MySQL database: $mysqli->connect_error");
-  $mysqli->set_charset('utf8');
-  $url = 'https://webots.cloud/a' . substr($folder, 17); // skip '../../animations/'
-  $escaped_title = $mysqli->escape_string($title);
-  $query = "INSERT INTO animation(url, title, duration, size) VALUES(\"$url\", \"$escaped_title\", $duration, $size)";
-  $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows != 1)
-    error("This animation already exists");
-
   $answer = array();
-  $answer['url'] = $url;
+  $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
   $answer['duration'] = $duration;
   $answer['size'] = $size;
