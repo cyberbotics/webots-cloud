@@ -1,4 +1,6 @@
 <?php
+die(substr($_SERVER['REQUEST_URI'], 1));
+
 if (substr($_SERVER['REQUEST_URI'], 10) == '/storage/A')
   $found = file_exists(substr($_SERVER['REQUEST_URI'], 1));
 else
