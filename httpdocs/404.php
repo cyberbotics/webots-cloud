@@ -1,5 +1,5 @@
 <?php
-if (substr($_SERVER['REQUEST_URI'], 5) == '/storage/A')
+if (substr($_SERVER['REQUEST_URI'], 10) == '/storage/A')
   $found = file_exists(substr($_SERVER['REQUEST_URI'], 1));
 else
   $found = false;
