@@ -43,9 +43,7 @@
     return $value;
   }
   $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
-  print_r($_FILES['textures']);
-  die();
-  $total = count($_FILES['textures']['name']);
+  $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
   header('Content-Type: application/json');
