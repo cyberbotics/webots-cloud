@@ -30,10 +30,9 @@
           $end += 1;
           $end = strpos($line, '"', $end);
         } while ($line[$end - 1] == '\\' && $end !== false);
-        if ($end !== false) {
+        if ($end !== false)
           array_push($value, str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1)));
-          die("start = $start, end=$end, value[0]=$value[0]\n");
-        } else
+        else
           break;
         if ($line[$end + 1] === ' ' && $line[$end + 2] === '"')
           $start = $end + 2;
