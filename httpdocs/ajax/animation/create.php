@@ -85,7 +85,8 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   $escaped_title = $mysqli->escape_string($title);
-  $query = "INSERT INTO animation(title, duration, size) VALUES(\"$escaped_title\", $duration, $size)";
+  $escaped_description = $mysqli->escape_string($description);
+  $query = "INSERT INTO animation(title, description, duration, size) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size)";
   $mysqli->query($query) or error($mysqli->error);
 
   // save files in new folder
