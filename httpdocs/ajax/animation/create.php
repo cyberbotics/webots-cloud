@@ -2,7 +2,7 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
-  function parse_sfstring($line, $parameter) {
+  function parse_sf_string($line, $parameter) {
     $n = 2;  // skiping '<' and node name (at least one character)
     $start = strpos($line, " $parameter=\"", $n);
     $value = '';
@@ -18,7 +18,7 @@
     }
     return $value;
   }
-  function parse_mfstring($line, $parameter) {
+  function parse_mf_string($line, $parameter) {
     $n = 2;  // skiping '<' and node name (at least one character)
     $start = strpos($line, " $parameter='\"", $n);
     $value = array();
