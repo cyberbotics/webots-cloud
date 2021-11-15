@@ -23,9 +23,9 @@
     $start = strpos($line, " $parameter='\"", $n);
     $value = array();
     if ($start !== false) {
-      $start += strlen($parameter) + 2;
-      $end = $start;
+      $start += strlen($parameter) + 3;
       while(true) {
+        $end = $start;
         do { // skip escaped double quotes
           $end += 1;
           $end = strpos($line, '"', $end);
