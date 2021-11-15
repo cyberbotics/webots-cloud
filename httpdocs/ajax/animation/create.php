@@ -2,6 +2,46 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
+  function parse_sfstring($line, $parameter) {
+    $n = 2;  // skiping '<' and node name (at least one character)
+    $start = strpos($line, " $parameter=\"", $n);
+    $value = '';
+    if ($start !== false) {
+      $start += strlen($parameter) + 2;
+      $end = $start;
+      do { // skip escaped double quotes
+        $end += 1;
+        $end = strpos($line, '"', $end);
+      } while ($line[$end - 1] == '\\' && $end !== false);
+      if ($end !== false)
+        $value = str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1));
+    }
+    return $value;
+  }
+  function parse_mfstring($line, $parameter) {
+    $n = 2;  // skiping '<' and node name (at least one character)
+    $start = strpos($line, " $parameter='\"", $n);
+    $value = array();
+    if ($start !== false) {
+      $start += strlen($parameter) + 2;
+      $end = $start;
+      while(true) {
+        do { // skip escaped double quotes
+          $end += 1;
+          $end = strpos($line, '"', $end);
+        } while ($line[$end - 1] == '\\' && $end !== false);
+        if ($end !== false)
+          array_push($value, append(str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1))));
+        else
+          break
+        if ($line[$end + 1] == ' ' and $line[$end + 2] == '"')
+          $start = $end + 2;
+        else
+          break
+      }
+    }
+    return $value;
+  }
   $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
   $total = count($_FILES['textures']['name']);
   for($i = 0; $i < $total; $i++)
@@ -11,25 +51,17 @@
   // determine title
   $file = fopen($_FILES['model-file']['tmp_name'], 'r') or error('Unable to open model file');
   $count = 0;
-  $title = false;
+  $world_info = false;
   while (!feof($file)) {
     $line = fgets($file);
     if (substr($line, 0, 15) === "<WorldInfo id='") {
-      $start = strpos($line, ' title="', 15);
-      if ($start !== false) {
-        $start += 7;
-        $end = $start;
-        do { // skip escaped double quotes
-          $end += 1;
-          $end = strpos($line, '"', $end);
-        } while ($line[$end - 1] == '\\' && $end !== false);
-        if ($end !== false)
-          $title = str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1));
-      }
+      $world_info = true;
+      $title = parse_sf_string($line, 'title');
+      $info = parse_mf_string($line, 'info');
     }
   }
   fclose($file);
-  if ($title === false)
+  if ($world_info === false)
     error('Missing WorldInfo title in x3d file');
 
   // determine duration
@@ -64,13 +96,15 @@
     error('Cannot move animation file.');
   if (!move_uploaded_file($_FILES['model-file']['tmp_name'], "$folder/model.x3d"))
     error('Cannot move model file.');
-  mkdir("$folder/textures");
-  for($i = 0; $i < $total; $i++) {
-    $target = basename($_FILES['textures']['name'][$i]);
-    if ($target == '')
-      continue;
-    if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
-      error("Cannot move $total $target");
+  if ($total > 0) {
+    mkdir("$folder/textures");
+    for($i = 0; $i < $total; $i++) {
+      $target = basename($_FILES['textures']['name'][$i]);
+      if ($target == '')
+        continue;
+      if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
+        error("Cannot move $total $target");
+    }
   }
 
   $answer = array();
