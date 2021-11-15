@@ -43,6 +43,8 @@
     return $value;
   }
   $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
+  print_r($_FILES['textures']);
+  die();
   $total = count($_FILES['textures']['name']);
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
@@ -116,6 +118,5 @@
   $answer['duration'] = $duration;
   $answer['size'] = $size;
   $answer['updated'] = date("Y-m-d H:i:s");
-  $answer['total'] = $total;
   die(json_encode($answer));
  ?>
