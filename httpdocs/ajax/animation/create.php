@@ -34,7 +34,7 @@
           array_push($value, append(str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1))));
         else
           break
-        if ($line[$end + 1] == ' ' and $line[$end + 2] == '"')
+        if ($line[$end + 1] === ' ' && $line[$end + 2] === '"')
           $start = $end + 2;
         else
           break
