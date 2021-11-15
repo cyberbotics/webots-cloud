@@ -116,5 +116,6 @@
   $answer['duration'] = $duration;
   $answer['size'] = $size;
   $answer['updated'] = date("Y-m-d H:i:s");
+  $answer['total'] = $total;
   die(json_encode($answer));
  ?>
