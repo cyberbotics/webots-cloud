@@ -31,7 +31,7 @@
           $end = strpos($line, '"', $end);
         } while ($line[$end - 1] == '\\' && $end !== false);
         if ($end !== false)
-          array_push($value, append(str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1))));
+          array_push($value, str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1)));
         else
           break;
         if ($line[$end + 1] === ' ' && $line[$end + 2] === '"')
