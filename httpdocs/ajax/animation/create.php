@@ -58,6 +58,7 @@
       $world_info = true;
       $title = parse_sf_string($line, 'title');
       $info = parse_mf_string($line, 'info');
+      $description = implode("\n", $info);
     }
   }
   fclose($file);
@@ -110,6 +111,7 @@
   $answer = array();
   $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
+  $answer['description'] = $description;
   $answer['duration'] = $duration;
   $answer['size'] = $size;
   $answer['updated'] = date("Y-m-d H:i:s");
