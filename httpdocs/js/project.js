@@ -49,6 +49,7 @@ export default class Project extends Router {
     let template = document.createElement('template');
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
     console.log('reference = ' + reference);
+    const description = data.description.replace('\n', '<br>\n');
     template.innerHTML =
 `<section class="section" style="padding-top:20px">
   <div class="container" style="height:540px">
@@ -56,9 +57,7 @@ export default class Project extends Router {
   </div>
   <div>
     <h1 class="subtitle" style="margin:10px 0">${data.title}</h1>
-    Description<br>
-    Blahblah<br>
-    Etc<br>
+    ${description}
   </div>
 </section>`;
     that.setup('animation', [], template.content);
