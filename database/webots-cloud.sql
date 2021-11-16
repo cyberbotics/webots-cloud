@@ -46,4 +46,19 @@ ALTER TABLE `project`
 ALTER TABLE `project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `email` varchar(254) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `password` varchar(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
