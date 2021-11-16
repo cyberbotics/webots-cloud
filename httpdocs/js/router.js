@@ -50,6 +50,8 @@ export default class Router {
   <div id="router-navbar" class="navbar-menu">
     <div class="navbar-start">
     </div>
+    <div class="navbar-end">
+    </div>
   </div>
 </nav>`;
     document.body.prepend(template.content.firstChild);
