@@ -20,7 +20,7 @@
   $user = $result->fetch_assoc();
   $result->free();
   if (!$user)
-    error("This e-mail address is not registered.");
+    error("This e-mail address is not registered. $email");
   if ($user['password'] != $password)
     error("The password you entered is wrong.");
   die("{\"status\": 1}");
