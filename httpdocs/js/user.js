@@ -170,17 +170,12 @@ export default class User extends Router {
               if (data.error)
                 ModalDialog.run('Account activation error', data.error);
               else {
-                if (data.type === 'reset')
-                  ModalDialog.run('Password reset', '<p>Your password was successfully reset.</p>');
-                else if (data.type === 'sign up') {
-                  if (data.enabled === 1)
-                    ModalDialog.run('Welcome to ' + that.title, '<p>Your new account is up-and-ready.</p>');
-                  else {
-                    ModalDialog.run('Welcome to ' + that.title,
-                      '<p>Your new account will be validated by our administrator in the next few hours.</p>' +
-                      '<p>You will receive an e-mail notification about it.</p>');
-                  }
-                }
+                if (data.status === 0)
+                  ModalDialog.run('Welcome to ' + that.title, '<p>Your new account is up-and-ready.</p>');
+                else if (data.status === 1)
+                  ModalDialog.run('Password changed', '<p>Your password was successfully changed.</p>');
+                else
+                  console.log('Error: ' + data.status);
                 that.email = email;
                 that.password = hash;
                 that.login();
