@@ -189,7 +189,7 @@ export default class User extends Router {
         return false;
       const template = document.createElement('template');
       template.innerHTML =
-`<section class="section">
+`<section class="section style=\"margin-top:0;padding-top:0\"">
   <div class="container">
     <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
     <h2 class="subtitle pt-3">${that.email}</h2>
