@@ -290,7 +290,7 @@ export default class User extends Router {
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
-    <a class="button is-mall is-success" id="sign-up">
+    <a class="button is-small is-success" id="sign-up">
       <strong>Sign up</strong>
     </a>
     <a class="button is-small is-light" id="log-in">
