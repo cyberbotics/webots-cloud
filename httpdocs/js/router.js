@@ -51,6 +51,28 @@ export default class Router {
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control">
+            <a class="button is-small">
+              <span class="icon">
+                <i class="fa fa-user-plus"></i>
+              </span>
+              <span>
+                Register
+              </span>
+            </a>
+          </p>
+          <p class="control">
+            <a class="button is-small is-info is-outlined">
+              <span class="icon">
+                <i class="fa fa-user"></i>
+              </span>
+              <span>Login</span>
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </nav>`;
