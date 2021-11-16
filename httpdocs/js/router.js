@@ -38,13 +38,13 @@ export default class Router {
     template.innerHTML =
 `<nav class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="router-navbar">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
     <a class="navbar-item" href="/">
       <img src="/images/logo-28.png" /> &nbsp; ${this.title}
-    </a>
-    <a role="button" class="navbar-burger right" aria-label="menu" aria-expanded="false" data-target="router-navbar">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
     </a>
   </div>
   <div id="router-navbar" class="navbar-menu">
