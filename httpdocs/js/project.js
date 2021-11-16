@@ -11,7 +11,6 @@ export default class Project extends User {
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
-    console.log('project.dynamicPage(): ' + url.pathname);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (!url.pathname.startsWith('/A') && url.pathname.length != 8) {
@@ -24,7 +23,6 @@ export default class Project extends User {
           url: url
         })
       };
-      console.log('fetch /ajax/animation/list.php');
       fetch('/ajax/animation/list.php', content)
         .then(function(response) {
           return response.json();
@@ -32,7 +30,6 @@ export default class Project extends User {
         .then(function(data) {
           if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
-          console.log(data);
           if (data.length == 0) { // no such animation
             that.notFound();
             resolve();
@@ -48,7 +45,6 @@ export default class Project extends User {
     let that = this;
     let template = document.createElement('template');
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-    console.log('reference = ' + reference);
     const description = data.description.replace('\n', '<br>\n');
     template.innerHTML =
 `<section class="section" style="padding-top:20px">
