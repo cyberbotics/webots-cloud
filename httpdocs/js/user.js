@@ -5,7 +5,6 @@ export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
-    // this.email = '!';
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
