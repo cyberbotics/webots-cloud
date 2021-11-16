@@ -191,10 +191,8 @@ export default class User extends Router {
       template.innerHTML =
 `<section class="section">
   <div class="container">
-    <h1 class="title"><i class="fas fa-cog"></i> Settings</h1>
-  </div>
-  <div class="container">
-    <h2 class="subtitle">${that.email}</h2>
+    <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
+    <h2 class="subtitle pt-3">${that.email}</h2>
   </div>
 </section>
 <section class="section">
