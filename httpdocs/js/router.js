@@ -41,11 +41,6 @@ export default class Router {
     <a class="navbar-item" href="/">
       <img src="/images/logo-28.png" /> &nbsp; ${this.title}
     </a>
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="router-navbar">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
   </div>
   <div id="router-navbar" class="navbar-menu">
     <div class="navbar-start">
@@ -55,17 +50,6 @@ export default class Router {
   </div>
 </nav>`;
     document.body.prepend(template.content.firstChild);
-
-    // navbar-burger
-    const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    if (navbarBurgers.length > 0) {
-      navbarBurgers.forEach(el => {
-        el.addEventListener('click', () => {
-          el.classList.toggle('is-active');
-          document.getElementById(el.dataset.target).classList.toggle('is-active');
-        });
-      });
-    }
   }
   load(page = null, pushHistory = true) {
     let that = this;
