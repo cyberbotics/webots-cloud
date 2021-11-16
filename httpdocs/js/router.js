@@ -48,6 +48,8 @@ export default class Router {
     </a>
   </div>
   <div id="router-navbar" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
   </div>
 </nav>`;
     document.body.prepend(template.content.firstChild);
