@@ -1,5 +1,5 @@
 import ModalDialog from './modal_dialog.js';
-import Router from './router.js';
+import Router from './user.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
