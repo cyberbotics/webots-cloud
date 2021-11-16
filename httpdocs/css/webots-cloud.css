@@ -30,6 +30,11 @@ body footer .has-text-centered {
   width:100%;
 }
 
+.navbar-burger.right {
+	margin-right: auto;
+	margin-left: 0;
+}
+
 #tab-content section {
   display: none;
 }
