@@ -29,7 +29,7 @@
   if ($request['token'] !== $token)
     error('Wrong token provided.');
   $mysqli->query("UPDATE user SET password=\"$password\", token='' WHERE id=$id AND token='$token'") or error($mysqli->error);
-  if ($mysqli->affected_rows !== 0)
+  if ($mysqli->affected_rows === 0)
     error('Failed to set-up password.');
   if ($request['password'] === '')
     $status = 0;
