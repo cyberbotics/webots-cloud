@@ -94,19 +94,12 @@ export default class Router {
     return promise;
   }
   notFound() {
-    /* if (window.location.pathname !== '/404.php') {
-      console.log('pathname1 = ' + window.location.pathname);
-      window.location.replace('/404.php?pathname=' + window.location.pathname);
-    } else */ {
-      console.log('pathname2 = ' + window.location.pathname);
-      // const pathname = (window.location.search.startsWith('?pathname=') ? window.location.search.substring(10) : '/404');
-      const pathname = window.location.pathname;
-      console.log('new pathname = ' + pathname);
-      const url = window.location.origin + pathname;
-      window.history.pushState(null, '404 Not Found', url);
-      const hostname = document.location.hostname;
-      let template = document.createElement('template');
-      template.innerHTML =
+    const pathname = window.location.pathname;
+    const url = window.location.origin + pathname;
+    window.history.pushState(null, '404 Not Found', url);
+    const hostname = document.location.hostname;
+    let template = document.createElement('template');
+    template.innerHTML =
 `<section>
 <div class="hero-body">
 <div class="container">
@@ -116,8 +109,7 @@ export default class Router {
 </div>
 </div>
 </section>`;
-      this.setup('page not found', [], template.content);
-    }
+    this.setup('page not found', [], template.content);
   }
   setup(title, anchors, content, fullpage = false) {
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
