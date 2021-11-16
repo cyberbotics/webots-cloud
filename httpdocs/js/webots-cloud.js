@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const row =
-        `<td class="has-text-centered"></td>` +
+        `<td class="has-text-centered">${data.view}</td>` +
         `<td><a class="has-text-dark" href="${url}">${data.title}</a></td>` +
         `<td class="has-text-right">${duration}</td>` +
         `<td class="has-text-right">${size}</td>` +

@@ -13,10 +13,12 @@
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   require '../../../php/mysql_id_string.php';
-  if (isset($data->url)) {
+  if (isset($data->url)) {  // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
     $id = string_to_mysql_id(substr($uri, 2));  // skipping '/A'
+    $query = "UPDATE animation SET view = view + 1 WHERE id=$id";
+    $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id";
   } else
     $query = "SELECT * FROM animation LIMIT $limit OFFSET $offset";
