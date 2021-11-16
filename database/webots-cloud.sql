@@ -50,7 +50,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `email` varchar(254) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `password` varchar(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
-  `token` varchar(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+  `token` varchar(32) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
