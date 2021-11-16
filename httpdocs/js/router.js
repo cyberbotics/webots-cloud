@@ -41,7 +41,7 @@ export default class Router {
     <a class="navbar-item" href="/">
       <img src="/images/logo-28.png" /> &nbsp; ${this.title}
     </a>
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="router-navbar">
+    <a style="align:left" role="button" class="navbar-burger navbar-end" aria-label="menu" aria-expanded="false" data-target="router-navbar">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
