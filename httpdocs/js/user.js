@@ -202,6 +202,7 @@ export default class User extends Router {
     <p class="panel-heading">Gravatar settings</p>
     <div class="panel-block">
       <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48">
+      ${displayName}
     </div>
     <div class="panel-block">
       <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
@@ -280,8 +281,9 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.innerHTML = `function User_profile(data) {
-  let displayName = data.entry[0].displayName;
+          script.innerHTML = `let displayName = 'Anonymous';
+function User_profile(data) {
+  displayName = data.entry[0].displayName;
   if (!displayName)
     displayName = data.entry[0].name.formatted;
   if (!displayName)
@@ -290,7 +292,7 @@ export default class User extends Router {
     displayName = data.entry[0].name.familyName;
   if (!displayName)
     displayName = 'Anonymous';
-  document.getElementById("display").innerHTML = data.entry[0].displayName;
+  document.getElementById("display").innerHTML = displayName;
 }`;
           head.appendChild(script);
           script = document.createElement('script');
