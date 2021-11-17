@@ -69,12 +69,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
+      const delete_icon = '';
       const row =
         `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
         `<td class="has-text-right">${duration}</td>` +
         `<td class="has-text-right">${size}</td>` +
-        `<td>${data.updated}</td>`;
+        `<td>${data.updated}</td>` +
+        `<td>${delete_icon}</td>`;
       return row;
     }
 
