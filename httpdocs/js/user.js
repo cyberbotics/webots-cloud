@@ -561,6 +561,15 @@ x[i].innerHTML = displayName;
         }
       });
   }
+  get id() {
+    return window.localStorage.getItem('id');
+  }
+  set id(value) {
+    if (value === null)
+      window.localStorage.removeItem('id');
+    else
+      window.localStorage.setItem('id', value);
+  }
   get email() {
     return window.localStorage.getItem('email');
   }
