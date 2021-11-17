@@ -294,6 +294,7 @@ function User_profile(data) {
     displayName = 'Anonymous';
   let x = document.getElementsByName("displayName");
   let i;
+  console.log(displayName);
   for (i = 0; i < x.length; i++)
     x.innerHTML = displayName;
 }`;
