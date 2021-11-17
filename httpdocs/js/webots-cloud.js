@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }]);
 
   function footer() {
+    console.log("footer");
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
