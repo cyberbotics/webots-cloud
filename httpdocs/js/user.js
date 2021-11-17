@@ -272,8 +272,6 @@ export default class User extends Router {
             .then(function(data) {
               console.log(data)
             });
-        });
-
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
