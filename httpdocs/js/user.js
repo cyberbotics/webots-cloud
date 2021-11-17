@@ -267,7 +267,7 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.innerHTML = 'function User_profile(data) { document.getElementById("display").innerHTML = data.entry[0].displayName; console.log(data); }';
+          script.innerHTML = 'function User_profile(data) { document.getElementById("display").innerHTML = data.entry[0].displayName; console.log(data); console.log(data.entry[0].displayName); }';
           head.appendChild(script);
           script = document.createElement('script');
           script.type = 'text/javascript';
