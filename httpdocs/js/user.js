@@ -269,7 +269,7 @@ export default class User extends Router {
       const email = findGetParameter('email');
       if (id && email) {
         that.email = email;
-        updateDisplayName();
+        that.updateDisplayName();
         resetPassword(id, token, email);
       }
     }
@@ -319,7 +319,7 @@ x[i].innerHTML = displayName;
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          updateDisplayName();
+          that.updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
