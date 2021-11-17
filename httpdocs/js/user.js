@@ -278,11 +278,12 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          const md5sum = md5(that.email.toLowerCase());
-          let head = document.getElementsByTagName('head')[0];
-          let script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.innerHTML = `let displayName = 'Anonymous';
+          if (typeof displayName === 'undefined') {
+            const md5sum = md5(that.email.toLowerCase());
+            let head = document.getElementsByTagName('head')[0];
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.innerHTML = `let displayName = 'Anonymous';
 function User_profile(data) {
   displayName = data.entry[0].displayName;
   if (!displayName)
@@ -298,11 +299,12 @@ function User_profile(data) {
   for (i = 0; i < x.length; i++)
     x[i].innerHTML = displayName;
 }`;
-          head.appendChild(script);
-          script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
-          head.appendChild(script);
+            head.appendChild(script);
+            script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
+            head.appendChild(script);
+          }
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
