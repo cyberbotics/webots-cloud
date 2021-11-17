@@ -305,7 +305,7 @@ function User_profile(data) {
 }`;
             head.appendChild(script);
           } else
-            User_profile(null);
+            User_profile();
           let gq = document.getElementById('gravatar-query');
           if (gq)
             gq.remove();
