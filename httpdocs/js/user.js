@@ -201,7 +201,7 @@ export default class User extends Router {
   <div class="container panel">
     <p class="panel-heading">Gravatar settings</p>
     <div class="panel-block">
-      <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48">
+      <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48"> &nbsp;
       <span name="displayName">Anonymous</span>
     </div>
     <div class="panel-block">
@@ -294,7 +294,6 @@ function User_profile(data) {
     displayName = 'Anonymous';
   let x = document.getElementsByName("displayName");
   let i;
-  console.log(displayName, x.length);
   for (i = 0; i < x.length; i++)
     x[i].innerHTML = displayName;
 }`;
