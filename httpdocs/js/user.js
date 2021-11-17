@@ -264,7 +264,7 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          md5sum = md5(that.email);
+          const md5sum = md5(that.email);
           fetch(`https://www.gravatar.com/avatar/${md5sum}.json`, { method: 'post' })
             .then(function(response) {
               return response.json();
