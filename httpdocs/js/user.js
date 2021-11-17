@@ -189,6 +189,7 @@ export default class User extends Router {
       if (!that.password || !that.email)
         return false;
       const template = document.createElement('template');
+      md5sum = md5(that.email.toLowerCase());
       template.innerHTML =
 `<section class="section">
   <div class="container">
@@ -197,6 +198,15 @@ export default class User extends Router {
   </div>
 </section>
 <section class="section" style="margin-top:0;padding-top:0">
+  <div class="container panel">
+    <p class="panel-heading">Gravatar settings</p>
+    <div class="panel-block">
+      Create or update your picture and information at <a href="https://www.gravatar.com/${md5sum}" target="_blank">gravatar</a>.
+    </div>
+    <div class="panel-block">
+      <button class="button is-link" id="">Change password</button>
+    </div>
+  </div>
   <div class="container panel">
     <p class="panel-heading">Change password</p>
     <div class="panel-block">
