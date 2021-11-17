@@ -1,6 +1,6 @@
 import ModalDialog from './modal_dialog.js';
 import Router from './router.js';
-import './md5.min.js';
+import md5 from './md5.min.js';
 
 export default class User extends Router {
   constructor(title, footer, routes) {
