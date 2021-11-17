@@ -263,6 +263,7 @@ export default class User extends Router {
       });
     }
     that.load();
+    console.log("loading...");
     // account creation: entering the password
     const token = findGetParameter('token');
     if (token) {
