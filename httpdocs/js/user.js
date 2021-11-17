@@ -262,6 +262,7 @@ export default class User extends Router {
         });
       });
     }
+    this.load();
     // account creation: entering the password
     const token = findGetParameter('token');
     if (token) {
