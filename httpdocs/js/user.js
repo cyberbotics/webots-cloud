@@ -190,6 +190,7 @@ export default class User extends Router {
         return false;
       const template = document.createElement('template');
       const md5sum = md5(that.email.toLowerCase());
+      const hostname = document.location.hostname;
       template.innerHTML =
 `<section class="section">
   <div class="container">
@@ -201,7 +202,7 @@ export default class User extends Router {
   <div class="container panel">
     <p class="panel-heading">Gravatar Profile</p>
     <div class="panel-block">
-      <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=80"> &nbsp;
+      <img src="https://www.gravatar.com/avatar/${md5sum}0?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
       <span name="displayName">Anonymous</span>
     </div>
     <div class="panel-block">
