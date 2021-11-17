@@ -201,7 +201,7 @@ export default class User extends Router {
   <div class="container panel">
     <p class="panel-heading">Gravatar Profile</p>
     <div class="panel-block">
-      <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48"> &nbsp;
+      <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=80"> &nbsp;
       <span name="displayName">Anonymous</span>
     </div>
     <div class="panel-block">
