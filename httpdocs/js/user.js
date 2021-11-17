@@ -199,7 +199,7 @@ export default class User extends Router {
 </section>
 <section class="section" style="margin-top:0;padding-top:0">
   <div class="container panel">
-    <p class="panel-heading">Gravatar settings</p>
+    <p class="panel-heading">Gravatar Profile</p>
     <div class="panel-block">
       <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48"> &nbsp;
       <span name="displayName">Anonymous</span>
@@ -208,16 +208,16 @@ export default class User extends Router {
       <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
     </div>
     <div class="panel-block">
-      <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar profile</a>
+      <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
     </div>
   </div>
   <div class="container panel">
-    <p class="panel-heading">Change password</p>
+    <p class="panel-heading">Change Password</p>
     <div class="panel-block">
       We will send you a e-mail with a link to reset your password.
     </div>
     <div class="panel-block">
-      <button class="button is-link" id="change-password">Change password</button>
+      <button class="button is-link" id="change-password">Change Password</button>
     </div>
   </div>
   <div class="container panel">
@@ -226,7 +226,7 @@ export default class User extends Router {
       <i class="fas fa-exclamation-triangle"></i> &nbsp; Once you delete your account, there is no going back. Please be certain.
     </div>
     <div class="panel-block">
-      <button class="button is-danger" id="delete-account">Delete my account</button>
+      <button class="button is-danger" id="delete-account">Delete my Account</button>
     </div>
   </div>
 </section>`;
