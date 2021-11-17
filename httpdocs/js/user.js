@@ -306,7 +306,7 @@ function User_profile(data) {
           let gq = document.getElementById('gravatar-query');
           if (gq)
             gq.remove();
-          script = document.createElement('script');
+          let script = document.createElement('script');
           script.id = 'gravatar-query';
           script.type = 'text/javascript';
           script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
