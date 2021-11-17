@@ -283,7 +283,7 @@ export default class User extends Router {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
-    md5sum = md5(this.email);
+    const md5sum = md5(this.email);
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
