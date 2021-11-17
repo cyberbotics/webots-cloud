@@ -267,7 +267,18 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.innerHTML = 'function User_profile(data) { document.getElementById("display").innerHTML = data.entry[0].displayName; }';
+          script.innerHTML = `function User_profile(data) {
+  let displayName = data.entry[0].displayName;
+  if (!displayName)
+    displayName = data.entry[0].name.formatted;
+  if (!displayName)
+    displayName = data.entry[0].name.givenName;
+  if (!displayName)
+    displayName = data.entry[0].name.familyName;
+  if (!displayName)
+    displayName = 'Anonymous';
+  document.getElementById("display").innerHTML = data.entry[0].displayName;
+}`;
           head.appendChild(script);
           script = document.createElement('script');
           script.type = 'text/javascript';
