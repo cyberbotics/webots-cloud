@@ -480,8 +480,8 @@ document.addEventListener('DOMContentLoaded', function() {
     project.setup('simulation', [], simulation.content(), true);
     simulation.run();
   }
-  
-  function deleteAnimation(id) {
-    console.log("Delete Animation " + id);
+
+  function deleteAnimation(event) {
+    console.log("Delete Animation " + event.target.id);
   }
 });
