@@ -246,7 +246,7 @@ export default class User extends Router {
         });
       });
     }
-    this.load();
+    // this.load();
     // account creation: entering the password
     const token = findGetParameter('token');
     if (token) {
@@ -479,10 +479,8 @@ export default class User extends Router {
             document.querySelector('#user-menu').style.display = 'flex';
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
-            if (reload) {  // the page content may need to be updated after loging in.
-              console.log('reload');
+            if (reload)  // the page content may need to be updated after loging in.
               that.load();
-            }
             if (success)
               success();
           }
