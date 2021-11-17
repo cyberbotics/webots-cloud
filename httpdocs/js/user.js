@@ -279,8 +279,8 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
+          const md5sum = md5(that.email.toLowerCase());
           if (typeof displayName === 'undefined') {
-            const md5sum = md5(that.email.toLowerCase());
             let head = document.getElementsByTagName('head')[0];
             let script = document.createElement('script');
             script.type = 'text/javascript';
