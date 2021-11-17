@@ -1,5 +1,6 @@
 import ModalDialog from './modal_dialog.js';
 import Router from './router.js';
+import md5 from './md5.min.js';
 
 export default class User extends Router {
   constructor(title, footer, routes) {
@@ -281,6 +282,7 @@ export default class User extends Router {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
+    md5sum = md5(this.email);
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
@@ -293,7 +295,7 @@ export default class User extends Router {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email">user</a>
+  <a class="navbar-link" id="email"><img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
