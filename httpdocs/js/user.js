@@ -256,12 +256,10 @@ export default class User extends Router {
     }
   }
   load(page = null, pushHistory = true) {
-    console.log("load " + page + " " + pushHistory);
     let that = this;
     super.load(page, pushHistory).then(() => {
       if (document.querySelector('#user-menu')) {
         if (that.email && that.password) {
-          console.log("coucou");
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
@@ -270,7 +268,7 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.src = `https://www.gravatar.com/${md5sum}.json?callback=console.log}`;
+          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User.profile}`;
           head.appendChild(script);
         } else {
           document.querySelector('#user-menu').style.display = 'none';
@@ -281,6 +279,9 @@ export default class User extends Router {
           that.login();
       }
     });
+  }
+  profile(data) {
+    console.log(data);
   }
   setup(title, anchors, content, fullpage = false) {
     super.setup(title, anchors, content, fullpage);
