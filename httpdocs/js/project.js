@@ -3,6 +3,7 @@ import User from './user.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
+    console.log("Project constructor...");
     super(title, footer, routes);
     this.load();
   }
