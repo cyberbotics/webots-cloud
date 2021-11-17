@@ -286,14 +286,17 @@ export default class User extends Router {
             script.type = 'text/javascript';
             script.innerHTML = `let displayName = 'Anonymous';
 function User_profile(data) {
-  displayName = data.entry[0].displayName;
-  if (!displayName)
-    displayName = data.entry[0].name.formatted;
-  if (!displayName)
-    displayName = data.entry[0].name.givenName;
-  if (!displayName)
-    displayName = data.entry[0].name.familyName;
-  if (!displayName)
+  if (data && data.entry && data.entry[0])
+    displayName = data.entry[0].displayName;
+    if (!displayName)
+      displayName = data.entry[0].name.formatted;
+    if (!displayName)
+      displayName = data.entry[0].name.givenName;
+    if (!displayName)
+      displayName = data.entry[0].name.familyName;
+    if (!displayName)
+      displayName = 'Anonymous';
+  } else
     displayName = 'Anonymous';
   let x = document.getElementsByName("displayName");
   let i;
@@ -302,7 +305,7 @@ function User_profile(data) {
 }`;
             head.appendChild(script);
           } else
-            displayName = 'Anonymous';
+            User_profile(null);
           let gq = document.getElementById('gravatar-query');
           if (gq)
             gq.remove();
