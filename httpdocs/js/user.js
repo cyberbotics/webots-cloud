@@ -294,9 +294,9 @@ function User_profile(data) {
     displayName = 'Anonymous';
   let x = document.getElementsByName("displayName");
   let i;
-  console.log(displayName);
+  console.log(displayName, x.length);
   for (i = 0; i < x.length; i++)
-    x.innerHTML = displayName;
+    x[i].innerHTML = displayName;
 }`;
           head.appendChild(script);
           script = document.createElement('script');
