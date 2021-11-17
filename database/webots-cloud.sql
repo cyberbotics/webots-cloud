@@ -7,7 +7,7 @@ CREATE TABLE `animation` (
   `duration` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `viewed` int (11) NOT NULL,
-  `owner` int(11) NOT NULL
+  `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `animation`

@@ -25,7 +25,7 @@
   if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     $link .= 's';
   $link .= '://' . $_SERVER['SERVER_NAME'] . "/?id=$id&token=$token&email=$email";
-  $subject = "SimGait password reset";
+  $subject = "webots.cloud password reset";
   $message = "<html><head><title>$subject</title></head>"
            . "<body><p>Hello,</p><p>Please click on this <a href=\"$link\">link</a> to set a new password to "
            . "you account.</p>"
