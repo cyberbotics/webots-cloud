@@ -286,7 +286,7 @@ export default class User extends Router {
             script.type = 'text/javascript';
             script.innerHTML = `let displayName = 'Anonymous';
 function User_profile(data) {
-  if (data && data.entry && data.entry[0])
+  if (data && data.entry && data.entry[0]) {
     displayName = data.entry[0].displayName;
     if (!displayName)
       displayName = data.entry[0].name.formatted;
