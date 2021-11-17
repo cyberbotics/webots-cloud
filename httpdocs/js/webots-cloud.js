@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const delete_icon = '';
-      console.log("that.email = " + project.email + " - data.user = " + data.user);
+      console.log("that.id = " + project.id + " - data.user = " + data.user);
       const row =
         `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
