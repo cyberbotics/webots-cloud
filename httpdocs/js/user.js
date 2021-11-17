@@ -275,6 +275,7 @@ export default class User extends Router {
     let that = this;
     super.load(page, pushHistory).then(() => {
       if (document.querySelector('#user-menu')) {
+        console.log('#user-menu');
         if (that.email && that.password) {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
