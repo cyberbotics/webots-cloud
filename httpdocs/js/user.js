@@ -204,7 +204,7 @@ export default class User extends Router {
       <p>Create or update your picture and information on <a href="https://www.gravatar.com/${md5sum}" target="_blank">gravatar</a>.</p>
     </div>
     <div class="panel-block">
-      <a class="button is-link" href="https://www.gravatar.com/${md5sum}">Gravatar profile</a>
+      <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar profile</a>
     </div>
   </div>
   <div class="container panel">
