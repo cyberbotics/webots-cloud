@@ -191,6 +191,7 @@ export default class User extends Router {
       const template = document.createElement('template');
       const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
+      const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
       template.innerHTML =
 `<section class="section">
   <div class="container">
@@ -203,7 +204,7 @@ export default class User extends Router {
     <p class="panel-heading">Gravatar Profile</p>
     <div class="panel-block">
       <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
-      <span name="displayName">Anonymous</span>
+      <span name="displayName">${name}</span>
     </div>
     <div class="panel-block">
       <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
@@ -325,6 +326,7 @@ function User_profile(data) {
     div.setAttribute('class', 'navbar-end');
     const md5sum = md5(this.email.toLowerCase());
     const hostname = document.location.hostname;
+    const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
@@ -337,7 +339,7 @@ function User_profile(data) {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email"><span name="displayName">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
+  <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
