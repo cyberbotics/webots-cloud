@@ -4,6 +4,7 @@ import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
+  console.log("Hello world");
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -15,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }]);
 
   function footer() {
-    console.log("footer");
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
