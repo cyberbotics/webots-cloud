@@ -189,7 +189,7 @@ export default class User extends Router {
       if (!that.password || !that.email)
         return false;
       const template = document.createElement('template');
-      md5sum = md5(that.email.toLowerCase());
+      const md5sum = md5(that.email.toLowerCase());
       template.innerHTML =
 `<section class="section">
   <div class="container">
