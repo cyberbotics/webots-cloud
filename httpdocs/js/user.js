@@ -301,11 +301,16 @@ function User_profile(data) {
     x[i].innerHTML = displayName;
 }`;
             head.appendChild(script);
-            script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
-            head.appendChild(script);
-          }
+          } else
+            displayName = 'Anonymous';
+          let gq = document.getElementById('gravatar-query');
+          if (gq)
+            gq.remove();
+          script = document.createElement('script');
+          script.id = 'gravatar-query';
+          script.type = 'text/javascript';
+          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
+          head.appendChild(script);
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
