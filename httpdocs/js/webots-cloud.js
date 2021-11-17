@@ -69,8 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
-      const delete_icon = (data.user > 0 && project.id == data.user) ? '<i class="far fa-trash-alt"></i>' : '';
-      console.log("that.id = " + project.id + " - data.user = " + data.user);
+      const delete_icon = (data.user > 0 && project.id == data.user) ? `<i class="far fa-trash-alt" id="animation-${data.id}" title="Delete this animation"></i>` : '';
       const row =
         `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
@@ -314,8 +313,9 @@ document.addEventListener('DOMContentLoaded', function() {
               console.log('answer: ' + JSON.stringify(data));
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
-              document.querySelector('section[data-content="animations"] > div > table > tbody').insertAdjacentHTML(
-                'beforeend', tr);
+              let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
+              parent.insertAdjacentHTML('beforeend', tr);
+              parent.querySelector('#animation-' + data.id).addEventListener('click', deleteAnimation);
             }
           });
       });
@@ -331,7 +331,10 @@ document.addEventListener('DOMContentLoaded', function() {
           let line = ``;
           for (let i = 0; i < data.length; i++)
             line += '<tr>' + animationRow(data[i]) + '</tr>';
-          project.content.querySelector('section[data-content="animations"] > div > table > tbody').innerHTML = line;
+          let parent = project.content.querySelector('section[data-content="animations"] > div > table > tbody');
+          parent.innerHTML = line;
+          for (let i = 0; i < data.length; i++)
+            parent.querySelector('#animation-' + data[i].id).addEventListener('click', deleteAnimation);
         }
       });
 
@@ -478,3 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
     simulation.run();
   }
 });
+
+function deleteAnimation(id) {
+  console.log("Delete Animation " + id);
+}
