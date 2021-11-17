@@ -315,7 +315,7 @@ export default class User extends Router {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email"><span id="display">Anonymous</span> <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
+  <a class="navbar-link" id="email"><span id="display">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
