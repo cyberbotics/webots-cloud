@@ -479,8 +479,10 @@ export default class User extends Router {
             document.querySelector('#user-menu').style.display = 'flex';
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
-            if (reload) // the page content may need to be updated after loging in.
+            if (reload) {  // the page content may need to be updated after loging in.
+              console.log('reload');
               that.load();
+            }
             if (success)
               success();
           }
