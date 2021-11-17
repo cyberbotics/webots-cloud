@@ -268,7 +268,7 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User.profile}`;
+          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
           head.appendChild(script);
         } else {
           document.querySelector('#user-menu').style.display = 'none';
@@ -279,9 +279,6 @@ export default class User extends Router {
           that.login();
       }
     });
-  }
-  profile(data) {
-    console.log(data);
   }
   setup(title, anchors, content, fullpage = false) {
     super.setup(title, anchors, content, fullpage);
@@ -528,4 +525,8 @@ export default class User extends Router {
     else
       window.localStorage.setItem('password', value);
   }
+}
+
+function User_profile(data) {
+  console.log(data);
 }
