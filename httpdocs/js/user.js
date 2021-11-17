@@ -526,6 +526,7 @@ x[i].innerHTML = displayName;
             that.email = '!';
             that.load('/');
           } else {
+            that.id = data.id;
             document.querySelector('#user-menu').style.display = 'flex';
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
