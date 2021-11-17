@@ -189,7 +189,7 @@ export default class User extends Router {
       if (!that.password || !that.email)
         return false;
       const template = document.createElement('template');
-      const md5sum = md5(that.email.toLowerCase() + "k");
+      const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
       template.innerHTML =
 `<section class="section">
@@ -322,6 +322,7 @@ function User_profile(data) {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
     const md5sum = md5(this.email.toLowerCase());
+    const hostname = document.location.hostname;
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
@@ -334,7 +335,7 @@ function User_profile(data) {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email"><span name="displayName">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
+  <a class="navbar-link" id="email"><span name="displayName">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
