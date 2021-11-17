@@ -265,13 +265,12 @@ export default class User extends Router {
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
           const md5sum = md5(that.email);
-          fetch(`https://www.gravatar.com/${md5sum}.json`, { method: 'post', mode: 'cors' })
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              console.log(data)
-            });
+          `<script type="text/javascript" src=""></script>`
+          let head = document.getElementsByTagName('head')[0];
+          let script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = `https://www.gravatar.com/${md5sum}.json?callback=alert`;
+          head.appendChild(script);
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
