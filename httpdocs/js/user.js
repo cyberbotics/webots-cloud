@@ -264,6 +264,16 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
+          md5sum = md5(that.email);
+          fetch(`https://www.gravatar.com/avatar/${md5sum}.json`, { method: 'post' })
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              console.log(data)
+            });
+        });
+
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
@@ -295,7 +305,7 @@ export default class User extends Router {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email">Anonymous <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
+  <a class="navbar-link" id="email"><span id="display">Anonymous</span> <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
