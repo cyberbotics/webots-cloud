@@ -273,7 +273,9 @@ export default class User extends Router {
   }
   load(page = null, pushHistory = true) {
     let that = this;
+    console.log('load page');
     super.load(page, pushHistory).then(() => {
+      console.log('super load page');
       if (document.querySelector('#user-menu')) {
         console.log('#user-menu');
         if (that.email && that.password) {
