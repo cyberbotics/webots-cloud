@@ -292,7 +292,7 @@ function User_profile(data) {
     displayName = data.entry[0].name.familyName;
   if (!displayName)
     displayName = 'Anonymous';
-  let x = document.getElementByName("displayName");
+  let x = document.getElementsByName("displayName");
   let i;
   for (i = 0; i < x.length; i++)
     x.innerHTML = displayName;
