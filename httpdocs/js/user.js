@@ -358,6 +358,7 @@ function User_profile(data) {
 
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
+      that.email = null;
       if (window.location.pathname === '/settings')
         that.load('/');
       else
