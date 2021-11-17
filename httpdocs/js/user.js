@@ -267,8 +267,10 @@ export default class User extends Router {
     if (token) {
       const id = findGetParameter('id');
       const email = findGetParameter('email');
-      if (id && email)
+      if (id && email) {
+        that.email = email;
         resetPassword(id, token, email);
+      }
     }
   }
   load(page = null, pushHistory = true) {
