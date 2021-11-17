@@ -332,7 +332,7 @@ function User_profile(data) {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
-    const md5sum = md5(this.email.toLowerCase());
+    const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
     div.innerHTML =
