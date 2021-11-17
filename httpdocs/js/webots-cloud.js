@@ -4,8 +4,7 @@ import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
-  console.log("Hello world");
-  Project.run('webots.cloud', footer(), [
+  Project.run('beta.webots.cloud', footer(), [
     {
       url: '/',
       setup: homePage
