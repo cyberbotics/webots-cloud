@@ -269,7 +269,7 @@ export default class User extends Router {
           let head = document.getElementsByTagName('head')[0];
           let script = document.createElement('script');
           script.type = 'text/javascript';
-          script.src = `https://www.gravatar.com/${md5sum}.json?callback=alert`;
+          script.src = `https://www.gravatar.com/${md5sum}.json?callback=function(data){console.log(data);}`;
           head.appendChild(script);
         } else {
           document.querySelector('#user-menu').style.display = 'none';
