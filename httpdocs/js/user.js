@@ -202,7 +202,7 @@ export default class User extends Router {
     <p class="panel-heading">Gravatar settings</p>
     <div class="panel-block">
       <img src="https://www.gravatar.com/avatar/${md5sum}.jpg?s=48">
-      ${displayName}
+      <span name="displayName">Anonymous</span>
     </div>
     <div class="panel-block">
       <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
@@ -292,7 +292,10 @@ function User_profile(data) {
     displayName = data.entry[0].name.familyName;
   if (!displayName)
     displayName = 'Anonymous';
-  document.getElementById("display").innerHTML = displayName;
+  let x = document.getElementByName("displayName");
+  let i;
+  for (i = 0; i < x.length; i++)
+    x.innerHTML = displayName;
 }`;
           head.appendChild(script);
           script = document.createElement('script');
@@ -330,7 +333,7 @@ function User_profile(data) {
   </div>
 </div>
 <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email"><span id="display">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
+  <a class="navbar-link" id="email"><span name="displayName">Anonymous</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}.jpg"></a>
   <div class="navbar-dropdown is-boxed">
     <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
     <a class="navbar-item" href="/${this.email}" id="projects"><i class="fas fa-folder"> &nbsp; </i>Projects</a>
