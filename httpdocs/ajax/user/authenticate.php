@@ -15,7 +15,7 @@
   $mysqli->set_charset('utf8');
   $email = $mysqli->escape_string($data->{'email'});
   $password = $mysqli->escape_string($data->{'password'});
-  $result = $mysqli->query("SELECT password FROM user WHERE email=\"$email\"")
+  $result = $mysqli->query("SELECT id, password FROM user WHERE email=\"$email\"")
     or error($mysqli->error);
   $user = $result->fetch_assoc();
   $result->free();
@@ -23,5 +23,5 @@
     error("This e-mail address is not registered. $email");
   if ($user['password'] != $password)
     error("The password you entered is wrong.");
-  die("{\"status\": 1}");
+  die("{\"id\": $user[id]}");
  ?>
