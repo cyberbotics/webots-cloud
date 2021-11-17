@@ -269,9 +269,47 @@ export default class User extends Router {
       const email = findGetParameter('email');
       if (id && email) {
         that.email = email;
+        updateDisplayName();
         resetPassword(id, token, email);
       }
     }
+  }
+  updateDisplayName() {
+    const md5sum = md5(that.email.toLowerCase());
+    let head = document.getElementsByTagName('head')[0];
+    if (typeof displayName === 'undefined') {
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.innerHTML = `let displayName = 'Anonymous';
+function User_profile(data) {
+if (data && data.entry && data.entry[0]) {
+displayName = data.entry[0].displayName;
+if (!displayName)
+displayName = data.entry[0].name.formatted;
+if (!displayName)
+displayName = data.entry[0].name.givenName;
+if (!displayName)
+displayName = data.entry[0].name.familyName;
+if (!displayName)
+displayName = 'Anonymous';
+} else
+displayName = 'Anonymous';
+let x = document.getElementsByName("displayName");
+let i;
+for (i = 0; i < x.length; i++)
+x[i].innerHTML = displayName;
+}`;
+      head.appendChild(script);
+    } else
+      User_profile();
+    let gq = document.getElementById('gravatar-query');
+    if (gq)
+      gq.remove();
+    let script = document.createElement('script');
+    script.id = 'gravatar-query';
+    script.type = 'text/javascript';
+    script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
+    head.appendChild(script);
   }
   load(page = null, pushHistory = true) {
     let that = this;
@@ -281,41 +319,7 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'flex';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          const md5sum = md5(that.email.toLowerCase());
-          let head = document.getElementsByTagName('head')[0];
-          if (typeof displayName === 'undefined') {
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.innerHTML = `let displayName = 'Anonymous';
-function User_profile(data) {
-  if (data && data.entry && data.entry[0]) {
-    displayName = data.entry[0].displayName;
-    if (!displayName)
-      displayName = data.entry[0].name.formatted;
-    if (!displayName)
-      displayName = data.entry[0].name.givenName;
-    if (!displayName)
-      displayName = data.entry[0].name.familyName;
-    if (!displayName)
-      displayName = 'Anonymous';
-  } else
-    displayName = 'Anonymous';
-  let x = document.getElementsByName("displayName");
-  let i;
-  for (i = 0; i < x.length; i++)
-    x[i].innerHTML = displayName;
-}`;
-            head.appendChild(script);
-          } else
-            User_profile();
-          let gq = document.getElementById('gravatar-query');
-          if (gq)
-            gq.remove();
-          let script = document.createElement('script');
-          script.id = 'gravatar-query';
-          script.type = 'text/javascript';
-          script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
-          head.appendChild(script);
+          updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
