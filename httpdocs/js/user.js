@@ -256,6 +256,7 @@ export default class User extends Router {
                   '<p>Your account was successfully deleted.</p><p>All you data was erased.</p>');
                 that.password = null;
                 that.email = null;
+                that.id = null;
                 that.load('/');
               }
             });
@@ -366,6 +367,7 @@ x[i].innerHTML = displayName;
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
       that.email = null;
+      that.id = null;
       if (window.location.pathname === '/settings')
         that.load('/');
       else
