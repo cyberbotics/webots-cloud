@@ -491,10 +491,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     console.log("Delete amination " + animation + ' ' + project.id + ' ' + project.password);
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
-    /*
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+      /*
       let content = {
         method: 'post',
         body: JSON.stringify({
@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
           }
         });
+        */
     }
-    */
   }
 });
