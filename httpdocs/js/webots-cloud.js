@@ -333,6 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
             line += '<tr>' + animationRow(data[i]) + '</tr>';
           let parent = project.content.querySelector('section[data-content="animations"] > div > table > tbody');
           parent.innerHTML = line;
+          console.log("user = " + project.id + " " + project.email + " " + project.password);
           for (let i = 0; i < data.length; i++)
             parent.querySelector('#animation-' + data[i].id).addEventListener('click', deleteAnimation);
         }
