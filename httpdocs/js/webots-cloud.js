@@ -482,7 +482,37 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteAnimation(event) {
-    const id = parseInt(event.target.id.substring(10)); // skip 'animation-'
-    console.log("Delete amination " + id);
+    const that = this;
+    const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
+    console.log("Delete amination " + animation + ' ' + that.id + ' ' + that.password);
+    let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
+    dialog.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+      let content = {
+        method: 'post',
+        body: JSON.stringify({
+          animation: animation,
+          user: that.id,
+          password: that.password
+        })
+      };
+      fetch('ajax/animation/delete.php', content)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          dialog.close();
+          const old = event.target.parentNode.parentNode;
+          const parent = old.parentNode;
+          if (data.error) {
+            modal.error(data.error);
+          } else if (data.status == 1) {
+            parent.removeChild(old);
+            ModalDialog.run('Animation deleted',
+              '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
+          }
+        });
+      }
   }
 });
