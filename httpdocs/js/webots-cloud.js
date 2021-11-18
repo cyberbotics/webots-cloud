@@ -494,7 +494,6 @@ document.addEventListener('DOMContentLoaded', function() {
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      /*
       let content = {
         method: 'post',
         body: JSON.stringify({
@@ -519,7 +518,6 @@ document.addEventListener('DOMContentLoaded', function() {
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
           }
         });
-        */
-    }
+    });
   }
 });
