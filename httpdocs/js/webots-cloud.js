@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
               parent.insertAdjacentHTML('beforeend', tr);
               parent.querySelector('#animation-' + data.id).addEventListener('click', function(event) {
                 deleteAnimation(event, project));
-              }
+              });
             }
           });
       });
