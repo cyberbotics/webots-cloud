@@ -307,14 +307,12 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         fetch('/ajax/animation/create.php', content)
           .then(function(response) {
-            console.log(response);
             return response.json();
           })
           .then(function(data) {
             if (data.error)
               modal.error(data.error);
             else {
-              console.log('answer: ' + JSON.stringify(data));
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
               let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
@@ -339,7 +337,6 @@ document.addEventListener('DOMContentLoaded', function() {
             line += '<tr>' + animationRow(data[i]) + '</tr>';
           let parent = project.content.querySelector('section[data-content="animations"] > div > table > tbody');
           parent.innerHTML = line;
-          console.log("user = " + project.id + " " + project.email + " " + project.password);
           for (let i = 0; i < data.length; i++) {
             let node = parent.querySelector('#animation-' + data[i].id);
             if (node)
@@ -494,7 +491,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function deleteAnimation(event, project) {
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
-    console.log("Delete amination " + animation + ' ' + project.id + ' ' + project.password);
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -507,14 +503,14 @@ document.addEventListener('DOMContentLoaded', function() {
           password: project.password
         })
       };
+      const old = event.target.parentNode.parentNode;
+      const parent = old.parentNode;
       fetch('ajax/animation/delete.php', content)
         .then(function(response) {
           return response.json();
         })
         .then(function(data) {
           dialog.close();
-          const old = event.target.parentNode.parentNode;
-          const parent = old.parentNode;
           if (data.error)
             modal.error(data.error);
           else if (data.status == 1) {
