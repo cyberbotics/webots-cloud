@@ -514,7 +514,9 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             modal.error(data.error);
           else if (data.status == 1) {
-            parent.removeChild(old);
+            // parent.removeChild(old);
+            console.log('parent = ' + parent);
+            console.log('old = ' + old);
             ModalDialog.run('Animation deleted',
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
           }
