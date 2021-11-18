@@ -310,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         fetch('/ajax/animation/create.php', content)
           .then(function(response) {
+            console.log(response);
             return response.json();
           })
           .then(function(data) {
