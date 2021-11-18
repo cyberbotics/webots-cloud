@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          dialog.close();
+          //dialog.close();
           if (data.error)
             modal.error(data.error);
           else if (data.status == 1)
