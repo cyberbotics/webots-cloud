@@ -318,8 +318,10 @@ document.addEventListener('DOMContentLoaded', function() {
               let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
               parent.insertAdjacentHTML('beforeend', tr);
               let node = parent.querySelector('#animation-' + data.id);
-              if (node)
+              if (node) {
+                console.log("Added event listener");
                 addEventListener('click', function(event) { deleteAnimation(event, project); });
+              }
             }
           });
       });
