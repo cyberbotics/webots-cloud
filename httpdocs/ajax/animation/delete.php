@@ -29,7 +29,7 @@ $animation = intval($data->animation);
 $password = $mysqli->escape_string($data->password);
 $query = "DELETE FROM animation WHERE user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\")";
 $mysqli->query($query) or error($mysqli->error);
-if ($mysql->affected_rows === 0)
+if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 require '../../../php/mysql_id_string.php';
 $path = '../storage/A' . mysql_id_to_string($animation);
