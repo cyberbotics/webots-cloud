@@ -315,7 +315,9 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
               let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
               parent.insertAdjacentHTML('beforeend', tr);
-              parent.querySelector('#animation-' + data.id).addEventListener('click', deleteAnimation);
+              parent.querySelector('#animation-' + data.id).addEventListener('click', function(event) {
+                deleteAnimation(event, project));
+              }
             }
           });
       });
@@ -335,7 +337,9 @@ document.addEventListener('DOMContentLoaded', function() {
           parent.innerHTML = line;
           console.log("user = " + project.id + " " + project.email + " " + project.password);
           for (let i = 0; i < data.length; i++)
-            parent.querySelector('#animation-' + data[i].id).addEventListener('click', deleteAnimation);
+            parent.querySelector('#animation-' + data[i].id).addEventListener('click', function(event) {
+              deleteAnimation(event, project);
+            });
         }
       });
 
@@ -482,10 +486,10 @@ document.addEventListener('DOMContentLoaded', function() {
     simulation.run();
   }
 
-  function deleteAnimation(event) {
+  function deleteAnimation(event, project) {
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
-    console.log("Delete amination " + animation + ' ' + that.id + ' ' + that.password);
+    console.log("Delete amination " + animation + ' ' + project.id + ' ' + project.password);
     /*
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
