@@ -498,8 +498,8 @@ document.addEventListener('DOMContentLoaded', function() {
         method: 'post',
         body: JSON.stringify({
           animation: animation,
-          user: that.id,
-          password: that.password
+          user: project.id,
+          password: project.password
         })
       };
       fetch('ajax/animation/delete.php', content)
