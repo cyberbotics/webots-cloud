@@ -490,6 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteAnimation(event, project) {
     console.log("deleteAnimation");
+    event.preventDefault();
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
