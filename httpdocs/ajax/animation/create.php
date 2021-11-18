@@ -46,9 +46,7 @@
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
-  $json = file_get_contents('php://input');
-  $data = json_decode($json);
-  $user = intval($data->user);
+  $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
   header('Content-Type: application/json');
 
   // determine title
