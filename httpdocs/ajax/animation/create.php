@@ -120,6 +120,7 @@
   }
 
   $answer = array();
+  $answer['id'] = $mysqli->insert_id;
   $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
   $answer['description'] = $description;
