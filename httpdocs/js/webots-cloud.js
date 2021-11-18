@@ -298,9 +298,13 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        let data = new FormData(this); // new FormData(modal.querySelector('form'))
+        data.append('user', project.id);
+        data.append('password', project.password);
+        console.log(data);
         const content = {
           method: 'post',
-          body: new FormData(modal.querySelector('form'))
+          body: data
         };
         fetch('/ajax/animation/create.php', content)
           .then(function(response) {
