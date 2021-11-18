@@ -32,7 +32,7 @@ $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 require '../../../php/mysql_id_string.php';
-$path = '../storage/A' . mysql_id_to_string($animation);
+$path = '../../storage/A' . mysql_id_to_string($animation);
 rrmdir($path);
 die("{\"status\":1}");
 ?>

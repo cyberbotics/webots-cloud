@@ -46,6 +46,9 @@
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
+  $json = file_get_contents('php://input');
+  $data = json_decode($json);
+  $user = intval($json.data);
   header('Content-Type: application/json');
 
   // determine title
@@ -86,7 +89,7 @@
   $mysqli->set_charset('utf8');
   $escaped_title = $mysqli->escape_string($title);
   $escaped_description = $mysqli->escape_string($description);
-  $query = "INSERT INTO animation(title, description, duration, size) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size)";
+  $query = "INSERT INTO animation(title, description, duration, size, user) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size, $user)";
   $mysqli->query($query) or error($mysqli->error);
 
   // save files in new folder
