@@ -482,6 +482,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteAnimation(event) {
-    console.log("Delete Animation " + event.target.id);
+    const id = parseInt(event.target.id.substring(10)); // skip 'animation-'
+    console.log("Delete amination " + id);
   }
 });
