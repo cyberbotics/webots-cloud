@@ -489,6 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteAnimation(event, project) {
+    console.log("deleteAnimation");
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
@@ -514,15 +515,9 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             modal.error(data.error);
           else if (data.status == 1) {
-            console.log("parent");
-            console.log(parent);
-            console.log("old");
-            console.log(old);
             parent.removeChild(old);
-            /*
             ModalDialog.run('Animation deleted',
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
-            */
           }
         });
     });
