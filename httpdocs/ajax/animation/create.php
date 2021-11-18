@@ -48,7 +48,7 @@
     $size += $_FILES['textures']['size'][$i];
   $json = file_get_contents('php://input');
   $data = json_decode($json);
-  $user = intval($json.data);
+  $user = intval($data->user);
   header('Content-Type: application/json');
 
   // determine title
