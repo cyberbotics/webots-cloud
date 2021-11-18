@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
               let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
               parent.insertAdjacentHTML('beforeend', tr);
               parent.querySelector('#animation-' + data.id).addEventListener('click', function(event) {
-                deleteAnimation(event, project));
+                deleteAnimation(event, project);
               });
             }
           });
