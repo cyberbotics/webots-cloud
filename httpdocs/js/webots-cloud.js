@@ -315,9 +315,9 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
               let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
               parent.insertAdjacentHTML('beforeend', tr);
-              parent.querySelector('#animation-' + data.id).addEventListener('click', function(event) {
-                deleteAnimation(event, project);
-              });
+              let node = parent.querySelector('#animation-' + data.id);
+              if (node)
+                addEventListener('click', function(event) { deleteAnimation(event, project); });
             }
           });
       });
@@ -336,10 +336,11 @@ document.addEventListener('DOMContentLoaded', function() {
           let parent = project.content.querySelector('section[data-content="animations"] > div > table > tbody');
           parent.innerHTML = line;
           console.log("user = " + project.id + " " + project.email + " " + project.password);
-          for (let i = 0; i < data.length; i++)
-            parent.querySelector('#animation-' + data[i].id).addEventListener('click', function(event) {
-              deleteAnimation(event, project);
-            });
+          for (let i = 0; i < data.length; i++) {
+            let node = parent.querySelector('#animation-' + data[i].id);
+            if (node)
+              node.addEventListener('click', function(event) { deleteAnimation(event, project); });
+          }
         }
       });
 
