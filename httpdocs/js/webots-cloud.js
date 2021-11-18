@@ -505,14 +505,14 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           const old = event.target.parentNode.parentNode;
           const parent = old.parentNode;
-          if (data.error) {
+          if (data.error)
             modal.error(data.error);
-          } else if (data.status == 1) {
+          else if (data.status == 1) {
             parent.removeChild(old);
             ModalDialog.run('Animation deleted',
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
           }
         });
-      }
+    }
   }
 });
