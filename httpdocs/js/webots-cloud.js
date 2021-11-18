@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
               parent.insertAdjacentHTML('beforeend', tr);
               let node = parent.querySelector('#animation-' + data.id);
               if (node)
-                addEventListener('click', function(event) { event.preventDefault(); deleteAnimation(event, project); });
+                addEventListener('click', function(event) { deleteAnimation(event, project); });
             }
           });
       });
@@ -490,7 +490,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteAnimation(event, project) {
     console.log("deleteAnimation");
-    event.preventDefault();
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
@@ -498,6 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const parent = old.parentNode;
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
+      return;
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
       let content = {
         method: 'post',
@@ -515,11 +515,8 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           if (data.error)
             modal.error(data.error);
-          else if (data.status == 1) {
+          else if (data.status == 1)
             parent.removeChild(old);
-            ModalDialog.run('Animation deleted',
-              '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
-          }
         });
     });
   }
