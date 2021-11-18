@@ -55,9 +55,6 @@ export default class ModalDialog extends HTMLElement {
     document.querySelector('html').classList.remove('is-clipped');
     document.removeEventListener('keydown', ModalDialog.closeEvent);
     ModalDialog.current = null;
-    let old_element = this.querySelector('form');
-    let new_element = old_element.cloneNode(true);
-    old_element.parentNode.replaceChild(new_element, old_element);
     this.remove();
   }
   error(message) {

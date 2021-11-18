@@ -497,7 +497,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const parent = old.parentNode;
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
-      return;
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
       let content = {
         method: 'post',
