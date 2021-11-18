@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
           password: project.password
         })
       };
-      const old = event.target.parentNode.parentNode;
+      const old = event.target.parentNode;
       const parent = old.parentNode;
       fetch('ajax/animation/delete.php', content)
         .then(function(response) {
