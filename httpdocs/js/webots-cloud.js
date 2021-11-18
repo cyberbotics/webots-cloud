@@ -514,13 +514,15 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             modal.error(data.error);
           else if (data.status == 1) {
-            // parent.removeChild(old);
             console.log("parent");
             console.log(parent);
             console.log("old");
             console.log(old);
+            parent.removeChild(old);
+            /*
             ModalDialog.run('Animation deleted',
               '<p>Your animation was successfully deleted.</p><p>All data about it was erased.</p>');
+            */
           }
         });
     });
