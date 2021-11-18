@@ -490,8 +490,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     console.log("Delete amination " + animation + ' ' + project.id + ' ' + project.password);
-    /*
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
+    /*
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
