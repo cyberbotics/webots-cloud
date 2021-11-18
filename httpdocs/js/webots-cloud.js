@@ -301,9 +301,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let body = new FormData(modal.querySelector('form'));  // new FormaData(this); ?
         body.append('user', project.id);
         body.append('password', project.password);
-        /*
-        console.log(body);
-        */
         const content = {
           method: 'post',
           body: body
