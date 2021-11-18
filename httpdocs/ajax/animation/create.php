@@ -87,6 +87,16 @@
   $mysqli->set_charset('utf8');
   $escaped_title = $mysqli->escape_string($title);
   $escaped_description = $mysqli->escape_string($description);
+  if ($user !== 0) {
+    $password = (isset($_POST['password'])) ? $mysqli->escape_string($_POST['password']) : '';
+    $query = "SELECT password from user WHERE id=$user";
+    $user = $result->fetch_assoc();
+    $result->free();
+    if (!$user)
+      error("Unknown user: $user.");
+    if ($user['password'] !== $password)
+      error("Wrong password for user $user.");
+  }
   $query = "INSERT INTO animation(title, description, duration, size, user) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size, $user)";
   $mysqli->query($query) or error($mysqli->error);
 
