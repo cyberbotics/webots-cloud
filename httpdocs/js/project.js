@@ -43,7 +43,8 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     super.setup(title, anchors, content, fullpage);
-    if (Project.webotsView && Project.webotsView.hasAnimation()) {
+//    if (Project.webotsView && Project.webotsView.hasAnimation()) {
+    if (Project.webotsView && !Project.webotsViewClosed) {
       console.log('Project.webotsView.close()');
       Project.webotsView.close();
     }
@@ -68,7 +69,9 @@ export default class Project extends User {
     else
       document.querySelector('webotsViewContainer').appendChild(Project.webotsView);
     Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
+    Project.webotsViewClosed = false;
   }
 }
 Project.current = null;
 Project.webotsView = null;
+Project.webotsViewClosed = true;
