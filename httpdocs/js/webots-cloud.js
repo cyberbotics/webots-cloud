@@ -265,8 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         console.log("coucou");
       });
-
-      return;
+      /*
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -330,6 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           });
       });
+      */
     });
     fetch('/ajax/animation/list.php', content)
       .then(function(response) {
