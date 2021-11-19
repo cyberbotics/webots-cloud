@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a data-tab="servers">Servers</a>
 </div>
 <div id="tab-content">
-  <section class="section is-active" data-content="models">
+  <section class="section" data-content="models">
     <div class="container">
       <table class="table">
         <thead>
