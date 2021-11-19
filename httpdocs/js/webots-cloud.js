@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
         m2.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
           // m2.close();
-          //console.log("coucou 1");
+          console.log("coucou 1");
         });
       });
       /*
