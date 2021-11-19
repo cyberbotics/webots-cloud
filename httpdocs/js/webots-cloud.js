@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
         `<td class="has-text-right">${duration}</td>` +
         `<td class="has-text-right">${size}</td>` +
-        `<td>${data.updated}</td>` +
+        `<td class="is-size-7">${data.updated}</td>` +
         `<td>${delete_icon}</td>`;
       return row;
     }
