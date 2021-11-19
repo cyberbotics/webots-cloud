@@ -260,19 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
-      let modal = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
-      modal.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        modal.close();
-        console.log("coucou");
-        let m2 = ModalDialog.run('Add an animation 2', 'How are you again?', 'Cancel', 'Add');
-        m2.querySelector('form').addEventListener('submit', function(event) {
-          event.preventDefault();
-          console.log("coucou 1");
-          m2.close();
-        });
-      });
-      /*
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -333,10 +320,28 @@ document.addEventListener('DOMContentLoaded', function() {
               let node = parent.querySelector('#animation-' + data.id);
               if (node)
                 addEventListener('click', function(event) { deleteAnimation(event, project); });
+
+
+
+                let m1 = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
+                m1.querySelector('form').addEventListener('submit', function(event) {
+                  event.preventDefault();
+                  m1.close();
+                  console.log("coucou");
+                  let m2 = ModalDialog.run('Add an animation 2', 'How are you again?', 'Cancel', 'Add');
+                  m2.querySelector('form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    console.log("coucou 1");
+                    m2.close();
+                  });
+                });
+
+
+
+
             }
           });
       });
-      */
     });
     fetch('/ajax/animation/list.php', content)
       .then(function(response) {
