@@ -260,7 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
-
+      let modal = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        console.log("coucou");
+      });
 
       return;
       let content = {};
