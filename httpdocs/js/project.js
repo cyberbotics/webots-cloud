@@ -41,6 +41,11 @@ export default class Project extends User {
     });
     return promise;
   }
+  setup(title, anchors, content, fullpage = false) {
+    super.setup(title, anchors, content, fullpage);
+    if (Project.webotsView)
+      Project.webotsView.close();
+  }
   animationPage(data) {
     let that = this;
     let template = document.createElement('template');
