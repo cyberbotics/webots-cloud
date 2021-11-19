@@ -42,11 +42,11 @@ export default class Project extends User {
     return promise;
   }
   setup(title, anchors, content, fullpage = false) {
-    super.setup(title, anchors, content, fullpage);
     if (Project.webotsView && Project.webotsView.hasAnimation()) {
       console.log("closing webotsView");
       Project.webotsView.close();
     }
+    super.setup(title, anchors, content, fullpage);
   }
   animationPage(data) {
     let that = this;
