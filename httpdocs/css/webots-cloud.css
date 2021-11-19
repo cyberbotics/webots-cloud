@@ -37,3 +37,7 @@ body footer .has-text-centered {
 #tab-content section.is-active {
   display: block;
 }
+
+.panel-tabs {
+  user-select:none;
+}
