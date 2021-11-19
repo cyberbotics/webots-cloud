@@ -66,8 +66,11 @@ export default class Project extends User {
     that.setup('animation', [], template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
-    else
-      document.querySelector('webotsViewContainer').appendChild(Project.webotsView);
+    else {
+      let container = document.querySelector('webotsViewContainer');
+      console.log('container = ', container);
+      container.appendChild(Project.webotsView);
+    }
     Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
     Project.webotsViewClosed = false;
   }
