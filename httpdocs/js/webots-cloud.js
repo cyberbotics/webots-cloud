@@ -328,12 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
                   event.preventDefault();
                   m1.close();
                   console.log("coucou");
-                  let m2 = ModalDialog.run('Add an animation 2', 'How are you again?', 'Cancel', 'Add');
-                  m2.querySelector('form').addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    console.log("coucou 1");
-                    m2.close();
-                  });
                 });
 
 
