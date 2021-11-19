@@ -21,7 +21,7 @@
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id";
   } else
-    $query = "SELECT * FROM animation LIMIT $limit OFFSET $offset ORDER BY viewed DESC";
+    $query = "SELECT * FROM animation ORDER BY viewed DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
