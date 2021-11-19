@@ -260,6 +260,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
+
+
+      return;
       let content = {};
       content.innerHTML =
         `<div class="field">
