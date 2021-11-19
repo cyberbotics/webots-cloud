@@ -43,7 +43,7 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     super.setup(title, anchors, content, fullpage);
-    if (Project.webotsView) {
+    if (Project.webotsView && Project.webotsViewClosed == false) {
       console.log('Project.webotsView.close()');
       Project.webotsView.close();
     }
@@ -70,7 +70,9 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
       console.log('Project.webotsView = ', Project.webotsView);
     }
+    Project.webotsViewClosed = false;
   }
 }
 Project.current = null;
 Project.webotsView = null;
+Project.webotsViewClosed = true;
