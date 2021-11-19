@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const style = (data.user == 0) ? ' style="color:grey"' : '';
       const title = (data.user == 0) ? 'Delete this anonymous animation' : 'Delete your animation';
       const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="far fa-trash-alt" id="animation-${data.id}" title="${title}"></i>` : '';
-      const updated = data.updated.replace(' ','<br>');
+      const updated = data.uploaded.replace(' ','<br>');
       const row =
         `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <th title="Title of the animation">Title</th>
             <th title="Duration of the animation">Duration</th>
             <th title="Total size of the animation files">Size</th>
-            <th title="Last update time">Updated</th>
+            <th title="Upload date and time">Uploaded</th>
             <th colspan="1"></th>
           </tr>
         </thead>
