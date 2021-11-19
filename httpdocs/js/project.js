@@ -67,7 +67,7 @@ export default class Project extends User {
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else {
-      let container = document.querySelector('webotsViewContainer');
+      let container = document.querySelector('#webotsViewContainer');
       console.log('container = ', container);
       container.appendChild(Project.webotsView);
     }
