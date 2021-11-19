@@ -325,9 +325,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 let m1 = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
                 m1.querySelector('form').addEventListener('submit', function(event) {
+                  console.log("coucou 1");
                   event.preventDefault();
                   m1.close();
-                  console.log("coucou");
+                  console.log("coucou 2");
                 });
 
 
