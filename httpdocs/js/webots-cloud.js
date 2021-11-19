@@ -248,9 +248,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.json();
       })
       .then(function(data) {
-        if (data.error)
+        if (data.error) {
           ModalDialog.run('Project listing error', data.error);
-        else {
+        } else {
           let line = ``;
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data[i]) + '</tr>';
