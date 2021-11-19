@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            console.log(data.error);
+            ModalDialog.run('Project creation error', data.error);
             parent.removeChild(old);
           } else {
             let tr = document.createElement('tr');
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(function(data) {
         if (data.error)
-          console.log(data.error);
+          ModalDialog.run('Project listing error', data.error);;
         else {
           let line = ``;
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(function(data) {
         if (data.error)
-          console.log(data.error);
+          ModalDialog.run('Animation listing error', data.error);
         else {
           let line = ``;
           for (let i = 0; i < data.length; i++)
@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(function(data) {
         if (data.error)
-          console.log(data.error);
+          ModalDialog.run('Server listing error', data.error);
         else {
           let line = ``;
           for (let i = 0; i < data.length; i++)
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           dialog.close();
           if (data.error)
-            console.log(data.error);
+            ModalDialog.run('Animation deletion error', data.error);
           else if (data.status == 1)
             parent.removeChild(old);
         });
