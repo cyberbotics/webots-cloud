@@ -43,8 +43,10 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     super.setup(title, anchors, content, fullpage);
-    if (Project.webotsView && Project.webotsView.hasAnimation())
+    if (Project.webotsView && Project.webotsView.hasAnimation()) {
+      console.log("closing webotsView");
       Project.webotsView.close();
+    }
   }
   animationPage(data) {
     let that = this;
