@@ -31,7 +31,6 @@ export default class ModalDialog extends HTMLElement {
     document.querySelector('body').appendChild(this);
   }
   connectedCallback() {
-    console.log("connectedCallback()");
     document.querySelector('html').classList.add('is-clipped');
     this.classList.add('is-active');
     ModalDialog.current = this;
@@ -47,14 +46,12 @@ export default class ModalDialog extends HTMLElement {
     this.querySelector('.modal-background').addEventListener('click', ModalDialog.closeEvent);
   }
   static closeEvent(event) {
-    console.log("closeEvent()");
     if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 27)) {
       event.preventDefault();
       ModalDialog.current.close();
     }
   }
   close() {
-    console.log("close()");
     document.querySelector('html').classList.remove('is-clipped');
     document.removeEventListener('keydown', ModalDialog.closeEvent);
     ModalDialog.current = null;
