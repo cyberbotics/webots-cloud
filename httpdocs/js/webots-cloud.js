@@ -266,11 +266,11 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.close();
         console.log("coucou");
         let m2 = ModalDialog.run('Add an animation 2', 'How are you again?', 'Cancel', 'Add');
-        modal.querySelector('form').addEventListener('submit', function(event) {
+        //modal.querySelector('form').addEventListener('submit', function(event) {
           // event.preventDefault();
           // m2.close();
-          console.log("coucou 1");
-        });
+          //console.log("coucou 1");
+        //});
       });
       /*
       let content = {};
