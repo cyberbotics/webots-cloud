@@ -323,6 +323,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+/*
               let m1 = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
               m1.querySelector('form').addEventListener('submit', function(event) {
                 console.log("coucou 1");
@@ -330,6 +332,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 m1.close();
                 console.log("coucou 2");
               });
+*/
+
 
 
 
@@ -508,12 +512,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     const old = event.target.parentNode.parentNode;
     const parent = old.parentNode;
-    /*
+
     let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      */
       let content = {
         method: 'post',
         body: JSON.stringify({
@@ -527,14 +530,12 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          //dialog.close();
+          dialog.close();
           if (data.error)
             console.log(data.error);
           else if (data.status == 1)
             parent.removeChild(old);
         });
-        /*
     });
-    */
   }
 });
