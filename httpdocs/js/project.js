@@ -59,7 +59,7 @@ export default class Project extends User {
     if (Project.webotsView)
       Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
     else
-      Project.webotsView = window.querySelector('webots-view');
+      Project.webotsView = document.querySelector('webots-view');
   }
 }
 Project.current = null;
