@@ -1,4 +1,4 @@
-<?php # This script list available animations
+<?php # This script list available animations (or models)
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
@@ -12,21 +12,26 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
+  $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
+  if ($type == 'M')  // model
+    $extra_condition = 'duration=0';
+  else  // animation
+    $extra_condition = 'duration>0';
   if (isset($data->url)) {  // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
     $id = string_to_mysql_id(substr($uri, 2));  // skipping '/A'
     $query = "UPDATE animation SET viewed = viewed + 1 WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
-    $query = "SELECT * FROM animation WHERE id=$id";
+    $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else
-    $query = "SELECT * FROM animation ORDER BY viewed DESC LIMIT $limit OFFSET $offset";
+    $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
-    $uri = '/A' . mysql_id_to_string($row['id']);
+    $uri = '/' . $type . mysql_id_to_string($row['id']);
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($answer, $row);
   }
