@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const template = document.createElement('template');
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="models">Models</a>
+  <a data-tab="models">Models</a>
   <a class="is-active" data-tab="animations">Animations</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="protos">Protos</a>
   <a data-tab="simulations">Simulations</a>
