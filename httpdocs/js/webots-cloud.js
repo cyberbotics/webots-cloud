@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           //dialog.close();
           if (data.error)
-            modal.error(data.error);
+            console.log(data.error);
           else if (data.status == 1)
             parent.removeChild(old);
         });
