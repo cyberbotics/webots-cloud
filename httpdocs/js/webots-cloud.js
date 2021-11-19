@@ -124,6 +124,25 @@ document.addEventListener('DOMContentLoaded', function() {
   <a data-tab="servers">Servers</a>
 </div>
 <div id="tab-content">
+  <section class="section is-active" data-content="models">
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+            <th title="Title of the model">Title</th>
+            <th title="Total size of the model files">Size</th>
+            <th title="Upload date and time">Uploaded</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="button" id="add-a-new-model">Add a new model</button>
+      </div>
+    </div>
+  </section>
   <section class="section is-active" data-content="animations">
     <div class="container">
       <table class="table">
