@@ -37,3 +37,8 @@ body footer .has-text-centered {
 #tab-content section.is-active {
   display: block;
 }
+
+.tab_button.is-disabled {
+    pointer-events: none;
+    cursor: default;
+}
