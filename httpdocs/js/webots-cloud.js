@@ -319,17 +319,17 @@ document.addEventListener('DOMContentLoaded', function() {
               parent.insertAdjacentHTML('beforeend', tr);
               let node = parent.querySelector('#animation-' + data.id);
               if (node)
-                addEventListener('click', function(event) { deleteAnimation(event, project); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, project); });
 
 
 
-                let m1 = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
-                m1.querySelector('form').addEventListener('submit', function(event) {
-                  console.log("coucou 1");
-                  event.preventDefault();
-                  m1.close();
-                  console.log("coucou 2");
-                });
+              let m1 = ModalDialog.run('Add an animation', 'How are you?', 'Cancel', 'Add');
+              m1.querySelector('form').addEventListener('submit', function(event) {
+                console.log("coucou 1");
+                event.preventDefault();
+                m1.close();
+                console.log("coucou 2");
+              });
 
 
 
