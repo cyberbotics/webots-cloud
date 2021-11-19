@@ -38,6 +38,6 @@ body footer .has-text-centered {
   display: block;
 }
 
-a.panel-tabs {
+.panel-tabs > a {
   user-select:none;
 }
