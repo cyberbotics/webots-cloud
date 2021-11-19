@@ -225,6 +225,7 @@ export default class User extends Router {
   <div class="container panel">
     <p class="panel-heading">Delete Account</p>
     <div class="panel-block">
+      All your data will be erased, including the models and animations you uploaded.<br>
       <i class="fas fa-exclamation-triangle"></i> &nbsp; Once you delete your account, there is no going back. Please be certain.
     </div>
     <div class="panel-block">
