@@ -17,13 +17,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      const content = {
-        method: 'post',
-        body: JSON.stringify({
-          url: url
-        })
-      };
-      fetch('/ajax/animation/list.php', content)
+      fetch('/ajax/animation/list.php', {method: 'post',body: JSON.stringify({url: url, type: url.pathname[1]})})
         .then(function(response) {
           return response.json();
         })
@@ -60,12 +54,15 @@ export default class Project extends User {
     ${description}
   </div>
 </section>`;
-    that.setup('animation', [], template.content);
+    that.setup(data.duration > 0 ? 'animation' : 'model', [], template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
-    Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
+    if (data.duration > 0)
+      Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
+    else
+      Project.webotsView.loadAnimation(`${reference}/model.x3d`);
   }
 }
 Project.current = null;
