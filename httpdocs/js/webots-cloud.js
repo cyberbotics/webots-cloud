@@ -4,6 +4,7 @@ import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
+  let active_tab = 'animation';
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -113,15 +114,19 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
     const template = document.createElement('template');
+    const scene_active = (active_tab == 'scene') ? ' class="is-active"' : '';
+    const animation_active = (active_tab == 'animation') ? ' class="is-active"' : '';
+    const demo_active = (active_tab == 'demo') ? ' class="is-active"' : '';
+    const server_active = (active_tab == 'server') ? ' class="is-active"' : '';
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a data-tab="scene">Scene</a>
-  <a class="is-active" data-tab="animation">Animation</a>
+  <a${scene_active} data-tab="scene">Scene</a>
+  <a${animation_active} data-tab="animation">Animation</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a data-tab="demo">Demo</a>
+  <a${demo_active} data-tab="demo">Demo</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="benchmark">Benchmark</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="competition">Competition</a>
-  <a data-tab="server">Server</a>
+  <a${server_active} data-tab="server">Server</a>
 </div>
 <div id="tab-content">
   <section class="section" data-content="scene">
@@ -216,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
               t.classList.remove(ACTIVE_CLASS);
           });
           tab.classList.add(ACTIVE_CLASS);
+          active_tab = tab.getAttribute('data-tab');
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
