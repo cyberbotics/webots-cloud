@@ -31,6 +31,10 @@
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
+    settype($row['user'], 'integer');
+    settype($row['duration'], 'integer');
+    settype($row['size'], 'integer');
+    settype($row['viewed'], 'integer');
     $uri = '/' . $type . mysql_id_to_string($row['id']);
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($answer, $row);
