@@ -42,7 +42,9 @@
     }
     return $value;
   }
-  $size = $_FILES['animation-file']['size'] + $_FILES['model-file']['size'];
+  $animation = array_key_exists('animation-files', $_FILES);
+  $size = $animation ? $_FILES['animation-file']['size'] : 0;
+  $size += $_FILES['model-file']['size'];
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
@@ -67,18 +69,20 @@
     error('Missing WorldInfo title in x3d file');
 
   // determine duration
-  $duration = false;
-  $content = file_get_contents($_FILES['animation-file']['tmp_name']);
-  $start = strrpos($content, '{"time":');
-  if ($start !== false) {
-    $start += 8;
-    $end = strpos($content, ',', $start);
-    if ($end !== false)
-      $duration = intval(substr($content, $start, $end - $start));
-  }
-  if ($duration === false)
-    error('Missing duration');
-
+  if ($animation) {
+    $duration = false;
+    $content = file_get_contents($_FILES['animation-file']['tmp_name']);
+    $start = strrpos($content, '{"time":');
+    if ($start !== false) {
+      $start += 8;
+      $end = strpos($content, ',', $start);
+      if ($end !== false)
+        $duration = intval(substr($content, $start, $end - $start));
+    }
+    if ($duration === false)
+      error('Missing duration');
+  } else
+    $duration = 0;
   // save entry in database
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
@@ -101,10 +105,11 @@
 
   // save files in new folder
   require '../../../php/mysql_id_string.php';
-  $uri = '/A' . mysql_id_to_string($mysqli->insert_id);
+  $type = $animation ? 'A' : 'M';
+  $uri = '/' . $type . mysql_id_to_string($mysqli->insert_id);
   $folder = "../../storage$uri";
   mkdir($folder);
-  if (!move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
+  if ($animation && !move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
     error('Cannot move animation file.');
   if (!move_uploaded_file($_FILES['model-file']['tmp_name'], "$folder/model.x3d"))
     error('Cannot move model file.');
