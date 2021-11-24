@@ -229,19 +229,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initTabs();
 
-    const content = {
-      method: 'post',
-      body: JSON.stringify({
-        offset: 0,
-        limit: 10
-      })
-    };
-
     function synchronize(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      let content = {
+      const content = {
         method: 'post',
         body: JSON.stringify({
           url: url,
@@ -267,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    fetch('/ajax/project/list.php', content)
+    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
       .then(function(response) {
         return response.json();
       })
@@ -348,10 +340,13 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
+    project.content.querySelector('#add-a-new-model').addEventListener('click', function(event) {
+      addAnimation('M');
+    });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
       addAnimation('A');
     });
-    fetch('/ajax/animation/list.php', content)
+    fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
       .then(function(response) {
         return response.json();
       })
@@ -440,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    fetch('/ajax/server/list.php', content)
+    fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
       .then(function(response) {
         return response.json();
       })
@@ -525,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      let content = {
+      const content = {
         method: 'post',
         body: JSON.stringify({
           animation: animation,
