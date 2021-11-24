@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>`;
       const title = (type == 'A') ? 'Add an animation' : 'Add a model';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
-      const type_name == (type == 'A') ? 'animation' : 'model';
+      const type_name = (type == 'A') ? 'animation' : 'model';
       let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
       modal.querySelector('form').addEventListener('submit', function(event) {
