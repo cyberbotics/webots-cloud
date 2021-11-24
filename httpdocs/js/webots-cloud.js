@@ -73,12 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const title = (data.user == 0) ? 'Delete this anonymous animation' : 'Delete your animation';
       const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="far fa-trash-alt" id="animation-${data.id}" title="${title}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
-      const row =
-        `<td class="has-text-centered">${data.viewed}</td>` +
-        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>` +
-        `<td class="has-text-right">${duration}</td>` +
-        `<td class="has-text-right">${size}</td>` +
-        `<td class="has-text-right is-size-7">${uploaded}</td>`;
+      let row = `<td class="has-text-centered">${data.viewed}</td>` +
+        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>`;
+      if (duration > 0)
+        row += `<td class="has-text-right">${duration}</td>`;
+      row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
       return row;
     }
 
