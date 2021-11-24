@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
       });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
+    function addAnimation(type) {
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -347,6 +347,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           });
       });
+    }
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
+      addAnimation('A');
     });
     fetch('/ajax/animation/list.php', content)
       .then(function(response) {
