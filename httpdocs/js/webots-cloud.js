@@ -68,10 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
           duration = hour + duration;
         }
       }
+      const type_name = duration == 0 ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const style = (data.user == 0) ? ' style="color:grey"' : '';
-      const title = (data.user == 0) ? 'Delete this anonymous animation' : 'Delete your animation';
-      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="far fa-trash-alt" id="animation-${data.id}" title="${title}"></i>` : '';
+      const title = (data.user == 0) ? `Delete this anonymous ${type_name}` : `Delete your ${type_name}`;
+      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="far fa-trash-alt" id="${type-name}-${data.id}" title="${title}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>`;
