@@ -1,5 +1,5 @@
 <?php
-if (strlen($_SERVER['REQUEST_URI']) == 8 && $_SERVER['REQUEST_URI'][1] == 'A')
+if (strlen($_SERVER['REQUEST_URI']) == 8 && in_array($_SERVER['REQUEST_URI'][1], array('A', 'M')))
   $found = file_exists('storage' . $_SERVER['REQUEST_URI']);
 elseif ($_SERVER['REQUEST_URI'] == '/settings')
   $found = true;
