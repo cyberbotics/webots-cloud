@@ -277,8 +277,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     function addAnimation(type) {
       let content = {};
-      content.innerHTML =
-        `<div class="field">
+      if (type == 'A')
+        content.innerHTML = `<div class="field">
   <label class="label">Webots animation</label>
   <div class="control has-icons-left">
     <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
@@ -287,8 +287,10 @@ document.addEventListener('DOMContentLoaded', function() {
     </span>
   </div>
   <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
-</div>
-<div class="field">
+</div>`;
+      else
+        content.innerHTML = '';
+      content.innerHTML += `<div class="field">
   <label class="label">Webots model</label>
   <div class="control has-icons-left">
     <input id="model-file" name="model-file" class="input" type="file" required accept=".x3d">
@@ -308,13 +310,16 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
 </div>`;
-      let modal = ModalDialog.run('Add an animation', content.innerHTML, 'Cancel', 'Add');
-      let input = modal.querySelector('#animation-file');
+      const title = (type == 'A') ? 'Add an animation' : 'Add a model';
+      let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
+      const type_name == (type == 'A') ? 'animation' : 'model';
+      let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        let body = new FormData(modal.querySelector('form'));  // new FormaData(this); ?
+        let body = new FormData(modal.querySelector('form'));
+        body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
         const content = {
@@ -331,11 +336,11 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
-              let parent = document.querySelector('section[data-content="animations"] > div > table > tbody');
+              let parent = document.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
               parent.insertAdjacentHTML('beforeend', tr);
-              let node = parent.querySelector('#animation-' + data.id);
+              let node = parent.querySelector(`#${type_name}-${data.id}`);
               if (node)
-                node.addEventListener('click', function(event) { deleteAnimation(event, project); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
           });
       });
@@ -346,27 +351,32 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
       addAnimation('A');
     });
-    fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.error)
-          ModalDialog.run('Animation listing error', data.error);
-        else {
-          let line = ``;
-          for (let i = 0; i < data.length; i++)
-            line += '<tr>' + animationRow(data[i]) + '</tr>';
-          let parent = project.content.querySelector('section[data-content="animations"] > div > table > tbody');
-          parent.innerHTML = line;
-          for (let i = 0; i < data.length; i++) {
-            let node = parent.querySelector('#animation-' + data[i].id);
-            if (node)
-              node.addEventListener('click', function(event) { deleteAnimation(event, project); });
+    function listAnimations(type) {
+      const type_name = (type == 'A') ? 'animation' : 'model';
+      const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10, type: type})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run(`${capitalized_type_name} listing error`, data.error);
+          else {
+            let line = ``;
+            for (let i = 0; i < data.length; i++)
+              line += '<tr>' + animationRow(data[i]) + '</tr>';
+            let parent = project.content.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
+            parent.innerHTML = line;
+            for (let i = 0; i < data.length; i++) {
+              let node = parent.querySelector(`#${type_name}-${data[i].id}`);
+              if (node)
+                node.addEventListener('click', function(event) { deleteAnimation(event, 'A', project); });
+            }
           }
-        }
-      });
-
+        });
+    }
+    listAnimations('A');
+    listAnimations('M');
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
@@ -510,19 +520,21 @@ document.addEventListener('DOMContentLoaded', function() {
     simulation.run();
   }
 
-  function deleteAnimation(event, project) {
+  function deleteAnimation(event, type, project) {
     const that = this;
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     const old = event.target.parentNode.parentNode;
     const parent = old.parentNode;
-
-    let dialog = ModalDialog.run('Really delete animation?', '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Animation', 'is-danger');
+    const type_name = (type == 'A') ? 'animation' : 'model';
+    const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
+    let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
       const content = {
         method: 'post',
         body: JSON.stringify({
+          type: type,
           animation: animation,
           user: project.id,
           password: project.password
@@ -535,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           dialog.close();
           if (data.error)
-            ModalDialog.run('Animation deletion error', data.error);
+            ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
           else if (data.status == 1)
             parent.removeChild(old);
         });
