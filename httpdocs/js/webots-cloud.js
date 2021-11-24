@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
-              let parent = document.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
+              let parent = document.querySelector(`section[data-content="${type_name}s"] > div > table > tbody`);
               parent.insertAdjacentHTML('beforeend', tr);
               let node = parent.querySelector(`#${type_name}-${data.id}`);
               if (node)
