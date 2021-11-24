@@ -19,6 +19,7 @@ if (!isset($data->password))
   error('Missing password');
 if (!isset($data->animation))
   error('Missing animation id');
+$type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
@@ -32,7 +33,7 @@ $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 require '../../../php/mysql_id_string.php';
-$path = '../../storage/A' . mysql_id_to_string($animation);
+$path = "../../storage/$type" . mysql_id_to_string($animation);
 rrmdir($path);
 die("{\"status\":1}");
 ?>
