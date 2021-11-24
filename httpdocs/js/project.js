@@ -62,7 +62,7 @@ export default class Project extends User {
     if (data.duration > 0)
       Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
     else
-      Project.webotsView.loadAnimation(`${reference}/scene.x3d`);
+      Project.webotsView.loadScene(`${reference}/scene.x3d`);
   }
 }
 Project.current = null;
