@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a data-tab="scenes">Scenes</a>
   <a class="is-active" data-tab="animations">Animations</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="protos">Protos</a>
-  <a data-tab="simulations">Simulations</a>
+  <a data-tab="demos">Demos</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="benchmarks">Benchmarks</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="competitions">Competitions</a>
   <a data-tab="servers">Servers</a>
@@ -163,13 +163,13 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section" data-content="simulations">
+  <section class="section" data-content="demos">
     <div class="container">
       <table class="table">
         <thead>
           <tr>
             <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-            <th title="Title of the simulation">Title</th>
+            <th title="Title of the demo">Title</th>
             <th title="Main programming language">Language</th>
             <th title="Last update time">Updated</th>
             <th colspan="2"></th>
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let line = ``;
           for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data[i]) + '</tr>';
-          project.content.querySelector('section[data-content="simulations"] > div > table > tbody').innerHTML = line;
+          project.content.querySelector('section[data-content="demos"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
-              document.querySelector('section[data-content="simulations"] > div > table > tbody').insertAdjacentHTML(
+              document.querySelector('section[data-content="demos"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
             }
           });
