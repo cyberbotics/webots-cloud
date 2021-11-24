@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a data-tab="demo">Demo</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="benchmark">Benchmark</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="competition">Competition</a>
-  <a data-tab="servers">Servers</a>
+  <a data-tab="server">Server</a>
 </div>
 <div id="tab-content">
   <section class="section" data-content="scene">
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section" data-content="servers">
+  <section class="section" data-content="server">
     <div class="container">
       <table class="table">
         <thead>
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let line = ``;
           for (let i = 0; i < data.length; i++)
             line += '<tr>' + serverRow(data[i]) + '</tr>';
-          project.content.querySelector('section[data-content="servers"] > div > table > tbody').innerHTML = line;
+          project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
         }
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + serverRow(data) + '</tr>';
-              document.querySelector('section[data-content="servers"] > div > table > tbody').insertAdjacentHTML(
+              document.querySelector('section[data-content="server"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
             }
           });
