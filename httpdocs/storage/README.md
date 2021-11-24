@@ -1,10 +1,10 @@
 # Storage folder
 
-This folder contains a series of subfolders containing models and animations.
+This folder contains a series of subfolders containing scenes and animations.
 Each subfolder contains the following files and folder:
 
-- model.x3d
+- scene.x3d
 - animation.json (only for animations)
 - textures/*.[jpg|png|hdr]
 
-Models and animations are uploaded on the server by users.
+Scenes and animations are uploaded on the server by users.

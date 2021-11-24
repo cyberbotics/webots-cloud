@@ -225,7 +225,7 @@ export default class User extends Router {
   <div class="container panel">
     <p class="panel-heading">Delete Account</p>
     <div class="panel-block">
-      All your data will be erased, including the models and animations you uploaded.
+      All your data will be erased, including the scenes and animations you uploaded.
       There is no undo.
     </div>
     <div class="panel-block">
@@ -240,7 +240,7 @@ export default class User extends Router {
       });
       document.querySelector('#delete-account').addEventListener('click', function(event) {
         let dialog = ModalDialog.run('Really delete account?',
-                                     '<p>All your data will be deleted from our database, including models and animations.</p>' +
+                                     '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
                                      '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
         dialog.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();

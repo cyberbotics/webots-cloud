@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const template = document.createElement('template');
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a data-tab="models">Models</a>
+  <a data-tab="scenes">Scenes</a>
   <a class="is-active" data-tab="animations">Animations</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="protos">Protos</a>
   <a data-tab="simulations">Simulations</a>
@@ -123,14 +123,14 @@ document.addEventListener('DOMContentLoaded', function() {
   <a data-tab="servers">Servers</a>
 </div>
 <div id="tab-content">
-  <section class="section" data-content="models">
+  <section class="section" data-content="scenes">
     <div class="container">
       <table class="table">
         <thead>
           <tr>
             <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the model">Title</th>
-            <th title="Total size of the model files">Size</th>
+            <th title="Title of the scene">Title</th>
+            <th title="Total size of the scene files">Size</th>
             <th title="Upload date and time">Uploaded</th>
           </tr>
         </thead>
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
       <div class="buttons">
-        <button class="button" id="add-a-new-model">Add a new model</button>
+        <button class="button" id="add-a-new-scene">Add a new scene</button>
       </div>
     </div>
   </section>
@@ -290,14 +290,14 @@ document.addEventListener('DOMContentLoaded', function() {
       else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
-  <label class="label">Webots model</label>
+  <label class="label">Webots scene</label>
   <div class="control has-icons-left">
-    <input id="model-file" name="model-file" class="input" type="file" required accept=".x3d">
+    <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
     <span class="icon is-small is-left">
       <i class="fas fa-upload"></i>
     </span>
   </div>
-  <div class="help">Upload the Webots X3D model file: <em>model.x3d</em></div>
+  <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
 </div>
 <div class="field">
   <label class="label">Texture files</label>
@@ -309,9 +309,9 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
 </div>`;
-      const title = (type == 'A') ? 'Add an animation' : 'Add a model';
+      const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
-      const type_name = (type == 'A') ? 'animation' : 'model';
+      const type_name = (type == 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
       modal.querySelector('form').addEventListener('submit', function(event) {
@@ -344,14 +344,14 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
-    project.content.querySelector('#add-a-new-model').addEventListener('click', function(event) {
-      addAnimation('M');
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {
+      addAnimation('S');
     });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
       addAnimation('A');
     });
     function listAnimations(type) {
-      const type_name = (type == 'A') ? 'animation' : 'model';
+      const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
       fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10, type: type})})
         .then(function(response) {
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     listAnimations('A');
-    listAnimations('M');
+    listAnimations('S');
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
     const old = event.target.parentNode.parentNode;
     const parent = old.parentNode;
-    const type_name = (type == 'A') ? 'animation' : 'model';
+    const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
