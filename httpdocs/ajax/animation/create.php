@@ -44,7 +44,7 @@
   }
   $animation = array_key_exists('animation-files', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
-  $size += $_FILES['model-file']['size'];
+  $size += $_FILES['scene-file']['size'];
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
@@ -52,7 +52,7 @@
   header('Content-Type: application/json');
 
   // determine title
-  $file = fopen($_FILES['model-file']['tmp_name'], 'r') or error('Unable to open model file');
+  $file = fopen($_FILES['scene-file']['tmp_name'], 'r') or error('Unable to open scene file');
   $count = 0;
   $world_info = false;
   while (!feof($file)) {
@@ -105,14 +105,14 @@
 
   // save files in new folder
   require '../../../php/mysql_id_string.php';
-  $type = $animation ? 'A' : 'M';
+  $type = $animation ? 'A' : 'S';
   $uri = '/' . $type . mysql_id_to_string($mysqli->insert_id);
   $folder = "../../storage$uri";
   mkdir($folder);
   if ($animation && !move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
     error('Cannot move animation file.');
-  if (!move_uploaded_file($_FILES['model-file']['tmp_name'], "$folder/model.x3d"))
-    error('Cannot move model file.');
+  if (!move_uploaded_file($_FILES['scene-file']['tmp_name'], "$folder/scene.x3d"))
+    error('Cannot move scene file.');
   if ($total > 0) {
     mkdir("$folder/textures");
     for($i = 0; $i < $total; $i++) {

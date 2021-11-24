@@ -1,4 +1,4 @@
-<?php # This script list available animations (or models)
+<?php # This script list available animations (or scenes)
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
@@ -14,7 +14,7 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
-  if ($type == 'M')  // model
+  if ($type == 'S')  // scene
     $extra_condition = 'duration=0';
   else  // animation
     $extra_condition = 'duration>0';

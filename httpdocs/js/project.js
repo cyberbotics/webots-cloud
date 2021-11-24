@@ -54,15 +54,15 @@ export default class Project extends User {
     ${description}
   </div>
 </section>`;
-    that.setup(data.duration > 0 ? 'animation' : 'model', [], template.content);
+    that.setup(data.duration > 0 ? 'animation' : 'scene', [], template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
     if (data.duration > 0)
-      Project.webotsView.loadAnimation(`${reference}/model.x3d`, `${reference}/animation.json`);
+      Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
     else
-      Project.webotsView.loadAnimation(`${reference}/model.x3d`);
+      Project.webotsView.loadAnimation(`${reference}/scene.x3d`);
   }
 }
 Project.current = null;
