@@ -133,6 +133,6 @@
   $answer['size'] = $size;
   $answer['viewed'] = 0;
   $answer['user'] = $user;
-  $answer['updated'] = date("Y-m-d H:i:s");
+  $answer['uploaded'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
  ?>
