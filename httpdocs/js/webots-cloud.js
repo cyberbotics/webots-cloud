@@ -570,6 +570,7 @@ document.addEventListener('DOMContentLoaded', function() {
           password: project.password
         })
       };
+      console.log('user id = ' + project.id);
       fetch('ajax/animation/delete.php', content)
         .then(function(response) {
           return response.json();
