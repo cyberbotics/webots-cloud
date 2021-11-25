@@ -364,9 +364,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
               if (!project.id)
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                                `The ${type_name} you just uploaded may be deleted anytime by anyone.` +
-                                `To prevent this, you can associate it with your webots.cloud account. ` +
-                                `To proceed, log-in or create a new account now from this browser.`);
+                                `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
+                                `To prevent this, you can associate it with your webots.cloud account: ` +
+                                ` log-in or create a new account now from this browser.`);
             }
           });
       });
