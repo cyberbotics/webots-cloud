@@ -40,15 +40,11 @@ body footer .has-text-centered {
 
 .panel-tabs > a {
   user-select: none;
-  font-size: 12px;
-  padding: 0.3em;
 }
 
 @include mobile {
-  .tabs ul {
-    flex-direction: column;
-    li {
-      width: 100%;
-    }
+  .panel-tabs > a {
+    font-size: 12px;
+    padding: 0.3em;
   }
 }
