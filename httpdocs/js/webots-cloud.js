@@ -225,10 +225,11 @@ document.addEventListener('DOMContentLoaded', function() {
     project.setup('home', [], template.content);
 
     function initTabs() {
+      /*
       active_tab = document.location.pathname.substring(1);
-      console.log('active_tab = "' + active_tab + '"');
       if (active_tab === '')
         active_tab = 'animation';
+        */
       const TABS = [...document.querySelectorAll('#tabs a')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
@@ -241,9 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
-          // FIXME: set URL to active_tab
-          window.history.pushState(null, 'webots.cloud - ' + active_tab, '/' + active_tab);
-          // document.location.pathname = '/' + active_tab;
+          window.history.pushState(null, document.title, '/' + active_tab);
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
