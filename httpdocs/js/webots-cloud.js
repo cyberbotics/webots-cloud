@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body: JSON.stringify({
           type: type,
           animation: animation,
-          user: project.id,
+          user: project.id == null ? 0 : project.id,
           password: project.password
         })
       };
