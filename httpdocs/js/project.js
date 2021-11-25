@@ -22,10 +22,8 @@ export default class Project extends User {
           return response.json();
         })
         .then(function(data) {
-          if (pushHistory) {
-            console.log('pushHistory: ' + name + ' ' + url.pathname + url.search + url.hash);
+          if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
-          }
           if (data.length == 0) { // no such animation
             that.notFound();
             resolve();
