@@ -41,3 +41,12 @@ body footer .has-text-centered {
 .panel-tabs > a {
   user-select:none;
 }
+
+@include mobile {
+  .tabs ul {
+    flex-direction: column;
+    li {
+      width: 100%;
+    }
+  }
+}
