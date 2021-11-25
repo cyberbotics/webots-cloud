@@ -242,7 +242,8 @@ document.addEventListener('DOMContentLoaded', function() {
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
           // FIXME: set URL to active_tab
-          document.location.pathname = '/' + active_tab;
+          window.history.pushState(null, 'webots.cloud - ' + active_state, '/' + active_state);
+          // document.location.pathname = '/' + active_tab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
