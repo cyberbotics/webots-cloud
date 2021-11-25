@@ -120,13 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const server_active = (active_tab == 'server') ? ' class="is-active"' : '';
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a${scene_active} data-tab="scene">Scene</a>
-  <a${animation_active} data-tab="animation">Animation</a>
+  <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
+  <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a${demo_active} data-tab="demo">Demo</a>
+  <a${(active_tab == 'demo') ? ' class="is-active"' : ''} data-tab="demo">Demo</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="benchmark">Benchmark</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="competition">Competition</a>
-  <a${server_active} data-tab="server">Server</a>
+  <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
 </div>
 <div id="tab-content">
   <section class="section" data-content="scene">
