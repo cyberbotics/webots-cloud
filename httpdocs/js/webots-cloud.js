@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
           duration = hour + duration;
         }
       }
-      const type_name = duration == 0 ? 'scene' : 'animation';
+      const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const style = (data.user == 0) ? ' style="color:grey"' : '';
       const title = (data.user == 0) ? `Delete this anonymous ${type_name}` : `Delete your ${type_name}`;
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${data.title}</a></td>`;
-      if (duration > 0)
+      if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
       return row;
