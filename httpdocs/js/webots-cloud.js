@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
+      url: '/animation',
+      setup: homePage
+    },
+    {
+      url: '/demo',
+      setup: homePage
+    },
+    {
+      url: '/server',
+      setup: homePage
+    },
+    {
       url: '/simulation',
       setup: simulationPage
     }]);
@@ -210,6 +222,9 @@ document.addEventListener('DOMContentLoaded', function() {
     project.setup('home', [], template.content);
 
     function initTabs() {
+      active_tab = document.location.pathname.substring(1);
+      if (active_tab === '')
+        active_tab = 'animation';
       const TABS = [...document.querySelectorAll('#tabs a')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
@@ -222,6 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
+          // FIXME: set URL to active_tab
+          document.location.pathname = '/' + active_tab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
