@@ -230,7 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
 </div>`;
-    project.setup('home', [], template.content);
+    const title = active_tab;
+    project.setup(title, [], template.content);
 
     function initTabs() {
       const TABS = [...document.querySelectorAll('#tabs a')];
@@ -570,7 +571,6 @@ document.addEventListener('DOMContentLoaded', function() {
           password: project.password
         })
       };
-      console.log('user id = ' + project.id);
       fetch('ajax/animation/delete.php', content)
         .then(function(response) {
           return response.json();
