@@ -158,6 +158,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
         </tbody>
       </table>
+    </div>
+    <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-scene">Add a new scene</button>
       </div>
@@ -178,6 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
         </tbody>
       </table>
+    </div>
+    <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-animation">Add a new animation</button>
       </div>
@@ -198,6 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
         </tbody>
       </table>
+    </div>
+    <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-project">Add a new demo</button>
       </div>
@@ -216,6 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
         </tbody>
       </table>
+    </div>
+    <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-server">Add a new server</button>
       </div>
