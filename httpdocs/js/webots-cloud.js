@@ -223,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initTabs() {
       active_tab = document.location.pathname.substring(1);
+      console.log('active_tab = "' + active_tab + '"');
       if (active_tab === '')
         active_tab = 'animation';
       const TABS = [...document.querySelectorAll('#tabs a')];
