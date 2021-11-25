@@ -400,7 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.length; i++) {
               let node = parent.querySelector(`#${type_name}-${data[i].id}`);
               if (node)
-                node.addEventListener('click', function(event) { deleteAnimation(event, 'A', project); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
           }
         });
