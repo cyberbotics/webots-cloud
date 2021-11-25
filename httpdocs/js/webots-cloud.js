@@ -265,14 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      const content = {
-        method: 'post',
-        body: JSON.stringify({
-          url: url,
-          id: id
-        })
-      };
-      fetch('ajax/project/create.php', content)
+      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
           return response.json();
         })
@@ -354,11 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
-        const content = {
-          method: 'post',
-          body: body
-        };
-        fetch('/ajax/animation/create.php', content)
+        fetch('/ajax/animation/create.php', {method: 'post', body: body})
           .then(function(response) {
             return response.json();
           })
@@ -373,6 +362,10 @@ document.addEventListener('DOMContentLoaded', function() {
               let node = parent.querySelector(`#${type_name}-${data.id}`);
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
+              if (!project.id)
+                ModalDialog.run(`Anonymous ${type_name} uploaded`,
+                                `The ${type_name} you just uploaded may be deleted by anyone unless you associate it with your webots.cloud account. ` +
+                                `To associate it, please log-in or create a new account from this browser.`)
             }
           });
       });
