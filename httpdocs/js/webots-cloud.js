@@ -114,10 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
     const template = document.createElement('template');
-    const scene_active = (active_tab == 'scene') ? ' class="is-active"' : '';
-    const animation_active = (active_tab == 'animation') ? ' class="is-active"' : '';
-    const demo_active = (active_tab == 'demo') ? ' class="is-active"' : '';
-    const server_active = (active_tab == 'server') ? ' class="is-active"' : '';
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
   <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
@@ -129,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
 </div>
 <div id="tab-content">
-  <section class="section" data-content="scene">
+  <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
     <div class="container">
       <table class="table">
         <thead>
@@ -148,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section is-active" data-content="animation">
+  <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
     <div class="container">
       <table class="table">
         <thead>
@@ -168,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section" data-content="demo">
+  <section class="section${(active_tab == 'demo') ? ' is-active' : ''}" data-content="demo">
     <div class="container">
       <table class="table">
         <thead>
@@ -188,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section" data-content="server">
+  <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
     <div class="container">
       <table class="table">
         <thead>
