@@ -247,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
           window.history.pushState(null, document.title, '/' + active_tab);
+          document.head.querySelector('#title').innerHTML = this.title + ' - ' + active_tab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
