@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <div id="tab-content">
   <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
-    <div class="container">
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
   <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
-    <div class="container">
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
   <section class="section${(active_tab == 'demo') ? ' is-active' : ''}" data-content="demo">
-    <div class="container">
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </section>
   <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
-    <div class="container">
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
