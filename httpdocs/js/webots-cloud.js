@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let active_tab = document.location.pathname.substring(1);
   if (active_tab === '')
     active_tab = 'animation';
-  console.log('DOMContentLoaded');
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -49,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    console.log('homePage');
+
     function animationRow(data) {
       let size = data.size;
       let unit;
