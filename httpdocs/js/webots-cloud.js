@@ -552,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteAnimation(event, type, project) {
     const that = this;
-    const animation = parseInt(event.target.id.substring(10)); // skip 'animation-'
+    const animation = parseInt(event.target.id.substring((type == 'A' ? 10 : 6)); // skip 'animation-' or 'scene-'
     const old = event.target.parentNode.parentNode;
     const parent = old.parentNode;
     const type_name = (type == 'A') ? 'animation' : 'scene';
