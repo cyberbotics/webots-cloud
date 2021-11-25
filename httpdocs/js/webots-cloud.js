@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
+      url: '/scene',
+      setup: homePage
+    },
+    {
       url: '/simulation',
       setup: simulationPage
     }]);
