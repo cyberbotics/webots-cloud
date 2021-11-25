@@ -4,7 +4,6 @@ import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
-  let active_tab = '';
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -46,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    console.log('homePage');
     let active_tab = document.location.pathname.substring(1);
     if (active_tab === '')
       active_tab = 'animation';
