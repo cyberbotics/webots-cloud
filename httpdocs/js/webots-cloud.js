@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
       active_tab = 'animation';
 
     function updatePagination(tab, current, max) {
+      console.log('updatePagination ' + tab + ' ' + current + ' ' + max);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('?p=' + (current - 1))}"`;
