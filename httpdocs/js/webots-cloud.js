@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </table>
     </div>
     <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-      <a class="pagination-previous is-disabled">Previous</a>
+      <a class="pagination-previous" disabled>Previous</a>
       <a class="pagination-next">Next page</a>
       <ul class="pagination-list">
         <li>
