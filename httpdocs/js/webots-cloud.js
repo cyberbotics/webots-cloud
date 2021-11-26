@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
           else if (data.status == 1) {
-            project.load(`/${type_name}${(p > 1) ? ('p=' + page) : ''}`);
+            project.load(`/${type_name}${(page > 1) ? ('p=' + page) : ''}`);
             // parent.removeChild(old);
           }
         });
