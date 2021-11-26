@@ -4,6 +4,8 @@ import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
+  let scene_page = 1;
+  let animation_page = 1;
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -47,6 +49,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
+    if (active_tab === 'scene')
+      scene_page = page;
+    else if (active_tab === 'animation')
+      animation_page = page;
     if (!page)
       page = 1;
     const page_limit = 5;
@@ -284,8 +290,12 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
+          if (active_tab === 'scene')
+            page = scene_page;
+          else if (active_tab === 'animation')
+            page = animation_page;
           window.history.pushState(null, document.title, '/' + active_tab + ((page == 1) ? '' : '?p=' + page));
-          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab + (page == 1) ? '' : ` (${page})`;
+          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
