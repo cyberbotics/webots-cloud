@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
               }
               const p = Math.ceil((data.total + 1) / (page_limit + 1));
-              project.load(`/${type_name}?p=$p`);
+              project.load(`/${type_name}?p=${p}`);
             }
           });
       });
