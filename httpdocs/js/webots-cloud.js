@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
-            updatePagination(${type_name}, 4, 9);
+            updatePagination(type_name, 4, 9);
           }
         });
     }
