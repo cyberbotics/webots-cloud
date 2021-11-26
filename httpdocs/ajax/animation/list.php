@@ -40,7 +40,7 @@
     array_push($animations, $row);
   }
   if (isset($data->url)) {  // view request
-    if (len($animations) === 0)
+    if (count($animations) === 0)
       error("Animation not found.");
     die(json_encode($animations[0]));
   }
