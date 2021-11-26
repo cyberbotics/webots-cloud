@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function listAnimations(type) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10, type: type})})
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 5, type: type})})
         .then(function(response) {
           return response.json();
         })
@@ -394,12 +394,12 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run(`${capitalized_type_name} listing error`, data.error);
           else {
             let line = ``;
-            for (let i = 0; i < data.length; i++)
-              line += '<tr>' + animationRow(data[i]) + '</tr>';
+            for (let i = 0; i < data.animations.length; i++)
+              line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             let parent = project.content.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
             parent.innerHTML = line;
-            for (let i = 0; i < data.length; i++) {
-              let node = parent.querySelector(`#${type_name}-${data[i].id}`);
+            for (let i = 0; i < data.animations.length; i++) {
+              let node = parent.querySelector(`#${type_name}-${data.animations[i].id}`);
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
