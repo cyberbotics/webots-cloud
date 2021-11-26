@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
+    if (!page)
+      page = 1;
     if (active_tab === 'scene')
       scene_page = page;
     else if (active_tab === 'animation')
       animation_page = page;
-    if (!page)
-      page = 1;
     const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
