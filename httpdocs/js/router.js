@@ -19,8 +19,8 @@ export default class Router {
             (element.pathname !== document.location.pathname || document.location.hash === element.hash || element.hash === '')) {
           // same-origin navigation: a link within the site (we are skipping linking to the same page with possibly hashtags)
           event.preventDefault(); // prevent the browser from doing the navigation
-          console.log('load 1 ' + element.pathname + element.hash);
-          console.log('load 2 ' + document.location.path + element.hash);          
+          console.log('load 1 ' + element.pathname + element.search + element.hash);
+          console.log('load 2 ' + document.location.pathname + document.location.search + document.location.hash);          
           that.load(element.pathname + element.hash);
           if (element.hash === '')
             window.scrollTo(0, 0);
