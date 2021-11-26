@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
-      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('?p' + (current - 1))}"`;
+      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('?p=' + (current - 1))}"`;
       const next_disabled = (current == max) ? ' disabled' : ` href="?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
