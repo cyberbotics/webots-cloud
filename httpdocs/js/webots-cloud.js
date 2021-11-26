@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
-    if (page === null)
+    if (!page)
       page = 1;
     console.log('page = ' + page);
     const page_limit = 5;
@@ -56,10 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
-      if (!nav) {
-        console.log('No <nav> found for ' + tab);
-        return;
-      }
       let content = {};
       const previous_disabled = (current == 1) ? ' disabled': ` href="?p=${current - 1}"`;
       const next_disabled = (current == max) ? ' disabled' : ` href="?p=${current + 1}"`;
