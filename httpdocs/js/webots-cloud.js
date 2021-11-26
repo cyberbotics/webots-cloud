@@ -46,15 +46,25 @@ document.addEventListener('DOMContentLoaded', function() {
     return template.content.firstChild;
   }
 
+  function setPages(active_tab, page) {
+    if (active_tab === 'scene')
+      scene_page = page;
+    else if (active_tab === 'animation')
+      animation_page = page;
+  }
+
+  function getPage(active_tab) {
+    if (active_tab === 'scene')
+      return scene_page;
+    if (active_tab === 'animation')
+      return animation_page;
+  }
+
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
       page = 1;
-    if (active_tab === 'scene')
-      scene_page = page;
-    else if (active_tab === 'animation')
-      animation_page = page;
     const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
@@ -290,10 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
-          if (active_tab === 'scene')
-            page = scene_page;
-          else if (active_tab === 'animation')
-            page = animation_page;
+          page = setPage(active_tab);
           window.history.pushState(null, document.title, '/' + active_tab + ((page == 1) ? '' : '?p=' + page));
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab;
           CONTENT.forEach((item) => {
