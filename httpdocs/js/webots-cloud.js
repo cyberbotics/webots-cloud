@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.animations.length; i++) {
               let node = parent.querySelector(`#${type_name}-${data.animations[i].id}`);
               if (node)
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, page); });
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination(type_name, page, total);
@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
     simulation.run();
   }
 
-  function deleteAnimation(event, type, project) {
+  function deleteAnimation(event, type, project, page) {
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
     const old = event.target.parentNode.parentNode;
