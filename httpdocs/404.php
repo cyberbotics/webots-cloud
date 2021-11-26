@@ -1,8 +1,8 @@
 <?php
-$url = strtok($_SERVER['REQUEST_URI'], '?');
-if (strlen($_SERVER['REQUEST_URI']) == 8 && in_array($_SERVER['REQUEST_URI'][1], array('A', 'S')))
-  $found = file_exists('storage' . $_SERVER['REQUEST_URI']);
-elseif (in_array($_SERVER['REQUEST_URI'], array('/settings', '/scene', '/animation', '/demo', '/server')))
+$uri = strtok($_SERVER['REQUEST_URI'], '?');
+if (strlen($uri) == 8 && in_array($uri[1], array('A', 'S')))
+  $found = file_exists('storage' . $uri);
+elseif (in_array($uri, array('/settings', '/scene', '/animation', '/demo', '/server')))
   $found = true;
 else
   $found = false;
