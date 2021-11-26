@@ -450,7 +450,8 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
-            updatePagination(type_name, page, data.total);
+            const total = Math.ceil((data.total + 1) / (page_limit + 1));
+            updatePagination(type_name, page, total);
           }
         });
     }
