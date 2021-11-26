@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    let that = this;
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
@@ -445,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
               }
               const p = Math.ceil((data.total + 1) / (page_limit + 1));
-              that.load(`/${type_name}?p=$p`);
+              project.load(`/${type_name}?p=$p`);
             }
           });
       });
