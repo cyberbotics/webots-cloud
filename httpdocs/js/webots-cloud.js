@@ -215,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
     </div>
+    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+    </nav>
     <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-animation">Add a new animation</button>
@@ -237,6 +239,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
     </div>
+    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+    </nav>
     <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-project">Add a new demo</button>
@@ -257,6 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
     </div>
+    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+    </nav>
     <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-server">Add a new server</button>
@@ -437,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
-            updatePagination(type_name, 4, 9);
+            updatePagination(type_name, 1, 1);
           }
         });
     }
