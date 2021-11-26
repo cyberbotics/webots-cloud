@@ -466,8 +466,12 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
               let node = parent.querySelector(`#${type_name}-${data.animations[i].id}`);
-              if (node)
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, page); });
+              if (node) {
+                let p = (data.animations.length === 1) ? page - 1 : page;
+                if (p === 0)
+                  p = 1;
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
+              }
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination(type_name, page, total);
@@ -625,8 +629,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function deleteAnimation(event, type, project, page) {
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-    const old = event.target.parentNode.parentNode;
-    const parent = old.parentNode;
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
@@ -652,7 +654,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
           else if (data.status == 1) {
             project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
-            // parent.removeChild(old);
           }
         });
     });
