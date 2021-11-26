@@ -51,6 +51,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if (active_tab === '')
       active_tab = 'animation';
 
+    function updatePagination(tab, current, max) {
+      let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
+      if (!nav) {
+        console.log('No <nav> found for ' + tab);
+        return;
+      }
+      let content = {};
+      const previous_disabled = (current == 1) ? ' disabled': '';
+      const next_disabled = (current == max) ? ' disabled' : '';
+      const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : '" aria-label="Goto page 1"';
+      content.innerHTML =
+`<a class="pagination-previous"${previous_disabled}>Previous</a>
+<a class="pagination-next"${next_disabled}>Next page</a><ul><li>
+<a class="pagination-link${one_is_current}>1</a></li>`;
+      for (i = 2; i <= max; i++) {
+        if (i == current - 2 || i == current + 2) {
+          content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
+          continue;
+        }
+        if (i == current)
+          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}" aria-current="page">${i}</a></li>`;
+        else
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}">${i}</a></li>`;
+      }
+      content.innerHTML += '</ul>';
+      nav.innerHTML = content.innerHTML;
+    }
+
     function animationRow(data) {
       let size = data.size;
       let unit;
@@ -162,31 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </table>
     </div>
     <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-      <a class="pagination-previous" disabled>Previous</a>
-      <a class="pagination-next">Next page</a>
-      <ul class="pagination-list">
-        <li>
-          <a class="pagination-link" aria-label="Goto page 1">1</a>
-        </li>
-        <li>
-          <span class="pagination-ellipsis">&hellip;</span>
-        </li>
-        <li>
-          <a class="pagination-link" aria-label="Goto page 45">45</a>
-        </li>
-        <li>
-          <a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>
-        </li>
-        <li>
-          <a class="pagination-link" aria-label="Goto page 47">47</a>
-        </li>
-        <li>
-          <span class="pagination-ellipsis">&hellip;</span>
-        </li>
-        <li>
-          <a class="pagination-link" aria-label="Goto page 86">86</a>
-        </li>
-      </ul>
     </nav>
     <div class="container">
       <div class="buttons">
@@ -432,6 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
+            updatePagination(${type_name}, 4, 9);
           }
         });
     }
