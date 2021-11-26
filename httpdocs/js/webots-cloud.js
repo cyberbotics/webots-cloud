@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulation = new Simulation('webots');
   let scene_page = 1;
   let animation_page = 1;
+  let demo_page = 1;
+  let server_page = 1;
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -51,6 +53,10 @@ document.addEventListener('DOMContentLoaded', function() {
       scene_page = page;
     else if (active_tab === 'animation')
       animation_page = page;
+    else if (active_tab === 'demo')
+      demo_page = page;
+    else if (active_tab === 'server')
+      server_page = page;
   }
 
   function getPage(active_tab) {
@@ -58,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
       return scene_page;
     if (active_tab === 'animation')
       return animation_page;
+    if (active_tab === 'demo')
+      return demo_page;
+    if (active_tab === 'server')
+      return server_page;
   }
 
   function homePage(project) {
@@ -414,12 +424,15 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(data.error);
             else {
               modal.close();
+              /*
               const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
               let parent = document.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
               parent.insertAdjacentHTML('beforeend', tr);
               let node = parent.querySelector(`#${type_name}-${data.id}`);
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
+              */
+              showAnimationPage(type_name, data.total);
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
@@ -431,7 +444,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploads.push(data.id);
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
               }
-              updatePagination(type_name, 5, 7);
+              const p = Math.ceil((data.total + 1) / (page_limit + 1));
+              that.load(`/${type_name}?p=$p`);
             }
           });
       });

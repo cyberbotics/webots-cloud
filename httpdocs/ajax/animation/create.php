@@ -102,6 +102,7 @@
   }
   $query = "INSERT INTO animation(title, description, duration, size, user) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size, $user)";
   $mysqli->query($query) or error($mysqli->error);
+  $id = $mysqli->insert_id;
 
   // save files in new folder
   require '../../../php/mysql_id_string.php';
@@ -124,8 +125,18 @@
     }
   }
 
+
+  if ($type == 'S')  // scene
+    $extra_condition = 'duration=0';
+  else  // animation
+    $extra_condition = 'duration>0';
+  $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
+  $count = $result->fetch_array(MYSQLI_ASSOC);
+  $total = intval($count['count']);
+
   $answer = array();
-  $answer['id'] = $mysqli->insert_id;
+  $answer['id'] = $id;
+  $answer['total'] = $total;
   $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
   $answer['description'] = $description;
