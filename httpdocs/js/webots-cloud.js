@@ -432,7 +432,6 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
               */
-              showAnimationPage(type_name, data.total);
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
