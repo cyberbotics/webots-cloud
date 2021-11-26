@@ -479,6 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
             const total = Math.ceil((data.total + 1) / (page_limit + 1));
+            console.log('data.total = ' + data.total);
             updatePagination(type_name, page, total);
           }
         });
