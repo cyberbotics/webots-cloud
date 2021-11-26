@@ -28,7 +28,7 @@ export default class Project extends User {
             that.notFound();
             resolve();
           } else {
-            that.animationPage(data[0]);
+            that.animationPage(data);
             resolve();
           }
         });

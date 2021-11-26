@@ -28,7 +28,7 @@
   } else
     $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $answer = array();
+  $animations = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['user'], 'integer');
@@ -37,7 +37,12 @@
     settype($row['viewed'], 'integer');
     $uri = '/' . $type . mysql_id_to_string($row['id']);
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
-    array_push($answer, $row);
+    array_push($animations, $row);
   }
+  if (isset($data->url)) // view request
+    die(json_encode($animations[0]));
+  $answer = new stdClass;
+  $answer->animations = $animations;
+  $answer->total = 0;
   die(json_encode($answer));
  ?>
