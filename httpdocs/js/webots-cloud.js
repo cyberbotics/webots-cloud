@@ -290,10 +290,12 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
+          console.log('previous page = ' + page);
           if (active_tab === 'scene')
             page = scene_page;
           else if (active_tab === 'animation')
             page = animation_page;
+          console.log('new page = ' + page);
           window.history.pushState(null, document.title, '/' + active_tab + ((page == 1) ? '' : '?p=' + page));
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab;
           CONTENT.forEach((item) => {
