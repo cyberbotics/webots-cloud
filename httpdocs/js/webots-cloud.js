@@ -46,8 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
-    let page_offset = new URL(document.location.href).searchParams.get('p');
-    console.log('page = ' + page_offset);
+    let page = new URL(document.location.href).searchParams.get('p');
+    if (page === null)
+      page = 1;
+    console.log('page = ' + page);
     const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
@@ -427,10 +429,10 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
       addAnimation('A');
     });
-    function listAnimations(type, page_offset) {
+    function listAnimations(type, page) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: page_offset, limit: page_limit, type: type})})
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: page, limit: page_limit, type: type})})
         .then(function(response) {
           return response.json();
         })
@@ -452,8 +454,8 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    listAnimations('S', scene_page_offset);
-    listAnimations('A', 0);
+    listAnimations('S', page);
+    listAnimations('A', page);
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
