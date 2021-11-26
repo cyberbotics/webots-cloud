@@ -424,14 +424,6 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(data.error);
             else {
               modal.close();
-              /*
-              const tr = '<tr class="has-background-warning-light">' + animationRow(data) + '</tr>';
-              let parent = document.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
-              parent.insertAdjacentHTML('beforeend', tr);
-              let node = parent.querySelector(`#${type_name}-${data.id}`);
-              if (node)
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
-              */
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
@@ -444,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
               }
               const p = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-              project.load(`/${type_name}?p=${p}`);
+              project.load(`/${type_name}${(p > 1) ? ('?p=' + p) : ''}`);
             }
           });
       });
@@ -658,8 +650,10 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           if (data.error)
             ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-          else if (data.status == 1)
-            parent.removeChild(old);
+          else if (data.status == 1) {
+            project.load(`/${type_name}${(p > 1) ? ('p=' + page) : ''}`);
+            // parent.removeChild(old);
+          }
         });
     });
   }
