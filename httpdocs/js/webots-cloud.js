@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
       page = 1;
-    console.log('page = ' + page);
     const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
@@ -285,8 +284,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           tab.classList.add(ACTIVE_CLASS);
           active_tab = tab.getAttribute('data-tab');
-          window.history.pushState(null, document.title, '/' + active_tab);
-          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab;
+          window.history.pushState(null, document.title, '/' + active_tab + ((page == 1) ? '' : '?p=' + page));
+          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab + (page == 1) ? '' : ` (${page})`;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
