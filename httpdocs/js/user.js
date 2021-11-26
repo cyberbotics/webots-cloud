@@ -516,7 +516,8 @@ x[i].innerHTML = displayName;
       document.querySelector('#log-in').style.display = 'none';
       document.querySelector('#sign-up').style.display = 'none';
       let that = this;
-      fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: this.email, password: this.password})})
+      const uploads = JSON.parse(window.localStorage.getItem('uploads'))
+      fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
         .then(function(response) {
           return response.json();
         })
@@ -534,6 +535,7 @@ x[i].innerHTML = displayName;
             document.querySelector('#user-menu').style.display = 'flex';
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
+            window.localStorage.removeItem('uploads');
             if (reload)  // the page content may need to be updated after loging in.
               that.load();
             if (success)
