@@ -432,7 +432,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function listAnimations(type, page) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: page, limit: page_limit, type: type})})
+      const offset = (page - 1) * page_limit;
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit, type: type})})
         .then(function(response) {
           return response.json();
         })
