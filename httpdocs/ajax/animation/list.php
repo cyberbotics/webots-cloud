@@ -41,8 +41,10 @@
   }
   if (isset($data->url)) // view request
     die(json_encode($animations[0]));
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition") or error($mysqli->error);
+  $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
-  $answer->total = 0;
+  $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
