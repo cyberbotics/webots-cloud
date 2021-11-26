@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
-    let scene_page_offset = 0;
+    let page_offset = new URL(document.location.href).searchParams.get('p');
+    console.log('page = ' + page_offset);
     const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       const previous_disabled = (current == 1) ? ' disabled': ` href="?p=${current - 1}"`;
       const next_disabled = (current == max) ? ' disabled' : ` href="?p=${current + 1}"`;
-      const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : '" aria-label="Goto page 1"';
+      const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : '" aria-label="Goto page 1" href="?p=1"';
       content.innerHTML =
 `<a class="pagination-previous"${previous_disabled}>Previous</a>
 <a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (i == current)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}" aria-current="page">${i}</a></li>`;
         else
-          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}">${i}</a></li>`;
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="?p=${i}">${i}</a></li>`;
       }
       content.innerHTML += '</ul>';
       nav.innerHTML = content.innerHTML;
