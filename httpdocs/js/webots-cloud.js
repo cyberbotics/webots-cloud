@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       let content = {};
-      const previous_disabled = (current == 1) ? ' disabled': '';
-      const next_disabled = (current == max) ? ' disabled' : '';
+      const previous_disabled = (current == 1) ? ' disabled': ` href="?p=${current - 1}"`;
+      const next_disabled = (current == max) ? ' disabled' : ` href="?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : '" aria-label="Goto page 1"';
       content.innerHTML =
 `<a class="pagination-previous"${previous_disabled}>Previous</a>
@@ -321,6 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
+            updatePagination('demo', 1, 1);
           }
         });
     }
@@ -338,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
           project.content.querySelector('section[data-content="demo"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
+          updatePagination('demo', 1, 1);
         }
       });
     function addAnimation(type) {
@@ -402,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
               let node = parent.querySelector(`#${type_name}-${data.id}`);
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
-              if (!project.id)
+              if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
                                 `To prevent this, you should associate it with your webots.cloud account: ` +
@@ -412,6 +414,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   uploads = [];
                 uploads.push(data.id);
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
+              }
+              updatePagination(type_name, 5, 7);
             }
           });
       });
@@ -512,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="demo"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
+              updatePagination('demo', 3, 5);
             }
           });
       });
@@ -531,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
           project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
             project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
+          updatePagination('server', 1, 1);
         }
       });
 
@@ -581,6 +587,7 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + serverRow(data) + '</tr>';
               document.querySelector('section[data-content="server"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
+              updatePagination('server', 1, 1);
             }
           });
       });
