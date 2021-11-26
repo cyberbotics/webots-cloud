@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    let that = this;
     let active_tab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
