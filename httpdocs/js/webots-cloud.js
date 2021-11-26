@@ -365,8 +365,11 @@ document.addEventListener('DOMContentLoaded', function() {
               if (!project.id)
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
-                                `To prevent this, you can associate it with your webots.cloud account: ` +
+                                `To prevent this, you should associate it with your webots.cloud account: ` +
                                 `log in or sign up for a new account now from this browser.`);
+                let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+                uploads.append(data.id);
+                window.localStorage.setItem('uploads', JSON.stringify(uploads));
             }
           });
       });
