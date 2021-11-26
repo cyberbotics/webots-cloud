@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!page)
       page = 1;
     setPages(active_tab, page);
-    const page_limit = 5;
+    const page_limit = 10;
     if (active_tab === '')
       active_tab = 'animation';
 
