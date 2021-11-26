@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
       active_tab = 'animation';
 
     function updatePagination(tab, current, max) {
-      console.log('updatePagination ' + tab + ' ' + current + ' ' + max);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('?p=' + (current - 1))}"`;
@@ -444,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 uploads.push(data.id);
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
               }
-              const p = Math.ceil((data.total + 1) / (page_limit + 1));
+              const p = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
               project.load(`/${type_name}?p=${p}`);
             }
           });
@@ -478,8 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
-            const total = Math.ceil((data.total + 1) / (page_limit + 1));
-            console.log('data.total = ' + data.total);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination(type_name, page, total);
           }
         });
