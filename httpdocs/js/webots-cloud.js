@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
+    let scene_page_offset = 0;
+    const page_limit = 5;
     if (active_tab === '')
       active_tab = 'animation';
 
@@ -159,6 +161,33 @@ document.addEventListener('DOMContentLoaded', function() {
         </tbody>
       </table>
     </div>
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <a class="pagination-previous">Previous</a>
+      <a class="pagination-next">Next page</a>
+      <ul class="pagination-list">
+        <li>
+          <a class="pagination-link" aria-label="Goto page 1">1</a>
+        </li>
+        <li>
+          <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+          <a class="pagination-link" aria-label="Goto page 45">45</a>
+        </li>
+        <li>
+          <a class="pagination-link is-current" aria-label="Page 46" aria-current="page">46</a>
+        </li>
+        <li>
+          <a class="pagination-link" aria-label="Goto page 47">47</a>
+        </li>
+        <li>
+          <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+          <a class="pagination-link" aria-label="Goto page 86">86</a>
+        </li>
+      </ul>
+    </nav>
     <div class="container">
       <div class="buttons">
         <button class="button" id="add-a-new-scene">Add a new scene</button>
@@ -382,10 +411,10 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
       addAnimation('A');
     });
-    function listAnimations(type) {
+    function listAnimations(type, page_offset) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 5, type: type})})
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: page_offset, limit: page_limit, type: type})})
         .then(function(response) {
           return response.json();
         })
@@ -406,8 +435,8 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    listAnimations('A');
-    listAnimations('S');
+    listAnimations('S', scene_page_offset);
+    listAnimations('A', 0);
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
       let content = {};
       content.innerHTML =
