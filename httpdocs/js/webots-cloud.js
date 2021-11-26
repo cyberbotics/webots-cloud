@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (node)
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project); });
             }
-            updatePagination(type_name, 3, 5);
+            updatePagination(type_name, 2, 4);
           }
         });
     }
