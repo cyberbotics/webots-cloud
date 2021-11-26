@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let uploads = JSON.parse(window.localStorage.getItem('uploads'));
                 if (uploads === null)
                   uploads = [];
-                uploads.append(data.id);
+                uploads.push(data.id);
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
             }
           });
