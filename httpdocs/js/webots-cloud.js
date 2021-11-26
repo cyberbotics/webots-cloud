@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     let active_tab = document.location.pathname.substring(1);
-    let page = new URL(document.location.href).searchParams.get('p');
+    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (page === null)
       page = 1;
     console.log('page = ' + page);
