@@ -16,17 +16,17 @@ export default class Router {
         element = element.parentElement;
       if (element.tagName === 'A' && element.href && event.button === 0) { // left click on an <a href=...>
         if (element.origin === document.location.origin &&
-            (element.path !== document.location.path || document.location.hash === element.hash || element.hash === '')) {
+            (element.pathname !== document.location.pathname || document.location.hash === element.hash || element.hash === '')) {
           // same-origin navigation: a link within the site (we are skipping linking to the same page with possibly hashtags)
           event.preventDefault(); // prevent the browser from doing the navigation
-          that.load(element.path + element.hash);
+          that.load(element.pathname + element.hash);
           if (element.hash === '')
             window.scrollTo(0, 0);
         }
       }
     });
     window.onpopstate = function(event) {
-      that.load(document.location.path + document.location.hash, false);
+      that.load(document.location.pathname + document.location.hash, false);
       event.preventDefault();
     };
   }
@@ -71,7 +71,7 @@ export default class Router {
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (page == null)
-        page = window.location.path + window.location.hash;
+        page = window.location.pathname + window.location.search + window.location.hash;
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
       if (url.pathname === '/404.php') {
@@ -83,7 +83,7 @@ export default class Router {
           const route = that.routes[i];
           if (url.pathname === route.url) {
             if (pushHistory)
-              window.history.pushState(null, name, url.path + url.hash);
+              window.history.pushState(null, name, url.pathname + url.search + url.hash);
             route.setup(that);
             found = true;
             resolve();
@@ -104,7 +104,7 @@ export default class Router {
     let promise = new Promise((resolve, reject) => {
       that.notFound();
       if (pushHistory)
-        window.history.pushState(null, name, url.path + url.hash);
+        window.history.pushState(null, name, url.pathname + url.search + url.hash);
       resolve();
     });
     return promise;
