@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
 <a class="pagination-link${one_is_current}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
-        if (i == current - 2 || (i == current + 2 && i != max) {
+        if (i == current - 2 || (i == current + 2 && i != max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
           continue;
         }
