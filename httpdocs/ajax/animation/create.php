@@ -126,13 +126,13 @@
   }
 
 
-  if ($type == 'S')  // scene
+  if ($type === 'S')  // scene
     $extra_condition = 'duration=0';
   else  // animation
     $extra_condition = 'duration>0';
   $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
-  $total = intval($count['count']);
+  $total = intval($count['total']);
 
   $answer = array();
   $answer['id'] = $id;
