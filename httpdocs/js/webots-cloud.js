@@ -368,6 +368,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 `To prevent this, you should associate it with your webots.cloud account: ` +
                                 `log in or sign up for a new account now from this browser.`);
                 let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+                if (uploads === null)
+                  uploads = [];
                 uploads.append(data.id);
                 window.localStorage.setItem('uploads', JSON.stringify(uploads));
             }
