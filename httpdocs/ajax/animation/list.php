@@ -39,8 +39,11 @@
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($animations, $row);
   }
-  if (isset($data->url)) // view request
+  if (isset($data->url)) {  // view request
+    if (len($animations) === 0)
+      error("Animation not found.");
     die(json_encode($animations[0]));
+  }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;

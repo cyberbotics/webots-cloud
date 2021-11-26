@@ -24,7 +24,7 @@ export default class Project extends User {
         .then(function(data) {
           if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
-          if (data.length == 0) { // no such animation
+          if (data.error) { // no such animation
             that.notFound();
             resolve();
           } else {
