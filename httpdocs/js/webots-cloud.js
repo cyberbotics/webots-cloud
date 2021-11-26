@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="tab-content">
   <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
     <div class="table-container">
-      <table class="table">
+      <table class="table is-striped is-hoverable">
         <thead>
           <tr>
             <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </section>
   <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
     <div class="table-container">
-      <table class="table">
+      <table class="table is-striped is-hoverable">
         <thead>
           <tr>
             <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </section>
   <section class="section${(active_tab == 'demo') ? ' is-active' : ''}" data-content="demo">
     <div class="table-container">
-      <table class="table">
+      <table class="table is-striped is-hoverable">
         <thead>
           <tr>
             <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </section>
   <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
     <div class="table-container">
-      <table class="table">
+      <table class="table is-striped is-hoverable">
         <thead>
           <tr>
             <th title="Fully qualified domain name of server">Server</th>
