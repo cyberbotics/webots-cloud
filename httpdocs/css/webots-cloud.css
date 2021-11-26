@@ -42,6 +42,14 @@ body footer .has-text-centered {
   user-select: none;
 }
 
+nav.pagination > a[disabled] {
+  background-color: #fff;
+  border-color:#dbdbdb;
+  box-shadow: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media only screen and (max-width: 500px) {
   .panel-tabs > a {
     font-size: 12px;
