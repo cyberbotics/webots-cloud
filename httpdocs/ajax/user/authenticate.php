@@ -25,7 +25,7 @@
     error("The password you entered is wrong.");
   $uploads = $data->{'uploads'};
   if (count($uploads)) {
-    $query = "UPDATE animation SET owner=$user[id] WHERE owner=0 AND id IN ($uploads[0]";
+    $query = "UPDATE animation SET user=$user[id] WHERE user=0 AND id IN ($uploads[0]";
     foreach(array_slice($uploads, 1) as $upload)
       $query .= ", $upload";
     $query .= ")";
