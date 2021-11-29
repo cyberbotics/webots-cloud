@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank">${data.title}</a></td>` +
-        `<td><a class="has-text-dark" href="${data.url}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
+        `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run" class="fas fa-film fa-lg has-text-dark"></i></a></td>` +
