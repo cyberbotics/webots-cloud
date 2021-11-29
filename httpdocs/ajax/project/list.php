@@ -17,6 +17,7 @@
   $answer = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
+    settype($row['stars'], 'integer');
     array_push($answer, $row);
   }
   die(json_encode($answer));
