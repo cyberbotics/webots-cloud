@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             line += '<tr>' + serverRow(data[i]) + '</tr>';
           project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
-            project.content.querySelector('#sync-server' + data[i].id).addEventListener('click', synchronizeServer);
+            project.content.querySelector('#sync-server-' + data[i].id).addEventListener('click', synchronizeServer);
           updatePagination('server', 1, 1);
         }
       });
