@@ -337,12 +337,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(function(data) {
           console.log(event.target.id);
+          const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
+          const parent = old.parentNode;
           if (data.error) {
             ModalDialog.run('Project creation error', data.error);
             parent.removeChild(old);
           } else {
-            const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
-            const parent = old.parentNode;
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
