@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
-      const words = data.url.substring(20).split('/');
+      const words = data.url.substring(19).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}/tree/${words[3]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
@@ -169,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${repository}" target="_blank">${data.title}</a></td>` +
-        `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
+        `<td><a class="has-text-dark" href="${data.url}" target="_blank">${data.title}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run" class="fas fa-film fa-lg has-text-dark"></i></a></td>` +
@@ -486,29 +486,16 @@ document.addEventListener('DOMContentLoaded', function() {
         `<div class="field">
   <label class="label">Webots world file</label>
   <div class="control has-icons-left">
-    <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag_or_branch/worlds/file.wbt" value="https://github.com/">
+    <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
     <span class="icon is-small is-left">
       <i class="fab fa-github"></i>
     </span>
   </div>
-  <div class="help">Blob reference in a public GitHub repository, including tag or branch information, for example:<br>
-    <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2020a/projects/languages/python/worlds/example.wbt">
-      https://github.com/cyberbotics/webots/blob/R2020a/projects/languages/python/worlds/example.wbt
+  <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+    <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
+      https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
     </a>
   </div>
-</div>
-<div class="field">
-  <label class="label">Tag or Branch?</label>
-  <div class="control">
-    <span class="icon is-small is-left"><i class="fas fa-code-branch"></i></span><span> &nbsp; </span>
-    <label class="radio">
-      <input type="radio" name="branch" required checked> Tag
-    </label>
-    <label class="radio">
-      <input type="radio" name="branch" required> Branch
-    </label>
-  </div>
-  <div class="help">Specify if the above blob corresponds to a git tag (recommended) or a git branch.</div>
 </div>`;
       let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
@@ -522,13 +509,10 @@ document.addEventListener('DOMContentLoaded', function() {
           modal.error('The world file should start with "https://github.com/".');
           return;
         }
-        const branchOrTag = modal.querySelector('input[type="radio"]').checked ? 'tag' : 'branch';
-        const n = worldFile.split('/', 5).join('/').length;
-        const url = 'webots' + worldFile.substring(5, n + 1) + branchOrTag + worldFile.substring(n + 5); // skipping "/blob"
         const content = {
           method: 'post',
           body: JSON.stringify({
-            url: url
+            url: worldFile
           })
         };
         fetch('/ajax/project/create.php', content)
