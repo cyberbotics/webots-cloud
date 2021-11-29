@@ -1,7 +1,7 @@
 <?php
 function simulation_check_url($url) {
-  if (substr($url, 0, 20) !== 'https://github.com/')
-    return 'The URL should start with \'https://github.com/\'';
+  if (substr($url, 0, 19) !== 'https://github.com/')
+    return "The URL should start with 'https://github.com/' instead of $url";
   if (substr($url, -4) != '.wbt')
     return 'The URL should end with \'.wbt\': ' . substr($url, -4);
   $exploded = explode('/', substr($url, 20));
