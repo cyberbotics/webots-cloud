@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function simulationRow(data) {
       const words = data.url.substring(19).split('/');
-      const repository = `https://github.com/${words[0]}/${words[1]}/tree/${words[3]}`;
+      const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
