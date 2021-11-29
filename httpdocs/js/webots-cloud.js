@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log(event.target.id);
+          console.log('tag = #sync-'event.target.id,substring(5));
           const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
