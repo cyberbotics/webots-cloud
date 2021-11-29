@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function serverRow(data) {
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const row =
         `<td><a class="has-text-dark" href="${data.url}" target="_blank">${data.url.substring(8)}</a></td>` +
@@ -351,6 +351,11 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
+
+    function synchronizeServer(event) {
+      console.log('synchronize server');
+    }
+
     fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
       .then(function(response) {
         return response.json();
@@ -546,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             line += '<tr>' + serverRow(data[i]) + '</tr>';
           project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.length; i++)
-            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
+            project.content.querySelector('#sync-server' + data[i].id).addEventListener('click', synchronizeServer);
           updatePagination('server', 1, 1);
         }
       });
