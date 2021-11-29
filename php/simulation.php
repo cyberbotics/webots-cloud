@@ -1,7 +1,7 @@
 <?php
 function simulation_check_url($url) {
-  if (substr($url, 0, 20) !== 'webots://github.com/')
-    return 'The URL should start with \'webots://github.com/\'';
+  if (substr($url, 0, 20) !== 'https://github.com/')
+    return 'The URL should start with \'https://github.com/\'';
   if (substr($url, -4) != '.wbt')
     return 'The URL should end with \'.wbt\': ' . substr($url, -4);
   $exploded = explode('/', substr($url, 20));
@@ -14,8 +14,8 @@ function simulation_check_url($url) {
     return 'Wrong GitHub username';
   if (!preg_match('/^[a-z\d_.-]{1,100}$/i', $repository))
     return 'Wrong GitHub repository';
-  if ($exploded[2] != 'tag' && $exploded[2] != 'branch')
-    return 'Missing \'/tag/\' or \'/branch/\' in URL';
+  if ($exploded[2] != 'blob' && $exploded[2] != 'raw')
+    return 'Missing \'/blob/\' or \'/raw/\' in URL';
   $tag_or_branch = $exploded[3];
   if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $tag_or_branch))
     return 'Wrong GitHub tag or branch name';
