@@ -336,8 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log('tag = #sync-' + event.target.id.substring(5));
-          const old = document.querySelector('#sync-' + data.id).parentNode.parentNode;
+          const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
             ModalDialog.run('Project creation error', data.error);
