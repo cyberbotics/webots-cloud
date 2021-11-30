@@ -387,11 +387,11 @@ document.addEventListener('DOMContentLoaded', function() {
           ModalDialog.run('Project listing error', data.error);
         else {
           let line = ``;
-          for (let i = 0; i < data.simulations.length; i++) // compute the GitHub repo URL from the simulation URL.
+          for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data.simulations[i]) + '</tr>';
           project.content.querySelector('section[data-content="demo"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.simulations.length; i++)
-            project.content.querySelector('#sync-' + data.simulations[i].id).addEventListener('click', synchronize);
+          for (let i = 0; i < data.projects.length; i++)
+            project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
           const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
           updatePagination('demo', demo_page, total);
         }
