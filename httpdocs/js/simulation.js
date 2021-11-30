@@ -30,12 +30,12 @@ export default class Simulation {
       webotsView.innerHTML = 'Unsupported mode: ' + mode;
     else {
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      let u = protocol + '//' + window.location.hostname + '/1999/session?url=' + url;
+      const u = protocol + '//' + window.location.hostname + '/session?url=' + url;
       console.log('opening ' + u + ' protocol = ' + window.location.protocol);
       if (mode)
-        webotsView.open(u, mode);
+        webotsView.connect(u, mode);
       else
-        webotsView.open(u);
+        webotsView.connect(u);
     }
   }
 }
