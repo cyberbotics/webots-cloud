@@ -171,12 +171,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${data.url}" target="_blank">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="/simulation?url=${data.url}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
-        `<i title="Playback saved simulation run" class="fas fa-film fa-lg has-text-dark"></i></a></td>` +
-        `<td><i title="Run interactive simulation (not available)" class="fas fa-robot fa-lg has-text-grey-light"></i></td>`;
+        `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>` +
+        `<td><a href="${data.url}" target="_blank"><i title="View GitHub repository" class="fab fa-github fa-lg has-text-dark"></i></a></td>`;
       return row;
     }
 
