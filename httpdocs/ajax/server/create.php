@@ -2,6 +2,11 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
+  function remove($message) {
+    global $mysqli, $url;
+    $mysqli->query("DELETE FROM server WHERE url=\"$url\"") or error($mysqli->error);
+    error($message);
+  }
   header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
@@ -11,14 +16,15 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   $url = $mysqli->escape_string($data->url);
+  if (substr($url, 0, 8) !== 'https://')
+    remove("Malformed URL: $url");
+  $session_content = @file_get_contents("$url/session");
+  if ($session_content === false)
+    remove("Cannot reach session server at $url");
+  if (substr($session_content, 0, 6) !== 'wss://')
+    remove("Bad answer from session server: \"$session_content\"");
   $query = "INSERT IGNORE INTO server(url) VALUES(\"$url\")";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows != 1) {
-    if ($id === 0)
-      error("This server already exists");
-    else
-      error("Failed to update the server");
-  }
   $answer = array();
   $answer['id'] = $mysqli->insert_id;
   $answer['url'] = $url;
