@@ -1,11 +1,6 @@
 /* global webots */
 
 export default class Simulation {
-  content() {
-    const template = document.createElement('template');
-    template.innerHTML = `<div id="webots-view" style="height:100vh;"></div>`;
-    return template.content;
-  }
   run() {
     function findGetParameter(parameterName) {
       let result = null;

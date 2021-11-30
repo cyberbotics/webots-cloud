@@ -636,8 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function simulationPage(project) {
-    project.setup('simulation', [], simulation.content(), true);
-    simulation.run();
+    project.simulationPage()
   }
 
   function deleteAnimation(event, type, project, page) {
