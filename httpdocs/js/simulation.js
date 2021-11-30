@@ -23,20 +23,19 @@ export default class Simulation {
     let webotsView = document.body.querySelector('#webots-view');
     if (url == null) {
       webotsView.innerHTML = 'Missing GET parameter: url<div class="is-size-6">Example: ' + window.location.href +
-        '?url=https://github.com/user/repo/tag/R2020b/simulation/folder/worlds/my_world.wbt';
+        '?url=https://github.com/user/repo/blob/R2020b/simulation/folder/worlds/my_world.wbt';
     } else if (!url.startsWith('https://github.com/'))
       webotsView.innerHTML = 'Wrong url: ' + url;
     else if (mode !== null && mode !== 'x3d' && mode !== 'mjpeg')
       webotsView.innerHTML = 'Unsupported mode: ' + mode;
     else {
-      let view = new webots.View(webotsView, 0);
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       let u = protocol + '//' + window.location.hostname + '/1999/session?url=' + url;
       console.log('opening ' + u + ' protocol = ' + window.location.protocol);
       if (mode)
-        view.open(u, mode);
+        webotsView.open(u, mode);
       else
-        view.open(u);
+        webotsView.open(u);
     }
   }
 }
