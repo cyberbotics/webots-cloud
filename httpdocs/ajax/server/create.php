@@ -23,10 +23,18 @@
     remove("Cannot reach session server at $url");
   if (substr($session_content, 0, 6) !== 'wss://')
     remove("Bad answer from session server: $session_content");
-  $query = "INSERT IGNORE INTO server(url) VALUES(\"$url\")";
-  $mysqli->query($query) or error($mysqli->error);
+  $query = "SELECT id FROM server WHERE url=\"$url\"";
+  $result = $mysqli->query($query) or error($mysqli->error);
+  $server = $result->fetch_array(MYSQLI_ASSOC)
+  if (!$server) {
+    $query = "INSERT INTO server(url) VALUES(\"$url\")";
+    $mysqli->query($query) or error($mysqli->error);
+    $id = $mysqli->insert_id;
+  } else
+    $id = $server['id'];
+
   $answer = array();
-  $answer['id'] = $mysqli->insert_id;
+  $answer['id'] = $id;
   $answer['url'] = $url;
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
