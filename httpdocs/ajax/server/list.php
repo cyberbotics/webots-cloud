@@ -14,10 +14,15 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM server LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $answer = array();
+  $servers = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
-    array_push($answer, $row);
+    array_push($servers, $row);
   }
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM server") or error($mysqli->error);
+  $count = $result->fetch_array(MYSQLI_ASSOC);
+  $answer = new StdClass;
+  $answer->servers = $servers;
+  $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
