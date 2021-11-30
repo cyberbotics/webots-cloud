@@ -364,6 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
+          console.log('#sync-server-' + id);
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
