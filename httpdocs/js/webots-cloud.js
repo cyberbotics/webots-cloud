@@ -355,8 +355,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function synchronizeServer(event) {
-      console.log('synchronize server');
       const id = event.target.id.substring(12);
+      console.log('synchronize server ' + id);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
       fetch('ajax/server/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
-            parent.querySelector('#sync-server-' + id).addEventListener('click', synchronizeServer);
+            parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
             event.target.classList.remove('fa-spin');
             updatePagination('server', 1, 1);
           }
