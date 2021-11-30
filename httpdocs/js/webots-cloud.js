@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
-            parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
+            parent.querySelector('#sync-server-' + id).addEventListener('click', synchronizeServer);
             event.target.classList.remove('fa-spin');
             updatePagination('server', 1, 1);
           }
