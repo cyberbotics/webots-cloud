@@ -60,7 +60,7 @@ export default class Project extends User {
   }
   animationPage(data) {
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-    setupWebotsView(data, data.duration > 0 ? 'animation' : 'scene');
+    this.setupWebotsView(data, data.duration > 0 ? 'animation' : 'scene');
     if (data.duration > 0)
       Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
     else
@@ -68,7 +68,7 @@ export default class Project extends User {
   }
   simulationPage(data) {
     const description = data.description.replace('\n', '<br>\n');
-    setupWebotsView(data, 'simulation');
+    this.setupWebotsView(data, 'simulation');
     Project.webotsView.connect(data.url);
   }
 }
