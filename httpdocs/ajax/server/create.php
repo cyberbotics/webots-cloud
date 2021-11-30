@@ -21,7 +21,7 @@
   $session_content = @file_get_contents("$url/session");
   if ($session_content === false)
     remove("Cannot reach session server at $url");
-  if (substr($session_content, 0, 6) !== 'wss://')
+  if (substr($session_content, 0, 6) !== 'wss://' && substr($session_content, 0, 5) !== 'ws://')
     remove("Bad answer from session server: $session_content");
   $query = "INSERT IGNORE INTO server(url) VALUES(\"$url\")";
   $mysqli->query($query) or error($mysqli->error);
