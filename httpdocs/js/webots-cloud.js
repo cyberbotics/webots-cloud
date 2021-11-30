@@ -356,7 +356,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function synchronizeServer(event) {
       const id = event.target.id.substring(12);
-      console.log('synchronize server ' + id);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
       fetch('ajax/server/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
@@ -364,7 +363,6 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log('1 #sync-server-' + id);
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -374,7 +372,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = serverRow(data);
             parent.replaceChild(tr, old);
-            console.log('2 #sync-server-' + data.id);
             parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
             event.target.classList.remove('fa-spin');
             updatePagination('server', 1, 1);
