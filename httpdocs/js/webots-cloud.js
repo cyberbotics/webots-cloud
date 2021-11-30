@@ -174,9 +174,9 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="/simulation?url=${data.url}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td><a href="${data.url}" target="_blank"><i title="View GitHub repository" class="fab fa-github fa-lg has-text-dark"></i></a></td>` +
         `<td><a href="${animation}" target="_blank">` +
-        `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>` +
-        `<td><a href="${data.url}" target="_blank"><i title="View GitHub repository" class="fab fa-github fa-lg has-text-dark"></i></a></td>`;
+        `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>`;
       return row;
     }
 
