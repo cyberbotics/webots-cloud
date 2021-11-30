@@ -40,12 +40,10 @@ export default class Project extends User {
       Project.webotsView.close();
     super.setup(title, anchors, content, fullpage);
   }
-  animationPage(data) {
-    let that = this;
-    let template = document.createElement('template');
-    const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+  setupWebotsView(data, page) {
+    const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     const description = data.description.replace('\n', '<br>\n');
-    const view = (!Project.webotsView) ? `<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>` : '';
+    let template = document.createElement('template');
     template.innerHTML =
 `<section class="section" style="padding-top:20px">
   <div class="container" style="height:540px" id="webotsViewContainer">${view}</div>
@@ -54,15 +52,24 @@ export default class Project extends User {
     ${description}
   </div>
 </section>`;
-    that.setup(data.duration > 0 ? 'animation' : 'scene', [], template.content);
+    this.setup(page, [], template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
+  }
+  animationPage(data) {
+    const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+    setupWebotsView(data, data.duration > 0 ? 'animation' : 'scene');
     if (data.duration > 0)
       Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
     else
       Project.webotsView.loadScene(`${reference}/scene.x3d`);
+  }
+  simulationPage(data) {
+    const description = data.description.replace('\n', '<br>\n');
+    setupWebotsView(data, 'simulation');
+    Project.webotsView.connect(data.url);
   }
 }
 Project.current = null;
