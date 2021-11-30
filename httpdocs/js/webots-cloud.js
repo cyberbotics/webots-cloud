@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    const offset = (demo_page - 1) * page_limit;
+    let offset = (page - 1) * page_limit;
     fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
       .then(function(response) {
         return response.json();
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let i = 0; i < data.projects.length; i++)
             project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
           const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('demo', demo_page, total);
+          updatePagination('demo', page, total);
         }
       });
     function addAnimation(type) {
@@ -560,8 +560,8 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     });
-
-    fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
+    offset = (page - 1) * page_limit;
+    fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
       .then(function(response) {
         return response.json();
       })
@@ -570,12 +570,13 @@ document.addEventListener('DOMContentLoaded', function() {
           ModalDialog.run('Server listing error', data.error);
         else {
           let line = ``;
-          for (let i = 0; i < data.length; i++)
-            line += '<tr>' + serverRow(data[i]) + '</tr>';
+          for (let i = 0; i < data.servers.length; i++)
+            line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
           project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.length; i++)
-            project.content.querySelector('#sync-server-' + data[i].id).addEventListener('click', synchronizeServer);
-          updatePagination('server', 1, 1);
+          for (let i = 0; i < data.servers.length; i++)
+            project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
+          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+          updatePagination('server', page, total);
         }
       });
 
