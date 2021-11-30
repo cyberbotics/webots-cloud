@@ -25,7 +25,7 @@
     remove("Bad answer from session server: $session_content");
   $query = "SELECT id FROM server WHERE url=\"$url\"";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $server = $result->fetch_array(MYSQLI_ASSOC)
+  $server = $result->fetch_array(MYSQLI_ASSOC);
   if ($server)
     $id = $server['id'];
   else {
