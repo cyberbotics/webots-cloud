@@ -26,12 +26,13 @@
   $query = "SELECT id FROM server WHERE url=\"$url\"";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server = $result->fetch_array(MYSQLI_ASSOC)
-  if (!$server) {
+  if ($server)
+    $id = $server['id'];
+  else {
     $query = "INSERT INTO server(url) VALUES(\"$url\")";
     $mysqli->query($query) or error($mysqli->error);
     $id = $mysqli->insert_id;
-  } else
-    $id = $server['id'];
+  }
 
   $answer = array();
   $answer['id'] = $id;
