@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else {
           let line = ``;
           for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-            line += '<tr>' + simulationRow(data.simulations[i]) + '</tr>';
+            line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
           project.content.querySelector('section[data-content="demo"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.projects.length; i++)
             project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
