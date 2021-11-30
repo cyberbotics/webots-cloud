@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log('#sync-server-' + id);
+          console.log('1 #sync-server-' + id);
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -374,6 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
+            console.log('#sync-server-' + data.id);
             parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
             event.target.classList.remove('fa-spin');
             updatePagination('server', 1, 1);
