@@ -354,9 +354,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function synchronizeServer(event) {
       console.log('synchronize server');
+      const id = event.target.id.substring(12);
+      event.target.classList.add('fa-spin');
+      const url = event.target.getAttribute('data-url');
+      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
+          const parent = old.parentNode;
+          if (data.error) {
+            ModalDialog.run('Server synchronization error', data.error);
+            parent.removeChild(old);
+          } else {
+            let tr = document.createElement('tr');
+            tr.innerHTML = simulationRow(data);
+            parent.replaceChild(tr, old);
+            parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
+            event.target.classList.remove('fa-spin');
+            updatePagination('server', 1, 1);
+          }
+        });
     }
-
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: 0, limit: 10})})
+    const offset = (demo_page - 1) * page_limit;
+    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
       .then(function(response) {
         return response.json();
       })
@@ -365,12 +387,13 @@ document.addEventListener('DOMContentLoaded', function() {
           ModalDialog.run('Project listing error', data.error);
         else {
           let line = ``;
-          for (let i = 0; i < data.length; i++) // compute the GitHub repo URL from the simulation URL.
-            line += '<tr>' + simulationRow(data[i]) + '</tr>';
+          for (let i = 0; i < data.simulations.length; i++) // compute the GitHub repo URL from the simulation URL.
+            line += '<tr>' + simulationRow(data.simulations[i]) + '</tr>';
           project.content.querySelector('section[data-content="demo"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.length; i++)
-            project.content.querySelector('#sync-' + data[i].id).addEventListener('click', synchronize);
-          updatePagination('demo', 1, 1);
+          for (let i = 0; i < data.simulations.length; i++)
+            project.content.querySelector('#sync-' + data.simulations[i].id).addEventListener('click', synchronize);
+          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+          updatePagination('demo', demo_page, total);
         }
       });
     function addAnimation(type) {

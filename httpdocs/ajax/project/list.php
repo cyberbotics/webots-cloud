@@ -14,11 +14,16 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM project ORDER BY stars DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $answer = array();
+  $projects = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['stars'], 'integer');
-    array_push($answer, $row);
+    array_push($projects, $row);
   }
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
+  $count = $result->fetch_array(MYSQLI_ASSOC);
+  $answer = new StdClass;
+  $answer->projects = $projects;
+  $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
