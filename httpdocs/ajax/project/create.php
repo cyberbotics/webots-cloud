@@ -45,7 +45,7 @@
         elseif (substr($line, 0, 5) === '    "') {
           if ($description !== '')
             $description .= "\n";
-          $description .= substr($line, 5, strrpos($line, '"'));
+          $description .= substr($line, 5, strrpos($line, '"') - 5);
         }
       }
     }
