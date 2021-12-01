@@ -36,7 +36,7 @@
       if ($line === '}')
         break;
       if (substr($line, 0, 9) === '  title "')
-        $title = substr($line, 9, strrpos($line, '"') - 9);
+        $title = $mysqli->escape_string(substr($line, 9, strrpos($line, '"') - 9));
       elseif ($line === '  info [')
         $info = true;
       elseif ($info) {
@@ -45,7 +45,7 @@
         elseif (substr($line, 0, 5) === '    "') {
           if ($description !== '')
             $description .= "\n";
-          $description .= substr($line, 5, strrpos($line, '"') - 5);
+          $description .= $mysqli->escape_string(substr($line, 5, strrpos($line, '"') - 5));
         }
       }
     }
@@ -61,7 +61,6 @@
   $stars = intval($info->{'stargazers_count'});
   $language = $info->{'language'};
   $parent = 0;
-  /*
   if ($id === 0)
     $query = "INSERT IGNORE INTO project(url, stars, parent, title, description, language) "
             ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$description\", \"$language\")";
@@ -75,7 +74,6 @@
     else
       error("Failed to update the simulation");
   }
-  */
   $answer = array();
   $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
