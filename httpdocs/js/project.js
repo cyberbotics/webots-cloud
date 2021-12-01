@@ -40,6 +40,17 @@ export default class Project extends User {
       Project.webotsView.close();
     super.setup(title, anchors, content, fullpage);
   }
+  findGetParameter(parameterName) {
+    let result = undefined;
+    let tmp = [];
+    let items = window.location.search.substr(1).split('&');
+    for (let index = 0; index < items.length; index++) {
+      tmp = items[index].split('=');
+      if (tmp[0] === parameterName)
+        result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+  }
   setupWebotsView(data, page) {
     const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     const description = data.description.replace('\n', '<br>\n');
@@ -66,10 +77,15 @@ export default class Project extends User {
     else
       Project.webotsView.loadScene(`${reference}/scene.x3d`);
   }
-  simulationPage(data) {
-    const description = data.description.replace('\n', '<br>\n');
+  simulationPage() {
+    data = {
+      title: "coucou",
+      description: "test"
+    };
     this.setupWebotsView(data, 'simulation');
-    Project.webotsView.connect(data.url);
+    const url = this.findGetParameter('url');
+    const mode = this.findGetParameter('mode');
+    Project.webotsView.connect(url, mode);
   }
 }
 Project.current = null;

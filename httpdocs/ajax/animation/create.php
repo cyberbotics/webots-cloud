@@ -125,7 +125,6 @@
     }
   }
 
-
   if ($type === 'S')  // scene
     $extra_condition = 'duration=0';
   else  // animation
