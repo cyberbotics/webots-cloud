@@ -35,6 +35,7 @@ CREATE TABLE `project` (
   `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `parent` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
+  `description` varchar(2048) NOT NULL,
   `stars` int(11) NOT NULL,
   `language` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
