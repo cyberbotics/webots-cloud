@@ -61,6 +61,7 @@
   $stars = intval($info->{'stargazers_count'});
   $language = $info->{'language'};
   $parent = 0;
+  /*
   if ($id === 0)
     $query = "INSERT IGNORE INTO project(url, stars, parent, title, description, language) "
             ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$description\", \"$language\")";
@@ -74,6 +75,7 @@
     else
       error("Failed to update the simulation");
   }
+  */
   $answer = array();
   $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
