@@ -16,8 +16,8 @@ function simulation_check_url($url) {
     return 'Wrong GitHub repository';
   if ($exploded[2] != 'blob' && $exploded[2] != 'raw')
     return 'Missing \'/blob/\' or \'/raw/\' in URL';
-  $tag_or_branch = $exploded[3];
-  if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $tag_or_branch))
+  $version = $exploded[3];
+  if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $version))
     return 'Wrong GitHub tag or branch name';
   $folder = implode('/', array_slice($exploded, 4, $count - 6));
   if ($folder !=='' and
@@ -32,6 +32,6 @@ function simulation_check_url($url) {
   if ($worlds_folder != 'worlds')
     return 'Missing \'/worlds/\' folder in URL';
   $world = $exploded[$count - 1];
-  return array($username, $repository, $tag_or_branch, $folder, $world);
+  return array($username, $repository, $version, $folder, $world);
 }
 ?>
