@@ -546,6 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         fetch('/ajax/project/create.php', content)
           .then(function(response) {
+            console.log(response);
             return response.json();
           })
           .then(function(data) {
