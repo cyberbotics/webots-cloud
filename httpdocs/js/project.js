@@ -51,18 +51,16 @@ export default class Project extends User {
     }
     return result;
   }
-  setupWebotsView(data, page) {
+  setupWebotsView(page, data) {
     const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
-    const description = data.description.replace('\n', '<br>\n');
     let template = document.createElement('template');
-    template.innerHTML =
-`<section class="section" style="padding-top:20px">
-  <div class="container" style="height:540px" id="webotsViewContainer">${view}</div>
-  <div>
-    <h1 class="subtitle" style="margin:10px 0">${data.title}</h1>
-    ${description}
-  </div>
-</section>`;
+    template.innerHTML = `<section class="section" style="padding-top:20px">
+<div class="container" style="height:540px" id="webotsViewContainer">${view}</div>`
+    if (data) {
+      const description = data.description.replace('\n', '<br>\n');
+      template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
+    }
+    template.innerHTML += '</section>';
     this.setup(page, [], template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
@@ -71,18 +69,14 @@ export default class Project extends User {
   }
   animationPage(data) {
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-    this.setupWebotsView(data, data.duration > 0 ? 'animation' : 'scene');
+    this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
     if (data.duration > 0)
       Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
     else
       Project.webotsView.loadScene(`${reference}/scene.x3d`);
   }
   simulationPage() {
-    data = {
-      title: "coucou",
-      description: "test"
-    };
-    this.setupWebotsView(data, 'simulation');
+    this.setupWebotsView('simulation');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     Project.webotsView.connect(url, mode);
