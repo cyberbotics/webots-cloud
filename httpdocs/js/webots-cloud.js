@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/simulation?url=${data.url}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="/simulation?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${data.url}" target="_blank"><i title="View GitHub repository" class="fab fa-github fa-lg has-text-dark"></i></a></td>` +
@@ -546,7 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         fetch('/ajax/project/create.php', content)
           .then(function(response) {
-            console.log(response);
             return response.json();
           })
           .then(function(data) {
