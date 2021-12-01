@@ -172,9 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/simulation?url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `<td><a href="${data.url}" target="_blank"><i title="View GitHub repository" class="fab fa-github fa-lg has-text-dark"></i></a></td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>`;
       return row;
@@ -257,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <tr>
             <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
             <th title="Title of the demo">Title</th>
+            <th title="Version of the demo">Version</th>
             <th title="Main programming language">Language</th>
             <th title="Last update time">Updated</th>
             <th colspan="2"></th>

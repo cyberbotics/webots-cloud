@@ -17,8 +17,8 @@
   $check_url = simulation_check_url($url);
   if (!is_array($check_url))
     error($check_url);
-  list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
-  $world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/worlds/$world";
+  list($username, $repository, $version, $folder, $world) = $check_url;
+  $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
   $world_content = @file_get_contents($world_url);
   if ($world_content === false)
     error("Failed to fetch world file at $world_url");
