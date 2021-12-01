@@ -28,7 +28,7 @@
   $info = false;
   $title = '';
   $description = '';
-  $line = strtok($subject, "\r\n");
+  $line = strtok($world_content, "\r\n");
   while ($line !== false) {
     if ($line == "WorldInfo {")
       $world_info = true;
