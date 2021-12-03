@@ -79,7 +79,7 @@ export default class Project extends User {
     this.setupWebotsView('simulation');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    Project.webotsView.connect(url, mode);
+    Project.webotsView.connect('wss://cyberbotics1.epfl.ch/session?url=' + url, mode);
   }
 }
 Project.current = null;
