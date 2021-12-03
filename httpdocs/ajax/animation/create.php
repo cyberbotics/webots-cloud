@@ -42,7 +42,7 @@
     }
     return $value;
   }
-  $animation = array_key_exists('animation-files', $_FILES);
+  $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
