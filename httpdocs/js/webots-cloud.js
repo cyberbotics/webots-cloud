@@ -1,9 +1,7 @@
 import Project from './project.js';
-import Simulation from './simulation.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
-  let simulation = new Simulation('webots');
   let scene_page = 1;
   let animation_page = 1;
   let demo_page = 1;
