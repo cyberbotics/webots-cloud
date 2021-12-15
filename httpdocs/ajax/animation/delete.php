@@ -3,6 +3,12 @@ function error($message) {
   die("{\"error\":\"$message\"}");
 }
 function rrmdir($dir) {  # recursive rmdir, e.g., rm -rf
+  if (!file_exists($dir))
+    return;
+  if (!is_dir($dir)) {
+    unlink($dir);
+    return;
+  }
   $files = array_diff(scandir($dir), array('.','..'));
   foreach ($files as $file) {
     $path = "$dir/$file";
