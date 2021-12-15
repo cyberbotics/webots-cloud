@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
-      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('?p=' + (current - 1))}"`;
-      const next_disabled = (current == max) ? ' disabled' : ` href="?p=${current + 1}"`;
+      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
+      const next_disabled = (current == max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
 `<a class="pagination-previous"${previous_disabled}>Previous</a>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (i == current)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}" aria-current="page">${i}</a></li>`;
         else
-          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="?p=${i}">${i}</a></li>`;
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="/${tab}?p=${i}">${i}</a></li>`;
       }
       content.innerHTML += '</ul>';
       nav.innerHTML = content.innerHTML;
