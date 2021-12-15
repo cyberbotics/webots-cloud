@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!page)
       page = 1;
     setPages(active_tab, page);
-    const page_limit = 5;
+    const page_limit = 10;
     if (active_tab === '')
       active_tab = 'animation';
 
@@ -555,7 +555,8 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="demo"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              updatePagination('demo', 3, 5);
+              const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+              updatePagination('demo', page, total);
             }
           });
       });
