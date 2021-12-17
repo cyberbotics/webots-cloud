@@ -25,8 +25,10 @@
     $query = "UPDATE animation SET viewed = viewed + 1 WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
-  } else
+  } else {  // listing request
+    // TODO: clean-up expired animations
     $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
+  }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
