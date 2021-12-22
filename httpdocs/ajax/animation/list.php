@@ -27,7 +27,7 @@
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else {  // listing request
     // delete old and not popular animations
-    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)))";
+    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)))";
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
