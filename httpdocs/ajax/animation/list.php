@@ -27,15 +27,12 @@
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else {  // listing request
     $query = "SELECT id FROM animation WHERE $extra_condition AND viewed = 0 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)";
-    $q2 = $query;
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
-    $counter = 0;
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
-      $counter++;
     }
     $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
   }
@@ -60,7 +57,6 @@
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
-  $answer->q2 = $q2;
   $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
