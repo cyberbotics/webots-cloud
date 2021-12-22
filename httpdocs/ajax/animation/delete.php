@@ -20,7 +20,7 @@ $query = "DELETE FROM animation WHERE id=$animation AND (user=0 OR user IN (SELE
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
-require '../../../php/animation.php'
+require '../../../php/animation.php';
 delete_animation($type, $animation);
 die("{\"status\":1}");
 ?>
