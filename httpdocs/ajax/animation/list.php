@@ -26,7 +26,14 @@
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else {  // listing request
-    // TODO: clean-up expired animations
+    $query = "SELECT id FROM animation WHERE $extra_condition AND viewed = 0 AND user = 0 AND uploaded < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 DAY))";
+    $result = $mysqli->query($query) or error($mysqli->error);
+    require '../../../php/anomation.php';
+    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+      $id = intval($row['id']);
+      $mysqli->query("DELETE FROM animation WHERE id=$id");
+      delete_animation($type, $id);
+    }
     $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);

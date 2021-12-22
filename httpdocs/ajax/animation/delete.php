@@ -2,20 +2,6 @@
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
-function rrmdir($dir) {  # recursive rmdir, e.g., rm -rf
-  if (!file_exists($dir))
-    return;
-  if (!is_dir($dir)) {
-    unlink($dir);
-    return;
-  }
-  $files = array_diff(scandir($dir), array('.','..'));
-  foreach ($files as $file) {
-    $path = "$dir/$file";
-    (is_dir($path) && !is_link($path)) ? rrmdir($path) : unlink($path);
-  }
-  return rmdir($dir);
-}
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
@@ -34,8 +20,7 @@ $query = "DELETE FROM animation WHERE id=$animation AND (user=0 OR user IN (SELE
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
-require '../../../php/mysql_id_string.php';
-$path = "../../storage/$type" . mysql_id_to_string($animation);
-rrmdir($path);
+require '../../../php/animation.php'
+delete_animation($type, $animation);
 die("{\"status\":1}");
 ?>
