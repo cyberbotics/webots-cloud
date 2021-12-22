@@ -15,9 +15,9 @@
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
   if ($type == 'S')  // scene
-    $extra_condition = 'duration=0';
+    $extra_condition = 'duration = 0';
   else  // animation
-    $extra_condition = 'duration>0';
+    $extra_condition = 'duration > 0';
   if (isset($data->url)) {  // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
@@ -29,10 +29,12 @@
     $query = "SELECT id FROM animation WHERE $extra_condition AND viewed = 0 AND user = 0 AND uploaded < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 DAY))";
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
+    $count = 0;
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
+      $count++;
     }
     $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
   }
@@ -57,6 +59,7 @@
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
+  $answer->count = $count;
   $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
