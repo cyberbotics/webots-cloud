@@ -29,10 +29,10 @@
   $server = $result->fetch_array(MYSQLI_ASSOC);
   if ($server) {
     $id = $server['id'];
-    $query = "UPDATE server SET load=$load WHERE id=$id";
+    $query = "UPDATE server SET `load`=$load WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
   } else {
-    $query = "INSERT INTO server(url, load) VALUES(\"$url\", $load)";
+    $query = "INSERT INTO server(url, `load`) VALUES(\"$url\", $load)";
     $mysqli->query($query) or error($mysqli->error);
     $id = $mysqli->insert_id;
   }
