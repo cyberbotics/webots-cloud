@@ -18,18 +18,21 @@
   $url = $mysqli->escape_string($data->url);
   if (substr($url, 0, 8) !== 'https://')
     remove("Malformed URL: $url");
-  $session_content = @file_get_contents("$url/session");
-  if ($session_content === false)
+  $load_content = @file_get_contents("$url/load");
+  if ($load_content === false)
     remove("Cannot reach session server at $url");
-  if (substr($session_content, 0, 6) !== 'wss://')
-    remove("Bad answer from session server: $session_content");
+  if (!is_numeric($load_content))
+    remove("Bad answer from session server: $load_content");
+  $load = intval($load_content);
   $query = "SELECT id FROM server WHERE url=\"$url\"";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server = $result->fetch_array(MYSQLI_ASSOC);
-  if ($server)
+  if ($server) {
     $id = $server['id'];
-  else {
-    $query = "INSERT INTO server(url) VALUES(\"$url\")";
+    $query = "UPDATE server SET load=$load WHERE id=$id";
+    $mysqli->query($query) or error($mysqli->error);
+  } else {
+    $query = "INSERT INTO server(url, load) VALUES(\"$url\", $load)";
     $mysqli->query($query) or error($mysqli->error);
     $id = $mysqli->insert_id;
   }
@@ -37,6 +40,7 @@
   $answer = array();
   $answer['id'] = $id;
   $answer['url'] = $url;
+  $answer['load'] = $load;
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
  ?>

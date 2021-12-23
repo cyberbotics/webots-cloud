@@ -19,7 +19,8 @@ ALTER TABLE `animation`
 CREATE TABLE `server` (
   `id` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL
+  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `load` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `server`
