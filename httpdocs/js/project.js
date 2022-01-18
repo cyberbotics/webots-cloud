@@ -54,8 +54,8 @@ export default class Project extends User {
   setupWebotsView(page, data) {
     const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     let template = document.createElement('template');
-    template.innerHTML = `<section class="section" style="padding-top:20px">
-<div class="container" style="height:540px" id="webotsViewContainer">${view}</div>`
+    template.innerHTML = `<section class="section" style="padding:0">
+<div class="container" style="padding-bottom:75%" id="webotsViewContainer">${view}</div>`
     if (data) {
       const description = data.description.replace('\n', '<br>\n');
       template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
