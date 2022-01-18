@@ -20,6 +20,9 @@ body:after{
 }
 
 body footer.footer {
+  display: flex;
+  padding-top: 10px;
+  padding-bottom: 20px;
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);
 }
 body section.hero {
