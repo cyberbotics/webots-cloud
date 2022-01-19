@@ -21,6 +21,7 @@ body:after{
 
 body footer.footer {
   padding-top: 10px;
+  padding-right: 10px;
   padding-bottom: 0;
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);
 }
