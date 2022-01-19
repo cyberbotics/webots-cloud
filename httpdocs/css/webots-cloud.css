@@ -25,6 +25,10 @@ body:after{
   box-shadow: 2px 2px 5px #740f00;
 }
 
+#mainContainer {
+  height: calc(100% - 48px);
+}
+
 body footer.footer {
   height: 48px;
   padding-top: 10px;
@@ -32,6 +36,7 @@ body footer.footer {
   padding-bottom: 0;
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);
 }
+
 body section.hero {
   background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 90%);
 }
