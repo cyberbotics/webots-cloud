@@ -74,7 +74,7 @@ export default class Project extends User {
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
     console.log('append webots-view component');
-    document.querySelector('#mainContainer').classList.remove('webotsView');
+    document.querySelector('#mainContainer').classList.add('webotsView');
   }
   animationPage(data) {
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
