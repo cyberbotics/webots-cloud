@@ -50,6 +50,10 @@ body footer .has-text-centered {
   width:100%;
 }
 
+div.table-container {
+  min-height: 390px;
+}
+
 #tab-content section {
   display: none;
 }
