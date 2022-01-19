@@ -37,8 +37,10 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     console.log('setup project');
-    if (Project.webotsView && Project.webotsView.hasAnimation())
+    if (Project.webotsView && Project.webotsView.hasAnimation()) {
+      console.log('webots-view close');
       Project.webotsView.close();
+    }
     super.setup(title, anchors, content, fullpage);
   }
   findGetParameter(parameterName) {

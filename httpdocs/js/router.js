@@ -129,7 +129,7 @@ export default class Router {
     this.setup('page not found', [], template.content);
   }
   setup(title, anchors, content, fullpage = false) {
-    console.log('setup router' + fullpage);
+    console.log('setup router ' + fullpage);
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
     let menu = '';
     for (let i = 0; i < anchors.length; i++)
