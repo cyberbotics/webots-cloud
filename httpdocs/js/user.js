@@ -335,6 +335,7 @@ x[i].innerHTML = displayName;
     });
   }
   setup(title, anchors, content, fullpage = false) {
+    console.log('setup user');
     super.setup(title, anchors, content, fullpage);
     let navbarEnd = document.body.querySelector('.navbar-end');
     navbarEnd.parentNode.replaceChild(this.menu(), navbarEnd);
