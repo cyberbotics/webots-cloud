@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="content has-text-centered">
     <p class="has-text-white is-size-7">
       <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github"></i> Webots open-source robot simulator</a>
-      by <a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a>
+      made by <a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a>
     </p>
   </div>
 </footer>`;
