@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
     template.innerHTML =
       `<footer class="footer">
   <div class="content has-text-centered">
-    <p class="has-text-white" style="margin-left:30px">
+    <p>
       <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> Webots open-source robot simulator</a>
     </p>
   </div>
   <div class="content is-size-7">
-    <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a></p>
+    <p style="margin-top:20px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a></p>
   </div>
 </footer>`;
     return template.content.firstChild;
