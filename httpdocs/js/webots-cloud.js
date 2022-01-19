@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered has-text-white">
+  <div class="content has-text-centered">
     <p>
       <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> Webots open-source robot simulator</a>
     </p>
   </div>
-  <div class="content is-size-7">
-    <p style="margin-top:20px">by <a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a></p>
+  <div class="content is-size-7 has-text-white">
+    <p style="margin-top:20px">by&nbsp;<a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a></p>
   </div>
 </footer>`;
     return template.content.firstChild;
