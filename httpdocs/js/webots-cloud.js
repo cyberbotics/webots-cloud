@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered">
+  <div class="content has-text-centered" style="margin-bottom:10px">
     <p>
       <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> Webots open-source robot simulator</a>
     </p>
