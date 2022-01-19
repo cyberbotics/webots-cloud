@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="content has-text-centered is-size-7">
       <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics</a></p>
     </div>
+  </div>
     <p class="has-text-white is-size-7">
       <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> Webots open-source robot simulator</a>
     </p>
