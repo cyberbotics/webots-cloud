@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </p>
   </div>
   <div class="content is-size-7">
-    <p style="margin-top:20px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">&copy; Cyberbotics</a></p>
+    <p style="margin-top:20px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">&copy;&nbsp;Cyberbotics</a></p>
   </div>
 </footer>`;
     return template.content.firstChild;
