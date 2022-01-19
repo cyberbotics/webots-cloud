@@ -76,10 +76,3 @@ nav.pagination > a[disabled] {
     padding: 0.3em;
   }
 }
-
-@media only screen and (max-width: 1026px) {
-  body footer.footer {
-    display: none;
-  }
-  
-}
