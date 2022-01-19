@@ -34,6 +34,10 @@ body:after{
   min-height: 10px;
 }
 
+div.table-container {
+  min-height: 390px;
+}
+
 body footer.footer {
   height: 48px;
   padding-top: 10px;
@@ -48,10 +52,6 @@ body section.hero {
 
 body footer .has-text-centered {
   width:100%;
-}
-
-div.table-container {
-  min-height: 390px;
 }
 
 #tab-content section {
