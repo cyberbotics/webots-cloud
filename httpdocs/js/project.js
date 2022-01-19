@@ -42,7 +42,9 @@ export default class Project extends User {
     }
     super.setup(title, anchors, content, fullpage);
     let c = document.querySelector('#tab-content');
-    console.log('h = ' + c.offsetHeight);
+    if (c) {
+      console.log('h = ' + c.offsetHeight);
+    }
   }
   findGetParameter(parameterName) {
     let result = undefined;
