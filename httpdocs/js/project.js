@@ -37,15 +37,10 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     if (Project.webotsView && Project.webotsView.hasAnimation()) {
-      console.log('close webots-view');
       Project.webotsView.close();
       document.querySelector('#mainContainer').classList.remove('webotsView');
     }
     super.setup(title, anchors, content, fullpage);
-    let c = document.querySelector('#tab-content');
-    if (c) {
-      console.log('h = ' + c.offsetHeight);
-    }
   }
   findGetParameter(parameterName) {
     let result = undefined;
@@ -73,7 +68,6 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
-    console.log('append webots-view component');
     document.querySelector('#mainContainer').classList.add('webotsView');
   }
   animationPage(data) {
