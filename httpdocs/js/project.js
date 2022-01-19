@@ -36,9 +36,8 @@ export default class Project extends User {
     return promise;
   }
   setup(title, anchors, content, fullpage = false) {
-    console.log('setup project');
     if (Project.webotsView && Project.webotsView.hasAnimation()) {
-      console.log('webots-view close');
+      console.log('close webots-view');
       Project.webotsView.close();
     }
     super.setup(title, anchors, content, fullpage);
