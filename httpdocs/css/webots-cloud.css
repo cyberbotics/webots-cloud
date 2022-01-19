@@ -1,3 +1,6 @@
+body {
+  height: 100%
+}
 body:after{
   content: "beta version";
   position: fixed;
@@ -62,5 +65,6 @@ nav.pagination > a[disabled] {
 }
 
 #webotsViewContainer {
+  height: 100%;
   max-width: none;
 }
