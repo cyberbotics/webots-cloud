@@ -37,10 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
     template.innerHTML =
       `<footer class="footer">
   <div class="content has-text-centered">
-    <p><strong><a class="has-text-white" href="/">webots.cloud</a></strong></p>
-    <p class="has-text-white">webots simulations running in the cloud</p>
-    <p><a class="has-text-white" href="https://github.com/cyberbotics/webots-cloud" target="_blank">
-    <i class="fab fa-github"></i> 100% free and open source software</a></p>
+    <p><a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github"></i> open-source online robot simulations</a>
+    by <a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics Ltd.</a></p>
   </div>
 </footer>`;
     return template.content.firstChild;
