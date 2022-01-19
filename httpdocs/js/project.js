@@ -41,6 +41,7 @@ export default class Project extends User {
       Project.webotsView.close();
     }
     super.setup(title, anchors, content, fullpage);
+    console.log('h = ' + document.querySelector('#tab-content').height);
   }
   findGetParameter(parameterName) {
     let result = undefined;
