@@ -39,9 +39,9 @@ export default class Project extends User {
     if (Project.webotsView && Project.webotsView.hasAnimation()) {
       console.log('close webots-view');
       Project.webotsView.close();
-      document.querySelector('#mainContainer').minHeight = '600px';
+      document.querySelector('#mainContainer').style.minHeight = '600px';
     } else {
-      document.querySelector('#mainContainer').minHeight = '';      
+      document.querySelector('#mainContainer').style.minHeight = '';      
     }
     super.setup(title, anchors, content, fullpage);
     let c = document.querySelector('#tab-content');
