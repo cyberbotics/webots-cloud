@@ -50,10 +50,6 @@ body footer .has-text-centered {
   width:100%;
 }
 
-#tab-content {
-  min-height: 600px;
-}
-
 #tab-content section {
   display: none;
 }
