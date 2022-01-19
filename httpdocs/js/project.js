@@ -39,9 +39,7 @@ export default class Project extends User {
     if (Project.webotsView && Project.webotsView.hasAnimation()) {
       console.log('close webots-view');
       Project.webotsView.close();
-      document.querySelector('#mainContainer').style.minHeight = '600px';
-    } else {
-      document.querySelector('#mainContainer').style.minHeight = '';      
+      document.querySelector('#mainContainer').classList.remove('webotsView');
     }
     super.setup(title, anchors, content, fullpage);
     let c = document.querySelector('#tab-content');
@@ -76,6 +74,7 @@ export default class Project extends User {
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
     console.log('append webots-view component');
+    document.querySelector('#mainContainer').classList.remove('webotsView');
   }
   animationPage(data) {
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));

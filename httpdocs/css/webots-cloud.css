@@ -27,6 +27,11 @@ body:after{
 
 #mainContainer {
   height: calc(100% - 48px);
+  min-height: 10px;
+}
+
+#mainContainer.listView {
+  min-height: 600px;
 }
 
 body footer.footer {
