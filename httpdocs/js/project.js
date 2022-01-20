@@ -37,7 +37,7 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     console.log("project setup");
-    if (Project.webotsView && Project.webotsView.hasAnimation()) {
+    if (Project.webotsView /* && Project.webotsView.hasAnimation()*/) {
       Project.webotsView.close();
       document.querySelector('#mainContainer').classList.remove('webotsView');
       console.log("remove webotsView");
