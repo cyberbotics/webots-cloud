@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
   <a${(active_tab == 'demo') ? ' class="is-active"' : ''} data-tab="demo">Demo</a>
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="Challenge">Challenge</a>
+  <a style="pointer-events:none;cursor:default;color:grey" data-tab="Competition">Competition</a>
   <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
 </div>
 <div id="tab-content">
