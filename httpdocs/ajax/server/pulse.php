@@ -44,7 +44,7 @@
         break;
       }
   if (!$found) {
-    $host = gethostbyaddr($_SERVER['REMOTE_ADDR'])
+    $host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $found = ($server === $host);
     if (!$found) {
       $ip_addresses = '';
