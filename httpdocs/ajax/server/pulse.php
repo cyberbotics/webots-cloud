@@ -66,7 +66,7 @@
   if (!isset($_POST['allowedRepositories']))
     error('Missing allowedRepositories parameter.');
   $allowedRepositories = explode(',', $_POST['allowedRepositories']);
-  $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share";
+  $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, id=LAST_INSERT_ID(id)";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
   foreach($allowedRepositories as $repository) {
