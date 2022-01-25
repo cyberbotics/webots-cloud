@@ -31,8 +31,10 @@
   $mysqli->set_charset('utf8');
   if (isset($data->url))
     $url = $mysqli->escape_string($data->url);
-  else
+  else {
+    print_r($data);
     error('Missing url parameter.');
+  }
   $server = get_server_from_url($url);
   $remote  = $_SERVER['REMOTE_ADDR'];  # IP address of the client machine
   $ips = gethostbynamel($server);
