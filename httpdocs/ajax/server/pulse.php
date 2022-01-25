@@ -22,15 +22,13 @@
     return substr($url, $start, $length);
   }
   header('Content-Type: application/json');
-  $json = file_get_contents('php://input');
-  $data = json_decode($json);
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  if (isset($data->url))
-    $url = $mysqli->escape_string($data->url);
+  if (isset($_POST['url']))
+    $url = $mysqli->escape_string($_POST['url']);
   else
     error('Missing url parameter.' . $json);
   $server = get_server_from_url($url);
@@ -55,22 +53,23 @@
       error("Server name mismatch: \"$host\" != \"$server\" and $remote not in ($ip_addresses).");
     }
   }
-  if (isset($data->currentLoad)) {
-    $load = floatval($data->currentLoad);
+  if (isset($_POST['currentLoad'])) {
+    $load = floatval($_POST['currentLoad']);
     $query = "UPDATE server SET load=$load WHERE url=\"$url\"";
     $result = $mysqli->query($query) or error($mysqli->error);
     die("OK: $load");
   }
-  if (isset($data->shareIdleTime))
-    $share = floatval($data->shareIdleTime);
+  if (isset($_POST['shareIdleTime']))
+    $share = floatval($_POST['shareIdleTime']);
   else
     error('Missing shareIdleTime parameter.');
-  if (!isset($data->allowedRepositories))
+  if (!isset($_POST['allowedRepositories']))
     error('Missing allowedRepositories parameter.');
+  $allowedRepositories = explode($_POST['allowedRepositories'], ',');
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
-  foreach($data->allowedRepositories as $repository) {
+  foreach($allowedRepositories as $repository) {
     $repo = $mysqli->escape_string($repository);
     $query = "INSERT INTO repository(server, url) VALUES($server_id, \"$repo\")";
     $result = $mysqli->query($query) or error($mysqli->error);
