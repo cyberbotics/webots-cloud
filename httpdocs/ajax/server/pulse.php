@@ -56,7 +56,7 @@
   if (isset($_POST['currentLoad'])) {
     $load = floatval($_POST['currentLoad']);
     $query = "UPDATE server SET load=$load WHERE url=\"$url\"";
-    $result = $mysqli->query($query) or error($mysqli->error);
+    $mysqli->query($query) or error($mysqli->error);
     die("OK: $load");
   }
   if (isset($_POST['shareIdleTime']))
@@ -67,12 +67,14 @@
     error('Missing allowedRepositories parameter.');
   $allowedRepositories = explode(',', $_POST['allowedRepositories']);
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, id=LAST_INSERT_ID(id)";
-  $result = $mysqli->query($query) or error($mysqli->error);
+  $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
+  $query = "DELETE FROM repository WHERE server=$server_id";
+  $mysqli->query($query) or error($mysqli->error);
   foreach($allowedRepositories as $repository) {
     $repo = $mysqli->escape_string($repository);
     $query = "INSERT IGNORE INTO repository(server, url) VALUES($server_id, \"$repo\")";
-    $result = $mysqli->query($query) or error($mysqli->error);
+    $mysqli->query($query) or error($mysqli->error);
   }
   die("OK: $share");
  ?>
