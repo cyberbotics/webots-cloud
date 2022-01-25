@@ -71,7 +71,7 @@
   $server_id = $mysqli->insert_id;
   foreach($allowedRepositories as $repository) {
     $repo = $mysqli->escape_string($repository);
-    $query = "INSERT INTO repository(server, url) VALUES($server_id, \"$repo\") ON DUPLICATE KEY IGNORE";
+    $query = "INSERT IGNORE INTO repository(server, url) VALUES($server_id, \"$repo\")";
     $result = $mysqli->query($query) or error($mysqli->error);
   }
   die("OK: $share");
