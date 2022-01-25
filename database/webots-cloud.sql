@@ -20,14 +20,13 @@ CREATE TABLE `server` (
   `id` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `load` float NOT NULL
+  `load` float NOT NULL,
+  `share` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `server`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
-
-ALTER TABLE `server`
+  ADD UNIQUE KEY (`url`),
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `project` (
@@ -38,20 +37,18 @@ CREATE TABLE `project` (
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
   `stars` int(11) NOT NULL,
-  `language` varchar(32) NOT NULL
+  `language` varchar(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `project`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`);
-
-ALTER TABLE `project`
+  ADD UNIQUE KEY `url` (`url`),
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `email` varchar(254) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `password` varchar(64) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
   `token` varchar(32) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -59,9 +56,15 @@ CREATE TABLE `user` (
 
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
-ALTER TABLE `user`
+  ADD UNIQUE KEY `email` (`email`),
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+CREATE TABLE `repository` (
+  `server` int(11) NOT NULL,
+  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `repository`
+  ADD PRIMARY KEY (`server`,`url`);
 
 COMMIT;
