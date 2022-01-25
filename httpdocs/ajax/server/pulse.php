@@ -68,7 +68,7 @@
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
-  foreach($repository in $date->repositories) {
+  foreach($repository in $data->repositories) {
     $repo = $mysqli->escape_string($repository);
     $query = "INSERT INTO repository(server, url) VALUES($server_id, \"$repo\")";
     $result = $mysqli->query($query) or error($mysqli->error);
