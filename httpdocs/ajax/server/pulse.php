@@ -18,7 +18,7 @@
     elseif (!$colon)
       $length = $slash - $start;
     else
-      $length = min($colon, $slash) - $start
+      $length = min($colon, $slash) - $start;
     return substr($url, $start, $length);
   }
   header('Content-Type: application/json');
