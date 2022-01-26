@@ -35,10 +35,10 @@
     $mysqli->query($query) or error($mysqli->error);
   }
   $answer = array();
-  $answer['id'] = $id;
+  $answer['id'] = intval($id);
   $answer['url'] = $url;
-  $answer['load'] = $load;
-  $answer['share'] = $share;
+  $answer['load'] = floatval($load);
+  $answer['share'] = floatval($share);
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
  ?>
