@@ -53,12 +53,6 @@
       error("Server name mismatch: \"$host\" != \"$server\" and $remote not in ($ip_addresses).");
     }
   }
-  if (isset($_POST['currentLoad'])) {
-    $load = floatval($_POST['currentLoad']);
-    $query = "UPDATE server SET load=$load WHERE url=\"$url\"";
-    $mysqli->query($query) or error($mysqli->error);
-    die("OK: $load");
-  }
   if (isset($_POST['shareIdleTime']))
     $share = floatval($_POST['shareIdleTime']);
   else
@@ -76,5 +70,6 @@
     $query = "INSERT IGNORE INTO repository(server, url) VALUES($server_id, \"$repo\")";
     $mysqli->query($query) or error($mysqli->error);
   }
-  die("OK: $share");
+  $http_host = $_SERVER['HTTP_HOST'];
+  die("Simulation server published on https://$http_host/server");
  ?>
