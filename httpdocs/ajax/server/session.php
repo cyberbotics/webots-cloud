@@ -17,6 +17,7 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($_GET['url']);
 $query = "SELECT url FROM server WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE url LIKE\"$url%\") ORDER BY `load` DESC LIMIT 1";
+print($query);
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($row = $result->fetch_array(MYSQLI_ASSOC))
   return_url($row['url']);
