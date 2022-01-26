@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </nav>
     <div class="container">
       <div class="buttons">
-        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add a new server</button>
+        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
       </div>
     </div>
   </section>
