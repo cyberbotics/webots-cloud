@@ -18,6 +18,7 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['load'], 'float');
+    settype($row['share'], 'float');
     array_push($servers, $row);
   }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM server") or error($mysqli->error);
