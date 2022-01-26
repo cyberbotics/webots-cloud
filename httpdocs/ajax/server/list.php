@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query = "SELECT * FROM server LIMIT $limit OFFSET $offset";
+  $query = "SELECT * FROM server LIMIT $limit OFFSET $offset ORDER BY (share - load) DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   $servers = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
