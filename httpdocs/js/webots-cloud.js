@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `<td class="has-text-centered" title="Current server load">{percent(data.load)}</td>`;
+        `<td class="has-text-centered" title="Current server load">${percent(data.load)}</td>`;
       return row;
     }
     const template = document.createElement('template');
