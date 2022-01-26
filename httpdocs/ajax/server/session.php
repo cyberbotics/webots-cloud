@@ -4,9 +4,9 @@ function error($message) {
 }
 function return_url($url) {
   if (substr($url, 0, 8) === "https://")
-    die('wss://' + substr($url, 8));
+    die('wss://' . substr($url, 8));
   elseif (substr($url, 0, 7) === "http://")
-    die('ws://' + substr($url, 7));
+    die('ws://' . substr($url, 7));
   else
     error("wrong URL protocol in $url");
 }
