@@ -180,6 +180,19 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
+    function percent(value):
+      const level = 150 + value;
+      let red, green;
+      if (value <= 50) {
+        red = Math.round(level * value / 50).toString(16).padStart(2, '0');
+        green = Math.round(level).toString(16).padStart(2, '0');
+      } else {
+        red = Math.round(level).toString(16).padStart(2, '0');
+        green = Math.round(level - level * (value - 50) / 50).toString(16).padStart(2, '0');
+      }
+      return '<font color="#' + red + green + '00">' + value + '%</font>';
+    }
+
     function serverRow(data) {
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
@@ -188,8 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `<td class="has-text-centered"><a href="${data.url}/monitor" target="_blank">` +
-        `<i title="Check server status details" class="fas fa-server fa-lg has-text-dark"></i></a></td>`;
+        `<td class="has-text-centered" title="Current server load">{percent(data.load)}</td>`;
       return row;
     }
     const template = document.createElement('template');
