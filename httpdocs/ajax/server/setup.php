@@ -2,11 +2,6 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
-  function remove($message) {
-    global $mysqli, $url;
-    $mysqli->query("DELETE FROM server WHERE url=\"$url\"") or error($mysqli->error);
-    error($message);
-  }
   function get_server_from_url($url) {
     $start = strpos($url, '://') + 3;
     $slash = strpos($url, '/', $start);
@@ -60,7 +55,7 @@
   if (!isset($_POST['allowedRepositories']))
     error('Missing allowedRepositories parameter.');
   $allowedRepositories = explode(',', $_POST['allowedRepositories']);
-  $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, id=LAST_INSERT_ID(id)";
+  $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, started=NOW(), id=LAST_INSERT_ID(id)";
   $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
   $query = "DELETE FROM repository WHERE server=$server_id";
