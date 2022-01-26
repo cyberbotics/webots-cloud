@@ -581,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
           updatePagination('server', page, total);
         }
       });
-    });
   }
 
   function simulationPage(project) {
