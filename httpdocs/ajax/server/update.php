@@ -25,23 +25,20 @@
   if (!is_numeric($load_content))
     remove("Bad answer from simulation server: $load_content");
   $load = intval($load_content);
-  $query = "SELECT id FROM server WHERE url=\"$url\"";
+  $query = "SELECT id, share FROM server WHERE url=\"$url\"";
   $result = $mysqli->query($query) or error($mysqli->error);
   $server = $result->fetch_array(MYSQLI_ASSOC);
   if ($server) {
     $id = $server['id'];
+    $share = $server['share'];
     $query = "UPDATE server SET `load`=$load WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
-  } else {
-    $query = "INSERT INTO server(url, `load`) VALUES(\"$url\", $load)";
-    $mysqli->query($query) or error($mysqli->error);
-    $id = $mysqli->insert_id;
   }
-
   $answer = array();
   $answer['id'] = $id;
   $answer['url'] = $url;
   $answer['load'] = $load;
+  $answer['share'] = $share;
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
  ?>
