@@ -23,6 +23,6 @@ if ($row = $result->fetch_array(MYSQLI_ASSOC))
 $query = "SELECT url FROM server WHERE `share` > 0 AND `share` - `load` > 0 ORDER BY `share` - `load` DESC LIMIT 1";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($row = $result->fetch_array(MYSQLI_ASSOC))
-  return_url($row['url'] + '2');
+  return_url($row['url'] . '2');
 error('no simulation server available at the moment.');
 ?>
