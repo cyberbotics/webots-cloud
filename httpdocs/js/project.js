@@ -82,8 +82,8 @@ export default class Project extends User {
     this.setupWebotsView('simulation');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    // Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode);
-    Project.webotsView.connect('wss://cyberbotics1.epfl.ch/1998/session?url=' + url, mode);
+    Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode);
+    //Project.webotsView.connect('wss://cyberbotics1.epfl.ch/1998/session?url=' + url, mode);
     Project.webotsView.displayQuit(false);
   }
 }
