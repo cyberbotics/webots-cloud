@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </nav>
     <div class="container">
       <div class="buttons">
-        <button class="button" id="add-a-new-server">Add a new server</button>
+        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add a new server</button>
       </div>
     </div>
   </section>
@@ -580,58 +580,6 @@ document.addEventListener('DOMContentLoaded', function() {
           const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
           updatePagination('server', page, total);
         }
-      });
-
-    project.content.querySelector('#add-a-new-server').addEventListener('click', function(event) {
-      let content = {};
-      content.innerHTML =
-        `<div class="field">
-  <label class="label">Server URL</label>
-  <div class="control has-icons-left">
-    <input id="server-url" class="input" type="url" required placeholder="https://cyberbotics1.epfl.ch" value="">
-    <span class="icon is-small is-left">
-      <i class="fas fa-server"></i>
-    </span>
-  </div>
-  <div class="help">URL of the machine running a session server for Webots simulations, for example:<br>
-    <a target="_blank" href="https://cyberbotics1.epfl.ch">
-      https://cyberbotics1.epfl.ch
-    </a>
-  </div>
-</div>`;
-      let modal = ModalDialog.run('Add a simulation server', content.innerHTML, 'Cancel', 'Add');
-      let input = modal.querySelector('#server-url');
-      input.focus();
-      input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        const serverUrl = input.value.trim();
-        if (!serverUrl.startsWith('https://')) {
-          modal.error('The server URL should start with "https://".');
-          return;
-        }
-        const content = {
-          method: 'post',
-          body: JSON.stringify({
-            url: serverUrl
-          })
-        };
-        fetch('/ajax/server/create.php', content)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            if (data.error)
-              modal.error(data.error);
-            else {
-              modal.close();
-              const tr = '<tr class="has-background-warning-light">' + serverRow(data) + '</tr>';
-              document.querySelector('section[data-content="server"] > div > table > tbody').insertAdjacentHTML(
-                'beforeend', tr);
-              updatePagination('server', 1, 1);
-            }
-          });
       });
     });
   }
