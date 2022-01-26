@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
-      const started = data.started.replace(' ', `<br>&nbsp;`);
+      const started = data.started.replace(' ', `<br>`);
       const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
       const accept = (data.load < data.share) ? "Is accepting public simulations" : "Is not accepting public simulations";
       const color = (data.load < data.share) ? "green" : "red";
