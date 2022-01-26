@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function percent(value):
+    function percent(value) {
       const level = 150 + value;
       let red, green;
       if (value <= 50) {
