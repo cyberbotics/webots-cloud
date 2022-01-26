@@ -184,8 +184,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
+      const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
       const row =
-        `<td><a class="has-text-dark" href="${data.url}" target="_blank">${data.url.substring(8)}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td class="has-text-centered"><a href="${data.url}/monitor" target="_blank">` +
         `<i title="Check server status details" class="fas fa-server fa-lg has-text-dark"></i></a></td>`;
