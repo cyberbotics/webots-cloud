@@ -13,7 +13,7 @@ if ($row = $result->fetch_array(MYSQLI_ASSOC)) {
   elseif (substr($row['url'], 0, 7) === "http://")
     die('ws://' + substr($row['url'], 7));
   else
-    die("Wrong URL protocol in $row");
+    die("Error: wrong URL protocol in $row");
 }
-die('No simulation server available.');
+die('Error: no simulation server available at the moment.');
 ?>
