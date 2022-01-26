@@ -82,7 +82,7 @@ export default class Project extends User {
     this.setupWebotsView('simulation');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    Project.webotsView.connect('wss://webots.cloud/ajax/server/session.php?url=' + url, mode);
+    Project.webotsView.connect('wss://beta.webots.cloud/ajax/server/session.php?url=' + url, mode);
     Project.webotsView.displayQuit(false);
   }
 }
