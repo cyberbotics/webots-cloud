@@ -198,9 +198,12 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
+      const accept = (data.load < data.share) ? "Is accepting public simulations" : "Is not accepting public simulations";
+      const color = (data.load < data.share) ? "green" : "red";
       const row =
         `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization">${updated}</td>` +
+        `<td class="has-text-centered" style="color:${color}" title="${accept}">${data.share}%</td>` +
         `<td class="has-text-centered" title="Current server load">${percent(data.load)}</td>`;
       return row;
     }
@@ -294,7 +297,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <tr>
             <th title="Fully qualified domain name of server">Server</th>
             <th title="Last update time">Updated</th>
-            <th style="text-align:center" title="Server status">Status</th>
+            <th style="text-align:center" title="Maximum load for public usage">Share</th>
+            <th style="text-align:center" title="Server load">Load</th>
           </tr>
         </thead>
         <tbody>
