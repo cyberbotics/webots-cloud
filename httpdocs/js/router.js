@@ -37,7 +37,7 @@ export default class Router {
       document.body.removeChild(navbar);
     let template = document.createElement('template');
     template.innerHTML =
-`<nav class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
+`<nav id="navbar" class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img src="/images/logo-28.png" /> &nbsp; ${this.title}
