@@ -17,7 +17,7 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($_GET['url']);
 # search for a dedicated server first
-$query = "SELECT url FROM server WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) ORDER BY `load` DESC LIMIT 1";
+$query = "SELECT url FROM server WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) ORDER BY `load` LIMIT 1";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($row = $result->fetch_array(MYSQLI_ASSOC))
   return_url($row['url']);
