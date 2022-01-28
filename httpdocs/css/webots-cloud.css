@@ -51,7 +51,7 @@ body footer .has-text-centered {
   width:100%;
 }
 
-navbar.is-link.is-fixed-top {
+nav .navbar.is-link.is-fixed-top {
   background-color: rgb(36, 87, 168);
 }
 
