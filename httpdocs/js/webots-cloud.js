@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
+        `<td><a class="has-text-dark" href="${data.url}/competitors.txt" target="_blank">${data.competitors}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>`;
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
             <th title="Title of the simulation">Title</th>
             <th title="Version of the simulation">Version</th>
-            <th title="Main programming language">Language</th>
+            <th title="Number of competitors">Competitors</th>
             <th title="Last update time">Updated</th>
             <th colspan="2"></th>
           </tr>

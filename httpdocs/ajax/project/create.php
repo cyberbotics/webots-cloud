@@ -59,13 +59,12 @@
   $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
   $info = json_decode($info_json);
   $stars = intval($info->{'stargazers_count'});
-  $language = $info->{'language'};
-  $parent = 0;
+  $competitors = 0;
   if ($id === 0)
-    $query = "INSERT IGNORE INTO project(url, stars, parent, title, description, language) "
-            ."VALUES(\"$url\", $stars, $parent, \"$title\", \"$description\", \"$language\")";
+    $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors) "
+            ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors)";
   else
-    $query = "UPDATE project SET stars=$stars, parent=$parent, title=\"$title\", description=\"$description\", language=\"$language\", updated=NOW() "
+    $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, updated=NOW() "
             ."WHERE url=\"$url\" AND id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows != 1) {
@@ -78,10 +77,9 @@
   $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
   $answer['stars'] = $stars;
-  $answer['parent'] = $parent;
   $answer['title'] = $title;
   $answer['description'] = $description;
-  $answer['language'] = $language;
+  $answer['competitors'] = $competitors;
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
  ?>

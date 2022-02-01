@@ -18,6 +18,7 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['stars'], 'integer');
+    settype($row['competitors'], 'integer');
     array_push($projects, $row);
   }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
