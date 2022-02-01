@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
-      if (data.type == 'demoe')
+      if (data.type == 'demo')
         type = `<i class="fas fa-grin-stars fa-lg" title="${data.type}"></i>`;
       else {
         const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
