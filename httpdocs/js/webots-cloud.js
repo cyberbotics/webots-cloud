@@ -169,13 +169,15 @@ document.addEventListener('DOMContentLoaded', function() {
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
-      if (data.type == 'demo')
+      let competitors;
+      if (data.type == 'demo') {
         type = `<i class="fas fa-grin-stars fa-lg" title="${data.type}"></i>`;
-      else {
+        competitors = '';
+      } else {
         const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
+        type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
         const url = data.url.substring(0, data.url.lastIndexOf("/worlds/"));
-        type = `<a class="has-text-dark" href="${url}/competitors.txt" target="_blank">` +
-               `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i> ${data.competitors}</a>`;
+        competitors = `<a class="has-text-dark" href="${url}/competitors.txt" target="_blank">${data.competitors}</a>`;
       }
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
@@ -183,6 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
+        `<td class="has-text-centered">${competitors}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
@@ -282,6 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <th title="Title of the simulation">Title</th>
             <th title="Version of the simulation">Version</th>
             <th title="Type of simulation">Type</th>
+            <th title="Number of competitors">#</th>
             <th title="Last update time">Updated</th>
             <th colspan="1"></th>
           </tr>
