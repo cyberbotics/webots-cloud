@@ -168,12 +168,17 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      let competitors;
+      if (data.competitors == 0)
+        competitors = '';
+      else
+        competitors = `<a class="has-text-centered has-text-dark" href="${data.url}/competitors.txt" target="_blank">${data.competitors}`;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td><a class="has-text-dark" href="${data.url}/competitors.txt" target="_blank">${data.competitors}</td>` +
+        `<td>${competitors}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><a href="${animation}" target="_blank">` +
         `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>`;
