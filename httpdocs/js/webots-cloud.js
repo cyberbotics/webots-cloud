@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/simulation',
-      setup: simulationPage
+      url: '/run',
+      setup: runPage
     }]);
 
   function footer() {
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/simulation?url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${repository}/search?l=${encodeURIComponent(data.language)}" target="_blank">${data.language}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
@@ -603,8 +603,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
-  function simulationPage(project) {
-    project.simulationPage();
+  function runPage(project) {
+    project.runPage();
   }
 
   function deleteAnimation(event, type, project, page) {
