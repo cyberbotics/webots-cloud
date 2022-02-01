@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type = `<i class="fas fa-grin-stars fa-lg" title="${data.type}"></i>`;
       else {
         const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
-        const url = data.url.substring(0, s.lastIndexOf("/worlds/"));
+        const url = data.url.substring(0, data.url.lastIndexOf("/worlds/"));
         type = `<a class="has-text-dark" href="${url}/competitors.txt" target="_blank">` +
                `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i> ${data.competitors}</a>`;
       }
