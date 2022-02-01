@@ -517,6 +517,8 @@ x[i].innerHTML = displayName;
       document.querySelector('#sign-up').style.display = 'none';
       let that = this;
       const uploads = JSON.parse(window.localStorage.getItem('uploads'))
+      if (uploads == NULL)
+        uploads = [];
       fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
         .then(function(response) {
           return response.json();
