@@ -4,7 +4,7 @@ import ModalDialog from './modal_dialog.js';
 document.addEventListener('DOMContentLoaded', function() {
   let scene_page = 1;
   let animation_page = 1;
-  let demo_page = 1;
+  let simulation_page = 1;
   let server_page = 1;
   Project.run('webots.cloud', footer(), [
     {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/demo',
+      url: '/simulation',
       setup: homePage
     },
     {
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
       scene_page = page;
     else if (active_tab === 'animation')
       animation_page = page;
-    else if (active_tab === 'demo')
-      demo_page = page;
+    else if (active_tab === 'simulation')
+      simulation_page = page;
     else if (active_tab === 'server')
       server_page = page;
   }
@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return scene_page;
     if (active_tab === 'animation')
       return animation_page;
-    if (active_tab === 'demo')
-      return demo_page;
+    if (active_tab === 'simulation')
+      return simulation_page;
     if (active_tab === 'server')
       return server_page;
   }
@@ -215,8 +215,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
   <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
   <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a${(active_tab == 'demo') ? ' class="is-active"' : ''} data-tab="demo">Demo</a>
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="Competition">Competition</a>
+  <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
   <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
 </div>
 <div id="tab-content">
@@ -267,14 +266,14 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </section>
-  <section class="section${(active_tab == 'demo') ? ' is-active' : ''}" data-content="demo">
+  <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
     <div class="table-container">
       <table class="table is-striped is-hoverable">
         <thead>
           <tr>
             <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-            <th title="Title of the demo">Title</th>
-            <th title="Version of the demo">Version</th>
+            <th title="Title of the simulation">Title</th>
+            <th title="Version of the simulation">Version</th>
             <th title="Main programming language">Language</th>
             <th title="Last update time">Updated</th>
             <th colspan="2"></th>
@@ -288,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </nav>
     <div class="container">
       <div class="buttons">
-        <button class="button" id="add-a-new-project">Add a new demo</button>
+        <button class="button" id="add-a-new-project">Add a new simulation</button>
       </div>
     </div>
   </section>
@@ -369,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
-            updatePagination('demo', 1, 1);
+            updatePagination('simulation', 1, 1);
           }
         });
     }
@@ -410,11 +409,11 @@ document.addEventListener('DOMContentLoaded', function() {
           let line = ``;
           for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-          project.content.querySelector('section[data-content="demo"] > div > table > tbody').innerHTML = line;
+          project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
           for (let i = 0; i < data.projects.length; i++)
             project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
           const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('demo', page, total);
+          updatePagination('simulation', page, total);
         }
       });
     function addAnimation(type) {
@@ -574,10 +573,10 @@ document.addEventListener('DOMContentLoaded', function() {
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
-              document.querySelector('section[data-content="demo"] > div > table > tbody').insertAdjacentHTML(
+              document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-              updatePagination('demo', page, total);
+              updatePagination('simulation', page, total);
             }
           });
       });
