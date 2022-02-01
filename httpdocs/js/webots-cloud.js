@@ -168,17 +168,21 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      let competitors;
-      if (data.competitors == 0)
-        competitors = '<i class="fas fa-grin-stars fa-lg" title="demo"></i>';
-      else
-        competitors = `<a class="has-text-dark" href="${data.url}/competitors.txt" target="_blank">${data.competitors}`;
+      let type;
+      if (data.type == 'demo')
+        type = `<i class="fas fa-grin-stars fa-lg" title="${data.type}"></i>`;
+      else {
+        const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
+        const url = data.url.substring(0, s.lastIndexOf("/worlds/"));
+        type = `<a class="has-text-dark" href="${url}/competitors.txt" target="_blank">` +
+               `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i> ${data.competitors}</a>`;
+      }
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td class="has-text-centered">${competitors}</td>` +
+        `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
