@@ -179,9 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${competitors}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `<td><a href="${animation}" target="_blank">` +
-        `<i title="Playback saved simulation run (not available)" class="fas fa-film fa-lg has-text-grey-light"></i></a></td>`;
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
 
@@ -281,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <th title="Version of the simulation">Version</th>
             <th title="Type of simulation">Type</th>
             <th title="Last update time">Updated</th>
-            <th colspan="2"></th>
+            <th colspan="1"></th>
           </tr>
         </thead>
         <tbody>
