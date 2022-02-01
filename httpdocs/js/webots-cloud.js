@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let competitors;
       if (data.competitors == 0)
-        competitors = '<i class="fas fa-grin-stars" title="demo"></i>';
+        competitors = '<i class="fas fa-grin-stars fa-3x" title="demo"></i>';
       else
         competitors = `<a class="has-text-dark" href="${data.url}/competitors.txt" target="_blank">${data.competitors}`;
       const row =
