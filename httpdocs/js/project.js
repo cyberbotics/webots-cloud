@@ -83,7 +83,7 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode);
-    Project.webotsView.displayQuit(false);
+    Project.webotsView.showQuit = false;
   }
 }
 Project.current = null;
