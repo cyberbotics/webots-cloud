@@ -8,7 +8,7 @@
     $value = '';
     if ($start !== false) {
       $start += strlen($parameter) + 2;
-      $quote = $line[$start - 1]
+      $quote = $line[$start - 1];
       $end = $start;
       do { // skip escaped double quotes
         $end += 1;
