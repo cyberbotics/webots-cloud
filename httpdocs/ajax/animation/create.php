@@ -4,17 +4,18 @@
   }
   function parse_sf_string($line, $parameter) {
     $n = 2;  // skiping '<' and node name (at least one character)
-    $start = strpos($line, " $parameter=\"", $n);
+    $start = strpos($line, " $parameter=", $n);
     $value = '';
     if ($start !== false) {
       $start += strlen($parameter) + 2;
+      $quote = $line[$start - 1]
       $end = $start;
       do { // skip escaped double quotes
         $end += 1;
-        $end = strpos($line, '"', $end);
+        $end = strpos($line, $quote, $end);
       } while ($line[$end - 1] == '\\' && $end !== false);
       if ($end !== false)
-        $value = str_replace('\\"', '"', substr($line, $start + 1, $end - $start - 1));
+        $value = str_replace("\\$quote", $quote, substr($line, $start + 1, $end - $start - 1));
     }
     return $value;
   }
