@@ -28,7 +28,7 @@ body:after{
 
 #mainContainer {
   height: calc(100% - 48px);
-  min-height: 600px;
+  min-height: 750px;
 }
 
 #mainContainer.webotsView {
@@ -36,7 +36,7 @@ body:after{
 }
 
 div.table-container {
-  min-height: 390px;
+  min-height: 532px;
 }
 
 body footer.footer {
