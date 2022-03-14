@@ -6,7 +6,7 @@ body {
   height: 100%;
 }
 body:after{
-  content: "testing";
+  content: "testing version";
   position: fixed;
   width: 260px;
   height: 25px;
