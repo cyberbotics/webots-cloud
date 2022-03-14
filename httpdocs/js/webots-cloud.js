@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered" style="margin-bottom:14px">
-    <p>
-      <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
-    </p>
-  </div>
-  <div class="content is-size-7">
-    <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
-  </div>
-</footer>`;
+        <div class="content has-text-centered" style="margin-bottom:14px">
+          <p>
+            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
+          </p>
+        </div>
+        <div class="content is-size-7">
+          <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+        </div>
+      </footer>`;
     return template.content.firstChild;
   }
 
@@ -162,6 +162,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function simulationRow(data) {
       const words = data.url.substring(19).split('/');
+      console.log("Data: ");
+      console.log(data);
+      console.log("Words: ");
+      console.log(words);
+      console.log("Words 0: "+words[0]);
+      console.log("Words 1: "+words[0]);
+      console.log("Words 2: "+words[0]);
+      console.log("Words 3: "+words[0]);
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
