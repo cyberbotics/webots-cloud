@@ -96,5 +96,6 @@ nav.pagination > a[disabled] {
 .synchronizable-icon {
   padding-right: 5px;
   top: 0;
-  color: #999;
+  font-size: 26px;
+  color: #aaa;
 }
