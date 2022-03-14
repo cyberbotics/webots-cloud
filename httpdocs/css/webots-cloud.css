@@ -6,11 +6,11 @@ body {
   height: 100%;
 }
 body:after{
-  content: "testing webhook";
+  content: "testing";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: #e00f00;
+  background: #088F8F;
   opacity: 0.95;
   top: 38px;
   right: -78px;
