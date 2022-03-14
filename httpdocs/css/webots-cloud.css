@@ -99,3 +99,7 @@ nav.pagination > a[disabled] {
   font-size: 26px;
   color: #ccc;
 }
+
+.synchronizable-icon :hover {
+  cursor: pointer;
+}
