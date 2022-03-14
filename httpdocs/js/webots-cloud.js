@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable fas fa-trash" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
@@ -194,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-centered">${competitors}</td>` +
-        `<td class="updatable">
-          <i class="fas fa-sync fa-lg" title="update simulation"></i>
+        `<td class="synchronizable">
+          <i class="fas fa-sync fa-lg" title="Re-synchronize now"></i>
           <div class="has-text-right is-size-7" title="Last synchronization with GitHub"/>${updated}
         </td>`;
       return row;

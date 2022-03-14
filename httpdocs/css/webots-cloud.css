@@ -87,7 +87,7 @@ nav.pagination > a[disabled] {
   }
 }
 
-.updatable {
-  display: block;
+.synchronizable {
+  display: flex;
   justify-content: space-between;
 }
