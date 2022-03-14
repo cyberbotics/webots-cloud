@@ -90,4 +90,9 @@ nav.pagination > a[disabled] {
 .synchronizable {
   display: flex;
   justify-content: space-between;
+  background-color: magenta;
+}
+
+.synchronizable-icon {
+  background-color: yellow;
 }
