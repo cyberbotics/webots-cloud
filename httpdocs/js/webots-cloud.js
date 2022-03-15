@@ -380,10 +380,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function deleteSimulation(event) {
-      console.log("Deleting target: "+event.target.id.replace('delete-',''));
-    }
-
     function synchronizeServer(event) {
       const id = event.target.id.substring(12);
       event.target.classList.add('fa-spin');
@@ -619,7 +615,13 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
+  function deleteSimulation(event) {
+    console.log("Deleting target: "+event.target.id.replace('delete-',''));
+    let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
+  }
+
   function deleteAnimation(event, type, project, page) {
+    console.log(page);
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
     const type_name = (type == 'A') ? 'animation' : 'scene';
