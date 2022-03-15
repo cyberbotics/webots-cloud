@@ -16,6 +16,8 @@ $mysqli = new mysqli($database_host, $database_username, $database_password, $da
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
 
+echo "Going here...";
+
 require '../../../php/simulation.php';
 delete_simulation($simulation);
 
