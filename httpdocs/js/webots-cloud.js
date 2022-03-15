@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="delete-${data.id}" data-url="${data.url}" title="Delete '${title}' simulation"></i> `
+        `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="simulation-${data.id}" title="Delete '${title}' simulation"></i> `
       );
       let type;
       let competitors;
@@ -532,6 +532,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
+                console.log("Type: "+type);
+                console.log("Project: "+project);
+                console.log("p: "+p);
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
