@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (data.type == 'demo') {
         type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
       } else {
-        const icon = (data.type == 'benchmark') ? 'award' : 'chart-line';
+        const icon = (data.type == 'benchmark') ? 'chart-line' : 'square-question';
         type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       }
       const row =
