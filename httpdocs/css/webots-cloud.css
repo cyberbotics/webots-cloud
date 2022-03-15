@@ -87,16 +87,11 @@ nav.pagination > a[disabled] {
   }
 }
 
-.synchronizable {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .synchronizable-icon {
+  margin-top: 5px;
   color: lightgrey;
 }
 
 .synchronizable-icon:hover {
-  color: grey;
+  color: #444;
 }
