@@ -532,9 +532,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                console.log("Type: "+type);
-                console.log("Project: "+project);
-                console.log("p: "+p);
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
@@ -624,6 +621,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteAnimation(event, type, project, page) {
+    console.log("Maybe deleting...");
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
     const type_name = (type == 'A') ? 'animation' : 'scene';
@@ -655,4 +653,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
   }
+
+  function deleteSimulation() {
+    return 0;
+  }
+
 });
