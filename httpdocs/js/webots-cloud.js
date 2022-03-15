@@ -381,6 +381,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function deleteSimulation(event) {
+      console.log("Deleting target: "+event.target.id);
+    }
+
     function synchronizeServer(event) {
       const id = event.target.id.substring(12);
       event.target.classList.add('fa-spin');
@@ -418,8 +422,10 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
             line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
           project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.projects.length; i++)
+          for (let i = 0; i < data.projects.length; i++) {
             project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
+            project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', deleteSimulation);
+          }
           const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
           updatePagination('simulation', page, total);
         }
@@ -645,10 +651,6 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     });
-  }
-
-  function deleteSimulation() {
-    return 0;
   }
 
 });
