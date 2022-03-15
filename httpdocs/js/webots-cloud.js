@@ -618,6 +618,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function deleteSimulation(event) {
     console.log("Deleting target: "+event.target.id.replace('delete-',''));
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
+    dialog.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+    });
   }
 
   function deleteAnimation(event, type, project, page) {
