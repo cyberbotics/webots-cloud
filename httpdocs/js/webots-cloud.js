@@ -621,15 +621,22 @@ document.addEventListener('DOMContentLoaded', function() {
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      dialog.querySelector('button[type="submit"]').classList.remove('is-loading');
-
+      const content = {
+        method: 'post',
+        body: JSON.stringify({
+          type: simulation,
+          simulation: animation
+        })
+      };
     });
   }
 
   function deleteAnimation(event, type, project, page) {
-    console.log(page);
+    console.log("Page: "+page);
+    console.log("Type: "+type);
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
+    console.log("Animation: "+animation);
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
