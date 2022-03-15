@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
+      console.log(data);
       const words = data.url.substring(19).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
