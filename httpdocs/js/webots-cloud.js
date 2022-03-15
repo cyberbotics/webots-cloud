@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered" style="margin-bottom:14px">
-    <p>
-      <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
-    </p>
-  </div>
-  <div class="content is-size-7">
-    <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
-  </div>
-</footer>`;
+        <div class="content has-text-centered" style="margin-bottom:14px">
+          <p>
+            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
+          </p>
+        </div>
+        <div class="content is-size-7">
+          <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+        </div>
+      </footer>`;
     return template.content.firstChild;
   }
 
@@ -162,10 +162,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function simulationRow(data) {
       const words = data.url.substring(19).split('/');
+      console.log("Data: ");
+      console.log(data);
+      console.log("Words: ");
+      console.log(words);
+      console.log("Words 0: "+words[0]);
+      console.log("Words 1: "+words[1]);
+      console.log("Words 2: "+words[2]);
+      console.log("Words 3: "+words[3]);
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable far fa-trash-alt" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
@@ -186,7 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-centered">${competitors}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td><i class="is-clickable fas fa-sync fa-lg synchronizable-icon" id="temp-${data.id}" data-url="${data.url} title="Re-synchronize now"></i></td>`;
       return row;
     }
 
@@ -362,6 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function synchronize(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
+      event.target.style.color = '#333';
       const url = event.target.getAttribute('data-url');
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
@@ -431,37 +441,37 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       if (type == 'A')
         content.innerHTML = `<div class="field">
-  <label class="label">Webots animation</label>
-  <div class="control has-icons-left">
-    <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
-</div>`;
+          <label class="label">Webots animation</label>
+          <div class="control has-icons-left">
+            <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
+        </div>`;
       else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
-  <label class="label">Webots scene</label>
-  <div class="control has-icons-left">
-    <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
-</div>
-<div class="field">
-  <label class="label">Texture files</label>
-  <div class="control has-icons-left">
-    <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
-</div>`;
+        <label class="label">Webots scene</label>
+        <div class="control has-icons-left">
+          <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
+          <span class="icon is-small is-left">
+            <i class="fas fa-upload"></i>
+          </span>
+        </div>
+        <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
+      </div>
+      <div class="field">
+        <label class="label">Texture files</label>
+        <div class="control has-icons-left">
+          <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+          <span class="icon is-small is-left">
+            <i class="fas fa-upload"></i>
+          </span>
+        </div>
+        <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+      </div>`;
       const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const type_name = (type == 'A') ? 'animation' : 'scene';
@@ -543,19 +553,19 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-  <label class="label">Webots world file</label>
-  <div class="control has-icons-left">
-    <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
-    <span class="icon is-small is-left">
-      <i class="fab fa-github"></i>
-    </span>
-  </div>
-  <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-    <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
-      https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
-    </a>
-  </div>
-</div>`;
+          <label class="label">Webots world file</label>
+          <div class="control has-icons-left">
+            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
+            <span class="icon is-small is-left">
+              <i class="fab fa-github"></i>
+            </span>
+          </div>
+          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
+              https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+            </a>
+          </div>
+        </div>`;
       let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
