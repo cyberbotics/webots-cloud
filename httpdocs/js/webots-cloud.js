@@ -194,10 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-centered">${competitors}</td>` +
-        `<td class="synchronizable">
-          <td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>
-          <i class="is-clickable fas fa-sync fa-m synchronizable-icon" title="Re-synchronize now"></i>
-        </td>`;
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td><i class="is-clickable fas fa-sync fa-m synchronizable-icon" title="Re-synchronize now"></i></td>`;
       return row;
     }
 
