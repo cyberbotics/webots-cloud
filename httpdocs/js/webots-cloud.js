@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="simulation-${data.id}" title="Delete '${title}' simulation"></i> `
+        `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="delete-${data.id}" title="Delete '${title}' simulation"></i> `
       );
       let type;
       if (data.type == 'demo') {
