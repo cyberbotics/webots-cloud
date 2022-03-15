@@ -172,10 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("Words 3: "+words[3]);
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
-      const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable far fa-trash-alt" id="delete-${data.id}" data-url="${data.url}" title="Delete '${words[3]}' simulation"></i> `
-      );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      const updated = data.updated.replace(' ',
+        `<br><i class="is-clickable far fa-trash-alt" id="delete-${data.id}" data-url="${data.url}" title="Delete '${title}' simulation"></i> `
+      );
       let type;
       let competitors;
       if (data.type == 'demo') {
