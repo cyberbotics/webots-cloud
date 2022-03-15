@@ -531,9 +531,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                console.log("Project: "+JSON.stringify(project));
-                console.log("ID: "+project.id);
-                console.log("Password: "+project.password);
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
