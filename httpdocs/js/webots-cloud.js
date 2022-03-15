@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered" style="margin-bottom:14px">
-    <p>
-      <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
-    </p>
-  </div>
-  <div class="content is-size-7">
-    <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
-  </div>
-</footer>`;
+        <div class="content has-text-centered" style="margin-bottom:14px">
+          <p>
+            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
+          </p>
+        </div>
+        <div class="content is-size-7">
+          <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+        </div>
+      </footer>`;
     return template.content.firstChild;
   }
 
@@ -162,10 +162,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function simulationRow(data) {
       const words = data.url.substring(19).split('/');
+      console.log("Data: ");
+      console.log(data);
+      console.log("Words: ");
+      console.log(words);
+      console.log("Words 0: "+words[0]);
+      console.log("Words 1: "+words[1]);
+      console.log("Words 2: "+words[2]);
+      console.log("Words 3: "+words[3]);
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable far fa-trash-alt" id="delete-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
@@ -186,7 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-centered">${competitors}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td><i class="is-clickable fas fa-sync fa-lg synchronizable-icon" id="sync-${data.id}" data-url="${data.url} title="Re-synchronize now"></i></td>`;
       return row;
     }
 
@@ -222,111 +231,111 @@ document.addEventListener('DOMContentLoaded', function() {
     const template = document.createElement('template');
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
-  <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
-  <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
-</div>
-<div id="tab-content">
-  <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the scene">Title</th>
-            <th title="Total size of the scene files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-scene">Add a new scene</button>
+        <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
+        <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
+        <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
+        <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
+        <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
       </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the animation">Title</th>
-            <th title="Duration of the animation">Duration</th>
-            <th title="Total size of the animation files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-animation">Add a new animation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-            <th title="Title of the simulation">Title</th>
-            <th title="Version of the simulation">Version</th>
-            <th title="Type of simulation">Type</th>
-            <th title="Number of competitors">#</th>
-            <th title="Last update time">Updated</th>
-            <th colspan="1"></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-project">Add a new simulation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th title="Fully qualified domain name of server">Server</th>
-            <th title="Start time">Started</th>
-            <th title="Last update time">Updated</th>
-            <th style="text-align:center" title="Maximum load for public usage">Share</th>
-            <th style="text-align:center" title="Server load">Load</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
-      </div>
-    </div>
-  </section>
-</div>`;
+      <div id="tab-content">
+        <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                  <th title="Title of the scene">Title</th>
+                  <th title="Total size of the scene files">Size</th>
+                  <th title="Upload date and time">Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-scene">Add a new scene</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                  <th title="Title of the animation">Title</th>
+                  <th title="Duration of the animation">Duration</th>
+                  <th title="Total size of the animation files">Size</th>
+                  <th title="Upload date and time">Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-animation">Add a new animation</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
+                  <th title="Title of the simulation">Title</th>
+                  <th title="Version of the simulation">Version</th>
+                  <th title="Type of simulation">Type</th>
+                  <th title="Number of competitors">#</th>
+                  <th title="Last update time">Updated</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-project">Add a new simulation</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th title="Fully qualified domain name of server">Server</th>
+                  <th title="Start time">Started</th>
+                  <th title="Last update time">Updated</th>
+                  <th style="text-align:center" title="Maximum load for public usage">Share</th>
+                  <th style="text-align:center" title="Server load">Load</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
+            </div>
+          </div>
+        </section>
+      </div>`;
     const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
     project.setup(title, [], template.content);
 
@@ -362,12 +371,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function synchronize(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
+      event.target.style.color = '#333';
       const url = event.target.getAttribute('data-url');
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
+          console.log(response.json());
           return response.json();
         })
         .then(function(data) {
+          console.log("Going into data");
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -431,37 +443,37 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       if (type == 'A')
         content.innerHTML = `<div class="field">
-  <label class="label">Webots animation</label>
-  <div class="control has-icons-left">
-    <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
-</div>`;
+          <label class="label">Webots animation</label>
+          <div class="control has-icons-left">
+            <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
+        </div>`;
       else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
-  <label class="label">Webots scene</label>
-  <div class="control has-icons-left">
-    <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
-</div>
-<div class="field">
-  <label class="label">Texture files</label>
-  <div class="control has-icons-left">
-    <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
-</div>`;
+        <label class="label">Webots scene</label>
+        <div class="control has-icons-left">
+          <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
+          <span class="icon is-small is-left">
+            <i class="fas fa-upload"></i>
+          </span>
+        </div>
+        <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
+      </div>
+      <div class="field">
+        <label class="label">Texture files</label>
+        <div class="control has-icons-left">
+          <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+          <span class="icon is-small is-left">
+            <i class="fas fa-upload"></i>
+          </span>
+        </div>
+        <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+      </div>`;
       const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const type_name = (type == 'A') ? 'animation' : 'scene';
@@ -543,19 +555,19 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-  <label class="label">Webots world file</label>
-  <div class="control has-icons-left">
-    <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
-    <span class="icon is-small is-left">
-      <i class="fab fa-github"></i>
-    </span>
-  </div>
-  <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-    <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
-      https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
-    </a>
-  </div>
-</div>`;
+          <label class="label">Webots world file</label>
+          <div class="control has-icons-left">
+            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
+            <span class="icon is-small is-left">
+              <i class="fab fa-github"></i>
+            </span>
+          </div>
+          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
+              https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+            </a>
+          </div>
+        </div>`;
       let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();

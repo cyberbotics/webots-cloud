@@ -6,11 +6,11 @@ body {
   height: 100%;
 }
 body:after{
-  content: "beta version";
+  content: "testing";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: #e00f00;
+  background: #dd6611;
   opacity: 0.95;
   top: 38px;
   right: -78px;
@@ -85,4 +85,13 @@ nav.pagination > a[disabled] {
     font-size: 12px;
     padding: 0.3em;
   }
+}
+
+.synchronizable-icon {
+  margin-top: 7px;
+  color: lightgrey;
+}
+
+.synchronizable-icon:hover {
+  color: #444;
 }
