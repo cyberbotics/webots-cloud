@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-trash" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable r fa-trash-alt" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let type;
