@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTabs();
 
     function synchronize(event) {
-      console.log(event.srcId);
+      console.log(event.target.id);
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       event.target.style.color = '#333';
