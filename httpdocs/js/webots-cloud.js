@@ -168,12 +168,19 @@ document.addEventListener('DOMContentLoaded', function() {
       const updated = data.updated.replace(' ',
         `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="simulation-${data.id}" title="Delete '${title}' simulation"></i> `
       );
+      let type;
+      if (data.type == 'demo') {
+        type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
+      } else {
+        const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
+        type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
+      }
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td class="has-text-centered"><i class="fas fa-chalkboard-teacher fa-lg" title="demo"></i></td>` +
+        `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `<td><i class="is-clickable fas fa-sync fa-lg synchronizable-icon" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i></td>`;
       return row;
