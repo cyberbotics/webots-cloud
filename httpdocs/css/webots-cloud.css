@@ -90,7 +90,6 @@ nav.pagination > a[disabled] {
 .synchronizable-icon {
   margin-top: 7px;
   color: lightgrey;
-  background-color: magenta;
 }
 
 .synchronizable-icon:hover {
