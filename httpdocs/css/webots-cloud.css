@@ -94,9 +94,9 @@ nav.pagination > a[disabled] {
 }
 
 .synchronizable-icon {
-  padding-left: 7px;
-  top: 0;
-  font-size: 20px;
   color: #ccc;
-  transition: all 0.1s ease;
+}
+
+.synchronizable-icon:hover {
+  color: #333;
 }
