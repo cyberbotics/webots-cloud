@@ -375,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = event.target.getAttribute('data-url');
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
-          console.log(response.json());
           return response.json();
         })
         .then(function(data) {
