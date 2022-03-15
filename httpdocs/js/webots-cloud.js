@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("URL: "+url);
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
-          console.log("Body: "+body);
+          console.log("Body: "+JSON.stringify({url: url, id: id}));
           console.log("Going into response");
           return response.json();
         })
