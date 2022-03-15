@@ -87,9 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const next_disabled = (current == max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
-`<a class="pagination-previous"${previous_disabled}>Previous</a>
-<a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
-<a class="pagination-link${one_is_current}>1</a></li>`;
+        `<a class="pagination-previous"${previous_disabled}>Previous</a>
+        <a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
+        <a class="pagination-link${one_is_current}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
         if (i == current - 2 || (i == current + 2 && i != max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
