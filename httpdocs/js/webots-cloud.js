@@ -161,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
-      console.log(data);
       const words = data.url.substring(19).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
@@ -362,6 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = event.target.getAttribute('data-url');
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
+          console.log(response.json);
           return response.json();
         })
         .then(function(data) {
