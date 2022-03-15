@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-centered">${competitors}</td>` +
         `<td class="synchronizable">
-          <span class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</span>
+          <td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>
           <i class="is-clickable fas fa-sync fa-m synchronizable-icon" title="Re-synchronize now"></i>
         </td>`;
       return row;
