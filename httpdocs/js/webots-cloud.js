@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let type;
       let competitors;
       if (data.type == 'demo') {
-        type = `<i class="fas fa-presentation-screen fa-lg" title="${data.type}"></i>`;
+        type = `<i class="fas fa-chalkboard-user fa-lg" title="${data.type}"></i>`;
         competitors = '';
       } else {
         const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
