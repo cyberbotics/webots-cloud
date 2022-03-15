@@ -616,7 +616,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event) {
-    console.log("Deleting target: "+event.target.id.replace('delete-',''));
+    simId = event.target.id.substring(7);
+    console.log(simId);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
@@ -625,7 +626,7 @@ document.addEventListener('DOMContentLoaded', function() {
         method: 'post',
         body: JSON.stringify({
           type: simulation,
-          simulation: animation
+          simulation: simId
         })
       };
     });
