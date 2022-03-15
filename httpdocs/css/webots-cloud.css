@@ -93,10 +93,6 @@ nav.pagination > a[disabled] {
   align-items: center;
 }
 
-.synchronizable-icon {
-  color: #ccc;
-}
-
 .synchronizable-icon:hover {
-  color: #555;
+  color: grey;
 }
