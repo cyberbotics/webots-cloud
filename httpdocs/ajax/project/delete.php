@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-foreach ($json['items'] as $address)
+foreach ($data['items'] as $address)
 {
     echo "items:". $address['address'] ."\n";
 };
