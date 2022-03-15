@@ -100,8 +100,3 @@ nav.pagination > a[disabled] {
   color: #ccc;
   transition: all 0.1s ease;
 }
-
-.synchronizable-icon:hover {
-  cursor: pointer;
-  color: #333;
-}
