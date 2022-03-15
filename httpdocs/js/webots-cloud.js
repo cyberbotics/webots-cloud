@@ -621,6 +621,8 @@ document.addEventListener('DOMContentLoaded', function() {
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+      dialog.querySelector('button[type="submit"]').classList.remove('is-loading');
+
     });
   }
 
