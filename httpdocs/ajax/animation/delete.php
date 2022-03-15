@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 if (!isset($data->animation))
-  error('Missing animation id');
+  error('Missing animation id maybe');
 $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
