@@ -1,0 +1,88 @@
+html {
+  height: 100%;
+  overflow-y: auto;
+}
+body {
+  height: 100%;
+}
+body:after{
+  content: "beta version";
+  position: fixed;
+  width: 260px;
+  height: 25px;
+  background: #e00f00;
+  opacity: 0.95;
+  top: 38px;
+  right: -78px;
+  text-align: center;
+  font-size: 13px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  line-height: 27px;
+  transform:rotate(45deg);
+  z-index: 100;
+  box-shadow: 2px 2px 5px #740f00;
+}
+
+#mainContainer {
+  height: calc(100% - 48px);
+  min-height: 750px;
+}
+
+#mainContainer.webotsView {
+  min-height: 10px;
+}
+
+div.table-container {
+  min-height: 532px;
+}
+
+body footer.footer {
+  height: 48px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 0;
+  background: linear-gradient(0deg, rgba(15,43,87,1) 0%, rgba(50,115,220,1) 100%);
+}
+
+body footer .has-text-centered {
+  width:100%;
+}
+
+#navbar {
+  background-color: rgb(36, 87, 168);
+}
+
+#tab-content section {
+  display: none;
+}
+
+#tab-content section.is-active {
+  display: block;
+}
+
+.panel-tabs > a {
+  user-select: none;
+}
+
+#webotsViewContainer {
+  height: 100%;
+  max-width: none;
+}
+
+nav.pagination > a[disabled] {
+  background-color: #fff;
+  border-color:#dbdbdb;
+  box-shadow: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media only screen and (max-width: 500px) {
+  .panel-tabs > a {
+    font-size: 12px;
+    padding: 0.3em;
+  }
+}
