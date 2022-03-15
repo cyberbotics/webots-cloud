@@ -170,9 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
       );
       let type;
       if (data.type == 'demo') {
-        type = `<i class="fas fa-chart-line fa-lg" title="${data.type}"></i>`;
+        type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
       } else {
-        const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
+        const icon = (data.type == 'benchmark') ? 'award' : 'chart-line';
         type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       }
       const row =
