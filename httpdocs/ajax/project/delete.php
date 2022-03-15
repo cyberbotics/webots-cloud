@@ -5,7 +5,12 @@ function error($message) {
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
-echo "Data: $data";
+
+foreach ($json['items'] as $address)
+{
+    echo "items:". $address['address'] ."\n";
+};
+
 if (!isset($data->simulation))
   error('Missing simulation id');
 require '../../../php/simulation.php';
