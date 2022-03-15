@@ -7,9 +7,6 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-if (!isset($data->simulation))
-  error('Missing simulation id');
-
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 
