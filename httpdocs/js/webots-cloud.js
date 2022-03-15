@@ -621,15 +621,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteAnimation(event, type, project, page) {
     const that = this;
-    console.log(event.target.id);
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-    console.log(animation);
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+      console.log("ID: "+project.id);
+      console.log("Password: "+project.password);
       const content = {
         method: 'post',
         body: JSON.stringify({
