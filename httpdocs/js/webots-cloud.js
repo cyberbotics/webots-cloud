@@ -617,24 +617,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteSimulation(event) {
     const simId = event.target.id.substring(7);
-    console.log(simId);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      const content = {
-        method: 'post',
-        body: JSON.stringify({
-          type: simulation,
-          simulation: simId
+      fetch('ajax/project/deletes.php', {method: 'post', body: JSON.stringify({simulation: simId})})
+        .then(function(response) {
+          return response.json();
         })
-      };
+        .then(function(data) {
+          dialog.close();
+          if (data.error)
+            ModalDialog.run(`Simulation deletion error`, data.error);
+        });
     });
   }
 
   function deleteAnimation(event, type, project, page) {
-    console.log("Page: "+page);
-    console.log("Type: "+type);
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
     console.log("Animation: "+animation);
