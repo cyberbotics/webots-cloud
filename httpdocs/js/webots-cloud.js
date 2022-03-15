@@ -373,11 +373,9 @@ document.addEventListener('DOMContentLoaded', function() {
       event.target.classList.add('fa-spin');
       event.target.style.color = '#333';
       const url = event.target.getAttribute('data-url');
-      console.log("URL: "+url);
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
-          console.log("Body: "+JSON.stringify({url: url, id: id}));
-          console.log("Going into response");
+          console.log(response.json());
           return response.json();
         })
         .then(function(data) {
