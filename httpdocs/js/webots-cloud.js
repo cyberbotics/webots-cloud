@@ -355,7 +355,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initTabs();
 
     function synchronize(event) {
-      console.log(event.target.id);
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       event.target.style.color = '#333';
@@ -382,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function deleteSimulation(event) {
-      console.log("Deleting target: "+event.target.id);
+      console.log("Deleting target: "+event.target.id.replace('delete-',''));
     }
 
     function synchronizeServer(event) {
