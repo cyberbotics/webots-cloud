@@ -34,4 +34,15 @@ function simulation_check_url($url) {
   $world = $exploded[$count - 1];
   return array($username, $repository, $version, $folder, $world);
 }
+
+function delete_simulation($type, $simulation) {
+  require_once 'mysql_id_string.php';
+  $path = "../../storage/$type" . mysql_id_to_string($simulation);
+  rrmdir($path);
+}
+
+function delete_simulations($type, $simulations) {
+  foreach($simulations as &$simulations)
+  delete_simulation($type, $simulation);
+}
 ?>
