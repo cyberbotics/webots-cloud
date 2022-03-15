@@ -2,18 +2,22 @@
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
+
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-foreach ($data['items'] as $address)
-{
-    echo "items:". $address['address'] ."\n";
-};
-
 if (!isset($data->simulation))
   error('Missing simulation id');
+
+require '../../../php/database.php';
+$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+
+if ($mysqli->connect_errno)
+  error("Can't connect to MySQL database: $mysqli->connect_error");
+
 require '../../../php/simulation.php';
 delete_simulation($simulation);
+
 die("{\"status\":1}");
 ?>
