@@ -231,111 +231,111 @@ document.addEventListener('DOMContentLoaded', function() {
     const template = document.createElement('template');
     template.innerHTML =
       `<div id="tabs" class="panel-tabs">
-  <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
-  <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
-  <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
-</div>
-<div id="tab-content">
-  <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the scene">Title</th>
-            <th title="Total size of the scene files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-scene">Add a new scene</button>
+        <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
+        <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
+        <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
+        <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
+        <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
       </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the animation">Title</th>
-            <th title="Duration of the animation">Duration</th>
-            <th title="Total size of the animation files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-animation">Add a new animation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-            <th title="Title of the simulation">Title</th>
-            <th title="Version of the simulation">Version</th>
-            <th title="Type of simulation">Type</th>
-            <th title="Number of competitors">#</th>
-            <th title="Last update time">Updated</th>
-            <th colspan="1"></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-project">Add a new simulation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th title="Fully qualified domain name of server">Server</th>
-            <th title="Start time">Started</th>
-            <th title="Last update time">Updated</th>
-            <th style="text-align:center" title="Maximum load for public usage">Share</th>
-            <th style="text-align:center" title="Server load">Load</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
-      </div>
-    </div>
-  </section>
-</div>`;
+      <div id="tab-content">
+        <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                  <th title="Title of the scene">Title</th>
+                  <th title="Total size of the scene files">Size</th>
+                  <th title="Upload date and time">Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-scene">Add a new scene</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                  <th title="Title of the animation">Title</th>
+                  <th title="Duration of the animation">Duration</th>
+                  <th title="Total size of the animation files">Size</th>
+                  <th title="Upload date and time">Uploaded</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-animation">Add a new animation</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
+                  <th title="Title of the simulation">Title</th>
+                  <th title="Version of the simulation">Version</th>
+                  <th title="Type of simulation">Type</th>
+                  <th title="Number of competitors">#</th>
+                  <th title="Last update time">Updated</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" id="add-a-new-project">Add a new simulation</button>
+            </div>
+          </div>
+        </section>
+        <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
+          <div class="table-container">
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th title="Fully qualified domain name of server">Server</th>
+                  <th title="Start time">Started</th>
+                  <th title="Last update time">Updated</th>
+                  <th style="text-align:center" title="Maximum load for public usage">Share</th>
+                  <th style="text-align:center" title="Server load">Load</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+          </nav>
+          <div class="container">
+            <div class="buttons">
+              <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
+            </div>
+          </div>
+        </section>
+      </div>`;
     const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
     project.setup(title, [], template.content);
 
@@ -375,9 +375,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = event.target.getAttribute('data-url');
       fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
+          console.log("Going into response");
           return response.json();
         })
         .then(function(data) {
+          console.log("Going into data");
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
