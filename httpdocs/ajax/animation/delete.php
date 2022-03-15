@@ -2,6 +2,7 @@
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
+echo "Going here 1";
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
@@ -22,5 +23,6 @@ if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 require '../../../php/animation.php';
 delete_animation($type, $animation);
+echo "Going here 2";
 die("{\"status\":1}");
 ?>
