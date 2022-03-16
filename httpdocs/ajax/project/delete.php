@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-error("Leaving because I can");
+error("Leaving because I can, but I read $data->simulation...");
 
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
