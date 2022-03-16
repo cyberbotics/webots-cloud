@@ -4,13 +4,14 @@ html {
 }
 body {
   height: 100%;
+  background-color: palegreen;
 }
 body:after{
   content: "testing";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: indianred;
+  background: purple;
   opacity: 0.95;
   top: 38px;
   right: -78px;
