@@ -4,7 +4,7 @@ html {
 }
 body {
   height: 100%;
-  background-color: purple;
+  background-color: yellow;
 }
 body:after{
   content: "testing";
