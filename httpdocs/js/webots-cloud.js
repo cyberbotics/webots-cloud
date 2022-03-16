@@ -637,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function deleteAnimation(event, type, project, page) {
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-    console.log("Animation: "+animation);
+    console.log("Animation ID: "+animation);
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
