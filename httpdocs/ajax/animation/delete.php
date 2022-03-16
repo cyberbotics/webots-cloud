@@ -16,7 +16,6 @@ $mysqli->set_charset('utf8');
 $user = isset($data->user) ? intval($data->user) : 0;
 $animation = intval($data->animation);
 $password = isset($data->password) ? $mysqli->escape_string($data->password) : '';
-error("I think I found this password: $password");
 $query = "DELETE FROM animation WHERE id=$animation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
