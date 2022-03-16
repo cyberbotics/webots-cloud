@@ -19,7 +19,8 @@ $password = isset($data->password) ? $mysqli->escape_string($data->password) : '
 // Until here all is good in the hood
 
 // Need to find where simulations are in database...
-$query = "DELETE FROM animation WHERE id=$simulation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
+//$query = "DELETE FROM animation WHERE id=$simulation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
+$query = "SELECT FROM animation WHERE id=$simulation AND user=0";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
