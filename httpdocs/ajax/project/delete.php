@@ -18,7 +18,7 @@ $simulation = intval($data->simulation);
 $password = isset($data->password) ? $mysqli->escape_string($data->password) : '';
 // Until here all is good in the hood
 
-$query = "DELETE FROM animation WHERE id=$animation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
+$query = "DELETE FROM animation WHERE id=$simulation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
 error("I think I found this password: $password");
 $mysqli->query($query) or error($mysqli->error);
 
