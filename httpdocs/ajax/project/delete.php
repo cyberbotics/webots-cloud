@@ -23,7 +23,7 @@ $password = isset($data->password) ? $mysqli->escape_string($data->password) : '
 
 //$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName' ";
 $query = "USE $database_name SELECT * FROM sys.Tables";
-error("Found these tables: $query");
+error("Found these tables: $mysqli->query($query)");
 
 error("I really tried to delete simulation $data->simulation...");
 
