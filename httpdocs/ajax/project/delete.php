@@ -21,8 +21,8 @@ $password = isset($data->password) ? $mysqli->escape_string($data->password) : '
 // Need to find where simulations are in database...
 //$query = "DELETE FROM animation WHERE id=$simulation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
 
-//$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='dbName' ";
-$query = "USE $database_name SELECT * FROM sys.Tables";
+$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA=$database_name ";
+//$query = "USE $database_name SELECT * FROM sys.Tables";
 $mysqli->query($query) or error($mysqli->error);
 error("Found these tables: ");
 
