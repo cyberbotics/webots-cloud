@@ -7,20 +7,13 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-echo "Going here with variable $data->testVariable ...";
-
-header('Content-Type: application/json');
-$json = file_get_contents('php://input');
-$data = json_decode($json);
+error("Leaving because I can");
 
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
-
-require '../../../php/simulation.php';
-delete_simulation($simulation);
 
 die("{\"status\":1}");
 ?>
