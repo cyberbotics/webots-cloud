@@ -21,6 +21,7 @@ $user = isset($data->user) ? intval($data->user) : 0;
 $simulation = intval($data->simulation);
 $password = isset($data->password) ? $mysqli->escape_string($data->password) : '';
 $query = "DELETE FROM simulation WHERE id=$simulation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
+$mysqli->query($query) or error($mysqli->error);
 
 error("I really tried to delete simulation $data->simulation...");
 
