@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event) {
-    const simId = "999999";//event.target.id.substring(7);
+    const simId = "748";//event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     console.log("Deleting simulation: "+simId);
     dialog.querySelector('form').addEventListener('submit', function(event) {
