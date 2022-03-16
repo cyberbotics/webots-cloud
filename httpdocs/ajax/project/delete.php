@@ -10,9 +10,6 @@ $data = json_decode($json);
 if (!isset($data->simulation))
   error('Missing simulation id');
 
-if (!isset($data->password))
-  error('No password provided...')
-
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 
