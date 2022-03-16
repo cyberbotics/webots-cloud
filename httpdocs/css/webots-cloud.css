@@ -1,6 +1,7 @@
 html {
   height: 100%;
   overflow-y: auto;
+  background-color: #444;
 }
 body {
   height: 100%;
