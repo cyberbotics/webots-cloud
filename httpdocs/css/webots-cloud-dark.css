@@ -45,7 +45,7 @@ body footer.footer {
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 0;
-  background: linear-gradient(0deg, #192734 0%, #15202B 100%);
+  background: linear-gradient(0deg, rgb(25, 39, 52) 0%, rgb(0, 0, 0) 100%);
 }
 
 body footer .has-text-centered {
@@ -53,7 +53,7 @@ body footer .has-text-centered {
 }
 
 #navbar {
-  background-color: #15202B;
+  background-color: #192734;
 }
 
 #tab-content section {
