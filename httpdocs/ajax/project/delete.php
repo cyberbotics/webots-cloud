@@ -3,7 +3,11 @@ function error($message) {
   die("{\"error\":\"$message\"}");
 }
 
-echo "Going here with variable $simulation ...";
+header('Content-Type: application/json');
+$json = file_get_contents('php://input');
+$data = json_decode($json);
+
+echo "Going here with variable $data->simulation ...";
 
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
