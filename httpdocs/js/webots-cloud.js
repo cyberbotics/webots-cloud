@@ -637,7 +637,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function deleteAnimation(event, type, project, page) {
     const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-    animation = 19838;
     console.log("Animation: "+animation);
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
