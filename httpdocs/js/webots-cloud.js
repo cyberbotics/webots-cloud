@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({simulation: simId})})
+      fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({simulation: simId, testVariable: "hello"})})
         .then(function(response) {
           return response.json();
         })
