@@ -18,6 +18,7 @@ if ($mysqli->connect_errno)
 
 $mysqli->set_charset('utf8');
 $user = isset($data->user) ? intval($data->user) : 0;
+$simulation = intval($data->simulation);
 
 error("I really tried to delete simulation $data->simulation...");
 
