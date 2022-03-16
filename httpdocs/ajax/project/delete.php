@@ -23,8 +23,8 @@ $password = isset($data->password) ? $mysqli->escape_string($data->password) : '
 
 $query = "DESCRIBE animation";
 //$query = "USE $database_name SELECT * FROM sys.Tables";
-$mysqli->query($query) or error($mysqli->error);
-error("Found these tables: ");
+$result = $mysqli->query($query) or error($mysqli->error);
+error("Found this info: $result");
 
 error("I really tried to delete simulation $data->simulation...");
 
