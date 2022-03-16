@@ -17,6 +17,7 @@ if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
 
 $mysqli->set_charset('utf8');
+$user = isset($data->user) ? intval($data->user) : 0;
 
 error("I really tried to delete simulation $data->simulation...");
 
