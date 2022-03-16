@@ -640,6 +640,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //console.log("Animation ID: "+animation);
     const animation = "99999";
     const type_name = (type == 'A') ? 'animation' : 'scene';
+    console.log("Deleting "+type_name+": "+animation);
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
     let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
