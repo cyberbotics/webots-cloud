@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-echo "Going here with variable $data...";
+echo "Going here with variable $data->testVariable ...";
 
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
