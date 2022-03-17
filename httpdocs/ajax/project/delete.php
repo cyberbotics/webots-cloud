@@ -22,6 +22,5 @@ if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 // Until here all is good in the hood
 require '../../../php/simulation.php';
-delete_simulation($id);
 die("{\"status\":1}");
 ?>
