@@ -36,7 +36,8 @@ function simulation_check_url($url) {
 }
 
 function delete_simulation($id) {
-  error("I really tried to delete simulation $id...");
+  $message = "I think I deleted simulation $id";
+  die("{\"error\":\"$message\"}");
 }
 
 function delete_simulations($simulations) {
