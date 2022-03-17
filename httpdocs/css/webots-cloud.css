@@ -95,3 +95,7 @@ nav.pagination > a[disabled] {
 .synchronizable-icon:hover {
   color: #444;
 }
+
+.fa-spin {
+  color: #444;
+}
