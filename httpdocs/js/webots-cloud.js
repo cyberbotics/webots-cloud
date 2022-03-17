@@ -553,6 +553,10 @@ document.addEventListener('DOMContentLoaded', function() {
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+              console.log("Page: "+page);
+              console.log("Data total: "+data.total);
+              console.log("Page Limit: "+page_limit);
+              console.log("Total Pages: "+total);
               updatePagination('simulation', page, total);
             }
           });
