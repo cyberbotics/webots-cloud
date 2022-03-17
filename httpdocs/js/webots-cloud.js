@@ -369,41 +369,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    
-    /*
-    function synchronize(event) {
-      const id = event.target.id.substring(5);
-      event.target.classList.add('fa-spin');
-      const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          const old = document.querySelector('#sync-' + id).parentNode.parentNode;
-          const parent = old.parentNode;
-          if (data.error) {
-            let dialog = ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
-            dialog.querySelector('form').addEventListener('submit', function(event) {
-              event.preventDefault();
-              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              deleteSimulation(id, project, page, true);
-            });
-            event.target.classList.remove('fa-spin');
-            dialog.close();
-          } else {
-            let tr = document.createElement('tr');
-            tr.innerHTML = simulationRow(data);
-            parent.replaceChild(tr, old);
-            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
-            event.target.classList.remove('fa-spin');
-            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-            updatePagination('simulation', page, total);
-          }
-        });
-      
-    }*/
-
     function synchronize(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
