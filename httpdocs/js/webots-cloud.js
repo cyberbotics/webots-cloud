@@ -71,6 +71,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    let active_tab = document.location.pathname.substring(1);
+    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
+    if (!page)
+      page = 1;
+
+    setPages(active_tab, page);
+    
+    const page_limit = 10;
+    if (active_tab === '')
+      active_tab = 'animation';
+
+    mainContainer(project, active_tab);
+    initTabs();
+
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {addAnimation('S');});
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {addAnimation('A');});
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {addSimulation();});
+
+    listAnimations('S', scene_page);
+    listAnimations('A', animation_page);
+    listSimulations(simulation_page);
+    listServers(server_page);
+
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
@@ -602,27 +625,6 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-
-    let active_tab = document.location.pathname.substring(1);
-    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
-    if (!page)
-      page = 1;
-    setPages(active_tab, page);
-    const page_limit = 10;
-    if (active_tab === '')
-      active_tab = 'animation';
-
-    mainContainer(project, active_tab);
-    initTabs();
-
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {addAnimation('S');});
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {addAnimation('A');});
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {addSimulation();});
-
-    listAnimations('S', scene_page);
-    listAnimations('A', animation_page);
-    listSimulations(simulation_page);
-    listServers(server_page);
   }
 
   function runPage(project) {
