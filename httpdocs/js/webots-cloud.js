@@ -388,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
               deleteSimulation(id, project, page, true);
             });
             event.target.classList.remove('fa-spin');
+            dialog.close();
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
