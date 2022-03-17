@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            ModalDialog.run('Project creation error', data.error);
+            ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
             parent.removeChild(old);
           } else {
             let tr = document.createElement('tr');
@@ -632,6 +632,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event, project, page) {
+    console.log("Target: "+event.target);
     const url = event.target.getAttribute('data-url');
     const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
