@@ -599,30 +599,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function listServers(page) {
+      let offset = (page - 1) * page_limit;
+      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Server listing error', data.error);
+          else {
+            let line = ``;
+            for (let i = 0; i < data.servers.length; i++)
+              line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
+            project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.servers.length; i++)
+              project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('server', page, total);
+          }
+        });
+    }
+
 
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
     listSimulations(simulation_page);
-    
-    let offset = (page - 1) * page_limit;
-    fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.error)
-          ModalDialog.run('Server listing error', data.error);
-        else {
-          let line = ``;
-          for (let i = 0; i < data.servers.length; i++)
-            line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-          project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.servers.length; i++)
-            project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
-          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('server', page, total);
-        }
-      });
+    listServers(server_page);
   }
 
   function runPage(project) {
