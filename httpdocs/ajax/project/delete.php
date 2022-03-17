@@ -18,7 +18,7 @@ $url = isset($data->url) ? $mysqli->escape_string($data->url) : '';
 
 // Need to find where simulations are in database...
 $query = "DELETE FROM project WHERE id=$simulation";
-//$mysqli->query($query) or error($mysqli->error);
+$mysqli->query($query) or error($mysqli->error);
 // Until here all is good in the hood
 //error("Found this info: $result");
 
