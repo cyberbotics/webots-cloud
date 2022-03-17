@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.querySelector('form').addEventListener('submit', function(event) {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              deleteSimulation(event, project, page);
+              deleteSimulation(id, project, page);
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
             });
             event.target.classList.remove('fa-spin');
@@ -600,8 +600,9 @@ document.addEventListener('DOMContentLoaded', function() {
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
-              project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
-              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', function(event) { deleteSimulation(event, project, page);});
+              let id = data.projects[i].id;
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
+              project.content.querySelector('#delete-' + id).addEventListener('click', function() { deleteSimulation(id, project, page);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -636,10 +637,9 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  function deleteSimulation(event, project, page) {
-    console.log("Target ID: "+event.target.id);
+  function deleteSimulation(id, project, page) {
+    console.log("Target ID: "+id);
     return;
-    const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
