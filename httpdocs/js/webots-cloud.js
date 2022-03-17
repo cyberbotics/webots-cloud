@@ -386,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               deleteSimulation(id, project, page);
-              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
             });
             event.target.classList.remove('fa-spin');
           } else {
@@ -639,7 +638,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function deleteSimulation(id, project, page) {
     console.log("Target ID: "+id);
-    return;
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
