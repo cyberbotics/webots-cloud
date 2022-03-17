@@ -39,9 +39,4 @@ function delete_simulation($id) {
   $message = "I think I deleted simulation $id...";
   die("{\"error\":\"$message\"}");
 }
-
-function delete_simulations($simulations) {
-  foreach($simulations as &$simulations)
-    delete_simulation($simulation);
-}
 ?>
