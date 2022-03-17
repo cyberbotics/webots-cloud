@@ -387,7 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               parent.removeChild(old);
+              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
             });
+            event.target.classList.remove('fa-spin');
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
