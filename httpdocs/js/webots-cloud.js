@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
       page = 1;
 
     setPages(active_tab, page);
-    
+
     const page_limit = 10;
     if (active_tab === '')
       active_tab = 'animation';
@@ -436,25 +436,25 @@ document.addEventListener('DOMContentLoaded', function() {
       else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
-        <label class="label">Webots scene</label>
-        <div class="control has-icons-left">
-          <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
-          <span class="icon is-small is-left">
-            <i class="fas fa-upload"></i>
-          </span>
+          <label class="label">Webots scene</label>
+          <div class="control has-icons-left">
+            <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
         </div>
-        <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
-      </div>
-      <div class="field">
-        <label class="label">Texture files</label>
-        <div class="control has-icons-left">
-          <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
-          <span class="icon is-small is-left">
-            <i class="fas fa-upload"></i>
-          </span>
-        </div>
-        <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
-      </div>`;
+        <div class="field">
+          <label class="label">Texture files</label>
+          <div class="control has-icons-left">
+            <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+        </div>`;
       const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const type_name = (type == 'A') ? 'animation' : 'scene';
@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
-              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', deleteSimulation);
+              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', function(event) { deleteSimulation(event, project);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  function deleteSimulation(event) {
+  function deleteSimulation(event, project) {
     const url = event.target.getAttribute('data-url');
     const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
@@ -646,6 +646,8 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           if (data.error)
             ModalDialog.run(`Simulation deletion error`, data.error);
+            else if (data.status == 1)
+              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
         });
     });
   }
@@ -676,9 +678,8 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           if (data.error)
             ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-          else if (data.status == 1) {
+          else if (data.status == 1)
             project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
-          }
         });
     });
   }
