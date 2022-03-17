@@ -17,7 +17,7 @@ $id = isset($data->id) ? intval($data->id) : '';
 $url = isset($data->url) ? $mysqli->escape_string($data->url) : '';
 
 // Need to find where simulations are in database...
-$query = "DELETE FROM project WHERE url=\"$url\" AND id=$id";
+$query = "DELETE FROM project WHERE id=$id";
 $mysqli->query($query) or error($mysqli->error);
 // Until here all is good in the hood
 if ($mysqli->affected_rows === 0)
