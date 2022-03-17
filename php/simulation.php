@@ -35,7 +35,16 @@ function simulation_check_url($url) {
   return array($username, $repository, $version, $folder, $world);
 }
 
+function error($message) {
+  die("{\"error\":\"$message\"}");
+}
+
 function delete_simulation($id) {
-  die("{\"error\":\"I think it got deleted...\"}");
+  error("I think I deleted simulation $id...");
+}
+
+function delete_simulations($simulations) {
+  foreach($simulations as &$simulations)
+    delete_simulation($simulation);
 }
 ?>
