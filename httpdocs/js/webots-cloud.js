@@ -644,7 +644,6 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          dialog.close();
           if (data.error)
             ModalDialog.run(`Simulation deletion error`, data.error);
             else if (data.status == 1)
