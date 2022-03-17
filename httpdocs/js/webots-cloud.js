@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.querySelector('form').addEventListener('submit', function(event) {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              deleteSimulation(id, project, page);
+              deleteSimulation(id, project, page, true);
             });
             event.target.classList.remove('fa-spin');
           } else {
@@ -601,7 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
-              project.content.querySelector('#delete-' + id).addEventListener('click', function() { deleteSimulation(id, project, page);});
+              project.content.querySelector('#delete-' + id).addEventListener('click', function() { deleteSimulation(id, project, page, false);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -636,12 +636,9 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  function deleteSimulation(id, project, page) {
+  function deleteSimulation(id, project, page, fromSync) {
     console.log("Target ID: "+id);
-    let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
-    dialog.querySelector('form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+    if (fromSync) {
       fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
         .then(function(response) {
           return response.json();
@@ -653,7 +650,24 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (data.status == 1)
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
         });
-    });
+    } else {
+      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Simulation deletion error`, data.error);
+              else if (data.status == 1)
+                project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+          });
+      });
+    }
   }
 
   function deleteAnimation(event, type, project, page) {
