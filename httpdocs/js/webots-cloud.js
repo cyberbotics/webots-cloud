@@ -612,8 +612,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (active_tab === '')
       active_tab = 'animation';
 
-    initTabs();
     mainContainer(project, active_tab);
+    initTabs();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {addAnimation('S');});
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {addAnimation('A');});
