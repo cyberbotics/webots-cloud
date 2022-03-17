@@ -637,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event, project, page) {
-    console.log("Target: "+event.target);
+    console.log("Target: "+SON.stringify(event.target));
     return;
     const url = event.target.getAttribute('data-url');
     const id = event.target.id.substring(7);
