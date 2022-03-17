@@ -13,14 +13,13 @@ $mysqli = new mysqli($database_host, $database_username, $database_password, $da
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
-$user = isset($data->user) ? intval($data->user) : 0;
 $simulation = intval($data->simulation);
-$password = isset($data->password) ? $mysqli->escape_string($data->password) : '';
-// Until here all is good in the hood
+$url = isset($data->url) ? $mysqli->escape_string($data->url) : '';
 
 // Need to find where simulations are in database...
 $query = "DELETE FROM project WHERE id=$simulation";
-$mysqli->query($query) or error($mysqli->error);
+//$mysqli->query($query) or error($mysqli->error);
+// Until here all is good in the hood
 //error("Found this info: $result");
 
 error("I really tried to delete simulation $data->simulation...");
