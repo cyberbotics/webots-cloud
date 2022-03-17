@@ -382,8 +382,12 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
-            parent.removeChild(old);
+            let dialog = ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
+            dialog.querySelector('form').addEventListener('submit', function(event) {
+              event.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              parent.removeChild(old);
+            });
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
