@@ -404,27 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    let offset = (page - 1) * page_limit;
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.error)
-          ModalDialog.run('Project listing error', data.error);
-        else {
-          let line = ``;
-          for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-            line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-          project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.projects.length; i++) {
-            project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
-            project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', deleteSimulation);
-          }
-          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('simulation', page, total);
-        }
-      });
+
     function addAnimation(type) {
       let content = {};
       if (type == 'A')
@@ -594,8 +574,35 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
+
+    function listSimulations(page) {
+      let offset = (page - 1) * page_limit;
+      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Project listing error', data.error);
+          else {
+            let line = ``;
+            for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
+              line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+            project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.projects.length; i++) {
+              project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
+              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', deleteSimulation);
+            }
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('simulation', page, total);
+          }
+        });
+    }
+
+
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
+    listSimulations(simulation_page);
     
     offset = (page - 1) * page_limit;
     fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
