@@ -616,9 +616,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event) {
-    const id = event.target.id.substring(7);
-    console.log("Deleting simulation: "+id);
-    /*
     const url = event.target.getAttribute('data-url');
     const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
@@ -636,7 +633,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run(`Simulation deletion error`, data.error);
         });
     });
-    */
   }
 
   function deleteAnimation(event, type, project, page) {
