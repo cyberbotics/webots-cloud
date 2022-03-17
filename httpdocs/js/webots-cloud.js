@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
-              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', function(event) { deleteSimulation(event, project);});
+              project.content.querySelector('#delete-' + data.projects[i].id).addEventListener('click', function(event) { deleteSimulation(event, project, page);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  function deleteSimulation(event, project) {
+  function deleteSimulation(event, project, page) {
     const url = event.target.getAttribute('data-url');
     const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
