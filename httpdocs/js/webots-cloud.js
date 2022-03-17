@@ -421,6 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               deleteSimulation(id, project, page, true);
+              dialog.close();
             });
             event.target.classList.remove('fa-spin');
           } else {
