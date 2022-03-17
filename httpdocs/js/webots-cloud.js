@@ -616,8 +616,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event) {
-    const url = "hello.com";//event.target.getAttribute('data-url');
-    const id = "99999";//event.target.id.substring(7);
+    const url = event.target.getAttribute('data-url');
+    const id = event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     console.log("Deleting simulation: "+id);
     dialog.querySelector('form').addEventListener('submit', function(event) {
