@@ -22,8 +22,7 @@ $mysqli->query($query) or error($mysqli->error);
 // Until here all is good in the hood
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
-
-error("I really tried to delete simulation $data->id...");
-
+require '../../../php/simulation.php';
+delete_animation($url, $id);
 die("{\"status\":1}");
 ?>
