@@ -34,9 +34,4 @@ function simulation_check_url($url) {
   $world = $exploded[$count - 1];
   return array($username, $repository, $version, $folder, $world);
 }
-
-function delete_simulation($id) {
-  $message = "I think I deleted simulation $id...";
-  die("{\"error\":\"$message\"}");
-}
 ?>
