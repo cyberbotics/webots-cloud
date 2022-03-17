@@ -616,13 +616,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteSimulation(event) {
-    const simId = "99999";//event.target.id.substring(7);
+    const url = "hello.com";//event.target.getAttribute('data-url');
+    const id = "99999";//event.target.id.substring(7);
     let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
     console.log("Deleting simulation: "+simId);
     dialog.querySelector('form').addEventListener('submit', function(event) {
       event.preventDefault();
       dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({simulation: simId, user: null, password: null})})
+      fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({simulation: id, url: url})})
         .then(function(response) {
           return response.json();
         })
