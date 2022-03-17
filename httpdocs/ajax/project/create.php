@@ -78,6 +78,7 @@
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $total = intval($count['count']);
   $type = 'demo';
+  
   $answer = array();
   $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
   $answer['url'] = $url;
