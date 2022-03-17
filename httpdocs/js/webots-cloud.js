@@ -71,17 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    mainContainer(project);
-
-    let active_tab = document.location.pathname.substring(1);
-    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
-    if (!page)
-      page = 1;
-    setPages(active_tab, page);
-    const page_limit = 10;
-    if (active_tab === '')
-      active_tab = 'animation';
-
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
@@ -218,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
     
-    function mainContainer(project) {
+    function mainContainer(project, active_tab) {
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="panel-tabs">
@@ -356,8 +345,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     }
-
-    initTabs();
 
     function synchronize(event) {
       const id = event.target.id.substring(5);
@@ -538,16 +525,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {
-      addAnimation('S');
-    });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
-      addAnimation('A');
-    });
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
-      addSimulation();
-    });
-
     function listAnimations(type, page) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
@@ -626,6 +603,21 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    let active_tab = document.location.pathname.substring(1);
+    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
+    if (!page)
+      page = 1;
+    setPages(active_tab, page);
+    const page_limit = 10;
+    if (active_tab === '')
+      active_tab = 'animation';
+
+    initTabs();
+    mainContainer(project, active_tab);
+
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {addAnimation('S');});
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {addAnimation('A');});
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {addSimulation();});
 
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
