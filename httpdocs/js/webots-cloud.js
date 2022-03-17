@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            ModalDialog.run('Project creation error', data.error);
+            ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
             parent.removeChild(old);
           } else {
             let tr = document.createElement('tr');
@@ -424,7 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
-            updatePagination('simulation', 1, 1);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('simulation', page, total);
           }
         });
     }
