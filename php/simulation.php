@@ -39,7 +39,7 @@ function error($message) {
   die("{\"error\":\"$message\"}");
 }
 
-function delete_simulation($url, $id) {
+function delete_simulation($id) {
   error("I really tried to delete simulation $id...");
 }
 
