@@ -20,8 +20,8 @@
   list($username, $repository, $version, $folder, $world) = $check_url;
   $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
   $world_content = @file_get_contents($world_url);
-  //if ($world_content === false)
-  error("Failed to fetch world file at $world_url. <br> <br> Would you like to delete this simulation? (There is no way to recover deleted data)");
+  if ($world_content === false)
+    error("Failed to fetch world file at $world_url. <br> <br> Would you like to delete this simulation? (There is no way to recover deleted data)");
 
   # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
   $world_info = false;
