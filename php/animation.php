@@ -17,9 +17,7 @@ function rrmdir($dir) {  # recursive rmdir, e.g., rm -rf
 function delete_animation($type, $animation) {
   require_once 'mysql_id_string.php';
   $path = "../../storage/$type" . mysql_id_to_string($animation);
-  $message = "This is the path that I'm dealing with: $path...";
-  die("{\"error\":\"$message\"}");
-  //rrmdir($path);
+  rrmdir($path);
 }
 
 function delete_animations($type, $animations) {
