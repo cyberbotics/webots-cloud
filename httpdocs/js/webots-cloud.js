@@ -394,7 +394,8 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
-            updatePagination('simulation', 1, 1);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('simulation', page, total);
           }
         });
     }
