@@ -73,6 +73,10 @@
     else
       error("Failed to update the simulation");
   }
+
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
+  $count = $result->fetch_array(MYSQLI_ASSOC);
+  $total = intval($count['count']);
   $type = 'demo';
   $answer = array();
   $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
@@ -83,5 +87,6 @@
   $answer['description'] = $description;
   $answer['competitors'] = $competitors;
   $answer['updated'] = date("Y-m-d H:i:s");
+  $answer['total'] =  $total;
   die(json_encode($answer));
  ?>
