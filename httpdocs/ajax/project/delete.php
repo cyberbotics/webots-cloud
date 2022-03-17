@@ -20,7 +20,8 @@ $url = isset($data->url) ? $mysqli->escape_string($data->url) : '';
 $query = "DELETE FROM project WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 // Until here all is good in the hood
-//error("Found this info: $result");
+if ($mysqli->affected_rows === 0)
+  error('Could not delete animation');
 
 error("I really tried to delete simulation $data->id...");
 
