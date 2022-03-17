@@ -604,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listAnimations('A', animation_page);
     listSimulations(simulation_page);
     
-    offset = (page - 1) * page_limit;
+    let offset = (page - 1) * page_limit;
     fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
       .then(function(response) {
         return response.json();
