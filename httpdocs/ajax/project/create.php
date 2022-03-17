@@ -21,7 +21,7 @@
   $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
   $world_content = @file_get_contents($world_url);
   if ($world_content === false)
-    error("Failed to fetch world file at $world_url\n\nWould you like to delete this simulation?");
+    error("Failed to fetch world file at $world_url. Would you like to delete this simulation?");
 
   # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
   $world_info = false;
