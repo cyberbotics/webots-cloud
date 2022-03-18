@@ -6,11 +6,11 @@ body {
   height: 100%;
 }
 body:after{
-  content: "testing";
+  content: "beta version";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: purple;
+  background: #e00f00;
   opacity: 0.95;
   top: 38px;
   right: -78px;
