@@ -93,5 +93,6 @@ function simulation_check_yaml($check_url) {
   }
 
   $n = count($animation_durations);
+  return array('hello');
 }
 ?>
