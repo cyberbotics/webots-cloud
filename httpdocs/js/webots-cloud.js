@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log(data.projects[0].type);
+          console.log(data.projects[3].type);
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
