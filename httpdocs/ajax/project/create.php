@@ -90,7 +90,7 @@ $answer['url'] = $url;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
-error("type: $type");
+#error("type: $type");
 $answer['description'] = $description;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
