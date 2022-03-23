@@ -52,8 +52,8 @@ function simulation_check_yaml($check_url) {
     if (substr($line, 0, 5) === 'uses:')
       $docker = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 5) === 'type:') {
-      return "type: $type";
       $type = trim(substr($line, 6), " ");
+      return "type: $type";
     }
 
     elseif (substr($line, 0, 11) === 'simulation:') {
