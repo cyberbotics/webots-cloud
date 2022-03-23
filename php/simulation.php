@@ -61,7 +61,7 @@ function simulation_check_yaml($check_url) {
   $line = strtok("\r\n");
   $line = strtok("\r\n");
   $line = strtok("\r\n");
-  return $line;
+  return substr($line, 0, 10);
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
       $publish = trim(substr($line, 7), " ");
