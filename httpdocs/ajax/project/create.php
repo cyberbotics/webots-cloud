@@ -28,6 +28,7 @@ $check_yaml = simulation_check_url($url);
 if (!is_array($check_yaml))
   error($check_yaml);
 list($url_temp) = $check_yaml;
+error($url_temp);
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
