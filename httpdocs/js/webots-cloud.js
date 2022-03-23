@@ -381,7 +381,14 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            ModalDialog.run('Project creation error', data.error);
+            let dialog = ModalDialog.run('Project creation error', data.error, 'Ok', 'isDanger');
+            dialog.querySelector('form').addEventListener('submit', function(event) {
+              event.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              console.log("Here is where it would be deleted");
+              dialog.close();
+              event.target.classList.remove('fa-spin');
+            });
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
