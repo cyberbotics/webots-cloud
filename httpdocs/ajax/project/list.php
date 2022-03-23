@@ -16,7 +16,7 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   $projects = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    error($row['id']);
+    error($row['type']);
     settype($row['id'], 'integer');
     settype($row['stars'], 'integer');
     settype($row['competitors'], 'integer');
