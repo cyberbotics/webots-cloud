@@ -46,8 +46,10 @@ function simulation_check_yaml($check_url) {
   $type = 'temp';
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    if (substr($line, 0, 3) === 'type')
+    if (substr($line, 0, 3) === 'type') {
       $type = substr(5, null);
+      return "I did it";
+    }
 
     $line = strtok("\r\n");
     return "line is $line";
