@@ -180,23 +180,24 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="delete-${data.id}" title="Delete '${title}' simulation"></i> `
+        `<br><i style="color:grey" class="is-clickable fas fa-sync-alt" id="sync-${data.id}" title="Delete '${title}' simulation"></i> `
       );
-      let type;
-      if (data.type == 'demo') {
-        type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
-      } else {
-        const icon = (data.type == 'benchmark') ? 'chart-line' : 'question';
-        type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
-      }
+      let icon = 'question';
+      if (data.type === 'demo')
+        icon = 'chalkboard-teacher';
+      else if (data.type === 'benchmark')
+        icon = 'chart-line';
+      else if (data.type === 'competition')
+        icon = 'trophy';
+      const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `<td><i class="is-clickable fas fa-sync fa-m synchronizable-icon" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i></td>`;
+        `<td class="has-text-centered">${competitors}</td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
 
@@ -603,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
-              project.content.querySelector('#delete-' + id).addEventListener('click', function() { deleteSimulation(id, project, page, false);});
+              //project.content.querySelector('#delete-' + id).addEventListener('click', function() {deleteSimulation(id, project, page, false);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -638,6 +639,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
+  /*
   function deleteSimulation(id, project, page, fromSync) {
     if (fromSync) {
       fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
@@ -669,6 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
+  */
 
   function deleteAnimation(event, type, project, page) {
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
