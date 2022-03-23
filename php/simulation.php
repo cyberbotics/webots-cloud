@@ -36,8 +36,6 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($url) {
-  if (substr($url, 0, 19) === 'https://github.com/')
-    return "The URL starts with 'https://github.com/'";
 
   return array($url);
 }
