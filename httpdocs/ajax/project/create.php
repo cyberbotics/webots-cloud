@@ -24,11 +24,9 @@ if ($world_content === false)
   error("Failed to fetch world file at $world_url.<br><br>Would you like to delete this simulation?<br>(There is no way to recover deleted data)");
 
 # retrieve information from webots.yaml file
-$check_yaml = simulation_check_yaml($url);
+$check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
-list($url_temp) = $check_yaml;
-error($url_temp);
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
