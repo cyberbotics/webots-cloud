@@ -21,7 +21,7 @@ list($username, $repository, $version, $folder, $world) = $check_url;
 $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
 $world_content = @file_get_contents($world_url);
 if ($world_content === false)
-  error("Failed to fetch world file at $world_url.<br><br>Would you like to delete this simulation?<br>(There is no way to recover deleted data)");
+  error("Failed to fetch world file $world.<br><br>Simulation will be deleted.");
 
 # retrieve information from webots.yaml file
 $check_yaml = simulation_check_yaml($check_url);
