@@ -49,10 +49,10 @@ function simulation_check_yaml($check_url) {
 
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    elseif (substr($line, 0, 5) === 'uses:')
-      $docker = trim(substr($line, 5), " ");
+    if (substr($line, 0, 5) === 'uses:')
+      $docker = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 5) === 'type:')
-      $type = trim(substr($line, 5), " ");
+      $type = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
