@@ -20,6 +20,7 @@ if (!is_array($check_url))
 list($username, $repository, $version, $folder, $world) = $check_url;
 $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
 $world_content = @file_get_contents($world_url);
+error("Error: strtok($world_content, "\r\n")")
 if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
