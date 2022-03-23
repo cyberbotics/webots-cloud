@@ -92,6 +92,8 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
+  return "Publish is $publish";
+
   $n = count($animation_durations);
   return array('hello');
 }
