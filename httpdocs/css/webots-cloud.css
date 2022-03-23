@@ -4,7 +4,7 @@ html {
 }
 body {
   height: 100%;
-  background-color: yellowgreen;
+  background-color: red;
 }
 body:after{
   content: "beta version";
