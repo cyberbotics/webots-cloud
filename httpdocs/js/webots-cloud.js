@@ -381,11 +381,10 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            let dialog = ModalDialog.run('Project creation error', data.error, 'Cancel', `Delete Simulation`, 'is-danger');
+            let dialog = ModalDialog.run('Project creation error', data.error, 'Ok');
             dialog.querySelector('form').addEventListener('submit', function(event) {
               event.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              deleteSimulation(id, project, page, true);
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
@@ -637,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  
+  /*
   function deleteSimulation(id, project, page, fromSync) {
     if (fromSync) {
       fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
@@ -668,8 +667,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
-  }
-  
+  }*/
 
   function deleteAnimation(event, type, project, page) {
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
