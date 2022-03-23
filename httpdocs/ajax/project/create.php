@@ -13,6 +13,7 @@ if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($data->url);
+error($url);
 $id = isset($data->id) ? intval($data->id) : 0;
 $check_url = simulation_check_url($url);
 if (!is_array($check_url))
