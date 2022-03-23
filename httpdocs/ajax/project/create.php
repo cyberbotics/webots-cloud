@@ -58,7 +58,7 @@ while ($line !== false) {
 }
 if ($world_info === false)
   error("Missing WorldInfo in $world world file");
-error("going here");
+error("going here now");
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
