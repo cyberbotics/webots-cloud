@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="delete-${data.id}" title="Delete '${title}' simulation"></i> `
       );
       let type;
-      console.log("Type: " + data.type);
       if (data.type == 'demo') {
         type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
       } else {
@@ -371,7 +370,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function synchronize(event) {
-      console.log("Hello");
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
@@ -395,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
-            //parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
+            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -595,6 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
+          console.log(data.type);
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
