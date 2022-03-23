@@ -83,22 +83,18 @@ function simulation_check_yaml($check_url) {
           if (substr(trim($line, " "), 0, 9) === 'duration') {
             array_push($animation_durations, substr(trim($line, " "), 9));
             $line = strtok("\r\n");
-          }
-          else
-            return "Error in 'webots.yaml' file. Animation duration not set.";
+          } else
+            array_push($animation_durations, 'full');
         }
         $world_list_end = true;
       }
     }
+
     if ($world_list_end === true)
       $world_list_end = false;
     else
       $line = strtok("\r\n");
   }
-
-  return "Publish is $publish";
-
-  $n = count($animation_durations);
   return array('hello');
 }
 ?>
