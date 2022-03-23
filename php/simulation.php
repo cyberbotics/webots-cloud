@@ -45,8 +45,10 @@ function simulation_check_yaml($check_url) {
 
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
-  $worlds_simulation = array();
-  $worlds_animation = array();
+  $world = '';
+  $simulation_worlds = array();
+  $animation_worlds = array();
+  $animation_durations = arra();
 
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
@@ -55,12 +57,14 @@ function simulation_check_yaml($check_url) {
       $docker = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 5), " ");
+    elseif (substr($line, 0, 6) === 'world:')
+      $world = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
-          array_push($worlds_simulation, trim(substr($line, 11), " "));
+          array_push($simulation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
         }
       }
@@ -69,7 +73,12 @@ function simulation_check_yaml($check_url) {
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
-          array_push($worlds_animation, trim(substr($line, 11), " "));
+          array_push($animation_worlds, trim(substr($line, 11), " "));
+          $line = strtok("\r\n");
+          if (substr(trim($line, " "), 0, 9) === 'duration')
+            $duration = substr(trim($line, " "), 9);
+          else
+            return "Error in 'webots.yaml' file. Animation duration not set."
           $line = strtok("\r\n");
         }
       }
@@ -77,9 +86,9 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  $n = count($worlds_simulation);
+  $n = count($simulation_worlds);
   return "world number : $n";
   
-  return array($docker, $type);
+  return array($docker, $type, $world, $simulation_worlds, $animation_worlds);
 }
 ?>
