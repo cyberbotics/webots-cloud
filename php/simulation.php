@@ -50,15 +50,15 @@ function simulation_check_yaml($check_url) {
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
     if (substr($line, 0, 5) === 'uses:')
-      $docker = trim(substr($line, 6), " ");
+      $docker = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 5) === 'type:')
-      $type = trim(substr($line, 6), " ");
+      $type = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
-          array_push($worlds, trim(substr($line, 12), " "));
+          array_push($worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
         }
       }
