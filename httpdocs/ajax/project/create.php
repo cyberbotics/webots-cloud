@@ -70,7 +70,7 @@ if ($id === 0)
   $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors) "
           ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors)";
 else
-  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, updated=NOW() "
+  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, type=$type, updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
@@ -90,7 +90,6 @@ $answer['url'] = $url;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
-#error("type: $type");
 $answer['description'] = $description;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
