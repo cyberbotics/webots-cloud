@@ -56,7 +56,7 @@ function simulation_check_yaml($check_url) {
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
-      $publish = trim(substr($line, 7), " ");
+      $publish = trim(substr($line, 8), " ");
     elseif (substr($line, 0, 5) === 'uses:')
       $docker = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 5) === 'type:')
@@ -80,6 +80,7 @@ function simulation_check_yaml($check_url) {
         while (substr($line, 0, 11) === '    - file:') {
           array_push($animation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
+          return substr(trim($line, " "), 0, 9);
           if (substr(trim($line, " "), 0, 9) === 'duration') {
             array_push($animation_durations, substr(trim($line, " "), 9));
             $line = strtok("\r\n");
