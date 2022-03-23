@@ -382,8 +382,8 @@ document.addEventListener('DOMContentLoaded', function() {
           const parent = old.parentNode;
           if (data.error) {
             let dialog = ModalDialog.run('Project creation error', data.error, 'Cancel', 'Ok', 'is-danger');
-            dialog.querySelector('form').addEventListener('submit', function(event) {
-              event.preventDefault();
+            dialog.querySelector('form').addEventListener('submit', function(e) {
+              e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               console.log("Here is where it would be deleted");
               event.target.classList.remove('fa-spin');
