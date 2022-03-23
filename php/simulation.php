@@ -46,9 +46,35 @@ function simulation_check_yaml($check_url) {
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
   $worlds_simulation = array();
-  $worlds_animation = array();
 
   return "Hello";
+
+  $yaml_content = implode("\n", array_filter(explode("\n", $yaml_content)));
+
+  return "Hello here";
+  
+  $line = strtok($yaml_content, "\r\n");
+  while ($line !== false) {
+    elseif (substr($line, 0, 5) === 'uses:')
+      $docker = trim(substr($line, 5), " ");
+    elseif (substr($line, 0, 5) === 'type:')
+      $type = trim(substr($line, 5), " ");
+    elseif (substr($line, 0, 11) === 'simulation:') {
+      $line = strtok("\r\n");
+      if (substr($line, 0, 9) === '  worlds:') {
+        $line = strtok("\r\n");
+        while (substr($line, 0, 11) === '    - file:') {
+          array_push($worlds_simulation, trim(substr($line, 12), " "));
+          $line = strtok("\r\n");
+        }
+      }
+    }
+    $line = strtok("\r\n");
+  }
+
+  list($w1, $w2, $w3) = $worlds_simulation;
+  
+  return "Worlds: $w1 $w2 $w3";
   
   return array($docker, $type);
 }
