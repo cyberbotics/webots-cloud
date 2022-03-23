@@ -87,7 +87,7 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  $n = count($simulation_worlds);
+  $n = count($animation_durations);
   return "world number : $n";
   
   return array($docker, $type, $world, $simulation_worlds, $animation_worlds);
