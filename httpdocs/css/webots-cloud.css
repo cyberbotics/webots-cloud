@@ -58,9 +58,8 @@ body footer .has-text-centered {
   background-color: rgb(0, 122, 204);
 }
 
-#navbar-item:hover {
+#navbar-item {
   background-color: #740f00;
-  cursor: pointer;
 }
 
 #tab-content section {
