@@ -54,6 +54,7 @@ function simulation_check_yaml($check_url) {
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
+    return substr($line, 0, 7);
     if (substr($line, 0, 7) === 'publish:')
       $publish = trim(substr($line, 7), " ");
     elseif (substr($line, 0, 5) === 'uses:')
