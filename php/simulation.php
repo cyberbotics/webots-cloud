@@ -36,13 +36,14 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
+  # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
-
   if ($yaml_content === false)
     return "'webots.yaml' file not found. Please add the file at the root level of your repository.";
 
+  # yaml file variables
   $publish = 'true';
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
@@ -103,6 +104,10 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
+
+  # check if configuration makes sense
+
+
   return array($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations);
 }
 ?>
