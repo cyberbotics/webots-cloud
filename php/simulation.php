@@ -56,10 +56,10 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       while (substr($line, 10) === '    -file:') {
-        return "Hello";
         array_push($worlds, trim(substr($line, 11), " "));
         $line = strtok("\r\n");
       }
+      return "Hello";
     }
     $line = strtok("\r\n");
   }
