@@ -95,8 +95,5 @@ function simulation_check_yaml($check_url) {
   }
 
   $n = count($animation_durations);
-  return "publish is $publish";
-  
-  return array($docker, $type, $world, $simulation_worlds, $animation_worlds);
 }
 ?>
