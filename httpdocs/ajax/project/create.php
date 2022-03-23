@@ -41,7 +41,9 @@ list($docker, $type, $publish, $world_temp, $benchmark, $competition, $simulatio
 if ($publish === 'false') {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'.<br><br>Simulation will be deleted.");
+  if ($mysqli->affected_rows === 0)
+    error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'");
+  error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'<br><br>Simulation will be deleted.");
 }
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
