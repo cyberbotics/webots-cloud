@@ -18,9 +18,9 @@ $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $version, $folder, $world) = $check_url;
+error("check url: $check_url");
 $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
 $world_content = @file_get_contents($world_url);
-error("World content");
 if ($world_content === false)
   error("Failed to fetch world file at $world_url.<br><br>Would you like to delete this simulation?<br>(There is no way to recover deleted data)");
 
