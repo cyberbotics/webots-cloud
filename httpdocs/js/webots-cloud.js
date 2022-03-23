@@ -196,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-centered">${competitors}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
