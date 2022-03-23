@@ -2,8 +2,6 @@
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
-
-error("going here");
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
@@ -20,6 +18,8 @@ $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $version, $folder, $world) = $check_url;
+
+error("going here");
 $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
 $world_content = @file_get_contents($world_url);
 if ($world_content === false)
