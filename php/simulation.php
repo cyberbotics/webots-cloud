@@ -69,6 +69,7 @@ function simulation_check_yaml($check_url) {
         }
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
+      return "going in here";
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
