@@ -60,6 +60,7 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 6) === 'world:')
       $world = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
+      return "going in here";
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
