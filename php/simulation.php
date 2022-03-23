@@ -63,13 +63,13 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 6) === 'world:')
       $world = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
-      return "going in here";
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
           array_push($simulation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
+          return "going in here";
         }
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
