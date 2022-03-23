@@ -43,6 +43,9 @@ function simulation_check_yaml($check_url) {
   if ($yaml_content === false)
     return "'webots.yaml' file not found, please add the file at the root level of your repository.";
 
+  $parsed = yaml_parse($yaml_content);
+  return $parsed;
+
   return array($username);
 }
 ?>
