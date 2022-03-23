@@ -67,7 +67,8 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  return "I read things";
+  $n = count($worlds);
+  return "world number : $n";
   
   return array($docker, $type);
 }
