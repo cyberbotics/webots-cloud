@@ -48,7 +48,7 @@ function simulation_check_yaml($check_url) {
   $world = '';
   $simulation_worlds = array();
   $animation_worlds = array();
-  $animation_durations = arra();
+  $animation_durations = array();
 
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
@@ -75,6 +75,12 @@ function simulation_check_yaml($check_url) {
         while (substr($line, 0, 11) === '    - file:') {
           array_push($animation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
+          if (substr(trim($line, " "), 0, 9) === 'duration') {
+            array_push($animation_durations, substr(trim($line, " "), 9));
+            $line = strtok("\r\n");
+          }
+          else
+            return "Error in 'webots.yaml' file. Animation duration not set."
         }
       }
     }
