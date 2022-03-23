@@ -62,7 +62,10 @@ function simulation_check_yaml($check_url) {
     }
     $line = strtok("\r\n");
   }
-  return "Type is $type";
+
+  list($w1, $w2, $w3) = $worlds;
+  
+  return "Worlds: $w1 $w2 $w3";
   
   return array($docker, $type);
 }
