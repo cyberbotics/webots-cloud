@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i style="color:grey" class="is-clickable fas fa-sync-alt" id="sync-${data.id}" title="Delete '${title}' simulation"></i> `
+        `<br><i style="color:black" class="is-clickable fas fa-sync-alt" id="sync-${data.id}" title="Synchronize '${title}' simulation"></i> `
       );
       let icon = 'question';
       if (data.type === 'demo')
