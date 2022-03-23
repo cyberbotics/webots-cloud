@@ -89,3 +89,16 @@ nav.pagination > a[disabled] {
     padding: 0.3em;
   }
 }
+
+.synchronizable-icon {
+  margin-top: 7px;
+  color: lightgrey;
+}
+
+.synchronizable-icon:hover {
+  color: #444;
+}
+
+.fa-spin {
+  color: #444;
+}
