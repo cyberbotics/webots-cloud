@@ -38,6 +38,7 @@ function simulation_check_url($url) {
 function simulation_check_yaml($url) {
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
+  return "Hello";
   $yaml_content = @file_get_contents($yaml_url);
 
   if ($yaml_content === false)
