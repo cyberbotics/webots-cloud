@@ -593,11 +593,11 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log(data.data.projects[0].type);
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
             let line = ``;
+            console.log(data.data.projects[0].type);
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
