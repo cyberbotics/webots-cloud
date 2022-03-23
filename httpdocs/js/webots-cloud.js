@@ -388,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
+            project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
