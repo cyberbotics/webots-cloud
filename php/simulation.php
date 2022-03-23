@@ -49,9 +49,9 @@ function simulation_check_yaml($check_url) {
 
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    if (substr($line, 0, 5) === 'uses:'){
-      return "hello uses";
+    if (substr($line, 0, 5) === 'uses:') {
       $docker = trim(substr($line, 6), " ");
+      return "hello uses";
     }
 
     elseif (substr($line, 0, 5) === 'type:') {
