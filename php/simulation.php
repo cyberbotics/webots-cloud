@@ -74,14 +74,12 @@ function simulation_check_yaml($check_url) {
         $world_list_end = true;
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
-      return "going in here";
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
           array_push($animation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
-          return substr(trim($line, " "), 0, 9);
           if (substr(trim($line, " "), 0, 9) === 'duration') {
             array_push($animation_durations, substr(trim($line, " "), 9));
             $line = strtok("\r\n");
@@ -89,6 +87,7 @@ function simulation_check_yaml($check_url) {
           else
             return "Error in 'webots.yaml' file. Animation duration not set.";
         }
+        $world_list_end = true;
       }
     }
     if ($world_list_end === true)
