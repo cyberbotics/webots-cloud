@@ -81,7 +81,7 @@ function simulation_check_yaml($check_url) {
           array_push($animation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
           return substr(trim($line, " "), 0, 9);
-          if (substr(trim($line, " "), 0, 9) === 'duration') {
+          if (substr(trim($line, " "), 0, 9) === 'duration:') {
             array_push($animation_durations, substr(trim($line, " "), 9));
             $line = strtok("\r\n");
           } else
