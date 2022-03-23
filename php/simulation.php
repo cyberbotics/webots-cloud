@@ -98,7 +98,7 @@ function simulation_check_yaml($check_url) {
   $ns = count($simulation_worlds);
   $na = count($animation_worlds);
   $nd = count($animation_durations);
-  return "docker: $docker <br> type: $type <br> publish: $publish <br> animations: [$na,$nd] <br> simulations: $ns"
+  //return "docker: $docker <br> type: $type <br> publish: $publish <br> animations: [$na,$nd] <br> simulations: $ns"
   return array('hello');
 }
 ?>
