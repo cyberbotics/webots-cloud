@@ -57,19 +57,14 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
-        return substr($line, 11);
-        while (substr($line, 11) === '    - file:') {
-          $temp = trim(substr($line, 12), " ");
-          return "world: $temp";
-          array_push($worlds, $temp);
+        while (substr($line, 0, 11) === '    - file:') {
+          array_push($worlds, trim(substr($line, 12), " "));
           $line = strtok("\r\n");
         }
       }
     }
     $line = strtok("\r\n");
   }
-  $n = count($worlds);
-  return "number of world: $n";
 
   list($w1, $w2, $w3) = $worlds;
   
