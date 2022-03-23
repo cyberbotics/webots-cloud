@@ -43,6 +43,7 @@ function simulation_check_yaml($check_url) {
   if ($yaml_content === false)
     return "'webots.yaml' file not found, please add the file at the root level of your repository.";
 
+  $publish = 'hello';
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
   $world = '';
@@ -53,7 +54,9 @@ function simulation_check_yaml($check_url) {
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    if (substr($line, 0, 5) === 'uses:')
+    if (substr($line, 0, 7) === 'publish:')
+      $publish = trim(substr($line, 7), " ");
+    elseif (substr($line, 0, 5) === 'uses:')
       $docker = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 5), " ");
@@ -90,7 +93,7 @@ function simulation_check_yaml($check_url) {
   }
 
   $n = count($animation_durations);
-  return "world number : $n";
+  return "publish is $publish";
   
   return array($docker, $type, $world, $simulation_worlds, $animation_worlds);
 }
