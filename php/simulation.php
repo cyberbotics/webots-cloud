@@ -65,6 +65,7 @@ function simulation_check_yaml($check_url) {
     }
     $line = strtok("\r\n");
   }
+  return "hello";
 
   list($w1, $w2, $w3) = $worlds;
   
