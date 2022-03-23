@@ -80,7 +80,7 @@ function simulation_check_yaml($check_url) {
             $line = strtok("\r\n");
           }
           else
-            return "Error in 'webots.yaml' file. Animation duration not set."
+            return "Error in 'webots.yaml' file. Animation duration not set.";
         }
       }
     }
