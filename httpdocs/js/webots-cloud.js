@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (data.type === 'demo')
         icon = 'chalkboard-teacher';
       else if (data.type === 'benchmark')
-        icon = 'chart-line';
+        icon = 'award';
       else if (data.type === 'competition')
         icon = 'trophy';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
@@ -381,14 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            let dialog = ModalDialog.run('Project creation error', data.error, 'Ok');
-            dialog.querySelector('form').addEventListener('submit', function(event) {
-              event.preventDefault();
-              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              console.log("Here is where it would be deleted");
-              dialog.close();
-            });
-            event.target.classList.remove('fa-spin');
+            ModalDialog.run('Project creation error', data.error);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
