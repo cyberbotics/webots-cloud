@@ -107,7 +107,6 @@ function simulation_check_yaml($check_url) {
 
   # check if configuration makes sense
 
-
   return array($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations);
 }
 ?>
