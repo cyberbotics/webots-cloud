@@ -53,6 +53,9 @@ function simulation_check_yaml($check_url) {
       $docker = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 6), " ");
+    elseif (substr($line, 0, 11) === 'simulation:') {
+      return "in here";
+    }
     $line = strtok("\r\n");
   }
   return "line";
