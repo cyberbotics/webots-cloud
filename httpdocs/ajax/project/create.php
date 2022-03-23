@@ -58,7 +58,6 @@ while ($line !== false) {
 }
 if ($world_info === false)
   error("Missing WorldInfo in $world world file");
-error("going here now");
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
@@ -82,7 +81,7 @@ if ($mysqli->affected_rows != 1) {
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
-
+error("going here now");
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
