@@ -50,6 +50,7 @@ function simulation_check_yaml($check_url) {
   $simulation_worlds = array();
   $animation_worlds = array();
   $animation_durations = array();
+  $world_list_end = false;
 
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
@@ -65,13 +66,13 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
+        $line = strtok("\r\n");
         while (true) {
-          $line = strtok("\r\n");
-          if (substr($line, 0, 11) === '    - file:')
+          if (substr($line, 0, 11) === '    - file:') {
             array_push($simulation_worlds, trim(substr($line, 11), " "));
-          else {
             $line = strtok("\r\n");
-            return "breaking, next line: $line";
+          } else {
+            $world_list_end = true;
             break;
           }
         }
@@ -94,7 +95,10 @@ function simulation_check_yaml($check_url) {
         }
       }
     }
-    $line = strtok("\r\n");
+    if ($world_list_end === true)
+      $world_list_end = false;
+    else
+      $line = strtok("\r\n");
   }
 
   return "Publish is $publish";
