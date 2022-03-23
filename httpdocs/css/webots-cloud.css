@@ -4,7 +4,7 @@ html {
 }
 body {
   height: 100%;
-  background-color: salmon;
+  background-color: violet;
 }
 body:after{
   content: "beta version";
