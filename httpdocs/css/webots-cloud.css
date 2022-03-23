@@ -58,10 +58,6 @@ body footer .has-text-centered {
   background-color: rgb(0, 122, 204);
 }
 
-#navbar-brand {
-  background-color: #740f00;
-}
-
 #tab-content section {
   display: none;
 }
