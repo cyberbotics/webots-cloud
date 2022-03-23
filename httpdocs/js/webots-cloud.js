@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i style="color:grey" class="is-clickable far fa-trash-alt" id="delete-${data.id}" title="Delete '${title}' simulation"></i> `
       );
       let type;
-      console.log("Type: "+data.type);
+      console.log("Type: " + data.type);
       if (data.type == 'demo') {
         type = `<i class="fas fa-chalkboard-teacher fa-lg" title="${data.type}"></i>`;
       } else {
