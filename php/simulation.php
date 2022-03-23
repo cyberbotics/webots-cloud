@@ -40,16 +40,8 @@ function simulation_check_yaml($check_url) {
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
-  if ($yaml_content === false) {
-    return `<div class="field">
-        <p 'webots.yaml' file not found. Please add the file at the root level of your repository.>
-        <div class="help">For information on how to configure 'webots.yaml' visit:<br>
-          <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
-            https://github.com/cyberbotics/webots-cloud/blob/main/README.md
-          </a>
-        </div>
-      </div>`;
-  }
+  if ($yaml_content === false)
+    return "'webots.yaml' file not found. Please add the file at the root level of your repository.";
 
   # yaml file variables
   $publish = 'true';
