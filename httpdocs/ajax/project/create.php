@@ -28,7 +28,6 @@ $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
 list($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
-error("going here");
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
 $info = false;
@@ -59,7 +58,7 @@ while ($line !== false) {
 }
 if ($world_info === false)
   error("Missing WorldInfo in $world world file");
-
+error("going here");
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
