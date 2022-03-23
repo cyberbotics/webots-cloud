@@ -41,18 +41,23 @@ function simulation_check_yaml($check_url) {
   $yaml_content = @file_get_contents($yaml_url);
 
   if ($yaml_content === false)
-    return "'webots.yaml' file not found, please add the file at the root level of your repository.";
+    return "'webots.yaml' file not found. Please add the file at the root level of your repository.";
 
   $publish = 'true';
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
   $world = '';
+  $benchmark = '';
+  $competition = '';
   $simulation_worlds = array();
   $animation_worlds = array();
   $animation_durations = array();
   $world_list_end = false;
 
+  # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
+
+  # parse yaml file
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
@@ -63,6 +68,10 @@ function simulation_check_yaml($check_url) {
       $type = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 6) === 'world:')
       $world = trim(substr($line, 6), " ");
+    elseif (substr($line, 0, 10) === 'benchmark:')
+      $benchmark = trim(substr($line, 10), " ");
+    elseif (substr($line, 0, 12) === 'competition:')
+      $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
@@ -89,16 +98,11 @@ function simulation_check_yaml($check_url) {
         $world_list_end = true;
       }
     }
-
     if ($world_list_end === true)
       $world_list_end = false;
     else
       $line = strtok("\r\n");
   }
-  $ns = count($simulation_worlds);
-  $na = count($animation_worlds);
-  $nd = count($animation_durations);
-  return "docker: $docker <br> type: $type <br> publish: $publish <br> animations: [$na,$nd] <br> simulations: $ns";
-  return array('hello');
+  return array($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations);
 }
 ?>
