@@ -59,6 +59,7 @@ body footer .has-text-centered {
 }
 
 #navbar-brand:hover {
+  background-color: #740f00;
   cursor: pointer;
 }
 
