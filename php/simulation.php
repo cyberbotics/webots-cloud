@@ -67,15 +67,11 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
-        while (true) {
-          if (substr($line, 0, 11) === '    - file:') {
-            array_push($simulation_worlds, trim(substr($line, 11), " "));
-            $line = strtok("\r\n");
-          } else {
-            $world_list_end = true;
-            break;
-          }
+        while (substr($line, 0, 11) === '    - file:') {
+          array_push($simulation_worlds, trim(substr($line, 11), " "));
+          $line = strtok("\r\n");
         }
+        $world_list_end = true;
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
       return "going in here";
