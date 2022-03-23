@@ -69,7 +69,7 @@ function simulation_check_yaml($check_url) {
         while (substr($line, 0, 11) === '    - file:') {
           array_push($simulation_worlds, trim(substr($line, 11), " "));
           $line = strtok("\r\n");
-          return "going in here";
+          return "going in here on line $line";
         }
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
