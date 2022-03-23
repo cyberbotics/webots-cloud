@@ -65,7 +65,7 @@ function simulation_check_yaml($check_url) {
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
-          array_push($worlds, trim(substr($line, 12), " "));
+          array_push($worlds_simulation, trim(substr($line, 12), " "));
           $line = strtok("\r\n");
         }
       }
@@ -74,7 +74,7 @@ function simulation_check_yaml($check_url) {
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
         while (substr($line, 0, 11) === '    - file:') {
-          array_push($worlds, trim(substr($line, 12), " "));
+          array_push($worlds_animation, trim(substr($line, 12), " "));
           $line = strtok("\r\n");
         }
       }
@@ -82,7 +82,7 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  list($w1, $w2, $w3) = $worlds;
+  list($w1, $w2, $w3) = $worlds_simulation;
   
   return "Worlds: $w1 $w2 $w3";
   
