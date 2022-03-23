@@ -48,32 +48,14 @@ function simulation_check_yaml($check_url) {
   $worlds = array();
 
   $line = strtok($yaml_content, "\r\n");
-  return "line";
   while ($line !== false) {
-    return "line $line";
-    if (substr($line, 0, 5) === 'uses:') {
+    if (substr($line, 0, 5) === 'uses:')
       $docker = trim(substr($line, 6), " ");
-      return "line $line";
-    }
-    elseif (substr($line, 0, 5) === 'type:') {
+    elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 6), " ");
-      return "line $line";
-    }
-    elseif (substr($line, 0, 11) === 'simulation:') {
-      return "line $line";
-      $line = strtok("\r\n");
-      if (substr($line, 0, 9) === '  worlds:')) {
-        return "in here";
-        $line = strtok("\r\n");
-        while (substr($line, 11) === '    - file:') {
-          array_push($worlds, trim(substr($line, 11), " "));
-          $line = strtok("\r\n");
-        }
-      }
-    }
-    return "line $line";
     $line = strtok("\r\n");
   }
+  return "line";
 
   list($w1, $w2, $w3) = $worlds;
   
