@@ -57,6 +57,7 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
         $line = strtok("\r\n");
+        return substr($line, 11);
         while (substr($line, 11) === '    - file:') {
           $temp = trim(substr($line, 12), " ");
           return "world: $temp";
