@@ -1,7 +1,10 @@
 <?php # This script initializes a new project
+# exit and error message
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
+
+# get content
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
@@ -14,6 +17,8 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($data->url);
 $id = isset($data->id) ? intval($data->id) : 0;
+
+# check content
 $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
@@ -28,11 +33,14 @@ if ($world_content === false) {
   error("Failed to fetch world file $world<br><br>Simulation will be deleted.");
 }
 
-# retrieve information from webots.yaml file
+# check and retrieve information from webots.yaml file
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
 list($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
+if ($publish === 'true') {
+  error("oh dear");
+}
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -62,6 +70,8 @@ while ($line !== false) {
   }
   $line = strtok("\r\n");
 }
+
+# update database
 if ($world_info === false)
   error("Missing WorldInfo in $world world file");
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
@@ -84,6 +94,7 @@ if ($mysqli->affected_rows != 1) {
     error("Failed to update the simulation");
 }
 
+# return answer
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
