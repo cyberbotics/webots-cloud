@@ -385,7 +385,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-              console.log("Here is where it would be deleted");
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
