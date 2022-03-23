@@ -49,11 +49,16 @@ function simulation_check_yaml($check_url) {
 
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    if (substr($line, 0, 5) === 'uses:')
-      return "hello";
+    if (substr($line, 0, 5) === 'uses:'){
+      return "hello uses";
       $docker = trim(substr($line, 6), " ");
-    elseif (substr($line, 0, 5) === 'type:')
+    }
+
+    elseif (substr($line, 0, 5) === 'type:') {
+      return "hello type";
       $type = trim(substr($line, 6), " ");
+    }
+
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       while (substr($line, 10) === '    -file:') {
