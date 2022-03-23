@@ -65,6 +65,7 @@ function simulation_check_yaml($check_url) {
         }
       }
     }
+    return "line $line";
     $line = strtok("\r\n");
   }
 
