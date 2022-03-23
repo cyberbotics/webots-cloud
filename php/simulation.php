@@ -41,7 +41,7 @@ function simulation_check_yaml($url) {
   $yaml_content = @file_get_contents($yaml_url);
 
   if ($yaml_content === false)
-    return "webots.yaml not found, please add the file at the root level of your repository."
+    return "webots.yaml not found, please add the file at the root level of your repository.";
 
   return array($url);
 }
