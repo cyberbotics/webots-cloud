@@ -56,6 +56,7 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:')) {
+        return "in here";
         $line = strtok("\r\n");
         while (substr($line, 11) === '    - file:') {
           array_push($worlds, trim(substr($line, 11), " "));
