@@ -54,8 +54,8 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 11) === 'simulation:') {
-      $line = strtok("\r\n");
       return "line $line";
+      $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:')) {
         return "in here";
         $line = strtok("\r\n");
