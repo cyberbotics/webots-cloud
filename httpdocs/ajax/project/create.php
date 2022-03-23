@@ -27,6 +27,7 @@ if ($world_content === false)
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
+list(($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
