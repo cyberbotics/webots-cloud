@@ -34,4 +34,11 @@ function simulation_check_url($url) {
   $world = $exploded[$count - 1];
   return array($username, $repository, $version, $folder, $world);
 }
+
+function simulation_check_yaml($url) {
+  if (substr($url, 0, 19) === 'https://github.com/')
+    return "The URL starts with 'https://github.com/'";
+
+  return array($url);
+}
 ?>
