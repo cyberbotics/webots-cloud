@@ -371,6 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function synchronize(event) {
+      console.log("Hello");
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
