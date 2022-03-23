@@ -1,4 +1,4 @@
-# webots.cloud
+# testing.webots.cloud
 
 This repository holds the contents of https://webots.cloud (master branch) and https://beta.webots.cloud (beta branch)
 
