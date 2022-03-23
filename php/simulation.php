@@ -43,15 +43,27 @@ function simulation_check_yaml($check_url) {
   if ($yaml_content === false)
     return "'webots.yaml' file not found, please add the file at the root level of your repository.";
 
-  $type = 'temp';
+  $docker = 'docker://cyberbotics/webots:latest';
+  $type = '';
+  $worlds = array();
+
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    if (substr($line, 0, 5) === 'type:')
+    if (substr($line, 0, 5) === 'uses:')
+      $docker = trim(substr($line, 6), " ");
+    elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 6), " ");
+    elseif (substr($line, 0, 11) === 'simulation:') {
+      $line = strtok("\r\n");
+      while (substr($line, 10) === '    -file:') {
+        array_push($worlds, trim(substr($line, 11), " "));
+        $line = strtok("\r\n");
+      }
+    }
     $line = strtok("\r\n");
   }
   return "Type is $type";
   
-  return array($type);
+  return array($docker, $type);
 }
 ?>
