@@ -28,8 +28,6 @@ $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
 list($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
-$temp = count($animation_worlds);
-error("number of animations: $temp");
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -85,7 +83,6 @@ if ($mysqli->affected_rows != 1) {
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
-$type = 'demo';
 
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
