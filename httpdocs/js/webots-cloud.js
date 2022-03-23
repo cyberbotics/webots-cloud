@@ -549,6 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'beforeend', tr);
               const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
               updatePagination('simulation', page, total);
+              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
