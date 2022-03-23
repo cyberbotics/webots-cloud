@@ -65,11 +65,12 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 11) === 'simulation:') {
       $line = strtok("\r\n");
       if (substr($line, 0, 9) === '  worlds:') {
-        $line = strtok("\r\n");
-        while (substr($line, 0, 11) === '    - file:') {
-          array_push($simulation_worlds, trim(substr($line, 11), " "));
+        while (true) {
           $line = strtok("\r\n");
-          return "going in here on line $line";
+          if (substr($line, 0, 11) === '    - file:')
+            array_push($simulation_worlds, trim(substr($line, 11), " "));
+          else
+            break;
         }
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
