@@ -65,7 +65,8 @@ function simulation_check_yaml($check_url) {
     }
     $line = strtok("\r\n");
   }
-  return "hello";
+  $n = count($worlds);
+  return "number of world: $n";
 
   list($w1, $w2, $w3) = $worlds;
   
