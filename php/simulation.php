@@ -47,7 +47,7 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $worlds = array();
 
-  $yaml_content = implode("\n", array_filter(explode("\n", $yaml_content)));
+  $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
     if (substr($line, 0, 5) === 'uses:')
