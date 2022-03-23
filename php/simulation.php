@@ -69,8 +69,10 @@ function simulation_check_yaml($check_url) {
           $line = strtok("\r\n");
           if (substr($line, 0, 11) === '    - file:')
             array_push($simulation_worlds, trim(substr($line, 11), " "));
-          else
+          else {
+            return "breaking";
             break;
+          }
         }
       }
     } elseif (substr($line, 0, 10) === 'animation:') {
