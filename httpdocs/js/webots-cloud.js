@@ -603,7 +603,6 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
-              //project.content.querySelector('#delete-' + id).addEventListener('click', function() {deleteSimulation(id, project, page, false);});
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -638,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runPage();
   }
 
-  /*
+  
   function deleteSimulation(id, project, page, fromSync) {
     if (fromSync) {
       fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
@@ -670,7 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
-  */
+  
 
   function deleteAnimation(event, type, project, page) {
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
