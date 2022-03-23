@@ -70,7 +70,8 @@ function simulation_check_yaml($check_url) {
           if (substr($line, 0, 11) === '    - file:')
             array_push($simulation_worlds, trim(substr($line, 11), " "));
           else {
-            return "breaking";
+            $line = strtok("\r\n");
+            return "breaking, next line: $line";
             break;
           }
         }
