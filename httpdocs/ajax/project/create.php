@@ -35,17 +35,19 @@ if ($world_content === false) {
 
 # check and retrieve information from webots.yaml file
 
-/*
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml)) {
+  /*
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
     error($check_yaml);
   error("$check_yaml<br><br>Simulation will be deleted.");
-} else
-  list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
-*/
+  */
+  error($check_yaml);
+}
+
+list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
