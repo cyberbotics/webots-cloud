@@ -98,13 +98,10 @@ function simulation_check_yaml($check_url) {
       return "YAML file error: world file not defined.";
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) > 0) {
-      return "gone here hello";
       return "YAML file error: with $type type please only define one world.";
     } elseif ($world === '') {
-      return "gone here goodbye";
       return "YAML file error: world file not defined.";
     }
-    return "leaving bye";
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
@@ -113,6 +110,7 @@ function simulation_check_yaml($check_url) {
   } else
     return "YAML file error: type not defined.";
 
+  return "leaving here";
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
 }
