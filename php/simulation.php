@@ -56,8 +56,6 @@ function simulation_check_yaml($check_url) {
   $world = '';
   $worlds = array();
   $world_list_end = false;
-  return "Hello";
-  /*
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -89,6 +87,8 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
+  return "Hello";
+  /*
 
   # check if configuration makes sense
   if ($type === 'demo') {
