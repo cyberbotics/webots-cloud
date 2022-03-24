@@ -34,7 +34,6 @@ if ($world_content === false) {
 }
 
 # check and retrieve information from webots.yaml file
-
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml)) {
   /*
