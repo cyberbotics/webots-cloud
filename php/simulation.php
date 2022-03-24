@@ -87,7 +87,7 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
-
+  return "why now";
   # check if configuration makes sense
   if ($type === 'demo') {
     if (($world !== '') && (count($worlds) == 0))
