@@ -49,7 +49,7 @@ function simulation_check_yaml($check_url) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return yaml_error("webots.yaml file not found, please add the file at the root level of your repository.");
+      return yaml_error("webots.yaml file not found.");
   }
 
   # yaml file variables
@@ -94,7 +94,7 @@ function simulation_check_yaml($check_url) {
 
   # check if configuration makes sense
   if ($publish === 'false')
-    return yaml_error("Simulation upload failed. Make sure to set 'publish: true' in webots.yaml");
+    return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
   elseif ($type === 'demo') {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
@@ -106,14 +106,14 @@ function simulation_check_yaml($check_url) {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
     elseif (count($worlds) > 0)
-      return yaml_error("with $type type please only define one world.");
+      return yaml_error("with $type type requires one single world.");
     elseif ($world === '')
       return yaml_error("world file not defined.");
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
-      return yaml_error("with competitor type please only define one scenario (benchmark or competition)");
+      return yaml_error("competitor type only requires one scenario (benchmark or competition)");
     elseif ($benchmark === '' && $competition === '')
-      return yaml_error("with competitor type please define a scenario (benchmark or competition)");
+      return yaml_error("competitor type requires a scenario (benchmark or competition)");
   } else
     return yaml_error("type not defined.");
 
