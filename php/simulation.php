@@ -83,7 +83,6 @@ function simulation_check_yaml($check_url) {
       }
       $world_list_end = true;
     }
-    } 
     if ($world_list_end === true)
       $world_list_end = false;
     else
