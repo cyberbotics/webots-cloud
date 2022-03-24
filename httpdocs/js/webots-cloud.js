@@ -382,13 +382,15 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            let errorMsg = data.error + 
-              `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
-                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
-                    github.com/cyberbotics/webots-cloud
-                  </a>
-                </div>`;
-
+            let errorMsg = data.error
+            if (errorMsg.startsWith('YAML file error:')) {
+              errorMsg = errorMsg + 
+                `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
+                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
+                      https://github.com/cyberbotics/webots-cloud/webots.yaml
+                    </a>
+                  </div>`;
+            }
             let dialog = ModalDialog.run('Project creation error', errorMsg);
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
