@@ -382,8 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-
-            errorMsg = data.error + 
+            let errorMsg = data.error + 
               `<div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
                   <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
                     https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
