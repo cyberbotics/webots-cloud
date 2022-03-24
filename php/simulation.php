@@ -36,6 +36,11 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
+  # yaml error return
+  function yaml_error($msg) {
+    yaml_error($msg<br><br>For information on publishing with webots.yaml visit hello.com";
+  }
+
   # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
@@ -44,7 +49,7 @@ function simulation_check_yaml($check_url) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return "YAML file error: webots.yaml file not found. Please add the file at the root level of your repository.";
+    yaml_error("webots.yaml file not found, please add the file at the root level of your repository.");
   }
 
   # yaml file variables
@@ -89,28 +94,28 @@ function simulation_check_yaml($check_url) {
 
   # check if configuration makes sense
   if ($publish === 'false')
-    return "Simulation upload failed. Make sure to set 'publish: true' in webots.yaml";
+    yaml_error("Simulation upload failed. Make sure to set 'publish: true' in webots.yaml");
   elseif ($type === 'demo') {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
     elseif (($world !== '') && (count($worlds) > 0))
-      return "YAML file error: only 'world' or 'worlds' should be defined, not both.";
+      yaml_error("only 'world' or 'worlds' should be defined, not both.");
     elseif (($world === '') && (count($worlds) == 0))
-      return "YAML file error: world file not defined.";
+      yaml_error("world file not defined.");
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
     elseif (count($worlds) > 0)
-      return "YAML file error: with $type type please only define one world.";
+      yaml_error("with $type type please only define one world.");
     elseif ($world === '')
-      return "YAML file error: world file not defined.";
+      yaml_error("world file not defined.");
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
-      return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
+      yaml_error("with competitor type please only define one scenario (benchmark or competition)");
     elseif ($benchmark === '' && $competition === '')
-      return "YAML file error: with competitor type please define a scenario (benchmark or competition)";
+      yaml_error("with competitor type please define a scenario (benchmark or competition)");
   } else
-    return "YAML file error: type not defined.";
+    yaml_error("type not defined.");
 
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
