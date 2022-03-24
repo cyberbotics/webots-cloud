@@ -382,7 +382,15 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            let dialog = ModalDialog.run('Project creation error', data.error);
+
+            errorMsg = data.error + 
+              `<div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+                  <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
+                    https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+                  </a>
+                </div>`;
+
+            let dialog = ModalDialog.run('Project creation error', errorMsg);
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
@@ -638,39 +646,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function runPage(project) {
     project.runPage();
   }
-
-  /*
-  function deleteSimulation(id, project, page, fromSync) {
-    if (fromSync) {
-      fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          if (data.error)
-            ModalDialog.run(`Simulation deletion error`, data.error);
-            else if (data.status == 1)
-              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
-        });
-    } else {
-      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete Simulation`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({id: id})})
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            dialog.close();
-            if (data.error)
-              ModalDialog.run(`Simulation deletion error`, data.error);
-              else if (data.status == 1)
-                project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
-          });
-      });
-    }
-  }*/
 
   function deleteAnimation(event, type, project, page) {
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
