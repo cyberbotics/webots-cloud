@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg + 
-                `<div class="help">More information at:<br>
+                `<div class="help">More information at: 
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
                       github.com/cyberbotics/webots-cloud
                     </a>
