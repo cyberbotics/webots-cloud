@@ -383,9 +383,9 @@ document.addEventListener('DOMContentLoaded', function() {
           const parent = old.parentNode;
           if (data.error) {
             let errorMsg = data.error + 
-              `<div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-                  <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
-                    https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+              `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
+                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
+                    github.com/cyberbotics/webots-cloud
                   </a>
                 </div>`;
 
