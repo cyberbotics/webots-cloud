@@ -57,6 +57,8 @@ function simulation_check_yaml($check_url) {
   $world = '';
   $worlds = array();
   $world_list_end = false;
+  
+  return "Hello";
   /*
 
   # delete empty lines
