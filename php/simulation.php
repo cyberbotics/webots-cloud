@@ -62,8 +62,6 @@ function simulation_check_yaml($check_url) {
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   # parse yaml file
   $line = strtok($yaml_content, "\r\n");
-  return "Hello";
-  /*
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
       $publish = trim(substr($line, 8), " ");
@@ -91,6 +89,9 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
+
+  return "Hello now";
+  /*
 
   # check if configuration makes sense
   if ($world !== '' && count($worlds)  > 0)
