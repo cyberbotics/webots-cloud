@@ -48,10 +48,8 @@ function simulation_check_yaml($check_url) {
   if ($yaml_content === false) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
-    /*
     if ($yaml_content === false)
       return yaml_error("webots.yaml file not found.");
-      */
   }
 
   # yaml file variables
@@ -94,7 +92,6 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
   }
 
-  /*
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
@@ -120,7 +117,7 @@ function simulation_check_yaml($check_url) {
   } else
     return yaml_error("type not defined.");
   */
-  $type = 'demo';
+
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
