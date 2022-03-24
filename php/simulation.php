@@ -36,6 +36,8 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
+  return "Oh dear";
+  /*
   # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
@@ -46,8 +48,6 @@ function simulation_check_yaml($check_url) {
     if ($yaml_content === false)
       return "'webots.yaml' file not found.<br><br>Please add the file at the root level of your repository.";
   }
-
-  return "Oh no";
 
   # yaml file variables
   $publish = 'true';
@@ -97,6 +97,6 @@ function simulation_check_yaml($check_url) {
   if ($world !== '' && count($worlds) == 0)
     array_push($worlds, $world);
 
-  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
+  return array($docker, $type, $publish, $worlds, $benchmark, $competition);*/
 }
 ?>
