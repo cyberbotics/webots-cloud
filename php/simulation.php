@@ -118,7 +118,7 @@ function simulation_check_yaml($check_url) {
   } else
     return yaml_error("type not defined.");
   */
-
+  $type = 'demo';
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
