@@ -44,7 +44,7 @@ function simulation_check_yaml($check_url) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return "YAML file error: 'webots.yaml' file not found. Please add the file at the root level of your repository.";
+      return "YAML file error: webots.yaml file not found. Please add the file at the root level of your repository.";
   }
 
   # yaml file variables
@@ -87,8 +87,6 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
-  return "Hello";
-  /*
 
   # check if configuration makes sense
   if ($type === 'demo') {
@@ -112,6 +110,9 @@ function simulation_check_yaml($check_url) {
       return "YAML file error: with competitor type please define a scenario (benchmark or competition)";
   } else
     return "YAML file error: type not defined.";
+
+  return "Hello";
+  /*
 
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
