@@ -385,9 +385,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg + 
-                `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
+                `<div class="help">More information at:<br>
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
-                      https://github.com/cyberbotics/webots-cloud/webots.yaml
+                      github.com/cyberbotics/webots-cloud
                     </a>
                   </div>`;
             }
