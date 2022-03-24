@@ -36,7 +36,6 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
-
   # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
@@ -90,13 +89,26 @@ function simulation_check_yaml($check_url) {
   }
 
   # check if configuration makes sense
-  if (($world !== '') && (count($worlds) == 0))
-    array_push($worlds, $world);
-  elseif (($world !== '') && (count($worlds) > 0))
-    return "YAML file error: only 'world' or 'worlds' should be defined, not both.";
-  elseif (($world === '') && (count($worlds) == 0))
-    return "YAML file error: world file not defined.";
+  if ($type === 'demo') {
+    if (($world !== '') && (count($worlds) == 0))
+      array_push($worlds, $world);
+    elseif (($world !== '') && (count($worlds) > 0))
+      return "YAML file error: only 'world' or 'worlds' should be defined, not both.";
+    elseif (($world === '') && (count($worlds) == 0))
+      return "YAML file error: world file not defined.";
+  } elseif ($type === 'benchmark' || $type === 'competition') {
+    if (count($worlds) > 0)
+      return "YAML file error: with $type type please only define one world.";
+    else if ($world == '')
+      return "YAML file error: world file not defined.";
+  } elseif ($type === 'competitor') {
+    if ($benchmark !== '' && $competition !== '')
+      return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
+    elseif ($benchmark === '' && $competition === '')
+      return "YAML file error: with competitor type please define a scenario (benchmark or competition)";
+  }
 
-  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
+  # return array with YAML file info
+  return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
 }
 ?>
