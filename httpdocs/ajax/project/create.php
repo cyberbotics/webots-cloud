@@ -37,7 +37,7 @@ if ($world_content === false) {
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
-list($docker, $type, $publish, $world_temp, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
+list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
 if ($publish === 'false') {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
@@ -45,7 +45,6 @@ if ($publish === 'false') {
     error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'");
   error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'<br><br>Simulation will be deleted.");
 }
-error("Hello now");
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
