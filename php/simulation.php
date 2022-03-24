@@ -40,8 +40,12 @@ function simulation_check_yaml($check_url) {
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
-  if ($yaml_content === false)
-    return "'webots.yaml' file not found.<br><br>Please add the file at the root level of your repository.";
+  if ($yaml_content === false) {
+    $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
+    $yaml_content = @file_get_contents($yaml_url);
+    if ($yaml_content === false)
+      return "'webots.yaml' file not found.<br><br>Please add the file at the root level of your repository.";
+  }
 
   # yaml file variables
   $publish = 'true';
