@@ -78,7 +78,7 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 7) === 'worlds:') {
       $line = strtok("\r\n");
       while (substr($line, 0, 7) === '  - file:') {
-        array_push($simulation_worlds, trim(substr($line, 9), " "));
+        array_push($worlds, trim(substr($line, 9), " "));
         $line = strtok("\r\n");
       }
       $world_list_end = true;
