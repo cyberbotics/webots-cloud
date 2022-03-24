@@ -37,7 +37,7 @@ if ($world_content === false) {
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
-list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
+list($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition) = $check_yaml;
 if ($publish === 'false') {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
