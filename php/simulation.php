@@ -92,6 +92,7 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
   }
 
+  /*
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
@@ -116,6 +117,7 @@ function simulation_check_yaml($check_url) {
       return yaml_error("competitor type requires a scenario (benchmark or competition)");
   } else
     return yaml_error("type not defined.");
+  */
 
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
