@@ -32,7 +32,7 @@ if ($world_content === false) {
     error("Failed to delete world file '$world'");
   error("Failed to fetch world file $world<br><br>Simulation will be deleted.");
 }
-return "Hello";
+
 # check and retrieve information from webots.yaml file
 /*
 $check_yaml = simulation_check_yaml($check_url);
@@ -47,6 +47,7 @@ if ($publish === 'false') {
   error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'<br><br>Simulation will be deleted.");
 }
 */
+
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
 $info = false;
@@ -98,8 +99,6 @@ if ($mysqli->affected_rows != 1) {
   else
     error("Failed to update the simulation");
 }
-
-$type = 'demo';
 
 # return answer
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
