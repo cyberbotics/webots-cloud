@@ -36,6 +36,7 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
+  /*
   # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
@@ -87,7 +88,7 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
-  return "why now";
+
   # check if configuration makes sense
   if ($type === 'demo') {
     if (($world !== '') && (count($worlds) == 0))
@@ -111,8 +112,9 @@ function simulation_check_yaml($check_url) {
   } else
     return "YAML file error: type not defined.";
 
-  return "why";
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
+  */
+  return "Hello";
 }
 ?>
