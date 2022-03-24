@@ -32,7 +32,7 @@ if ($world_content === false) {
     error("Failed to delete world file '$world'");
   error("Failed to fetch world file $world<br><br>Simulation will be deleted.");
 }
-
+return "Hello";
 # check and retrieve information from webots.yaml file
 /*
 $check_yaml = simulation_check_yaml($check_url);
