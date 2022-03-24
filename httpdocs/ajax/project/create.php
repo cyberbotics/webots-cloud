@@ -30,7 +30,7 @@ if ($world_content === false) {
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
     error("Failed to delete world file '$world'");
-  error("Failed to fetch world file $world<br><br>Simulation will be deleted.");
+  error("Failed to fetch world file $world");
 }
 
 # check and retrieve information from webots.yaml file
@@ -42,12 +42,11 @@ if (!is_array($check_yaml)) {
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
     error($check_yaml);
-  error("$check_yaml<br><br>Simulation will be deleted.");
-  */
+  error("$check_yaml");
   error($check_yaml);
-}
-
-list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
+  */
+} else
+  list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
