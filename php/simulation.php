@@ -47,7 +47,6 @@ function simulation_check_yaml($check_url) {
     if ($yaml_content === false)
       return "'webots.yaml' file not found.<br><br>Please add the file at the root level of your repository.";
   }
-  /*
 
   # yaml file variables
   $publish = 'true';
@@ -58,6 +57,7 @@ function simulation_check_yaml($check_url) {
   $world = '';
   $worlds = array();
   $world_list_end = false;
+  /*
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
