@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function mainContainer(project, active_tab) {
       const template = document.createElement('template');
       template.innerHTML =
-        `<div id="tabs" class="tabs is-boxed">
+        `<div id="tabs" class="panel-tabs">
           <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
           <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
           <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
