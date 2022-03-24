@@ -36,6 +36,7 @@ if ($world_content === false) {
 # check and retrieve information from webots.yaml file
 
 $check_yaml = simulation_check_yaml($check_url);
+return "Hello here";
 if (!is_array($check_yaml))
   error($check_yaml);
 list($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition) = $check_yaml;
