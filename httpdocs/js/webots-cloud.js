@@ -550,8 +550,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
           })
           .then(function(data) {
-            if (data.error)
-              modal.error(data.error);
+            if (data.error) {
+              if (errorMsg.startsWith('YAML file error:')) {
+                errorMsg = errorMsg + 
+                  `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
+                      <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
+                        https://github.com/cyberbotics/webots-cloud/webots.yaml
+                      </a>
+                    </div>`;
+              }
+              modal.error(errorMsg);
+            }
             else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
