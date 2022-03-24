@@ -47,6 +47,7 @@ if (!is_array($check_yaml)) {
   */
 }
 list($docker, $type, $publish, $worlds, $benchmark, $competition) = $check_yaml;
+error("Type is $type");
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
