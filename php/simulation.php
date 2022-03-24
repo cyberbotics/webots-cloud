@@ -89,7 +89,9 @@ function simulation_check_yaml($check_url) {
   }
 
   # check if configuration makes sense
-  if ($type === 'demo') {
+  if ($publish === 'false')
+    return "Simulation upload failed. Make sure to set 'publish: true' in webots.yaml";
+  elseif ($type === 'demo') {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
     elseif (($world !== '') && (count($worlds) > 0))
