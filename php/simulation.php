@@ -96,7 +96,7 @@ function simulation_check_yaml($check_url) {
   if (($world !== '') && (count($worlds) == 0))
     array_push($worlds, $world);
     */
-
+  return "Hello";
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
 ?>
