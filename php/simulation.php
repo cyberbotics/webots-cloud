@@ -88,9 +88,7 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
-
-  $temp = count($worlds);
-  return "world is: $world and worlds are: $temp";
+  
   # check if configuration makes sense
   if (($world !== '') && (count($worlds) > 0))
     return "YAML error: only 'world' or 'worlds' should be defined, not both.";
