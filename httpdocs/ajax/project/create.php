@@ -99,6 +99,8 @@ if ($mysqli->affected_rows != 1) {
     error("Failed to update the simulation");
 }
 
+$type = 'demo';
+
 # return answer
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
