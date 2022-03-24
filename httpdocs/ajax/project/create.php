@@ -1,7 +1,10 @@
 <?php # This script initializes a new project
+# exit and error message
 function error($message) {
   die("{\"error\":\"$message\"}");
 }
+
+# get content
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
@@ -14,22 +17,36 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($data->url);
 $id = isset($data->id) ? intval($data->id) : 0;
+
+# check content
 $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $version, $folder, $world) = $check_url;
 $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
 $world_content = @file_get_contents($world_url);
-if ($world_content === false)
-  error("Failed to fetch world file at $world_url.<br><br>Would you like to delete this simulation?<br>(There is no way to recover deleted data)");
+if ($world_content === false) {
+  $query = "DELETE FROM project WHERE id=$id";
+  $mysqli->query($query) or error($mysqli->error);
+  if ($mysqli->affected_rows === 0)
+    error("Failed to delete world file '$world'");
+  error("Failed to fetch world file $world<br><br>Simulation will be deleted.");
+}
 
-# retrieve information from webots.yaml file
+# check and retrieve information from webots.yaml file
 /*
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml))
   error($check_yaml);
-list($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
-*/
+list($docker, $type, $publish, $world_temp, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations) = $check_yaml;
+if ($publish === 'false') {
+  $query = "DELETE FROM project WHERE id=$id";
+  $mysqli->query($query) or error($mysqli->error);
+  if ($mysqli->affected_rows === 0)
+    error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'");
+  error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'<br><br>Simulation will be deleted.");
+}*/
+$type = 'demo';
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -59,9 +76,10 @@ while ($line !== false) {
   }
   $line = strtok("\r\n");
 }
+
+# update database
 if ($world_info === false)
   error("Missing WorldInfo in $world world file");
-
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
@@ -72,7 +90,7 @@ if ($id === 0)
   $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors) "
           ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors)";
 else
-  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, type=$type, updated=NOW() "
+  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, type=\"$type\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
@@ -82,6 +100,7 @@ if ($mysqli->affected_rows != 1) {
     error("Failed to update the simulation");
 }
 
+# return answer
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
