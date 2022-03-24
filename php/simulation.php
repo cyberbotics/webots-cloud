@@ -53,7 +53,6 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
-  $world = '';
   $worlds = array();
   $world_list_end = false;
 
