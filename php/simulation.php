@@ -48,8 +48,8 @@ function simulation_check_yaml($check_url) {
   }
 
   # yaml file variables
-  $publish = 'true';
   $docker = 'docker://cyberbotics/webots:latest';
+  $publish = 'true';
   $type = '';
   $benchmark = '';
   $competition = '';
@@ -112,6 +112,6 @@ function simulation_check_yaml($check_url) {
     return "YAML file error: type not defined.";
 
   # return array with YAML file info
-  return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
+  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
 ?>
