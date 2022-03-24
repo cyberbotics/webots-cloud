@@ -59,7 +59,7 @@ function simulation_check_yaml($check_url) {
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
-
+  return "Oh no";
   # parse yaml file
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
