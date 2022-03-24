@@ -51,12 +51,10 @@ function simulation_check_yaml($check_url) {
   $publish = 'true';
   $docker = 'docker://cyberbotics/webots:latest';
   $type = '';
-  $world = '';
   $benchmark = '';
   $competition = '';
-  $simulation_worlds = array();
-  $animation_worlds = array();
-  $animation_durations = array();
+  $world = '';
+  $worlds = array();
   $world_list_end = false;
 
   # delete empty lines
@@ -77,32 +75,15 @@ function simulation_check_yaml($check_url) {
       $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
-    elseif (substr($line, 0, 11) === 'simulation:') {
+    elseif (substr($line, 0, 9) === 'worlds:') {
       $line = strtok("\r\n");
-      if (substr($line, 0, 9) === '  worlds:') {
+      while (substr($line, 0, 11) === '  - file:') {
+        array_push($simulation_worlds, trim(substr($line, 11), " "));
         $line = strtok("\r\n");
-        while (substr($line, 0, 11) === '    - file:') {
-          array_push($simulation_worlds, trim(substr($line, 11), " "));
-          $line = strtok("\r\n");
-        }
-        $world_list_end = true;
       }
-    } elseif (substr($line, 0, 10) === 'animation:') {
-      $line = strtok("\r\n");
-      if (substr($line, 0, 9) === '  worlds:') {
-        $line = strtok("\r\n");
-        while (substr($line, 0, 11) === '    - file:') {
-          array_push($animation_worlds, trim(substr($line, 11), " "));
-          $line = strtok("\r\n");
-          if (substr(trim($line, " "), 0, 9) === 'duration:') {
-            array_push($animation_durations, substr(trim($line, " "), 9));
-            $line = strtok("\r\n");
-          } else
-            array_push($animation_durations, 'full');
-        }
-        $world_list_end = true;
-      }
+      $world_list_end = true;
     }
+    } 
     if ($world_list_end === true)
       $world_list_end = false;
     else
@@ -110,7 +91,11 @@ function simulation_check_yaml($check_url) {
   }
 
   # check if configuration makes sense
+  if ($world !== '' && count($worlds)  > 0)
+    return "YAML error: only 'world' or 'worlds' should be defined, not both.";
+  if ($world !== '' && count($worlds) == 0)
+    array_push($worlds, $world);
 
-  return array($docker, $type, $publish, $world, $benchmark, $competition, $simulation_worlds, $animation_worlds, $animation_durations);
+  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
 ?>
