@@ -555,11 +555,11 @@ document.addEventListener('DOMContentLoaded', function() {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
                 errorMsg = errorMsg + 
-                  `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
-                      <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
-                        https://github.com/cyberbotics/webots-cloud/webots.yaml
-                      </a>
-                    </div>`;
+                  `<div class="help">More information at: 
+                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
+                      github.com/cyberbotics/webots-cloud
+                    </a>
+                  </div>`;
               }
               modal.error(errorMsg);
             }
