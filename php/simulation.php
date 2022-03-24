@@ -38,7 +38,7 @@ function simulation_check_url($url) {
 function simulation_check_yaml($check_url) {
   # yaml error return
   function yaml_error($msg) {
-    return 'YAML file error: $msg<br><br><div class="help">For information on how to publish a project with a webots.yaml file visit:<br><a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt</a></div>';
+    return 'YAML file error: $msg<br><br>link';
   }
 
   # get file from github
