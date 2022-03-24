@@ -13,20 +13,23 @@ webots.cloud is implemented as a Single Page Application (SPA), including the fo
 - https://webots.cloud/settings => user settings (private information)
 - https://webots.cloud/UL6ZtOI => user page (public information, the URI starts with `/U`)
 
-In addition, specific URLs correspond to different Webots materials:
+In addition, specific URLs correspond to different Webots materials.
+
+Scenes and animantions are hosted directly on webots.cloud:
 
 | type                        | data host    | sample URL                                                |
 | --------------------------- | ------------ | --------------------------------------------------------- |
 | [scene](#Scene)             | webots.cloud | `https://webots.cloud/S0_2Q8O` (the URI starts with `/S`) |
 | [animation](#Animation)     | webots.cloud | `https://webots.cloud/AQnPNle` (the URI starts with `/A`) |
-| [proto](#Proto)             | github.com   | `https://webots.cloud/P9COc_3` (the URI starts with `/P`) |
-| [demo](#Demo)               | github.com   | `https://webots.cloud/SJJl-rl` (the URI starts with `/D`) |
-| [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/BnmJEHj` (the URI starts with `/B`) |
-| [competition](#Competition) | github.com   | `https://webots.cloud/CoLEx-A` (the URI starts with `/C`) |
 
-Scenes and animantions are hosted directly on webots.cloud.
-Protos, demos, benchmarks and competitions are hosted on GitHub repositories.
+Protos, demos, benchmarks and competitions are hosted on GitHub repositories:
 
+| type                        | data host    | sample URL                                                |
+| --------------------------- | ------------ | --------------------------------------------------------- |
+| [proto](#Proto)             | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/protos/example.proto` |
+| [demo](#Demo)               | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/worlds/example.wbt` |
+| [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/benchmark/example.wbt` |
+| [competition](#Competition) | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/competition` |
 
 ## Scene
 
@@ -110,33 +113,24 @@ Currently, we support 4 different types of repositories:
 
 #### Demo
 
-This is a simple simulation that can be run interactively or viewed as an animation.
-The `webots.yaml` file should contain references to the animations and simulations, for example:
+This is a simple simulation that can be run interactively.
+The `webots.yaml` file should contain a publish setting and a reference to the demo type, for example:
 
 ```yaml
 type: demo
-animation:
-  worlds:
-    - file: worlds/my_demo.wbt
-      duration: 5
-    - file: worlds/my_other_demo.wbt
-      duration: 10
-simulation:
-  worlds:
-    - file: worlds/my_demo.wbt
-      duration: 120
+publish: true
 ```
 
-The files specified in the `animation` section are used by the CI to generate the corresponding animation on each push.
-The files specified in the `simulation` section are used by webots.cloud to list the various simulations available for interactive run sessions.
+The `publish` section is set to `true` by default if not defined. When `true`, all files in the `/worlds` directory  are used by webots.cloud to list the various simulations available for interactive run sessions. When `false` the simulation will not be published and therefore can be removed on refresh if the user changes the setting in their repository.
 
 #### Benchmark
 
 This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s).
 
 ```yaml
-type: competition
+type: Benchmark
 world: worlds/my_benchmark.wbt
+publish: true
 ```
 
 #### Competition
@@ -146,6 +140,7 @@ This type of repository should contain the scenario of a competition, including 
 ```yaml
 type: competition
 world: worlds/my_competition.wbt
+publish: true
 ```
 
 #### Competitor
