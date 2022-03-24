@@ -45,8 +45,7 @@ if ($publish === 'false') {
   if ($mysqli->affected_rows === 0)
     error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'");
   error("Simulation upload failed. Make sure to set 'publish: true' in 'webots.yaml'<br><br>Simulation will be deleted.");
-}
-*/
+}*/
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
