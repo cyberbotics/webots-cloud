@@ -106,7 +106,8 @@ function simulation_check_yaml($check_url) {
       return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
     elseif ($benchmark === '' && $competition === '')
       return "YAML file error: with competitor type please define a scenario (benchmark or competition)";
-  }
+  } else
+    return "YAML file error: type not defined."
 
   # return array with YAML file info
   return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
