@@ -89,15 +89,12 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
   }
 
-  return "Hello now";
-  /*
-
   # check if configuration makes sense
   if ($world !== '' && count($worlds)  > 0)
     return "YAML error: only 'world' or 'worlds' should be defined, not both.";
   if ($world !== '' && count($worlds) == 0)
     array_push($worlds, $world);
 
-  return array($docker, $type, $publish, $worlds, $benchmark, $competition);*/
+  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
 ?>
