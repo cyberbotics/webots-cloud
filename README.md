@@ -26,7 +26,7 @@ Protos, demos, benchmarks and competitions are hosted on GitHub repositories:
 
 | type                        | data host    | sample URL                                                |
 | --------------------------- | ------------ | --------------------------------------------------------- |
-| [proto](#Proto)             | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/protos/example.proto' |
+| [proto](#Proto)             | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/protos/example.proto` |
 | [demo](#Demo)               | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/worlds/example.wbt` |
 | [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/benchmark/example.wbt` |
 | [competition](#Competition) | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/competition` |
