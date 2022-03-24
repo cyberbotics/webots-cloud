@@ -90,9 +90,9 @@ function simulation_check_yaml($check_url) {
   }
 
   # check if configuration makes sense
-  if ($world !== '' && count($worlds)  > 0)
+  if (($world !== '') && (count($worlds)  > 0))
     return "YAML error: only 'world' or 'worlds' should be defined, not both.";
-  if ($world !== '' && count($worlds) == 0)
+  if (($world !== '') && (count($worlds) == 0))
     array_push($worlds, $world);
 
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
