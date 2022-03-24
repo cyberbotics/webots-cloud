@@ -104,6 +104,7 @@ function simulation_check_yaml($check_url) {
       return "gone here goodbye";
       return "YAML file error: world file not defined.";
     }
+    return "leaving bye";
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
