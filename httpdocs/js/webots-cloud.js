@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            let errorMsg = data.error
+            let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg + 
                 `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </a>
                   </div>`;
             }
-            let dialog = ModalDialog.run('Project creation error', errorMsg);
+            let dialog = ModalDialog.run('Project synchronization error', errorMsg);
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
@@ -551,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
           })
           .then(function(data) {
             if (data.error) {
+              let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
                 errorMsg = errorMsg + 
                   `<div class="help">For information on how to publish projects using webots.yaml visit:<br>
