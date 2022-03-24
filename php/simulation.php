@@ -38,7 +38,7 @@ function simulation_check_url($url) {
 function simulation_check_yaml($check_url) {
   # yaml error return
   function yaml_error($msg) {
-    yaml_error($msg<br><br>For information on publishing with webots.yaml visit hello.com";
+    return "YAML file error: $msg<br><br>For information on publishing with webots.yaml visit hello.com");
   }
 
   # get file from github
