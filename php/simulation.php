@@ -36,7 +36,6 @@ function simulation_check_url($url) {
 }
 
 function simulation_check_yaml($check_url) {
-  /*
   # get file from github
   list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
@@ -47,6 +46,8 @@ function simulation_check_yaml($check_url) {
     if ($yaml_content === false)
       return "YAML file error: 'webots.yaml' file not found. Please add the file at the root level of your repository.";
   }
+  return "Hello";
+  /*
 
   # yaml file variables
   $publish = 'true';
@@ -113,7 +114,7 @@ function simulation_check_yaml($check_url) {
     return "YAML file error: type not defined.";
 
   # return array with YAML file info
-  return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);*/
-  return "Hello";
+  return array($docker, $type, $publish, $worlds, $competitor, $benchmark, $competition);
+  */
 }
 ?>
