@@ -97,6 +97,7 @@ function simulation_check_yaml($check_url) {
     elseif (($world === '') && (count($worlds) == 0))
       return "YAML file error: world file not defined.";
   } elseif ($type === 'benchmark' || $type === 'competition') {
+    return "gone here";
     if (count($worlds) > 0)
       return "YAML file error: with $type type please only define one world.";
     elseif ($world == '')
