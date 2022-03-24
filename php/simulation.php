@@ -45,7 +45,7 @@ function simulation_check_yaml($check_url) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return "'webots.yaml' file not found.<br><br>Please add the file at the root level of your repository.";
+      return "YAML file error: 'webots.yaml' file not found. Please add the file at the root level of your repository.";
   }
 
   # yaml file variables
@@ -88,12 +88,14 @@ function simulation_check_yaml($check_url) {
     else
       $line = strtok("\r\n");
   }
-  
+
   # check if configuration makes sense
-  if (($world !== '') && (count($worlds) > 0))
-    return "YAML error: only 'world' or 'worlds' should be defined, not both.";
   if (($world !== '') && (count($worlds) == 0))
     array_push($worlds, $world);
+  elseif (($world !== '') && (count($worlds) > 0))
+    return "YAML file error: only 'world' or 'worlds' should be defined, not both.";
+  elseif (($world === '') && (count($worlds) == 0))
+    return "YAML file error: world file not defined.";
 
   return array($docker, $type, $publish, $worlds, $benchmark, $competition);
 }
