@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </a>
                   </div>`;
             }
-            let dialog = ModalDialog.run('Project sync error', errorMsg);
+            let dialog = ModalDialog.run('Project sync error', errorMsg, 'is-info');
             dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
