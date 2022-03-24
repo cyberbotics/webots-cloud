@@ -97,10 +97,13 @@ function simulation_check_yaml($check_url) {
     elseif (($world === '') && (count($worlds) == 0))
       return "YAML file error: world file not defined.";
   } elseif ($type === 'benchmark' || $type === 'competition') {
-    if (count($worlds) > 0)
+    if (count($worlds) > 0) {
+      return "gone here hello";
       return "YAML file error: with $type type please only define one world.";
-    elseif ($world === '')
+    } elseif ($world === '') {
+      return "gone here goodbye";
       return "YAML file error: world file not defined.";
+    }
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return "YAML file error: with competitor type please only define one scenario (benchmark or competition)";
