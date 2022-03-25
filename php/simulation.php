@@ -88,9 +88,9 @@ function simulation_check_yaml($check_url) {
   }
 
   # check if configuration makes sense
-  /*
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
+  /*
   elseif ($type === 'demo') {
     if(count($worlds) == 0)
       array_push($worlds, $world_url);
