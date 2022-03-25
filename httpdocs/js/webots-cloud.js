@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initTabs() {
-      const TABS = [...document.querySelectorAll('#tabs a')];
+      const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
       TABS.forEach((tab) => {
