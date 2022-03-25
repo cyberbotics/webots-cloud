@@ -71,7 +71,7 @@ body footer .has-text-centered {
 }
 
 #sign-up:hover {
-  background-color: rgb(255, 122, 204);
+  opacity: 0.6;
 }
 
 /*  Tabs  */
