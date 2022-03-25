@@ -40,7 +40,7 @@ export default class Router {
 `<nav id="navbar" class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="/images/logo-28.png" /> <p &nbsp; ${this.title} />
+      <img src="/images/logo-28.png" /> < &nbsp; ${this.title} />
     </a>
     <a class="navbar-burger burger" data-target="router-navbar">
       <span></span>
