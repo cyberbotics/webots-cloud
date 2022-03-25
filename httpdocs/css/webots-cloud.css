@@ -82,12 +82,12 @@ body footer .has-text-centered {
   background-color: hsl(0, 0%, 80%);
 }
 
-#data-tab {
+.data-tab.is-active {
   color: rgb(0, 122, 204);
 }
 
 #data-tab:hover {
-  color: black;
+  color: rgb(0, 122, 204);
 }
 
 /*  Tabs  */
