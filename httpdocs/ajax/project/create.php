@@ -102,7 +102,6 @@ if ($mysqli->affected_rows != 1) {
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
-error("Type is: $type");
 
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
