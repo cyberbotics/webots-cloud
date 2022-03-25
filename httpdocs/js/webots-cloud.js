@@ -234,12 +234,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="panel-tabs">
-          <a class="data-tab" ${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
-          <a class="data-tab" ${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
-          <a class="data-tab" ${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
+          <a ${(active_tab == 'animation') ? ' class="is-active"' : 'class="data-tab"'} data-tab="animation">Animation</a>
+          <a ${(active_tab == 'simulation') ? ' class="is-active"' : 'class="data-tab"'} data-tab="simulation">Simulation</a>
+          <a ${(active_tab == 'scene') ? ' class="is-active"' : 'class="data-tab"'} data-tab="scene">Scene</a>
           <a class="data-tab" style="pointer-events:none;cursor:default;color:grey" data-tab="competition">Competition</a>
           <a class="data-tab" style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-          <a class="data-tab" ${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
+          <a ${(active_tab == 'server') ? ' class="is-active"' : 'class="data-tab"'} data-tab="server">Server</a>
         </div>
         <div id="tab-content">
           <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
