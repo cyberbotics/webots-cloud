@@ -60,7 +60,7 @@ body footer .has-text-centered {
 }
 
 .has-text-white:hover {
-  color: #999;
+  opacity: 0.6;
 }
 
 /*  Navbar  */
