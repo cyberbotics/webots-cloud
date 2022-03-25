@@ -86,7 +86,7 @@ body footer .has-text-centered {
   color: rgb(0, 122, 204);
 }
 
-.data-tab:hover a {
+.data-tab:hover > a {
   color: rgb(0, 122, 204);
 }
 
