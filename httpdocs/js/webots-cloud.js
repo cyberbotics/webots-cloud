@@ -235,12 +235,12 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML =
         `<div id="tabs" class="tabs">
           <ul>
-            <li ${(active_tab == 'animation') ? ' class="is-active"' : 'class="data-tab"'}><a data-tab="animation">Animation</a></li>
-            <li ${(active_tab == 'simulation') ? ' class="is-active"' : 'class="data-tab"'}><a data-tab="simulation">Simulation</a></li>
-            <li ${(active_tab == 'scene') ? ' class="is-active"' : 'class="data-tab"'}><a data-tab="scene">Scene</a></li>
-            <li class="data-tab"><a style="pointer-events:none;cursor:default;color:grey" data-tab="competition">Competition</a></li>
-            <li class="data-tab"><a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a></li>
-            <li ${(active_tab == 'server') ? ' class="is-active"' : 'class="data-tab"'}><a data-tab="server">Server</a></li>
+            <li ${(active_tab == 'animation') ? ' class="is-active"' : 'class="data-tab"' data-tab="animation"}><a>Animation</a></li>
+            <li ${(active_tab == 'simulation') ? ' class="is-active"' : 'class="data-tab"' data-tab="simulation"}><a>Simulation</a></li>
+            <li ${(active_tab == 'scene') ? ' class="is-active"' : 'class="data-tab"'} data-tab="scene"><a>Scene</a></li>
+            <li class="data-tab" data-tab="competition"><a style="pointer-events:none;cursor:default;color:grey">Competition</a></li>
+            <li class="data-tab" data-tab="proto"><a style="pointer-events:none;cursor:default;color:grey">Proto</a></li>
+            <li ${(active_tab == 'server') ? ' class="is-active"' : 'class="data-tab"'} data-tab="server"><a>Server</a></li>
           </ul>
         </div>
         <div id="tab-content">
