@@ -53,12 +53,10 @@ function simulation_check_yaml($check_url) {
   }
 
   # yaml file variables
-  $docker = 'docker://cyberbotics/webots:latest';
   $publish = 'true';
   $type = '';
   $benchmark = '';
   $competition = '';
-  $world = '';
   $worlds = array();
   $world_list_end = false;
 
@@ -69,12 +67,8 @@ function simulation_check_yaml($check_url) {
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
       $publish = trim(substr($line, 8), " ");
-    elseif (substr($line, 0, 5) === 'uses:')
-      $docker = trim(substr($line, 5), " ");
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 5), " ");
-    elseif (substr($line, 0, 6) === 'world:')
-      $world = trim(substr($line, 6), " ");
     elseif (substr($line, 0, 10) === 'benchmark:')
       $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
@@ -97,19 +91,13 @@ function simulation_check_yaml($check_url) {
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
   elseif ($type === 'demo') {
-    if (($world !== '') && (count($worlds) == 0))
-      array_push($worlds, $world);
-    elseif (($world !== '') && (count($worlds) > 0))
-      return yaml_error("only 'world' or 'worlds' should be defined, not both.");
-    elseif (($world === '') && (count($worlds) == 0))
+    if(count($worlds) == 0)
       array_push($worlds, $world_url);
   } elseif ($type === 'benchmark' || $type === 'competition') {
-    if (($world !== '') && (count($worlds) == 0))
-      array_push($worlds, $world);
+    if (count($worlds) == 0))
+      array_push($worlds, $world_url);
     elseif (count($worlds) > 0)
-      return yaml_error("with $type type requires one single world.");
-    elseif ($world === '')
-     array_push($worlds, $world_url);
+      return yaml_error("type $type does not require worlds to be defined.");
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return yaml_error("competitor type only requires one scenario (benchmark or competition)");
@@ -119,6 +107,6 @@ function simulation_check_yaml($check_url) {
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($docker, $type, $publish, $worlds, $benchmark, $competition);
+  return array($type, $publish, $worlds, $benchmark, $competition);
 }
 ?>
