@@ -115,6 +115,7 @@ nav.pagination > a[disabled] {
 
 .pagination-link.is-current {
   background-color: magenta;
+  border: 2px solid #006100
 }
 
 /*  Other  */
