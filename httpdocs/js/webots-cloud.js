@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <li data-tab="animation" ${(active_tab == 'animation') ? ' class="is-active"' : 'class="data-tab"'}><a>Animation</a></li>
             <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="is-active"' : 'class="data-tab"'}><a>Simulation</a></li>
             <li data-tab="scene" ${(active_tab == 'scene') ? ' class="is-active"' : 'class="data-tab"'}><a>Scene</a></li>
-            <li data-tab="competition" lass="data-tab"><astyle="pointer-events:none;cursor:default;color:grey">Competition</a></li>
+            <li data-tab="competition" class="data-tab"><astyle="pointer-events:none;cursor:default;color:grey">Competition</a></li>
             <li data-tab="proto" class="data-tab" ><astyle="pointer-events:none;cursor:default;color:grey">Proto</a></li>
             <li data-tab="server" ${(active_tab == 'server') ? ' class="is-active"' : 'class="data-tab"'}><a>Server</a></li>
           </ul>
