@@ -59,8 +59,8 @@ body footer .has-text-centered {
   width:100%;
 }
 
-.content:hover {
-  background-color: #333;
+.has-text-white:hover {
+  background-color: #999;
 }
 
 /*  Navbar  */
