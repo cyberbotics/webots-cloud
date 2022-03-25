@@ -113,7 +113,7 @@ nav.pagination > a[disabled] {
   cursor: not-allowed;
 }
 
-.is-current {
+.pagination-link {
   background-color: magenta;
 }
 
