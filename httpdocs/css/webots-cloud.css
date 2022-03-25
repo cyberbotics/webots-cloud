@@ -113,6 +113,10 @@ nav.pagination > a[disabled] {
   cursor: not-allowed;
 }
 
+.pagination {
+  background-color: magenta;
+}
+
 /*  Other  */
 
 @media only screen and (max-width: 500px) {
