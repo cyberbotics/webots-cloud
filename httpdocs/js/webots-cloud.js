@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let animation_page = 1;
   let simulation_page = 1;
   let server_page = 1;
+  this.worlds = ['OroBot.wbt', 'OroBot_opposites.wbt', 'test_world.wbt'];
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -655,7 +656,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    project.runPage();
+    project.runPage(this.worlds);
   }
 
   function deleteAnimation(event, type, project, page) {
