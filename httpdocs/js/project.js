@@ -1,4 +1,3 @@
-import ModalDialog from './modal_dialog.js';
 import User from './user.js';
 
 export default class Project extends User {
