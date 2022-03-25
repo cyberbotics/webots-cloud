@@ -90,11 +90,10 @@ function simulation_check_yaml($check_url) {
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
-  /*
   elseif ($type === 'demo') {
     if(count($worlds) == 0)
       array_push($worlds, $world_url);
-  } elseif ($type === 'benchmark' || $type === 'competition') {
+  }/* elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) == 0))
       array_push($worlds, $world_url);
     elseif (count($worlds) > 0)
@@ -107,7 +106,7 @@ function simulation_check_yaml($check_url) {
   } else
     return yaml_error("type not defined.");
   */
-  return "oh dear";
+  return "oh dear me";
 
   # return array with YAML file info
   return array($type, $publish, $worlds, $benchmark, $competition);
