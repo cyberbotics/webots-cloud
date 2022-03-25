@@ -93,7 +93,9 @@ function simulation_check_yaml($check_url) {
   elseif ($type === 'demo') {
     if(count($worlds) === 0)
       array_push($worlds, $world_url);
-  } /* elseif ($type === 'benchmark' || $type === 'competition') {
+  } elseif ($type === 'benchmark' || $type === 'competition') {
+    return "gone in here";
+  }/* elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) === 0))
       array_push($worlds, $world_url);
     elseif (count($worlds) > 0)
