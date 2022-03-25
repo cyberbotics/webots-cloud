@@ -94,9 +94,7 @@ function simulation_check_yaml($check_url) {
     if(count($worlds) === 0)
       array_push($worlds, $world_url);
   } elseif ($type === 'benchmark' || $type === 'competition') {
-    return "gone in here";
-  }/* elseif ($type === 'benchmark' || $type === 'competition') {
-    if (count($worlds) === 0))
+    if (count($worlds) === 0)
       array_push($worlds, $world_url);
     elseif (count($worlds) > 0)
       return yaml_error("type $type does not require worlds to be defined.");
@@ -108,7 +106,6 @@ function simulation_check_yaml($check_url) {
   } else
     return yaml_error("type not defined.");
   */
-  return "oh dear";
 
   # return array with YAML file info
   return array($type, $publish, $worlds, $benchmark, $competition);
