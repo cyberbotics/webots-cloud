@@ -42,7 +42,7 @@ function simulation_check_yaml($check_url) {
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world) = $check_url;
+  list($username, $repository, $version, $folder, $world_url) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
@@ -58,6 +58,7 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
+  $world = '';
   $worlds = array();
   $world_list_end = false;
 
@@ -101,14 +102,14 @@ function simulation_check_yaml($check_url) {
     elseif (($world !== '') && (count($worlds) > 0))
       return yaml_error("only 'world' or 'worlds' should be defined, not both.");
     elseif (($world === '') && (count($worlds) == 0))
-      return yaml_error("world file not defined.");
+      array_push($worlds, $world_url);
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (($world !== '') && (count($worlds) == 0))
       array_push($worlds, $world);
     elseif (count($worlds) > 0)
       return yaml_error("with $type type requires one single world.");
     elseif ($world === '')
-      return yaml_error("world file not defined.");
+     array_push($worlds, $world_url);
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return yaml_error("competitor type only requires one scenario (benchmark or competition)");
