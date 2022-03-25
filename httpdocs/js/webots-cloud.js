@@ -161,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
+      const style = (data.user == 0) ? ' style="color:grey"' : '';
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : `Delete your ${type_name}`;
-      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
+      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
