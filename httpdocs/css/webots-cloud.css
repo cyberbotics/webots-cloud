@@ -90,13 +90,18 @@ body footer .has-text-centered {
 
 #tabs {
   padding-top: 30px;
-  padding-left: 30px;
+  padding-left: 50px;
   padding-right: 30px;
   margin-bottom: -15px;
 }
 
-#tab-content {
-  left: 50%;
+@media only screen and (max-width: 1024px) {
+  #tabs {
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: -15px;
+  }
 }
 
 #tab-content section {
