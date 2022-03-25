@@ -70,7 +70,7 @@ body footer .has-text-centered {
   background-color: rgb(0, 110, 185);
 }
 
-#sign-up {
+#sign-up:hover {
   background-color: rgb(255, 122, 204);
 }
 
