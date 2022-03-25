@@ -78,13 +78,12 @@ export default class Project extends User {
     else
       Project.webotsView.loadScene(`${reference}/scene.x3d`);
   }
-  runPage(worlds) {
+  runPage() {
     this.setupWebotsView('run');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode);
     Project.webotsView.showQuit = false;
-    Project.webotsView.worlds = worlds;
   }
 }
 Project.current = null;
