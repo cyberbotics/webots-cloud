@@ -26,10 +26,10 @@ Protos, demos, benchmarks and competitions are hosted on GitHub repositories:
 
 | type                        | data host    | sample URL                                                |
 | --------------------------- | ------------ | --------------------------------------------------------- |
-| [proto](#Proto)             | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/protos/example.proto` |
-| [demo](#Demo)               | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/worlds/example.wbt` |
-| [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/benchmark/example.wbt` |
-| [competition](#Competition) | github.com   | `https://webots.cloud/run?url=https://github.com/user/repository/blob/master/competition` |
+| [proto](#Proto)             | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/protos/example.proto` |
+| [demo](#Demo)               | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/worlds/example.wbt` |
+| [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/worlds/example.wbt` |
+| [competition](#Competition) | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/competition` |
 
 ## Scene
 
@@ -92,20 +92,23 @@ webots.cloud holds a database of GitHub repositories containing a Webots simulat
 |  2 | competitor  | https://github.com/me/my_entry          |      1 | My Super Rat       |     3 |   Python |
 |  3 | demo        | https://github.com/me/my_demo           |      0 | My Webots demo     |    12 |      C++ |
 
-## webots.yaml
+## Dockerfile
 
-webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required host, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
-
-### Uses
-
-The version information specified in the `webots.yaml` file indicates which version of Webots is required to run the simulation.
+The version information specified in the Dockerfile at the root of the repository indicates which version of Webots is required to run the simulation.
 The format is inherited from the GitHub action format: `uses: docker://{host}/{image}:{tag}`.
 
 For example:
 
-```yaml
-uses: docker://cyberbotics/webots:R2020b-rev1-ubuntu20.04
+```Dockerfile
+FROM cyberbotics/webots:R2020b-rev1-ubuntu20.04
+ARG PROJECT_PATH
+RUN mkdir -p $PROJECT_PATH
+COPY . $PROJECT_PATH
 ```
+
+## webots.yaml
+
+webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required host, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
 
 ### Type
 
@@ -114,32 +117,33 @@ Currently, we support 4 different types of repositories:
 #### Demo
 
 This is a simple simulation that can be run interactively.
-The `webots.yaml` file should contain a publish setting and a reference to the demo type, for example:
+The `webots.yaml` file should contain a reference to the demo type, a publish setting and the worlds you wish to publish as simulations, for example:
 
 ```yaml
 type: demo
 publish: true
+worlds:
+  - file: worlds/my_world.wbt
+  - file: worlds/my_other_world.wbt
 ```
 
-The `publish` section is set to `true` by default if not defined. When `true`, all files in the `/worlds` directory  are used by webots.cloud to list the various simulations available for interactive run sessions. When `false` the simulation will not be published and therefore can be removed on refresh if the user changes the setting in their repository.
+By default, only the world found in the uploaded url is uploaded and `publish` is set to `true`. Other worlds can be specified and will also be used by webots.cloud and listed as interactive run sessions as shown in the example above. When `publish` is set to `false` the simulation will not be uploaded and can be removed from webots.cloud on resynchronization.
 
 #### Benchmark
 
-This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s).
+This type of repository should contain the scenario of a benchmark, including a supervisor process performing the evalution of the controller(s) and a publish setting.
 
 ```yaml
 type: Benchmark
-world: worlds/my_benchmark.wbt
 publish: true
 ```
 
 #### Competition
 
-This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s).
+This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s) and a a publish setting.
 
 ```yaml
 type: competition
-world: worlds/my_competition.wbt
 publish: true
 ```
 
