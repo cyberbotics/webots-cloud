@@ -123,8 +123,8 @@ The `webots.yaml` file should contain a reference to the demo type, a publish se
 type: demo
 publish: true
 worlds:
-  - file: worlds/my_world.wbt
-  - file: worlds/my_other_world.wbt
+  - file: my_world.wbt
+  - file: my_other_world.wbt
 ```
 
 By default, only the world found in the uploaded url is uploaded and `publish` is set to `true`. Other worlds can be specified and will also be used by webots.cloud and listed as interactive run sessions as shown in the example above. When `publish` is set to `false` the simulation will not be uploaded and can be removed from webots.cloud on resynchronization.
