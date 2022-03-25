@@ -3,6 +3,8 @@ html {
   overflow-y: auto;
 }
 
+/*  Body  */
+
 body {
   height: 100%;
 }
@@ -28,6 +30,8 @@ body:after{
   box-shadow: 2px 2px 5px #740f00;
 }
 
+/*  Main Container  */
+
 #mainContainer {
   height: calc(100% - 48px);
   min-height: 750px;
@@ -41,6 +45,8 @@ div.table-container {
   min-height: 532px;
 }
 
+/*  Footer  */
+
 body footer.footer {
   height: 48px;
   padding-top: 10px;
@@ -53,6 +59,8 @@ body footer .has-text-centered {
   width:100%;
 }
 
+/*  Navbar  */
+
 #navbar {
   background-color: rgb(0, 122, 204);
   box-shadow: 0 -15px 20px 20px rgba(0,0,0,0.4);
@@ -61,6 +69,12 @@ body footer .has-text-centered {
 #navbar .navbar-brand:hover .navbar-item {
   background-color: rgb(0, 110, 185);
 }
+
+#navbar .button .is-success {
+  background-color: rgb(255, 122, 204);
+}
+
+/*  Tabs  */
 
 #tab-content section {
   display: none;
@@ -74,10 +88,14 @@ body footer .has-text-centered {
   user-select: none;
 }
 
+/*  Webots view  */
+
 #webotsViewContainer {
   height: 100%;
   max-width: none;
 }
+
+/*  Pagination  */
 
 nav.pagination > a[disabled] {
   background-color: #fff;
@@ -86,6 +104,8 @@ nav.pagination > a[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/*  Other  */
 
 @media only screen and (max-width: 500px) {
   .panel-tabs > a {
