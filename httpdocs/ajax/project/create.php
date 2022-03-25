@@ -85,8 +85,8 @@ $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
 if ($id === 0)
-  $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors) "
-          ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors)";
+  $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors, type) "
+          ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors, \"$type\")";
 else
   $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, type=\"$type\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
