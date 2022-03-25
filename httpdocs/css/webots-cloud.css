@@ -67,11 +67,15 @@ body footer .has-text-centered {
 }
 
 #navbar .navbar-brand:hover .navbar-item {
-  background-color: rgb(0, 110, 185);
+  background-color: rgb(0, 122, 204);
 }
 
 #sign-up:hover {
   background-color: hsl(141, 53%, 48%)
+}
+
+#log-in:hover {
+  background-color: hsl(0, 0%, 91%);
 }
 
 /*  Tabs  */
