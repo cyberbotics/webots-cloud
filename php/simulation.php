@@ -42,7 +42,7 @@ function simulation_check_yaml($check_url) {
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world_url) = $check_url;
+  list($username, $repository, $version, $folder, $world_from_url) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
@@ -91,11 +91,14 @@ function simulation_check_yaml($check_url) {
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
   elseif ($type === 'demo') {
-    if(count($worlds) === 0)
-      array_push($worlds, $world_url);
+    if (count($worlds) === 0)
+      array_push($worlds, $world_from_url);
+    elseif (!in_array($world_from_url, $worlds))
+      return yaml_error("$world_from_url not in webots.yaml world list.")
+    }
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) === 0)
-      array_push($worlds, $world_url);
+      array_push($worlds, $world_from_url);
     else
       return yaml_error("type $type does not require worlds to be defined.");
   } elseif ($type === 'competitor') {
@@ -107,6 +110,6 @@ function simulation_check_yaml($check_url) {
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($type, $publish, $worlds, $benchmark, $competition);
+  return array($type, $worlds, $benchmark, $competition);
 }
 ?>
