@@ -562,8 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>`;
               }
               modal.error(errorMsg);
-            }
-            else {
+            } else {
               modal.close();
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
@@ -623,7 +622,6 @@ document.addEventListener('DOMContentLoaded', function() {
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
-              console.log("type is :" + data.projects[i].type);
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
             }
