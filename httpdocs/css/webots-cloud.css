@@ -59,6 +59,10 @@ body footer .has-text-centered {
   width:100%;
 }
 
+.content:hover {
+  color: #999;
+}
+
 /*  Navbar  */
 
 #navbar {
