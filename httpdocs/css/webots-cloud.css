@@ -83,7 +83,7 @@ body footer .has-text-centered {
 }
 
 #data-tab {
-  color: magenta;
+  color: rgb(0, 122, 204);
 }
 
 /*  Tabs  */
@@ -93,6 +93,10 @@ body footer .has-text-centered {
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: -15px;
+}
+
+#tab-content {
+  left: 50%;
 }
 
 #tab-content section {
