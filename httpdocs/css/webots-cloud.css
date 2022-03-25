@@ -78,6 +78,10 @@ body footer .has-text-centered {
   background-color: hsl(0, 0%, 80%);
 }
 
+.data-tab {
+  color: rgb(0, 122, 204);
+}
+
 /*  Tabs  */
 
 #tab-content section {
