@@ -59,7 +59,7 @@ body footer .has-text-centered {
 }
 
 #navbar .navbar-brand:hover .navbar-item {
-  background-color: rgb(255, 122, 204);
+  transform: scale(1.1);
 }
 
 #tab-content section {
