@@ -94,7 +94,7 @@ function simulation_check_yaml($check_url) {
     if (count($worlds) === 0)
       array_push($worlds, $world_from_url);
     elseif (!in_array($world_from_url, $worlds))
-      return yaml_error("$world_from_url not in webots.yaml world list.")
+      return yaml_error("$world_from_url not in webots.yaml world list.");
     }
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) === 0)
