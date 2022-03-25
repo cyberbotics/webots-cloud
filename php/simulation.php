@@ -96,7 +96,7 @@ function simulation_check_yaml($check_url) {
   } elseif ($type === 'benchmark' || $type === 'competition') {
     if (count($worlds) === 0)
       array_push($worlds, $world_url);
-    elseif (count($worlds) > 0)
+    else
       return yaml_error("type $type does not require worlds to be defined.");
   } elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
