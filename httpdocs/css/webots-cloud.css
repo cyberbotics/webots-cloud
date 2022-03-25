@@ -88,6 +88,10 @@ body footer .has-text-centered {
 
 /*  Tabs  */
 
+#tabs {
+  margin-top: 300px;
+}
+
 #tab-content section {
   display: none;
 }
@@ -96,7 +100,7 @@ body footer .has-text-centered {
   display: block;
 }
 
-.panel-tabs > a {
+.tabs > li {
   user-select: none;
 }
 
