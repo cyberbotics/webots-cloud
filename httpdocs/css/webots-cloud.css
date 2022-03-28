@@ -89,7 +89,7 @@ body footer .has-text-centered {
   background-color: hsl(0, 0%, 80%);
 }
 
-.data-tab.active-tab a {
+.data-tab.active-tab > * {
   color: rgb(255, 122, 204);
 }
 
