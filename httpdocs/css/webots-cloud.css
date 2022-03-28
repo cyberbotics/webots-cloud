@@ -66,6 +66,7 @@ body footer .has-text-centered {
 
 .footer {
   position: fixed;
+  width: 100%;
   z-index: 30;
 }
 
