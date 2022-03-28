@@ -90,7 +90,7 @@ body footer .has-text-centered {
 }
 
 .data-tab .is-active > a {
-  color: rgb(255, 122, 204);
+  background-color: rgb(255, 122, 204);
 }
 
 .data-tab:hover > a {
