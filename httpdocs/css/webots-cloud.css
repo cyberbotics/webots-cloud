@@ -36,7 +36,6 @@ body:after{
 #mainContainer {
   height: calc(100% - 48px);
   min-height: 750px;
-  z-index: 0;
 }
 
 #mainContainer.webotsView {
@@ -66,6 +65,7 @@ body footer .has-text-centered {
 }
 
 .footer {
+  position: absolute;
   z-index: 30;
 }
 
