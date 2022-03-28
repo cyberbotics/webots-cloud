@@ -89,7 +89,7 @@ body footer .has-text-centered {
   background-color: hsl(0, 0%, 80%);
 }
 
-.tabs > .data-tab.is-active-wow > a {
+.tabs.is-boxed > .data-tab.is-active-wow > a {
   color: rgb(255, 122, 204);
 }
 
