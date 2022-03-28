@@ -236,13 +236,13 @@ document.addEventListener('DOMContentLoaded', function() {
         `<div id="tabs" class="tabs is-boxed">
           <ul>
             <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a ${(active_tab == 'animation') ? ' id="active-tab-text"' : 'id=""'}>Animation</a>
+              <a ${(active_tab == 'animation') ? ' id="tab-text-active"' : 'id="tab-text"'}>Animation</a>
             </li>
             <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a ${(active_tab == 'simualtion') ? ' id="active-tab-text"' : 'id=""'}>Simulation</a>
+              <a ${(active_tab == 'simualtion') ? ' id="tab-text-active"' : 'id="tab-text"'}>Simulation</a>
             </li>
             <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a ${(active_tab == 'scene') ? ' id="active-tab-text"' : 'id=""'}>Scene</a>
+              <a ${(active_tab == 'scene') ? ' id="tab-text-active"' : 'id="tab-text"'}>Scene</a>
             </li>
             <li data-tab="competition" class="data-tab" style="pointer-events:none;cursor:default;">
               <a style="color:grey">Competition</a>
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <a style="color:grey">Proto</a>
             </li>
             <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a ${(active_tab == 'server') ? ' id="active-tab-text"' : 'id=""'}>Server</a>
+              <a ${(active_tab == 'server') ? ' id="tab-text-active"' : 'id="tab-text"'}>Server</a>
             </li>
           </ul>
         </div>
