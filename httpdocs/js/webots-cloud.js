@@ -235,13 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML =
         `<div id="tabs" class="tabs is-boxed">
           <ul>
-            <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab is-not-active"'}>
               <a>Animation</a>
             </li>
-            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab is-not-active"'}>
               <a>Simulation</a>
             </li>
-            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab is-not-active"'}>
               <a>Scene</a>
             </li>
             <li data-tab="competition" class="data-tab" style="pointer-events:none;cursor:default;">
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <li data-tab="proto" class="data-tab" style="pointer-events:none;cursor:default;">
               <a style="color:grey">Proto</a>
             </li>
-            <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab is-not-active"'}>
               <a>Server</a>
             </li>
           </ul>
