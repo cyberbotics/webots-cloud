@@ -116,17 +116,14 @@ Currently, we support 4 different types of repositories:
 #### Demo
 
 This is a simple simulation that can be run interactively.
-The `webots.yaml` file should contain a reference to the demo type, a publish setting and the worlds you wish to publish as simulations, for example:
+The `webots.yaml` file should contain a reference to the demo type and a publish setting, for example:
 
 ```yaml
 type: demo
 publish: true
-worlds:
-  - file: my_world.wbt
-  - file: my_other_world.wbt
 ```
 
-By default, only the world found in the uploaded url is uploaded and `publish` is set to `true`. Other worlds can be specified and will also be used by webots.cloud and listed as interactive run sessions as shown in the example above. When `publish` is set to `false` the simulation will not be uploaded and can be removed from webots.cloud on resynchronization.
+By default, `publish` is set to `true`. All worlds found in the same directory as the specified world will be be used by webots.cloud and listed as interactive run sessions. When `publish` is set to `false` the simulation will not be uploaded and can be removed from webots.cloud on resynchronization.
 
 #### Benchmark
 
