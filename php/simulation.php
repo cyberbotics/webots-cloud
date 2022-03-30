@@ -57,7 +57,7 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
-  $init_end = false
+  $init_end = false;
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
