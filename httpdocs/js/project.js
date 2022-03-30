@@ -56,7 +56,7 @@ export default class Project extends User {
     const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     let template = document.createElement('template');
     template.innerHTML = `<section class="section" style="padding:0;height:100%">
-<div class="container" id="webotsViewContainer">${view}</div>`
+<div class="container" id="webots-view-container">${view}</div>`
     if (data) {
       const description = data.description.replace('\n', '<br>\n');
       template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
@@ -66,7 +66,7 @@ export default class Project extends User {
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else
-      document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
+      document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
   animationPage(data) {

@@ -120,7 +120,7 @@ body footer .has-text-centered {
 
 /*  Webots view  */
 
-#webotsViewContainer {
+#webots-view-container {
   height: 100%;
   max-width: none;
 }
