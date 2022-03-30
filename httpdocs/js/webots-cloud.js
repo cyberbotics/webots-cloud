@@ -400,10 +400,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg + 
                 `<div class="help">More information at: 
-                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
-                      github.com/cyberbotics/webots-cloud
-                    </a>
-                  </div>`;
+                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md#webotsyaml">
+                    github.com/cyberbotics/webots-cloud
+                  </a>
+                </div>`;
             }
             let dialog = ModalDialog.run('Project sync error', errorMsg);
             dialog.error('Project has been deleted.');
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (errorMsg.startsWith('YAML file error:')) {
                 errorMsg = errorMsg + 
                   `<div class="help">More information at: 
-                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md">
+                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md#webotsyaml">
                       github.com/cyberbotics/webots-cloud
                     </a>
                   </div>`;
