@@ -130,7 +130,7 @@ By default, `publish` is set to `true`. All worlds found in the same directory a
 This type of repository should contain the scenario of a benchmark, including a supervisor process performing the evalution of the controller(s) and a publish setting.
 
 ```yaml
-type: Benchmark
+type: benchmark
 publish: true
 ```
 
