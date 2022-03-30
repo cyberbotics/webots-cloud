@@ -76,7 +76,10 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       $init_end = true;
     }
-    $line = strtok("\r\n");
+    if ($init_end)
+      $init_end = false;
+    else
+      $line = strtok("\r\n");
   }
 
   # check if configuration makes sense
