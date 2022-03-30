@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
               errorMsg = errorMsg + 
                 `<div class="help">More information at: 
                   <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md#webotsyaml">
-                    github.com/cyberbotics/webots-cloud
+                    github.com/cyberbotics/webots-cloud/webotsyaml
                   </a>
                 </div>`;
             }
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorMsg = errorMsg + 
                   `<div class="help">More information at: 
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/main/README.md#webotsyaml">
-                      github.com/cyberbotics/webots-cloud
+                      github.com/cyberbotics/webots-cloud/webotsyaml
                     </a>
                   </div>`;
               }
