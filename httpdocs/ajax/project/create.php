@@ -34,7 +34,6 @@ if ($world_content === false) {
 }
 
 # check and retrieve information from webots.yaml file
-/*
 $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml)) {
   /* 
@@ -42,11 +41,10 @@ if (!is_array($check_yaml)) {
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
     error($check_yaml);
-
+  */
   error($check_yaml);
 }
-list($type, $benchmark, $competition) = $check_yaml;
-*/
+list($type, $worlds, $benchmark, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -111,6 +109,7 @@ $answer['url'] = $url;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
+$answer['worlds'] = $worlds;
 $answer['description'] = $description;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
