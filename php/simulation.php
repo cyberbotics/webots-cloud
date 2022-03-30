@@ -42,7 +42,7 @@ function simulation_check_yaml($check_url) {
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world_from_url) = $check_url;
+  list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
@@ -57,7 +57,6 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
-  $worlds = array();
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -88,6 +87,6 @@ function simulation_check_yaml($check_url) {
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($type, $worlds, $benchmark, $competition);
+  return array($type, $benchmark, $competition);
 }
 ?>
