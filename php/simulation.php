@@ -71,6 +71,7 @@ function simulation_check_yaml($check_url) {
       $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
+    $line = strtok($yaml_content, "\r\n");
   }
 
   # check if configuration makes sense
