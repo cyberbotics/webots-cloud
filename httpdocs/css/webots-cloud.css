@@ -89,14 +89,6 @@ body footer .has-text-centered {
   background-color: hsl(0, 0%, 80%);
 }
 
-.tabs li.is-active a {
-  color: rgb(0, 122, 204);
-}
-
-.data-tab:hover > a {
-  color: rgb(0, 122, 204);
-}
-
 /*  Tabs  */
 
 #tabs {
@@ -113,6 +105,16 @@ body footer .has-text-centered {
 
 .tabs > li {
   user-select: none;
+}
+
+.tabs a:hover {
+  border-bottom-color: transparent;
+  color: rgb(0, 122, 204);
+}
+
+
+.tabs li.is-active a {
+  color: rgb(0, 122, 204);
 }
 
 /*  Webots view  */
