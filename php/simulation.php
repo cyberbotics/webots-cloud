@@ -42,7 +42,7 @@ function simulation_check_yaml($check_url) {
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world_from_url) = $check_url;
+  list($username, $repository, $version, $folder, $world) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
@@ -57,8 +57,6 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
-  $worlds = array();
-  $world_list_end = false;
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -73,29 +71,13 @@ function simulation_check_yaml($check_url) {
       $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
-    elseif (substr($line, 0, 7) === 'worlds:') {
-      $line = strtok("\r\n");
-      while (substr($line, 0, 9) === '  - file:') {
-        array_push($worlds, trim(substr($line, 9), " "));
-        $line = strtok("\r\n");
-      }
-      $world_list_end = true;
-    }
-    if ($world_list_end === true)
-      $world_list_end = false;
-    else
-      $line = strtok("\r\n");
+    $line = strtok("\r\n");
   }
 
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
-  elseif ($type === 'benchmark' || $type === 'competition') {
-    if (count($worlds) === 0)
-      array_push($worlds, $world_from_url);
-    else
-      return yaml_error("type $type does not require worlds to be defined.");
-  } elseif ($type === 'competitor') {
+  elseif ($type === 'competitor') {
     if ($benchmark !== '' && $competition !== '')
       return yaml_error("competitor type only requires one scenario (benchmark or competition)");
     elseif ($benchmark === '' && $competition === '')
