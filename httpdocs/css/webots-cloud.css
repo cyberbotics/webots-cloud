@@ -118,6 +118,10 @@ body footer .has-text-centered {
   color: rgb(0, 122, 204);
 }
 
+.tabs.is-small-medium {
+  font-size: 1.0rem;
+}
+
 /*  Webots view  */
 
 #webots-view-container {
