@@ -70,6 +70,17 @@ body footer .has-text-centered {
   z-index: 30;
 }
 
+/*  Tables  */
+
+.table {
+  background-color: #000000;
+  color: #afafaf;
+}
+
+.table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+  background-color: #060606;
+}
+
 /*  Navbar  */
 
 #navbar {
