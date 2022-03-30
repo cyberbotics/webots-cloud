@@ -78,7 +78,7 @@ body footer .has-text-centered {
 }
 
 .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-  background-color: #060606;
+  background-color: #262626;
 }
 
 /*  Navbar  */
