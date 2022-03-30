@@ -37,7 +37,7 @@ export default class Project extends User {
   setup(title, anchors, content, fullpage = false) {
     if (Project.webotsView) {
       Project.webotsView.close();
-      document.querySelector('#mainContainer').classList.remove('webotsView');
+      document.querySelector('#main-container').classList.remove('webotsView');
     }
     super.setup(title, anchors, content, fullpage);
   }
@@ -67,7 +67,7 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webotsViewContainer').appendChild(Project.webotsView);
-    document.querySelector('#mainContainer').classList.add('webotsView');
+    document.querySelector('#main-container').classList.add('webotsView');
   }
   animationPage(data) {
     const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));

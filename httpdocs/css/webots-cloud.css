@@ -33,12 +33,12 @@ body:after{
 
 /*  Main Container  */
 
-#mainContainer {
+#main-container {
   height: calc(100% - 48px);
   min-height: 750px;
 }
 
-#mainContainer.webotsView {
+#main-container.webotsView {
   min-height: 10px;
 }
 
