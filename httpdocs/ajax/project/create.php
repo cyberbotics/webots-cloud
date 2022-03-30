@@ -44,7 +44,7 @@ if (!is_array($check_yaml)) {
   */
   error($check_yaml);
 }
-list($type, $worlds, $benchmark, $competition) = $check_yaml;
+list($type, $benchmark, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -109,7 +109,6 @@ $answer['url'] = $url;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
-$answer['worlds'] = $worlds;
 $answer['description'] = $description;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
