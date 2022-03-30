@@ -100,8 +100,7 @@ body footer .has-text-centered {
 /*  Tabs  */
 
 #tabs {
-  padding-top: 10px;
-  margin-bottom: -15px;
+  margin-bottom: -10px;
 }
 
 #tab-content section {
