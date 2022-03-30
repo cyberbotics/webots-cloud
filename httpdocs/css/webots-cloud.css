@@ -98,7 +98,7 @@ body footer .has-text-centered {
 }
 
 /*  Tabs  */
-
+/*
 #tabs {
   padding-top: 30px;
   padding-left: 50px;
@@ -114,6 +114,7 @@ body footer .has-text-centered {
     margin-bottom: -15px;
   }
 }
+*/
 
 #tab-content section {
   display: none;
