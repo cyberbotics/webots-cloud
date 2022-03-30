@@ -29,7 +29,7 @@ if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
-    error("Failed to delete world file '$world'");
+    error("Failed to delete simulation with world file '$world'");
   error("Failed to fetch world file $world");
 }
 

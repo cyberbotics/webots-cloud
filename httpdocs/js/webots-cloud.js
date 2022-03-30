@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', function() {
     mainContainer(project, active_tab);
     initTabs();
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {addAnimation('S');});
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {addAnimation('A');});
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {addSimulation();});
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container">
+            <div class="container is-fullhd">
               <div class="buttons">
                 <button class="button" id="add-a-new-scene">Add a new scene</button>
               </div>
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container">
+            <div class="container is-fullhd">
               <div class="buttons">
                 <button class="button" id="add-a-new-animation">Add a new animation</button>
               </div>
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container">
+            <div class="container is-fullhd">
               <div class="buttons">
                 <button class="button" id="add-a-new-project">Add a new simulation</button>
               </div>
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container">
+            <div class="container is-fullhd">
               <div class="buttons">
                 <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
               </div>
