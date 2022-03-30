@@ -98,23 +98,11 @@ body footer .has-text-centered {
 }
 
 /*  Tabs  */
-/*
+
 #tabs {
-  padding-top: 30px;
-  padding-left: 50px;
-  padding-right: 30px;
+  padding-top: 10px;
   margin-bottom: -15px;
 }
-
-@media only screen and (max-width: 1024px) {
-  #tabs {
-    padding-top: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin-bottom: -15px;
-  }
-}
-*/
 
 #tab-content section {
   display: none;
