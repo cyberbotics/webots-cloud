@@ -95,7 +95,6 @@ webots.cloud holds a database of GitHub repositories containing a Webots simulat
 ## Dockerfile
 
 The version information specified in the Dockerfile at the root of the repository indicates which version of Webots is required to run the simulation.
-The format is inherited from the GitHub action format: `uses: docker://{host}/{image}:{tag}`.
 
 For example:
 
