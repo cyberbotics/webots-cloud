@@ -58,7 +58,6 @@ function simulation_check_yaml($check_url) {
   $benchmark = '';
   $competition = '';
   $init = '';
-  $init_end = false;
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -74,13 +73,12 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 5) === 'init:') {
-      $line = strtok("\r\n");
-      $init_end = true;
+      if (trim(substr($line, 5), " ") === '|')
+        $line = strtok("\r\n");
+      else
+        $init = substr($line, 5);
     }
-    if ($init_end)
-      $init_end = false;
-    else
-      $line = strtok("\r\n");
+    $line = strtok("\r\n");
   }
 
   # check if configuration makes sense
