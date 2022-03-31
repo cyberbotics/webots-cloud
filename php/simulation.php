@@ -96,8 +96,6 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
   }
 
-  return ("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
-
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("Project publish failed. Make sure to set 'publish: true' in webots.yaml");
