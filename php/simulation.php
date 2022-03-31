@@ -57,6 +57,7 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
+  $init = '';
   $init_end = false;
 
   # delete empty lines
@@ -94,6 +95,6 @@ function simulation_check_yaml($check_url) {
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($type, $benchmark, $competition);
+  return array($type, $benchmark, $competition, $init);
 }
 ?>
