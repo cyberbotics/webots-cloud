@@ -77,6 +77,7 @@ function simulation_check_yaml($check_url) {
         $line = strtok("\\\r\n");
         $line = strtok("\\\r\n");
         $line = strtok("\\\r\n");
+        $line = strtok("\\\r\n");
         return "Line read: $line";
         while (true) {
           if (substr($line, 0, 2) === '  ') {
