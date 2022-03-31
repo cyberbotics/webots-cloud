@@ -53,7 +53,7 @@ function simulation_check_yaml($check_url) {
   }
 
   # yaml file variables
-  $publish = 'true';
+  $publish = 'true (default)';
   $type = '';
   $benchmark = '';
   $competition = '';
@@ -81,7 +81,7 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  return("init message: $init");
+  return("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
 
   # check if configuration makes sense
   if ($publish === 'false')
