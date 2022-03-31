@@ -20,6 +20,7 @@ function simulation_check_url($url) {
   if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $version))
     return 'Wrong GitHub tag or branch name';
   $folder = implode('/', array_slice($exploded, 4, $count - 6));
+  return "folder: $folder";
   if ($folder !=='' and
       (!preg_match('/^[a-z\d_.-\/]{1,100}$/i', $folder)  # no fancy folder name
       or substr($folder, 0, 1) === '/'                  # doesn't start with slash
