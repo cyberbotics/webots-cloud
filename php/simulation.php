@@ -78,9 +78,8 @@ function simulation_check_yaml($check_url) {
         while (true) {
           if (substr($line, 0, 2) === '  ')
             $init .= substr($line, 2);
-          else
+          elseif (trim($line, " ") !== '')
             break;
-          $line = strtok("\\\r\n");
         }
       } else
         $init = substr($line, 5);
