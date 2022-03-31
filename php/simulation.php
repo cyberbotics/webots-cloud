@@ -63,7 +63,6 @@ function simulation_check_yaml($check_url) {
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
   # parse yaml file
   $line = strtok($yaml_content, "\r\n");
-  $line = strtok("\\");
   return "line is: $line";
   while ($line !== false) {
     if (substr($line, 0, 8) === 'publish:')
@@ -78,10 +77,9 @@ function simulation_check_yaml($check_url) {
       if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\\\r\n");
         while (true) {
-          if (substr($line, 0, 2) === '  ') {
+          if (substr($line, 0, 2) === '  ')
             $init .= substr($line, 2);
-          }
-          if (substr(trim($line, " "), -1) !== '/')
+          else
             break;
           $line = strtok("\\\r\n");
         }
