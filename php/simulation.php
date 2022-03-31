@@ -76,7 +76,7 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       $line = strtok("\\");
       $temp = gettype($line);
-      return "Type of line: $line";
+      return "Type of line: $temp";
       if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\r\n");
         while (true) {
