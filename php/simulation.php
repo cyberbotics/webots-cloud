@@ -64,7 +64,6 @@ function simulation_check_yaml($check_url) {
   # parse yaml file
   $line = strtok($yaml_content, "\r\n");
   while ($line !== false) {
-    return "reading line: $line";
     if (substr($line, 0, 8) === 'publish:')
       $publish = trim(substr($line, 8), " ");
     elseif (substr($line, 0, 5) === 'type:')
@@ -78,10 +77,8 @@ function simulation_check_yaml($check_url) {
         $line = strtok("\r\n");
         while (true) {
           if (substr($line, 0, 2) === '  ') {
-            $temp = substr($line, 2);
-            return "reading line: $line";
             $init .= substr($line, 2);
-            return "gone here and read: $init";
+            return ("gone here and read: $init");
           }
           if (substr(trim($line, " "), -1) !== '/')
             break;
@@ -93,7 +90,7 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  return("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
+  return ("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
 
   # check if configuration makes sense
   if ($publish === 'false')
