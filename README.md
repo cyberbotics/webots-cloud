@@ -164,6 +164,10 @@ benchmark: https://github.com/username/benchmark
 Some dependencies can be specified in the `init` section of the `webots.yaml` file:
 
 ```yaml
+init: apt install -y python3-numpy
+```
+or:
+```yaml
 init: |
   apt install -y \
     python3-numpy \
