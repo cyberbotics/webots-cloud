@@ -73,8 +73,16 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 5) === 'init:') {
-      if (trim(substr($line, 5), " ") === '|')
+      if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\r\n");
+        while (true) {
+          if (substr($line, 0, 2) === '  ')
+            $init .= substr($line, 2);
+          if ((substr(trim($line, " "), -1) !== '/')
+            break;
+          $line = strtok("\r\n");
+        }
+      }
       else
         $init = substr($line, 5);
     }
