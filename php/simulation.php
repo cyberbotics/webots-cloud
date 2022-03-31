@@ -75,6 +75,7 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 5) === 'init:') {
       if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\\\r\n");
+        $line = strtok("\\\r\n");
         return "Line read: $line";
         while (true) {
           if (substr($line, 0, 2) === '  ') {
