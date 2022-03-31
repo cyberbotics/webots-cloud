@@ -81,7 +81,7 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
-  return("<h1 Information in webots.yaml file: /> <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
+  return("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
 
   # check if configuration makes sense
   if ($publish === 'false')
