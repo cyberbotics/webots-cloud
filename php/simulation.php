@@ -74,6 +74,7 @@ function simulation_check_yaml($check_url) {
       $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 5) === 'init:') {
       if (trim(substr($line, 5), " ") === '|') {
+        return "gone here..."
         $line = strtok("\r\n");
         while (true) {
           if (substr($line, 0, 2) === '  ')
@@ -82,8 +83,7 @@ function simulation_check_yaml($check_url) {
             break;
           $line = strtok("\r\n");
         }
-      }
-      else
+      } else
         $init = substr($line, 5);
     }
     $line = strtok("\r\n");
