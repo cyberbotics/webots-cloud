@@ -58,6 +58,7 @@ function simulation_check_yaml($check_url) {
   $benchmark = '';
   $competition = '';
   $init = '';
+  $init_end = false;
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -74,18 +75,25 @@ function simulation_check_yaml($check_url) {
       $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 5) === 'init:') {
       if (trim(substr($line, 5), " ") === '|') {
-        while (true) {
-          $line = strtok("\\\r\n");
+        $line = strtok("\\\r\n");
+        while ($line !== false) {
+          if (trim($line, " ") === '') 
+            $line = strtok("\\\r\n");
           if (substr($line, 0, 2) === '  ')
             $init .= substr($line, 2);
-          elseif (trim($line, " ") !== '')
+          else {
+            $init_end = true;
             break;
+          }
           $line = strtok("\\\r\n");
         }
       } else
         $init = substr($line, 5);
     }
-    $line = strtok("\r\n");
+    if ($init_end)
+      $init_end = false;
+    else
+      $line = strtok("\r\n");
   }
 
   return ("Information in webots.yaml file: <br> type: $type <br> publish: $publish <br> benchmark: $benchmark <br> competition: $competition <br> init: $init");
