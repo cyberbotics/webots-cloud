@@ -77,14 +77,11 @@ function simulation_check_yaml($check_url) {
       $line = strtok("\r\n");
       if ($line === false)
         return "line is fales...";
-      return ("gone in here with line: $line");
       if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\r\n");
         while (true) {
           if (substr($line, 0, 2) === '  ') {
-            return ("gone in here with line: $line");
             $init .= substr($line, 2);
-            return ("gone here and read: $init");
           }
           if (substr(trim($line, " "), -1) !== '/')
             break;
