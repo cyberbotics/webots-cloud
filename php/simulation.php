@@ -73,10 +73,7 @@ function simulation_check_yaml($check_url) {
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
     elseif (substr($line, 0, 5) === 'init:') {
-      $line = strtok("\r\n");
-      $line = strtok("\\");
-      $temp = gettype($line);
-      return "Type of line is $temp: $line";
+      return "Line read: $line";
       if (trim(substr($line, 5), " ") === '|') {
         $line = strtok("\r\n");
         while (true) {
