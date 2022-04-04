@@ -4,10 +4,6 @@ html {
 
 /*  Body  */
 
-body {
-  height: 100%;
-}
-
 body:after{
   content: "beta version";
   position: fixed;
