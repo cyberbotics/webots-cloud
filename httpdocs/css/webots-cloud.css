@@ -1,6 +1,5 @@
 html {
   height: 100%;
-  overflow: hidden;
 }
 
 /*  Body  */
@@ -69,18 +68,6 @@ body footer .has-text-centered {
   width: 100%;
   z-index: 30;
 }
-
-/*  Tables  */
-/*
-.table {
-  background-color: #000000;
-  color: #afafaf;
-}
-
-.table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-  background-color: #262626;
-}
-*/
 
 /*  Navbar  */
 
