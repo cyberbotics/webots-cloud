@@ -57,8 +57,6 @@ function simulation_check_yaml($check_url) {
   $type = '';
   $benchmark = '';
   $competition = '';
-  $init = '';
-  $init_end = false;
 
   # delete empty lines
   $yaml_content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $yaml_content);
@@ -73,27 +71,7 @@ function simulation_check_yaml($check_url) {
       $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
-    elseif (substr($line, 0, 5) === 'init:') {
-      if (trim(substr($line, 5), " ") === '|') {
-        $line = strtok("\\\r\n");
-        while ($line !== false) {
-          if (trim($line, " ") === '') 
-            $line = strtok("\\\r\n");
-          if (substr($line, 0, 2) === '  ')
-            $init .= substr($line, 2);
-          else {
-            $init_end = true;
-            break;
-          }
-          $line = strtok("\\\r\n");
-        }
-      } else
-        $init = substr($line, 5);
-    }
-    if ($init_end)
-      $init_end = false;
-    else
-      $line = strtok("\r\n");
+    $line = strtok("\r\n");
   }
 
   # check if configuration makes sense
@@ -108,6 +86,6 @@ function simulation_check_yaml($check_url) {
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($type, $benchmark, $competition, $init);
+  return array($type, $benchmark, $competition);
 }
 ?>
