@@ -17,8 +17,8 @@
   $check_url = simulation_check_url($url);
   if (!is_array($check_url))
     error($check_url);
-  list($username, $repository, $version, $folder, $world) = $check_url;
-  $world_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/worlds/$world";
+  list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
+  $world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/worlds/$world";
   $world_content = @file_get_contents($world_url);
   if ($world_content === false)
     error("Failed to fetch world file at $world_url");
@@ -29,6 +29,8 @@
   $title = '';
   $description = '';
   $line = strtok($world_content, "\r\n");
+  $version = $mysqli->escape_string(substr($line, 10, 6));  // "#VRML_SIM R2022b utf8" -> "R2022b"
+  $line = strtok("\r\n");
   while ($line !== false) {
     if ($line == "WorldInfo {")
       $world_info = true;
@@ -61,10 +63,11 @@
   $stars = intval($info->{'stargazers_count'});
   $competitors = 0;
   if ($id === 0)
-    $query = "INSERT IGNORE INTO project(url, stars, title, description, competitors) "
-            ."VALUES(\"$url\", $stars, \"$title\", \"$description\", $competitors)";
+    $query = "INSERT IGNORE INTO project(url, stars, title, description, version, competitors) "
+            ."VALUES(\"$url\", $stars, \"$title\", \"$description\", \"$version\", $competitors)";
   else
-    $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", competitors=$competitors, updated=NOW() "
+    $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", "
+            ."version=\"$version\", competitors=$competitors, updated=NOW() "
             ."WHERE url=\"$url\" AND id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows != 1) {
@@ -79,6 +82,7 @@
   $answer['stars'] = $stars;
   $answer['title'] = $title;
   $answer['description'] = $description;
+  $answer['version'] = $version;
   $answer['competitors'] = $competitors;
   $answer['updated'] = date("Y-m-d H:i:s");
   die(json_encode($answer));
