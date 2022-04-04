@@ -7,8 +7,7 @@ webots.cloud is implemented as a Single Page Application (SPA), including the fo
 - https://webots.cloud/scene => scenes listing
 - https://webots.cloud/animation => animations listing
 - https://webots.cloud/proto => protos listing
-- https://webots.cloud/demo => demos listing
-- https://webots.cloud/benchmark => benchmarks listing
+- https://webots.cloud/simulation => demos and benchmarks listing
 - https://webots.cloud/competition => competitions listing
 - https://webots.cloud/settings => user settings (private information)
 - https://webots.cloud/UL6ZtOI => user page (public information, the URI starts with `/U`)
@@ -107,7 +106,7 @@ COPY . $PROJECT_PATH
 
 ## webots.yaml
 
-webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the required host, the type of Webots repository, dependencies, etc. allowing to run the simulation in the cloud.
+webots.cloud parses the `webots.yaml` file at the root level of a repository to determine the type of Webots repository, publishing permission, etc. allowing to run the simulation in the cloud.
 
 ### Type
 
@@ -158,26 +157,6 @@ competition: https://github.com/username/competition
 type: competitor
 benchmark: https://github.com/username/benchmark
 ```
-
-### Init
-
-Some dependencies can be specified in the `init` section of the `webots.yaml` file:
-
-```yaml
-init: apt install -y python3-numpy
-```
-or:
-```yaml
-init: |
-  apt install -y \
-    python3-numpy \
-    python3-opencv
-```
-
-Specifying dependencies may not be allowed for competitor repositories (depending on the corresponding competition/benchmark repository).
-In such a case, the init section will be simply ignored.
-
-In general, it is better to include the dependencies inside the docker image rather than in this section to speed-up the start-up of the simulation.
 
 ## Behind the Scene
 
