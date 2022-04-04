@@ -1,9 +1,12 @@
 html {
   height: 100%;
-  width: 100%;
 }
 
 /*  Body  */
+
+body {
+  height: 100%;
+}
 
 body:after{
   content: "beta version";
