@@ -22,9 +22,9 @@ function simulation_check_url($url) {
   $folder = implode('/', array_slice($exploded, 4, $count - 6));
   if ($folder !=='' and
       (!preg_match('/^[-a-z\d_.-\/]{1,100}$/i', $folder)  # no fancy folder name
-      or substr($folder, 0, 1) === '/'                  # doesn't start with slash
-      or strstr($folder, '//')                          # no double slashes
-      or substr($folder, -1) === '/'))                  # doesn't end with slash
+       or substr($folder, 0, 1) === '/'                   # doesn't start with slash
+       or strstr($folder, '//')                           # no double slashes
+       or substr($folder, -1) === '/'))                   # doesn't end with slash
     return 'Wrong folder name';
   if ($folder !== '')
     $folder = "/$folder";
