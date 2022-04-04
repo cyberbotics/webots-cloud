@@ -1,12 +1,12 @@
 html {
   height: 100%;
+  overflow-y: auto;
 }
 
 /*  Body  */
 
 body {
   height: 100%;
-  overflow: hidden;
 }
 
 body:after{
