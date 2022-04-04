@@ -182,13 +182,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
-      let icon = 'question';
+      let icon;
       if (data.type === 'demo')
         icon = 'chalkboard-teacher';
       else if (data.type === 'benchmark')
         icon = 'award';
       else if (data.type === 'competition')
         icon = 'trophy';
+      else
+        icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
