@@ -12,15 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/simulation',
-      setup: homePage
-    },
-    {
       url: '/animation',
       setup: homePage
     },
     {
       url: '/scene',
+      setup: homePage
+    },
+    {
+      url: '/simulation',
       setup: homePage
     },
     {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const page_limit = 10;
     if (active_tab === '')
-      active_tab = 'simulation';
+      active_tab = 'animation';
 
     mainContainer(project, active_tab);
     initTabs();
@@ -237,20 +237,14 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
           <ul>
-            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Simulation</a>
+            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Scene</a>
             </li>
             <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
             </li>
-            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Scene</a>
-            </li>
-            <li data-tab="competition" class="data-tab" style="pointer-events:none;cursor:default;">
-              <a style="color:grey">Competition</a>
-            </li>
-            <li data-tab="proto" class="data-tab" style="pointer-events:none;cursor:default;">
-              <a style="color:grey">Proto</a>
+            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Simulation</a>
             </li>
             <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
