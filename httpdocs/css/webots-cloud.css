@@ -8,11 +8,11 @@ body {
 }
 
 body:after{
-  content: "beta version";
+  content: "testing version";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: #e00f00;
+  background: #fb8b00;
   opacity: 0.95;
   top: 38px;
   right: -78px;
