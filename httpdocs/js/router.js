@@ -2,7 +2,7 @@ export default class Router {
   constructor(title, footer, routes) {
     this.title = title;
     this.content = document.createElement('div');
-    this.content.id = 'mainContainer';
+    this.content.id = 'main-container';
     this.routes = routes;
     const body = document.querySelector('body');
     body.classList.add('has-navbar-fixed-top');

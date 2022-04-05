@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/scene',
+      url: '/animation',
       setup: homePage
     },
     {
-      url: '/animation',
+      url: '/scene',
       setup: homePage
     },
     {
@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-  <div class="content has-text-centered" style="margin-bottom:14px">
-    <p>
-      <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
-    </p>
-  </div>
-  <div class="content is-size-7">
-    <p style="margin-top:12px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
-  </div>
-</footer>`;
+        <div class="content has-text-centered" style="margin-bottom:14px">
+          <p>
+            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
+          </p>
+        </div>
+        <div class="content is-size-7">
+          <p style="margin-top:5px"><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+        </div>
+      </footer>`;
     return template.content.firstChild;
   }
 
@@ -75,10 +75,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
       page = 1;
+
     setPages(active_tab, page);
+
     const page_limit = 10;
     if (active_tab === '')
       active_tab = 'animation';
+
+    mainContainer(project, active_tab);
+    initTabs();
+
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
+
+    listAnimations('S', scene_page);
+    listAnimations('A', animation_page);
+    listSimulations(simulation_page);
+    listServers(server_page);
 
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
@@ -87,9 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const next_disabled = (current == max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
-`<a class="pagination-previous"${previous_disabled}>Previous</a>
-<a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
-<a class="pagination-link${one_is_current}>1</a></li>`;
+        `<a class="pagination-previous"${previous_disabled}>Previous</a>
+        <a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
+        <a class="pagination-link${one_is_current}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
         if (i == current - 2 || (i == current + 2 && i != max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
@@ -149,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const style = (data.user == 0) ? ' style="color:grey"' : '';
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : `Delete your ${type_name}`;
-      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
+      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
@@ -164,28 +178,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const words = data.url.substring(19).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
+      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
-      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      let type;
-      let competitors;
-      if (data.type == 'demo') {
-        type = `<i class="fas fa-grin-stars fa-lg" title="${data.type}"></i>`;
-        competitors = '';
-      } else {
-        const icon = (data.type == 'benchmark') ? 'award' : 'trophy';
-        type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
-        const url = data.url.substring(0, data.url.lastIndexOf("/worlds/"));
-        competitors = `<a class="has-text-dark" href="${url}/competitors.txt" target="_blank">${data.competitors}</a>`;
-      }
+      let icon;
+      if (data.type === 'demo')
+        icon = 'chalkboard-teacher';
+      else if (data.type === 'benchmark')
+        icon = 'award';
+      else if (data.type === 'competition')
+        icon = 'trophy';
+      else
+        icon = 'question';
+      const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-centered">${competitors}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
     }
@@ -219,119 +231,130 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-centered" title="Current server load">${percent(data.load)}</td>`;
       return row;
     }
-    const template = document.createElement('template');
-    template.innerHTML =
-      `<div id="tabs" class="panel-tabs">
-  <a${(active_tab == 'scene') ? ' class="is-active"' : ''} data-tab="scene">Scene</a>
-  <a${(active_tab == 'animation') ? ' class="is-active"' : ''} data-tab="animation">Animation</a>
-  <a style="pointer-events:none;cursor:default;color:grey" data-tab="proto">Proto</a>
-  <a${(active_tab == 'simulation') ? ' class="is-active"' : ''} data-tab="simulation">Simulation</a>
-  <a${(active_tab == 'server') ? ' class="is-active"' : ''} data-tab="server">Server</a>
-</div>
-<div id="tab-content">
-  <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the scene">Title</th>
-            <th title="Total size of the scene files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-scene">Add a new scene</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-            <th title="Title of the animation">Title</th>
-            <th title="Duration of the animation">Duration</th>
-            <th title="Total size of the animation files">Size</th>
-            <th title="Upload date and time">Uploaded</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-animation">Add a new animation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-            <th title="Title of the simulation">Title</th>
-            <th title="Version of the simulation">Version</th>
-            <th title="Type of simulation">Type</th>
-            <th title="Number of competitors">#</th>
-            <th title="Last update time">Updated</th>
-            <th colspan="1"></th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" id="add-a-new-project">Add a new simulation</button>
-      </div>
-    </div>
-  </section>
-  <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
-    <div class="table-container">
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <tr>
-            <th title="Fully qualified domain name of server">Server</th>
-            <th title="Start time">Started</th>
-            <th title="Last update time">Updated</th>
-            <th style="text-align:center" title="Maximum load for public usage">Share</th>
-            <th style="text-align:center" title="Server load">Load</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-    <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-    </nav>
-    <div class="container">
-      <div class="buttons">
-        <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
-      </div>
-    </div>
-  </section>
-</div>`;
-    const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-    project.setup(title, [], template.content);
+    
+    function mainContainer(project, active_tab) {
+      const template = document.createElement('template');
+      template.innerHTML =
+        `<div id="tabs" class="tabs is-centered is-small-medium">
+          <ul>
+            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Scene</a>
+            </li>
+            <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Animation</a>
+            </li>
+            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Simulation</a>
+            </li>
+            <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Server</a>
+            </li>
+          </ul>
+        </div>
+        <div id="tab-content">
+          <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
+            <div class="table-container">
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Title of the scene">Title</th>
+                    <th title="Total size of the scene files">Size</th>
+                    <th title="Upload date and time">Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-scene">Add a new scene</button>
+              </div>
+            </div>
+          </section>
+          <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
+            <div class="table-container">
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Title of the animation">Title</th>
+                    <th title="Duration of the animation">Duration</th>
+                    <th title="Total size of the animation files">Size</th>
+                    <th title="Upload date and time">Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-animation">Add a new animation</button>
+              </div>
+            </div>
+          </section>
+          <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
+            <div class="table-container">
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
+                    <th title="Title of the simulation">Title</th>
+                    <th title="Version of the simulation">Version</th>
+                    <th title="Type of simulation">Type</th>
+                    <th title="Last update time">Updated</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-project">Add a new simulation</button>
+              </div>
+            </div>
+          </section>
+          <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
+            <div class="table-container">
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th title="Fully qualified domain name of server">Server</th>
+                    <th title="Start time">Started</th>
+                    <th title="Last update time">Updated</th>
+                    <th style="text-align:center" title="Maximum load for public usage">Share</th>
+                    <th style="text-align:center" title="Server load">Load</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
+              </div>
+            </div>
+          </section>
+        </div>`;
+      const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
+      project.setup(title, [], template.content);
+    }
 
     function initTabs() {
-      const TABS = [...document.querySelectorAll('#tabs a')];
+      const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
       TABS.forEach((tab) => {
@@ -357,8 +380,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    initTabs();
-
     function synchronize(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
@@ -371,15 +392,32 @@ document.addEventListener('DOMContentLoaded', function() {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
-            ModalDialog.run('Project creation error', data.error);
-            parent.removeChild(old);
+            let errorMsg = data.error;
+            if (errorMsg.startsWith('YAML file error:')) {
+              errorMsg = errorMsg + 
+                `<div class="help">More information at: 
+                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml">
+                    github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml
+                  </a>
+                </div>`;
+            }
+            let dialog = ModalDialog.run('Project sync error', errorMsg);
+            dialog.error('Project has been deleted.');
+            dialog.querySelector('form').addEventListener('submit', function(e) {
+              e.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              dialog.close();
+            });
+            event.target.classList.remove('fa-spin');
+            project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
             event.target.classList.remove('fa-spin');
-            updatePagination('simulation', 1, 1);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('simulation', page, total);
           }
         });
     }
@@ -408,60 +446,42 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    let offset = (page - 1) * page_limit;
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.error)
-          ModalDialog.run('Project listing error', data.error);
-        else {
-          let line = ``;
-          for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-            line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-          project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.projects.length; i++)
-            project.content.querySelector('#sync-' + data.projects[i].id).addEventListener('click', synchronize);
-          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('simulation', page, total);
-        }
-      });
+
     function addAnimation(type) {
       let content = {};
       if (type == 'A')
         content.innerHTML = `<div class="field">
-  <label class="label">Webots animation</label>
-  <div class="control has-icons-left">
-    <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
-</div>`;
+          <label class="label">Webots animation</label>
+          <div class="control has-icons-left">
+            <input id="animation-file" name="animation-file" class="input" type="file" required accept=".json">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
+        </div>`;
       else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
-  <label class="label">Webots scene</label>
-  <div class="control has-icons-left">
-    <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
-</div>
-<div class="field">
-  <label class="label">Texture files</label>
-  <div class="control has-icons-left">
-    <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
-    <span class="icon is-small is-left">
-      <i class="fas fa-upload"></i>
-    </span>
-  </div>
-  <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
-</div>`;
+          <label class="label">Webots scene</label>
+          <div class="control has-icons-left">
+            <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
+        </div>
+        <div class="field">
+          <label class="label">Texture files</label>
+          <div class="control has-icons-left">
+            <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+        </div>`;
       const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const type_name = (type == 'A') ? 'animation' : 'scene';
@@ -500,12 +520,71 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) {
-      addAnimation('S');
-    });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) {
-      addAnimation('A');
-    });
+
+    function addSimulation() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          <label class="label">Webots world file</label>
+          <div class="control has-icons-left">
+            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
+            <span class="icon is-small is-left">
+              <i class="fab fa-github"></i>
+            </span>
+          </div>
+          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
+              https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+            </a>
+          </div>
+        </div>`;
+      let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
+      let input = modal.querySelector('#world-file');
+      input.focus();
+      input.selectionStart = input.selectionEnd = input.value.length;
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        const worldFile = modal.querySelector('#world-file').value.trim();
+        if (!worldFile.startsWith('https://github.com/')) {
+          modal.error('The world file should start with "https://github.com/".');
+          return;
+        }
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            url: worldFile
+          })
+        };
+        fetch('/ajax/project/create.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.error) {
+              let errorMsg = data.error;
+              if (errorMsg.startsWith('YAML file error:')) {
+                errorMsg = errorMsg + 
+                  `<div class="help">More information at: 
+                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml">
+                      github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml
+                    </a>
+                  </div>`;
+              }
+              modal.error(errorMsg);
+            } else {
+              modal.close();
+              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
+              const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+              updatePagination('simulation', page, total);
+              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+            }
+          });
+      });
+    }
+
     function listAnimations(type, page) {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
@@ -537,80 +616,52 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
-    listAnimations('S', scene_page);
-    listAnimations('A', animation_page);
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) {
-      let content = {};
-      content.innerHTML =
-        `<div class="field">
-  <label class="label">Webots world file</label>
-  <div class="control has-icons-left">
-    <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
-    <span class="icon is-small is-left">
-      <i class="fab fa-github"></i>
-    </span>
-  </div>
-  <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-    <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
-      https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
-    </a>
-  </div>
-</div>`;
-      let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
-      let input = modal.querySelector('#world-file');
-      input.focus();
-      input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        const worldFile = modal.querySelector('#world-file').value.trim();
-        if (!worldFile.startsWith('https://github.com/')) {
-          modal.error('The world file should start with "https://github.com/".');
-          return;
-        }
-        const content = {
-          method: 'post',
-          body: JSON.stringify({
-            url: worldFile
-          })
-        };
-        fetch('/ajax/project/create.php', content)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            if (data.error)
-              modal.error(data.error);
-            else {
-              modal.close();
-              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
-              document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
-                'beforeend', tr);
-              const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-              updatePagination('simulation', page, total);
+
+    function listSimulations(page) {
+      let offset = (page - 1) * page_limit;
+      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Project listing error', data.error);
+          else {
+            let line = ``;
+            for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
+              line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+            project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.projects.length; i++) {
+              let id = data.projects[i].id;
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
             }
-          });
-      });
-    });
-    offset = (page - 1) * page_limit;
-    fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        if (data.error)
-          ModalDialog.run('Server listing error', data.error);
-        else {
-          let line = ``;
-          for (let i = 0; i < data.servers.length; i++)
-            line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-          project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
-          for (let i = 0; i < data.servers.length; i++)
-            project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
-          const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-          updatePagination('server', page, total);
-        }
-      });
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('simulation', page, total);
+          }
+        });
+    }
+
+    function listServers(page) {
+      let offset = (page - 1) * page_limit;
+      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Server listing error', data.error);
+          else {
+            let line = ``;
+            for (let i = 0; i < data.servers.length; i++)
+              line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
+            project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.servers.length; i++)
+              project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
+            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            updatePagination('server', page, total);
+          }
+        });
+    }
   }
 
   function runPage(project) {
@@ -618,7 +669,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function deleteAnimation(event, type, project, page) {
-    const that = this;
     const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
     const type_name = (type == 'A') ? 'animation' : 'scene';
     const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
@@ -643,10 +693,10 @@ document.addEventListener('DOMContentLoaded', function() {
           dialog.close();
           if (data.error)
             ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-          else if (data.status == 1) {
+          else if (data.status == 1)
             project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
-          }
         });
     });
   }
+
 });
