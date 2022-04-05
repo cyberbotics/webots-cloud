@@ -12,22 +12,22 @@ export default class ModalDialog extends HTMLElement {
     }
     this.innerHTML =
       `<div class="modal-background"></div>
-<form>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">${title}</p>
-      <button type="button" class="delete" aria-label="close"></button>
-    </header>
-    <section class="modal-card-body">
-     <p>${text}</p>
-    </section>
-    <footer class="modal-card-foot">
-      ${actionButton}
-      <button class="button cancel${closeClass}" type="button">${close}</button>
-      <div class="help is-danger"></div>
-    </footer>
-  </div>
-</form>`;
+      <form>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">${title}</p>
+            <button type="button" class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+          <p>${text}</p>
+          </section>
+          <footer class="modal-card-foot">
+            ${actionButton}
+            <button class="button cancel${closeClass}" type="button">${close}</button>
+            <div class="help is-danger"></div>
+          </footer>
+        </div>
+        </form>`;
     document.querySelector('body').appendChild(this);
   }
   connectedCallback() {
