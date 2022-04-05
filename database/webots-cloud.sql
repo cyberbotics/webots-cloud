@@ -4,6 +4,7 @@ CREATE TABLE `animation` (
   `uploaded` timestamp NOT NULL DEFAULT current_timestamp(),
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
+  `version` varchar(16) NOT NULL,
   `duration` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `viewed` int (11) NOT NULL,
@@ -36,6 +37,7 @@ CREATE TABLE `project` (
   `parent` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
+  `version` varchar(16) NOT NULL,
   `stars` int(11) NOT NULL,
   `language` varchar(32) CHARACTER SET ascii COLLATE ascii_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
