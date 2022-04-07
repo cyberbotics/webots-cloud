@@ -5,6 +5,7 @@ html {
 
 body {
   height: 100%;
+  background-color: #0d1117;
 }
 
 body:after{
