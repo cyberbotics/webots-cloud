@@ -91,6 +91,10 @@ body footer .has-text-centered {
   user-select: none;
 }
 
+.tabs.is-small-medium {
+  font-size: 0.875rem;
+}
+
 /*  Webots view  */
 
 #webots-view-container {
