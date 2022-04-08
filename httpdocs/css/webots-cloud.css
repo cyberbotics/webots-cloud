@@ -67,25 +67,6 @@ body footer .has-text-centered {
   z-index: 30;
 }
 
-/*  Navbar  */
-
-#navbar {
-  background-color: rgb(0, 122, 204);
-  box-shadow: 0 -15px 15px 15px rgba(0,0,0,0.4);
-}
-
-#navbar .navbar-brand:hover .navbar-item {
-  background-color: rgb(0, 122, 204);
-}
-
-#sign-up:hover {
-  background-color: hsl(141, 53%, 48%)
-}
-
-#log-in:hover {
-  background-color: hsl(0, 0%, 85%);
-}
-
 /*  Tabs  */
 
 #tabs {
