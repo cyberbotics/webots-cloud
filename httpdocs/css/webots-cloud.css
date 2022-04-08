@@ -29,6 +29,12 @@ body:after{
   box-shadow: 2px 2px 5px #740f00;
 }
 
+/*  Nav  */
+
+#navbar {
+  background-color: #242424;
+}
+
 /*  Main Container  */
 
 #main-container {
@@ -51,7 +57,7 @@ body footer.footer {
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 0;
-  background: linear-gradient(0deg, rgba(0,61,102,1) 0%, rgb(0, 122, 204) 70%);
+  background: linear-gradient(0deg, #121212 0%, #242424 70%);
 }
 
 body footer .has-text-centered {
