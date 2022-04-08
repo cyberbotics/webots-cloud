@@ -34,6 +34,10 @@ body:after{
   background-color: #161b22;
 }
 
+#navbar .navbar-brand:hover .navbar-item {
+  background-color: #30363d;
+}
+
 /*  Main Container  */
 
 #main-container {
