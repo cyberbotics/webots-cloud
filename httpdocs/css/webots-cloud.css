@@ -67,6 +67,12 @@ body footer .has-text-centered {
   z-index: 30;
 }
 
+/*  Nav  */
+
+#navbar {
+  box-shadow: 0 -15px 15px 15px rgba(0,0,0,0.4);
+}
+
 /*  Tabs  */
 
 #tabs {
