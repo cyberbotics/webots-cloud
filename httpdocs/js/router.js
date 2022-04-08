@@ -40,7 +40,7 @@ export default class Router {
 `<nav id="navbar" class="navbar is-link is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="https://cyberbotics.com/assets/images/webots.png" /> &nbsp; ${this.title}
+      <img src="https://cyberbotics.com/wwi/testing1/images/webots_cloud_logo.svg" /> &nbsp; ${this.title}
     </a>
     <a class="navbar-burger burger" data-target="router-navbar">
       <span></span>
