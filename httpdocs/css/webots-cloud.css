@@ -91,3 +91,9 @@ body footer .has-text-centered {
   height: 100%;
   max-width: none;
 }
+
+/*  Pagination  */
+
+nav.pagination > a[disabled] {
+  cursor: not-allowed;
+}
