@@ -13,7 +13,7 @@ body:after{
   position: fixed;
   width: 260px;
   height: 25px;
-  background: #fb8b00;
+  background: red;
   opacity: 0.95;
   top: 38px;
   right: -78px;
@@ -26,7 +26,7 @@ body:after{
   line-height: 27px;
   transform:rotate(45deg);
   z-index: 100;
-  box-shadow: 2px 2px 5px #740f00;
+  box-shadow: 2px 2px 5px #777777;
 }
 
 /*  Nav  */
