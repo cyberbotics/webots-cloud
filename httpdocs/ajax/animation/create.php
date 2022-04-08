@@ -70,7 +70,7 @@
   if ($world_info === false)
     error('Missing WorldInfo title in x3d file');
   if (!isset($version))
-    error('Missing version meta header node in x3d file')
+    error('Missing version meta header node in x3d file');
   // determine duration
   if ($animation) {
     $duration = false;
