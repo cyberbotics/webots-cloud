@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
       );
       let icon;
       if (data.type === 'demo')
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function serverRow(data) {
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
       );
       const started = data.started.replace(' ', `<br>`);
       const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
