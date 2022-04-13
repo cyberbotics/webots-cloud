@@ -5,7 +5,6 @@ html {
 
 body {
   height: 100%;
-  position: relative;
 }
 
 body:after{
@@ -47,8 +46,6 @@ div.table-container {
 /*  Footer  */
 
 body footer.footer {
-  position: absolute;
-  bottom: 0;
   height: 48px;
   padding-top: 10px;
   padding-right: 10px;
