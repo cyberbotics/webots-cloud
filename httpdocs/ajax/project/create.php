@@ -38,6 +38,8 @@ $check_yaml = simulation_check_yaml($check_url);
 if (!is_array($check_yaml)) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
+  if ($mysqli->affected_rows === 0)
+    error("$check_yaml (no files deleted)");
   error($check_yaml);
 }
 list($type, $benchmark, $competition) = $check_yaml;
