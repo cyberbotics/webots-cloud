@@ -31,7 +31,9 @@ body:after{
 /*  Main Container  */
 
 #main-container {
-  min-height: 750px;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 48px;
 }
 
 #main-container.webotsView {
@@ -45,7 +47,7 @@ div.table-container {
 /*  Footer  */
 
 body footer.footer {
-  position: relative;
+  position: absolute;
   bottom: 0;
   height: 48px;
   padding-top: 10px;
