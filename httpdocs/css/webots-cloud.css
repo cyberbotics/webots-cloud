@@ -8,7 +8,7 @@ body {
 }
 
 body:after{
-  content: "beta version";
+  content: "testing version";
   position: fixed;
   width: 260px;
   height: 25px;
