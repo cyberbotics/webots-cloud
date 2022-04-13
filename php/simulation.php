@@ -74,6 +74,8 @@ function simulation_check_yaml($check_url) {
     $line = strtok("\r\n");
   }
 
+  return ("Publish value is: $publish");
+
   # check if configuration makes sense
   if ($publish === 'false')
     return yaml_error("project publish failed. Make sure to set 'publish: true' in webots.yaml");
