@@ -402,7 +402,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
             }
             let dialog = ModalDialog.run('Project sync error', errorMsg);
-            dialog.error('Project has been deleted.');
+            if (errorMsg !== "Failed to update the simulation")
+              dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
