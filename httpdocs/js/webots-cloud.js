@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
-        `<td><a class="has-text-light" href="${url}" title="${data.description}">${title}</a></td>`;
+        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       let icon;
       if (data.type === 'demo')
@@ -193,10 +193,10 @@ document.addEventListener('DOMContentLoaded', function() {
         icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const row =
-        `<td class="has-text-centered"><a class="has-text-light" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
+        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-light" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-light" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+        `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
       return row;
@@ -217,14 +217,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function serverRow(data) {
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now" style="color:grey"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const started = data.started.replace(' ', `<br>`);
       const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
       const accept = (data.load < data.share) ? "Is accepting public simulations" : "Is not accepting public simulations";
       const color = (data.load < data.share) ? "green" : "red";
       const row =
-        `<td><a class="has-text-light" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
         `<td class="has-text-right is-size-7" title="Start time">${started}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization">${updated}</td>` +
         `<td class="has-text-centered" style="color:${color}" title="${accept}">${data.share}%</td>` +
@@ -402,8 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
             }
             let dialog = ModalDialog.run('Project sync error', errorMsg);
-            if (errorMsg !== "Failed to update the simulation")
-              dialog.error('Project has been deleted.');
+            dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');

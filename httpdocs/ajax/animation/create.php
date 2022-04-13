@@ -52,7 +52,7 @@
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
   header('Content-Type: application/json');
 
-  // determine title
+  // determine title, info and version
   $file = fopen($_FILES['scene-file']['tmp_name'], 'r') or error('Unable to open scene file');
   $count = 0;
   $world_info = false;
@@ -63,12 +63,14 @@
       $title = parse_sf_string($line, 'title');
       $info = parse_mf_string($line, 'info');
       $description = implode("\n", $info);
-    }
+    } else if (substr($line, 0, 30) == '<meta name="version" content="')
+      $version = parse_sf_string($line, 'content');
   }
   fclose($file);
   if ($world_info === false)
     error('Missing WorldInfo title in x3d file');
-
+  if (!isset($version))
+    error('Missing version meta header node in x3d file');
   // determine duration
   if ($animation) {
     $duration = false;
@@ -92,6 +94,7 @@
   $mysqli->set_charset('utf8');
   $escaped_title = $mysqli->escape_string($title);
   $escaped_description = $mysqli->escape_string($description);
+  $escaped_version = $mysqli->escape_string($version);
   if ($user !== 0) {
     $result = $mysqli->query("SELECT password from user WHERE id=$user") or error($mysqli->error);
     $password = $result->fetch_assoc();
@@ -101,7 +104,8 @@
     if ($password['password'] !== $_POST['password'])
       error("Wrong password for user $user.");
   }
-  $query = "INSERT INTO animation(title, description, duration, size, user) VALUES(\"$escaped_title\", \"$escaped_description\", $duration, $size, $user)";
+  $query = "INSERT INTO animation(title, description, version, duration, size, user) ".
+           "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user)";
   $mysqli->query($query) or error($mysqli->error);
   $id = $mysqli->insert_id;
 
@@ -140,6 +144,7 @@
   $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
   $answer['description'] = $description;
+  $answer['version'] = $version;
   $answer['duration'] = $duration;
   $answer['size'] = $size;
   $answer['viewed'] = 0;

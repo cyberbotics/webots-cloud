@@ -8,11 +8,11 @@ body {
 }
 
 body:after{
-  content: "testing version";
+  content: "beta version";
   position: fixed;
   width: 260px;
   height: 25px;
-  background: red;
+  background: #e00f00;
   opacity: 0.95;
   top: 38px;
   right: -78px;
@@ -25,17 +25,7 @@ body:after{
   line-height: 27px;
   transform:rotate(45deg);
   z-index: 100;
-  box-shadow: 2px 2px 5px #010409;
-}
-
-/*  Nav  */
-
-#navbar {
-  background-color: #161b22;
-}
-
-#navbar .navbar-brand:hover .navbar-item {
-  background-color: #30363d;
+  box-shadow: 2px 2px 5px #740f00;
 }
 
 /*  Main Container  */
@@ -60,7 +50,7 @@ body footer.footer {
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 0;
-  background: linear-gradient(0deg, #0d1117 0%, #161b22 70%);
+  background: linear-gradient(0deg, rgba(0,61,102,1) 0%, rgb(0, 122, 204) 70%);
 }
 
 body footer .has-text-centered {
@@ -76,10 +66,23 @@ body footer .has-text-centered {
   z-index: 30;
 }
 
-/*  Nav  */
+/*  Navbar  */
 
 #navbar {
+  background-color: rgb(0, 122, 204);
   box-shadow: 0 -15px 15px 15px rgba(0,0,0,0.4);
+}
+
+#navbar .navbar-brand:hover .navbar-item {
+  background-color: rgb(0, 122, 204);
+}
+
+#sign-up:hover {
+  background-color: hsl(141, 53%, 48%)
+}
+
+#log-in:hover {
+  background-color: hsl(0, 0%, 85%);
 }
 
 /*  Tabs  */
@@ -100,6 +103,17 @@ body footer .has-text-centered {
   user-select: none;
 }
 
+.tabs a:hover {
+  border-bottom-color: transparent;
+  color: rgb(0, 122, 204);
+}
+
+
+.tabs li.is-active a {
+  border-color: rgb(0, 122, 204);
+  color: rgb(0, 122, 204);
+}
+
 .tabs.is-small-medium {
   font-size: 0.875rem;
 }
@@ -109,4 +123,28 @@ body footer .has-text-centered {
 #webots-view-container {
   height: 100%;
   max-width: none;
+}
+
+/*  Pagination  */
+
+nav.pagination > a[disabled] {
+  background-color: #fff;
+  border-color:#dbdbdb;
+  box-shadow: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-link.is-current {
+  background-color: rgb(0, 122, 204);
+  border: none;
+}
+
+/*  Other  */
+
+@media only screen and (max-width: 500px) {
+  .panel-tabs > a {
+    font-size: 12px;
+    padding: 0.3em;
+  }
 }
