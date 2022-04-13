@@ -394,11 +394,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
-              errorMsg = errorMsg + 
-                `<div class="help">More information at: 
-                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml">
-                    github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml
-                  </a>
+              errorMsg = errorMsg +
+                `<div class="help">More information at 
+                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
+                    here
+                  </a>.
                 </div>`;
             }
             let dialog = ModalDialog.run('Project sync error', errorMsg);
@@ -564,12 +564,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
-                errorMsg = errorMsg + 
-                  `<div class="help">More information at: 
-                    <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml">
-                      github.com/cyberbotics/webots-cloud/blob/beta#webotsyaml
-                    </a>
-                  </div>`;
+                errorMsg = errorMsg +
+                `<div class="help">More information at 
+                  <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
+                    here
+                  </a>.
+                </div>`;
               }
               modal.error(errorMsg);
             } else {
