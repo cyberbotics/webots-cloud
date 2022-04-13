@@ -394,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
-              errorMsg = errorMsg +
+              errorMsg = errorMsg + 
                 `<div class="help">More information at: 
                   <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                     github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
-                errorMsg = errorMsg +
+                errorMsg = errorMsg + 
                   `<div class="help">More information at: 
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                       github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml

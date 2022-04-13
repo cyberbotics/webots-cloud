@@ -8,7 +8,7 @@ body {
 }
 
 body:after{
-  content: "testing version";
+  content: "beta version";
   position: fixed;
   width: 260px;
   height: 25px;
@@ -31,7 +31,8 @@ body:after{
 /*  Main Container  */
 
 #main-container {
-  min-height: calc(100vh - 100px);
+  height: calc(100% - 48px);
+  min-height: 750px;
 }
 
 #main-container.webotsView {
