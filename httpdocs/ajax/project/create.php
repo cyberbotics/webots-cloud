@@ -39,8 +39,9 @@ if (!is_array($check_yaml)) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
-    error("Synchronization error: could not delete file on sync");
-  error($check_yaml);
+    error($check_yaml "(no files created or deleted)");
+  else
+    error($check_yaml);
 }
 list($type, $benchmark, $competition) = $check_yaml;
 
