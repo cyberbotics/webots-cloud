@@ -19,6 +19,9 @@
     settype($row['id'], 'integer');
     settype($row['stars'], 'integer');
     settype($row['competitors'], 'integer');
+    $row['title'] = htmlentities($row['title'];
+    $row['description'] = htmlentities($row['description'];
+    $row['version'] = htmlentities($row['version'];
     array_push($projects, $row);
   }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
