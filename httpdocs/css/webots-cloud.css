@@ -9,7 +9,7 @@ body {
 }
 
 body:after{
-  content: "testing version";
+  content: "beta version";
   position: fixed;
   width: 260px;
   height: 25px;
