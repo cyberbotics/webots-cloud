@@ -1,6 +1,7 @@
 html {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 body {
@@ -31,11 +32,11 @@ body:after{
 /*  Main Container  */
 
 #main-container {
-  height: calc(100% - 48px);
-  min-height: 750px;
+  min-height: calc(100vh - 100px);
 }
 
 #main-container.webotsView {
+  height: calc(100% - 48px);
   min-height: 10px;
 }
 
