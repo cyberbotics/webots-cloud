@@ -7,5 +7,9 @@ elseif (in_array($uri, array('/settings', '/scene', '/animation', '/demo', '/ser
 else
   $found = false;
 http_response_code($found ? 200 : 404);
+
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+
 readfile('index.html');
 ?>
