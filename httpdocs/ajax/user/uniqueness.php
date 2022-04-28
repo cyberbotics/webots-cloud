@@ -16,4 +16,8 @@
   $notunique = $result->fetch_assoc();
   if ($notunique)
     error("An account has already been created with this e-mail.");
+  else {
+    $status = 'OK';
+    die("{\"status\": \"$status\"}");
+  }
 ?>
