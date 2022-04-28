@@ -405,7 +405,7 @@ x[i].innerHTML = displayName;
           return;
         }
         // check if this e-mail address is not already registered
-        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({field: 'email', value: email})})
+        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({email: email}) })
           .then(function(response) {
             return response.json();
           })
@@ -426,9 +426,7 @@ x[i].innerHTML = displayName;
         event.preventDefault();
         const email = modal.querySelector('#sign-up-email').value;
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('/ajax/user/sign-up.php', {
-          method: 'post',
-          body: JSON.stringify({email: email})})
+        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({email: email}) })
           .then(function(response) {
             return response.json();
           })
