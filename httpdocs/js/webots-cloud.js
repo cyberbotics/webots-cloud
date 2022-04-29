@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
           duration = hour + duration;
         }
       }
-      const admin = project.email ? (project.email.endsWith('@cyberbotics.com') ? true : false) : false;
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));

@@ -16,12 +16,7 @@ $mysqli->set_charset('utf8');
 $user = isset($data->user) ? intval($data->user) : 0;
 $animation = intval($data->animation);
 $password = isset($data->password) ? $mysqli->escape_string($data->password) : '';
-$query = "SELECT id FROM user WHERE id=$user AND email LIKE '%@cyberbotics.com'";
-$result = $mysqli->query($query) or error($mysqli->error);
-$admin = $result->fetch_assoc();
-$query = "DELETE FROM animation WHERE id=$animation";
-if (!$admin)
-  $query .= " AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password=\"$password\"))";
+$query = "DELETE FROM animation WHERE id=$animation AND (user=0 OR user IN (SELECT id FROM user WHERE id=$user AND password='$password') OR EXISTS (SELECT * FROM user WHERE id=$user AND password='$password' AND email LIKE '%@cyberbotics.com'))";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
