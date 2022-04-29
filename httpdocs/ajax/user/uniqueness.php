@@ -11,13 +11,11 @@
     error("Can't connect to MySQL database: $mysqli->error");
   $mysqli->set_charset('utf8');
   $email = $mysqli->escape_string($data->{'email'});
-  $query = "SELECT * FROM user WHERE email like \"$email\"";
+  $query = "SELECT email FROM user WHERE email LIKE \"$email\"";
   $result = $mysqli->query($query) or error($mysqli->error);
   $notunique = $result->fetch_assoc();
   if ($notunique)
     error("An account has already been created with this e-mail.");
-  else {
-    $status = 'OK';
-    die("{\"status\": \"$status\"}");
-  }
+  else
+    die('{"status":"OK"}');
 ?>
