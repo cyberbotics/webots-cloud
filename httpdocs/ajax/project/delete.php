@@ -16,6 +16,6 @@ $id = isset($data->id) ? intval($data->id) : 0;
 $query = "DELETE FROM project WHERE id=$id AND EXISTS (SELECT * FROM user WHERE id=$user AND password='$password' AND email LIKE '%@cyberbotics.com')";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
-  error('Could not delete project');
+  error('Could not delete simulation');
 die("{\"status\":1}");
 ?>
