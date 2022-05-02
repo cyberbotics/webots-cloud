@@ -159,11 +159,12 @@ document.addEventListener('DOMContentLoaded', function() {
           duration = hour + duration;
         }
       }
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
-      const style = (data.user == 0) ? ' style="color:grey"' : '';
-      const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : `Delete your ${type_name}`;
-      const delete_icon = (data.user == 0 || project.id == data.user) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
+      const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
+      const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
+      const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
