@@ -716,9 +716,8 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
-            else if (data.status == 1) {
+            else if (data.status == 1)
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
-            }
           });
       });
     }

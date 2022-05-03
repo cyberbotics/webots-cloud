@@ -22,5 +22,5 @@ if ($mysqli->affected_rows === 0)
   error('Could not delete animation');
 require '../../../php/animation.php';
 delete_animation($type, $animation);
-die("{\"status\":1}");
+die('{"status":1}');
 ?>
