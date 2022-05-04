@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
-            if (project.email ? project.email.endsWith('@cyberbotics.com') : false)
+            if (project.email && project.email.endsWith('@cyberbotics.com'))
               project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr').appendChild(document.createElement('th'));
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
