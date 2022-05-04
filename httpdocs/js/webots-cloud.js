@@ -313,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th title="Version of the simulation">Version</th>
                     <th title="Type of simulation">Type</th>
                     <th title="Last update time">Updated</th>
-                    <th colspan="1"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -633,6 +632,8 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
+            if (project.email ? project.email.endsWith('@cyberbotics.com') : false)
+              project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr').appendChild(document.createElement('th'));
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
