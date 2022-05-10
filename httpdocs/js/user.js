@@ -320,7 +320,7 @@ x[i].innerHTML = displayName;
     super.load(page, pushHistory).then(() => {
       if (document.querySelector('#user-menu')) {
         if (that.email && that.password) {
-          document.querySelector('#user-menu').style.display = 'flex';
+          document.querySelector('#user-menu').style.display = 'auto';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
           that.updateDisplayName();

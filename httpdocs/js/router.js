@@ -148,7 +148,7 @@ export default class Router {
       document.querySelector('body').classList.remove('has-navbar-fixed-top');
     } else {
       document.querySelector('body footer').style.display = 'flex';
-      document.querySelector('body nav').style.display = 'flex';
+      document.querySelector('body nav').style.display = 'auto';
       document.querySelector('body').classList.add('has-navbar-fixed-top');
     }
   }

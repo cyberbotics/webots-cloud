@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previous_disabled}>Previous</a>
-        <a class="pagination-next"${next_disabled}>Next page</a><ul class="pagination-list"><li>
+        <ul class="pagination-list"><li>
         <a class="pagination-link${one_is_current}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
         if (i == current - 2 || (i == current + 2 && i != max)) {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="/${tab}?p=${i}">${i}</a></li>`;
       }
-      content.innerHTML += '</ul>';
+      content.innerHTML += `</ul>` + `<a class="pagination-next"${next_disabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
     }
 
