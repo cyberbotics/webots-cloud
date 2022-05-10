@@ -76,13 +76,6 @@ body footer .has-text-centered {
   box-shadow: 0 -15px 15px 15px rgba(0, 0, 0, 0.4);
 }
 
-@media (hover: hover) {
-  .navbar.is-link .navbar-brand>a.navbar-item:hover,
-  .navbar.is-link .navbar-item.has-dropdown:hover .navbar-link {
-    background-color: #006db7;
-  }
-}
-
 .navbar-link:hover {
   background-color: rgba(0, 0, 0, 0);
 }
