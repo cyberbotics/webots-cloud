@@ -45,6 +45,9 @@
     settype($row['duration'], 'integer');
     settype($row['size'], 'integer');
     settype($row['viewed'], 'integer');
+    $row['title'] = htmlentities($row['title']);
+    $row['description'] = htmlentities($row['description']);
+    $row['version'] = htmlentities($row['version']);
     $uri = '/' . $type . mysql_id_to_string($row['id']);
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($animations, $row);

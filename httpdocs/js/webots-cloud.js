@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
           duration = hour + duration;
         }
       }
-      const admin = project.email ? (project.email.endsWith('@cyberbotics.com') ? true : false) : false;
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
       const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const repository = `https://github.com/${words[0]}/${words[1]}`;
-      const animation = `https://${words[0]}.github.io/${words[1]}/${words[3]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
@@ -193,13 +193,16 @@ document.addEventListener('DOMContentLoaded', function() {
       else
         icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
+      const delete_icon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}" title="Delete ${data.type} as administrator"></i>`;
+      const delete_project = admin ? `<td class="has-text-centered">${delete_icon}</td>` : ``;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>`;
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` + 
+        `${delete_project}`;
       return row;
     }
 
@@ -310,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th title="Version of the simulation">Version</th>
                     <th title="Type of simulation">Type</th>
                     <th title="Last update time">Updated</th>
-                    <th colspan="1"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -381,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function synchronize(event) {
+    function synchronizeSimulation(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
@@ -415,7 +417,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
-            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronize);
+            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
+            if (parent.querySelector('#delete-' + id) !== null)
+              parent.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -628,13 +632,17 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
+            if (project.email && project.email.endsWith('@cyberbotics.com'))
+              project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr').appendChild(document.createElement('th'));
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', synchronize);
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
+              if (project.content.querySelector('#delete-' + id) !== null)
+                project.content.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -663,41 +671,61 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         });
     }
+
+    function deleteAnimation(event, type, project, page) {
+      const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
+      const type_name = (type == 'A') ? 'animation' : 'scene';
+      const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
+      let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            type: type,
+            animation: animation,
+            user: project.id,
+            password: project.password
+          })
+        };
+        fetch('ajax/animation/delete.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
+            else if (data.status == 1)
+              project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
+          });
+      });
+    }
+  
+    function deleteSimulation(event, project) {
+      const id = event.target.id.substring(7);
+      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete simulation`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({user: project.id, password: project.password, id: id})})
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Simulation deletion error`, data.error);
+            else if (data.status == 1)
+              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+          });
+      });
+    }
   }
 
   function runPage(project) {
     project.runPage();
-  }
-
-  function deleteAnimation(event, type, project, page) {
-    const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-    const type_name = (type == 'A') ? 'animation' : 'scene';
-    const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-    let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
-    dialog.querySelector('form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-      const content = {
-        method: 'post',
-        body: JSON.stringify({
-          type: type,
-          animation: animation,
-          user: project.id,
-          password: project.password
-        })
-      };
-      fetch('ajax/animation/delete.php', content)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          dialog.close();
-          if (data.error)
-            ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-          else if (data.status == 1)
-            project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
-        });
-    });
   }
 
 });
