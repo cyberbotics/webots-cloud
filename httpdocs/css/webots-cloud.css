@@ -6,6 +6,17 @@ html {
 
 body {
   height: 100%;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.scrollable-body {
+  height: calc(100% - 3.25rem);
+  width: 100vw;
+  overflow-y: auto;
+  position: absolute;
+  top: 3.25rem;
+  left: 0;
 }
 
 body:after{
@@ -46,44 +57,82 @@ div.table-container {
 
 /*  Footer  */
 
-body footer.footer {
+.footer {
   height: 48px;
+  width: 100%;
+  z-index: 30;
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 0;
-  background: linear-gradient(0deg, rgba(0,61,102,1) 0%, rgb(0, 122, 204) 70%);
+  background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
+  position: relative;
+  display: flex;
 }
 
-body footer .has-text-centered {
-  width:100%;
+#footer-github {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.has-text-white:hover {
-  opacity: 0.8;
+#footer-cyberbotics {
+  margin: 1px 0 0 0;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
 }
 
-.footer {
-  width: 100%;
-  z-index: 30;
+@media only screen and (max-width: 500px) {
+  #footer-github {
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+  }
+  
+  #footer-cyberbotics {
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  #footer-github {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  #footer-cyberbotics {
+    display: none;
+  }
 }
 
 /*  Navbar  */
 
 #navbar {
-  background-color: rgb(0, 122, 204);
-  box-shadow: 0 -15px 15px 15px rgba(0,0,0,0.4);
+  background-color: #007acc;
+  box-shadow: 0 -15px 15px 15px rgba(0, 0, 0, 0.4);
 }
 
-#navbar .navbar-brand:hover .navbar-item {
-  background-color: rgb(0, 122, 204);
+.navbar-link:hover {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 #sign-up:hover {
-  background-color: hsl(141, 53%, 48%)
+  background-color: #3abb67
 }
 
 #log-in:hover {
-  background-color: hsl(0, 0%, 85%);
+  background-color: #d9d9d9;
+}
+
+#email {
+  pointer-events: none;
 }
 
 /*  Tabs  */
@@ -106,17 +155,23 @@ body footer .has-text-centered {
 
 .tabs a:hover {
   border-bottom-color: transparent;
-  color: rgb(0, 122, 204);
+  color: #007acc;
 }
 
-
 .tabs li.is-active a {
-  border-color: rgb(0, 122, 204);
-  color: rgb(0, 122, 204);
+  border-color: #007acc;
+  color: #007acc;
 }
 
 .tabs.is-small-medium {
   font-size: 0.875rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .panel-tabs > a {
+    font-size: 12px;
+    padding: 0.3em;
+  }
 }
 
 /*  Webots view  */
@@ -137,15 +192,12 @@ nav.pagination > a[disabled] {
 }
 
 .pagination-link.is-current {
-  background-color: rgb(0, 122, 204);
+  background-color: #007acc;
   border: none;
 }
 
-/*  Other  */
+/*  Modals */
 
-@media only screen and (max-width: 500px) {
-  .panel-tabs > a {
-    font-size: 12px;
-    padding: 0.3em;
-  }
+.modal-card {
+  max-width: calc(100vw - 40px);
 }
