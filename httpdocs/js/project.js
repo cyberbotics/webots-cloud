@@ -78,19 +78,11 @@ export default class Project extends User {
       Project.webotsView.loadScene(`${reference}/scene.x3d`);
   }
   runPage() {
-    console.log("running page");
     this.setupWebotsView('run');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+    Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
     Project.webotsView.showQuit = false;
-  }
-  reloadView() {
-    if (Project.webotsView) {
-      console.log("Loading new view");
-      Project.webotsView.close();
-      document.querySelector('#main-container').classList.remove('webotsView');
-    }
   }
 }
 Project.current = null;

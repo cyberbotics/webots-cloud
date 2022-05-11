@@ -348,8 +348,11 @@ x[i].innerHTML = displayName;
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
+    <a class="button is-small is-warning" id="load-R2021c">
+      <strong>R2021c</strong>
+    </a>
     <a class="button is-small is-warning" id="load-R2022a">
-      <strong>Load R2022a</strong>
+      <strong>R2022a</strong>
     </a>
     <a class="button is-small is-success" id="sign-up">
       <strong>Sign up</strong>
@@ -368,6 +371,10 @@ x[i].innerHTML = displayName;
   </div>
 </div>`;
     let that = this;
+
+    div.querySelector('a#load-R2021c').addEventListener('click', function(event) {
+      
+    });
 
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
