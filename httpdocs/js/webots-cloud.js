@@ -89,6 +89,18 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
+    document.getElementById('load-R2022a').addEventListener('click', function(event) {
+      project.reloadView();
+      let script = document.getElementById('webots-view-version');
+      console.log("Loading new script...");
+      script = document.createElement('script');
+      script.type = 'module';
+      script.id = 'webots-view-version';
+      script.src = 'https://cyberbotics.com/wwi/R2022a/WebotsView.js';
+      script.onload = console.log("R2022a loaded.");
+      document.body.appendChild(script);
+    });
+
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
     listSimulations(simulation_page);
