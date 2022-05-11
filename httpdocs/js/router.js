@@ -5,10 +5,11 @@ export default class Router {
     this.content.id = 'main-container';
     this.routes = routes;
     const body = document.querySelector('body');
+    const scrollableBody = document.getElementById('scrollable-body');
     body.classList.add('has-navbar-fixed-top');
     this.resetNavbar();
-    body.append(this.content);
-    body.append(footer);
+    scrollableBody.append(this.content);
+    scrollableBody.append(footer);
     let that = this;
     // Catch clicks on the root-level element.
     body.addEventListener('click', function(event) {
@@ -143,11 +144,11 @@ export default class Router {
       });
     }
     if (fullpage) {
-      document.querySelector('body footer').style.display = 'none';
+      document.querySelector('footer').style.display = 'none';
       document.querySelector('body nav').style.display = 'none';
       document.querySelector('body').classList.remove('has-navbar-fixed-top');
     } else {
-      document.querySelector('body footer').style.display = 'flex';
+      document.querySelector('footer').style.display = 'auto';
       document.querySelector('body nav').style.display = 'auto';
       document.querySelector('body').classList.add('has-navbar-fixed-top');
     }

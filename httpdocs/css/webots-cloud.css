@@ -6,6 +6,17 @@ html {
 
 body {
   height: 100%;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.scrollable-body {
+  height: calc(100% - 3.25rem);
+  width: 100vw;
+  overflow-y: auto;
+  position: absolute;
+  top: 3.25rem;
+  left: 0;
 }
 
 /*
@@ -48,25 +59,59 @@ div.table-container {
 
 /*  Footer  */
 
-body footer.footer {
+.footer {
   height: 48px;
+  width: 100%;
+  z-index: 30;
   padding-top: 10px;
   padding-right: 10px;
   padding-bottom: 0;
   background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
+  position: relative;
+  display: flex;
 }
 
-body footer .has-text-centered {
-  width:100%;
+#footer-github {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.has-text-white:hover {
-  opacity: 0.8;
+#footer-cyberbotics {
+  margin: 1px 0 0 0;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
 }
 
-.footer {
-  width: 100%;
-  z-index: 30;
+@media only screen and (max-width: 500px) {
+  #footer-github {
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+  }
+  
+  #footer-cyberbotics {
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  #footer-github {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  #footer-cyberbotics {
+    display: none;
+  }
 }
 
 /*  Navbar  */
@@ -115,7 +160,6 @@ body footer .has-text-centered {
   color: #007acc;
 }
 
-
 .tabs li.is-active a {
   border-color: #007acc;
   color: #007acc;
@@ -123,6 +167,13 @@ body footer .has-text-centered {
 
 .tabs.is-small-medium {
   font-size: 0.875rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .panel-tabs > a {
+    font-size: 12px;
+    padding: 0.3em;
+  }
 }
 
 /*  Webots view  */
@@ -151,13 +202,4 @@ nav.pagination > a[disabled] {
 
 .modal-card {
   max-width: calc(100vw - 40px);
-}
-
-/*  Other  */
-
-@media only screen and (max-width: 500px) {
-  .panel-tabs > a {
-    font-size: 12px;
-    padding: 0.3em;
-  }
 }
