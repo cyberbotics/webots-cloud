@@ -7,39 +7,31 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulation_page = 1;
   let server_page = 1;
 
-  let script = document.createElement('script');
-  script.type = 'module';
-  script.id = 'webots-view-version';
-  script.src = 'https://cyberbotics.com/wwi/R2022b/WebotsView.js';
-  //script.onload = console.log(script.src.substring(28, 34) + " files loaded.");
-  script.onload = function() {
-    Project.run('webots.cloud', footer(), [
-      {
-        url: '/',
-        setup: homePage
-      },
-      {
-        url: '/animation',
-        setup: homePage
-      },
-      {
-        url: '/scene',
-        setup: homePage
-      },
-      {
-        url: '/simulation',
-        setup: homePage
-      },
-      {
-        url: '/server',
-        setup: homePage
-      },
-      {
-        url: '/run',
-        setup: runPage
-      }]);
-  }
-  document.body.appendChild(script);
+  Project.run('webots.cloud', 'R2022b', footer(), [
+    {
+      url: '/',
+      setup: homePage
+    },
+    {
+      url: '/animation',
+      setup: homePage
+    },
+    {
+      url: '/scene',
+      setup: homePage
+    },
+    {
+      url: '/simulation',
+      setup: homePage
+    },
+    {
+      url: '/server',
+      setup: homePage
+    },
+    {
+      url: '/run',
+      setup: runPage
+    }]);
 
   function footer() {
     let template = document.createElement('template');

@@ -5,8 +5,16 @@ export default class Project extends User {
     super(title, footer, routes);
     this.load();
   }
-  static run(title, footer, routes) {
-    Project.current = new Project(title, footer, routes);
+  static run(title, version, footer, routes) {
+    let script = document.createElement('script');
+    script.type = 'module';
+    script.id = 'webots-view-version';
+    script.src = 'https://cyberbotics.com/wwi/' + version +'/WebotsView.js';
+    //script.onload = console.log(script.src.substring(28, 34) + " files loaded.");
+    script.onload = function() {
+      Project.current = new Project(title, footer, routes);
+    }
+    document.body.appendChild(script);
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
