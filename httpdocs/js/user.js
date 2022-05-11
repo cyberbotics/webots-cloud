@@ -348,6 +348,9 @@ x[i].innerHTML = displayName;
     div.innerHTML =
 `<div class="navbar-item">
   <div class="buttons">
+    <a class="button is-small is-danger" id="load-R2022a">
+    <strong>Load R2022a</strong>
+    </a>
     <a class="button is-small is-success" id="sign-up">
       <strong>Sign up</strong>
     </a>
