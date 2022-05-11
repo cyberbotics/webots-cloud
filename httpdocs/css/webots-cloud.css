@@ -19,7 +19,6 @@ body {
   left: 0;
 }
 
-/*
 body:after{
   content: "beta version";
   position: fixed;
@@ -40,7 +39,6 @@ body:after{
   z-index: 100;
   box-shadow: 2px 2px 5px #740f00;
 }
-*/
 
 /*  Main Container  */
 
