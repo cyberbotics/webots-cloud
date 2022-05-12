@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulation_page = 1;
   let server_page = 1;
 
-  Project.run('webots.cloud', 'R2022b', footer(), [
+  Project.run('webots.cloud', 'testingR2022b', footer(), [
     {
       url: '/',
       setup: homePage
