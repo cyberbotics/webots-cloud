@@ -5,16 +5,8 @@ export default class Project extends User {
     super(title, footer, routes);
     this.load();
   }
-  static run(title, version, footer, routes) {
-    let script = document.createElement('script');
-    script.type = 'module';
-    script.id = 'webots-view-version';
-    script.src = 'https://cyberbotics.com/wwi/' + version +'/WebotsView.js';
-    //script.onload = console.log(script.src.substring(28, 34) + " files loaded.");
-    script.onload = function() {
-      Project.current = new Project(title, footer, routes);
-    }
-    document.body.appendChild(script);
+  static run(title, footer, routes) {
+    Project.current = new Project(title, footer, routes);
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
@@ -24,7 +16,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post',body: JSON.stringify({url: url, type: url.pathname[1]})})
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
         .then(function(response) {
           return response.json();
         })
@@ -35,7 +27,7 @@ export default class Project extends User {
             that.notFound();
             resolve();
           } else {
-            that.animationPage(data);
+            that.animationPage(data.animation);
             resolve();
           }
         });
@@ -78,19 +70,61 @@ export default class Project extends User {
     document.querySelector('#main-container').classList.add('webotsView');
   }
   animationPage(data) {
-    const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-    this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-    if (data.duration > 0)
-      Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
-    else
-      Project.webotsView.loadScene(`${reference}/scene.x3d`);
+    if (document.getElementById('webots-view-version')) {
+      document.getElementById('webots-view-version').remove();
+      window.location.href = window.location.href;
+    }
+    let that = this;
+    let script = document.createElement('script');
+    script.type = 'module';
+    script.id = 'webots-view-version';
+    script.src = 'https://cyberbotics.com/wwi/' + data.version +'/WebotsView.js';
+    script.onload = function() {
+      const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+      that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+      if (data.duration > 0)
+        Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+      else
+        Project.webotsView.loadScene(`${reference}/scene.x3d`);
+    }
+    document.body.appendChild(script);
   }
   runPage() {
-    this.setupWebotsView('run');
+    const version = 'R2022bs';
+    const src = 'https://cyberbotics.com/wwi/' + version +'/WebotsView.js';
+    this.loadSimulation(src);
+  }
+  loadSimulation(src) {
+    let script = document.getElementById('webots-view-version');
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
-    Project.webotsView.showQuit = false;
+    const that = this;
+
+    if (!script || (script && script.src !== src)) {
+      if (script && script.src !== src) {
+        script.remove();
+        window.location.href = window.location.href;
+      }
+      script = document.createElement('script');
+      script.type = 'module';
+      script.id = 'webots-view-version';
+      script.src = src;
+      script.onload = () => {
+        that.setupWebotsView('run');
+        Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+        Project.webotsView.showQuit = false;
+      };
+      script.onerror = () => {
+        console.warn('Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+        script.remove();
+        that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
+      };
+      document.body.appendChild(script);
+    } else {
+      that.setupWebotsView('run');
+      Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+      Project.webotsView.showQuit = false;
+    }
   }
 }
 Project.current = null;
