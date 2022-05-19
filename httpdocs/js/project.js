@@ -16,18 +16,18 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
-        .then(function(response) {
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (pushHistory)
             window.history.pushState(null, name, url.pathname + url.search + url.hash);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
           } else {
-            that.animationPage(data.animation);
+            that.runWebotsView(data.animation);
             resolve();
           }
         });
@@ -69,62 +69,79 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  animationPage(data) {
-    if (document.getElementById('webots-view-version')) {
-      document.getElementById('webots-view-version').remove();
-      window.location.href = window.location.href;
-    }
+  runWebotsView(data) {
     let that = this;
-    let script = document.createElement('script');
-    script.type = 'module';
-    script.id = 'webots-view-version';
-    script.src = 'https://cyberbotics.com/wwi/' + data.version +'/WebotsView.js';
-    script.onload = function() {
-      const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-      that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-      if (data.duration > 0)
-        Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
-      else
-        Project.webotsView.loadScene(`${reference}/scene.x3d`);
-    }
-    document.body.appendChild(script);
-  }
-  runPage() {
-    const version = 'R2022bs';
-    const src = 'https://cyberbotics.com/wwi/' + version +'/WebotsView.js';
-    this.loadSimulation(src);
-  }
-  loadSimulation(src) {
-    let script = document.getElementById('webots-view-version');
+    let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    const that = this;
+    const version = data ? data.version : this.findGetParameter('version');
+    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
-    if (!script || (script && script.src !== src)) {
-      if (script && script.src !== src) {
-        script.remove();
+    let promise = new Promise((resolve, reject) => {
+      let script = document.getElementById('webots-view-version');
+
+      if (!script || (script && script.src !== src)) {
         window.location.href = window.location.href;
-      }
-      script = document.createElement('script');
-      script.type = 'module';
-      script.id = 'webots-view-version';
-      script.src = src;
-      script.onload = () => {
+        if (script && script.src !== src) {
+          script.remove();
+          window.location.href = window.location.href;
+        }
+        script = document.createElement('script');
+        script.type = 'module';
+        script.id = 'webots-view-version';
+        script.src = src;
+        script.onload = () => {
+          if (data) {
+            reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+            if (data.duration > 0)
+              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+            else
+              Project.webotsView.loadScene(`${reference}/scene.x3d`);
+            resolve();
+          } else {
+            that.setupWebotsView('run');
+            Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+            Project.webotsView.showQuit = false;
+            resolve();
+          }
+        };
+        script.onerror = () => {
+          console.warn('Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+          script.remove();
+          that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
+        };
+        document.body.appendChild(script);
+      } else if (data) {
+        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+        if (data.duration > 0)
+          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+        else
+          Project.webotsView.loadScene(`${reference}/scene.x3d`);
+      } else {
         that.setupWebotsView('run');
         Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
         Project.webotsView.showQuit = false;
-      };
-      script.onerror = () => {
-        console.warn('Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
-        script.remove();
-        that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
-      };
-      document.body.appendChild(script);
-    } else {
-      that.setupWebotsView('run');
-      Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
-      Project.webotsView.showQuit = false;
-    }
+      }
+    });
+
+    promise.then(() => {
+      if (document.querySelector('#user-menu')) {
+        if (that.email && that.password) {
+          document.querySelector('#user-menu').style.display = 'auto';
+          document.querySelector('#log-in').style.display = 'none';
+          document.querySelector('#sign-up').style.display = 'none';
+          that.updateDisplayName();
+        } else {
+          document.querySelector('#user-menu').style.display = 'none';
+          document.querySelector('#log-in').style.display = 'flex';
+          document.querySelector('#sign-up').style.display = 'flex';
+        }
+        if (that.email === '!')
+          that.login();
+      }
+    });
   }
 }
 Project.current = null;

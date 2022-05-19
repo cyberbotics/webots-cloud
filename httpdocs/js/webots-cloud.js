@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulation_page = 1;
   let server_page = 1;
 
-  console.log("DOM Content Loaded");
-
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -204,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
@@ -735,8 +733,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    console.log("Running page");
-    project.runPage();
+    project.runWebotsView();
   }
 
 });

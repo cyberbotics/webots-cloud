@@ -175,7 +175,7 @@ export default class User extends Router {
                 else if (data.status == 1)
                   ModalDialog.run('Password changed', '<p>Your password was successfully changed.</p>');
                 else
-                  console.log('Error: ' + data.status);
+                  console.error('Error: ' + data.status);
                 that.email = email;
                 that.password = hash;
                 that.login();
