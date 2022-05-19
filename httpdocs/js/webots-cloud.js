@@ -1,7 +1,7 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
   let scene_page = 1;
   let animation_page = 1;
   let simulation_page = 1;
@@ -85,9 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
     mainContainer(project, active_tab);
     initTabs();
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function (event) { addAnimation('S'); });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function (event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function (event) { addSimulation(); });
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     listAnimations('S', scene_page);
     listAnimations('A', animation_page);
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
-      const previous_disabled = (current == 1) ? ' disabled' : ` href="${(current == 2) ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
+      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
       const next_disabled = (current == max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
       const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
       const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
-      const uploaded = data.uploaded.replace(' ', `<br>${delete_icon} `);
+      const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` + 
         `${delete_project}`;
       return row;
     }
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `<td class="has-text-centered" title="Current server load">${percent(data.load)}</td>`;
       return row;
     }
-
+    
     function mainContainer(project, active_tab) {
       const template = document.createElement('template');
       template.innerHTML =
@@ -394,17 +394,17 @@ document.addEventListener('DOMContentLoaded', function () {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', { method: 'post', body: JSON.stringify({ url: url, id: id }) })
-        .then(function (response) {
+      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
-              errorMsg = errorMsg +
+              errorMsg = errorMsg + 
                 `<div class="help">More information at: 
                   <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                     github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml
@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             let dialog = ModalDialog.run('Project sync error', errorMsg);
             dialog.error('Project has been deleted.');
-            dialog.querySelector('form').addEventListener('submit', function (e) {
+            dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               dialog.close();
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function () {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
-              parent.querySelector('#delete-' + id).addEventListener('click', function (event) { deleteSimulation(event, project); });
+              parent.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -438,11 +438,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const id = event.target.id.substring(12);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/server/update.php', { method: 'post', body: JSON.stringify({ url: url, id: id }) })
-        .then(function (response) {
+      fetch('ajax/server/update.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -499,27 +499,27 @@ document.addEventListener('DOMContentLoaded', function () {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
-      modal.querySelector('form').addEventListener('submit', function (event) {
+      modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
         body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
-        fetch('/ajax/animation/create.php', { method: 'post', body: body })
-          .then(function (response) {
+        fetch('/ajax/animation/create.php', {method: 'post', body: body})
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             if (data.error)
               modal.error(data.error);
             else {
               modal.close();
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                  `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
-                  `To prevent this, you should associate it with your webots.cloud account: ` +
-                  `log in or sign up for a new account now from this browser.`);
+                                `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
+                                `To prevent this, you should associate it with your webots.cloud account: ` +
+                                `log in or sign up for a new account now from this browser.`);
                 let uploads = JSON.parse(window.localStorage.getItem('uploads'));
                 if (uploads === null)
                   uploads = [];
@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function (event) {
+      modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         const worldFile = modal.querySelector('#world-file').value.trim();
@@ -569,14 +569,14 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         };
         fetch('/ajax/project/create.php', content)
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
-                errorMsg = errorMsg +
+                errorMsg = errorMsg + 
                   `<div class="help">More information at: 
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                       github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml
@@ -601,11 +601,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
       const offset = (page - 1) * page_limit;
-      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: page_limit, type: type }) })
-        .then(function (response) {
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit, type: type})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run(`${capitalized_type_name} listing error`, data.error);
           else {
@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function (event) { deleteAnimation(event, type, project, p); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
@@ -631,11 +631,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function listSimulations(page) {
       let offset = (page - 1) * page_limit;
-      fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: page_limit }) })
-        .then(function (response) {
+      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function () {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
               if (project.content.querySelector('#delete-' + id) !== null)
-                project.content.querySelector('#delete-' + id).addEventListener('click', function (event) { deleteSimulation(event, project); });
+                project.content.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
             updatePagination('simulation', page, total);
@@ -659,11 +659,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function listServers(page) {
       let offset = (page - 1) * page_limit;
-      fetch('/ajax/server/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: page_limit }) })
-        .then(function (response) {
+      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run('Server listing error', data.error);
           else {
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
       let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function (event) {
+      dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
         const content = {
@@ -697,10 +697,10 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         };
         fetch('ajax/animation/delete.php', content)
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
@@ -709,18 +709,18 @@ document.addEventListener('DOMContentLoaded', function () {
           });
       });
     }
-
+  
     function deleteSimulation(event, project) {
       const id = event.target.id.substring(7);
       let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete simulation`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function (event) {
+      dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/project/delete.php', { method: 'post', body: JSON.stringify({ user: project.id, password: project.password, id: id }) })
-          .then(function (response) {
+        fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({user: project.id, password: project.password, id: id})})
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
