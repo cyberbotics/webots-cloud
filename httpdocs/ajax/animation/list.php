@@ -21,6 +21,11 @@
   if (isset($data->url)) {  // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
+    $uploadMessage = "?upload=webots";
+    if (str_ends_with($uri, $uploadMessage)) {
+      $webotsUpload = true;
+      $uri = substr($uri, 0, strrpos($uri, '?'));
+    }
     $id = string_to_mysql_id(substr($uri, 2));  // skipping '/A'
     $query = "UPDATE animation SET viewed = viewed + 1 WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
@@ -55,7 +60,10 @@
   if (isset($data->url)) {  // view request
     if (count($animations) === 0)
       error("Animation not found.");
-    die(json_encode($animations[0]));
+    $answer = array();
+    $answer['animation'] = $animations[0];
+    $answer['uploadMessage'] = $uploadMessage;
+    die(json_encode($answer));
   }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);

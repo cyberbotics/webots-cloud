@@ -22,7 +22,7 @@ export default class Project extends User {
           return response.json();
         })
         .then(function(data) {
-          let pushUrl = url.pathname + url.search + url.hash
+          let pushUrl = url.pathname + url.search + url.hash;
           if (url.search === data.uploadMessage) {
             if (!that.id) {
               let uploads = JSON.parse(window.localStorage.getItem('uploads'));
@@ -54,7 +54,7 @@ export default class Project extends User {
             that.notFound();
             resolve();
           } else {
-            that.runWebotsView(data);
+            that.runWebotsView(data.animation);
             resolve();
           }
         });
