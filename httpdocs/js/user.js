@@ -5,7 +5,7 @@ import md5 from './md5.min.js';
 export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
-    this.routes.push({url: '/settings', setup: settingsPage});
+    this.routes.push({ url: '/settings', setup: settingsPage });
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
@@ -21,7 +21,7 @@ export default class User extends Router {
     function resetPassword(id, token, email) {
       let content = {};
       content.innerHTML =
-`<div class="field">
+        `<div class="field">
 <label class="label">E-mail</label>
 <div class="control has-icons-left">
   <input class="input" type="email" required readonly value="${email}">
@@ -157,15 +157,15 @@ export default class User extends Router {
             button.disabled = false;
         }
       }
-      choose.querySelector('form').addEventListener('submit', function(event) {
+      choose.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         choose.querySelector('button[type="submit"]').classList.add('is-loading');
-        that.sha256Hash(choose.querySelector('#choose-password').value + that.title).then(function(hash) {
-          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({id: id, token: token, password: hash})})
-            .then(function(response) {
+        that.sha256Hash(choose.querySelector('#choose-password').value + that.title).then(function (hash) {
+          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({ id: id, token: token, password: hash }) })
+            .then(function (response) {
               return response.json();
             })
-            .then(function(data) {
+            .then(function (data) {
               choose.close();
               if (data.error)
                 ModalDialog.run('Account activation error', data.error);
@@ -193,7 +193,7 @@ export default class User extends Router {
       const hostname = document.location.hostname;
       const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
       template.innerHTML =
-`<section class="section">
+        `<section class="section">
   <div class="container">
     <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
     <h2 class="subtitle pt-3">${that.email}</h2>
@@ -234,22 +234,22 @@ export default class User extends Router {
   </div>
 </section>`;
       that.setup('settings', [], template.content);
-      document.querySelector('#change-password').addEventListener('click', function(event) {
+      document.querySelector('#change-password').addEventListener('click', function (event) {
         event.target.classList.add('is-loading');
-        that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
+        that.forgotPassword(that.email, function () { event.target.classList.remove('is-loading'); });
       });
-      document.querySelector('#delete-account').addEventListener('click', function(event) {
+      document.querySelector('#delete-account').addEventListener('click', function (event) {
         let dialog = ModalDialog.run('Really delete account?',
-                                     '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
-                                     '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
-        dialog.querySelector('form').addEventListener('submit', function(event) {
+          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
+          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
+        dialog.querySelector('form').addEventListener('submit', function (event) {
           event.preventDefault();
           dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post', body: JSON.stringify({email: that.email, password: that.password})})
-            .then(function(response) {
+          fetch('/ajax/user/delete.php', { method: 'post', body: JSON.stringify({ email: that.email, password: that.password }) })
+            .then(function (response) {
               return response.json();
             })
-            .then(function(data) {
+            .then(function (data) {
               dialog.close();
               if (data.error)
                 ModalDialog.run('Error', data.error);
@@ -346,7 +346,7 @@ x[i].innerHTML = displayName;
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
     div.innerHTML =
-`<div class="navbar-item">
+      `<div class="navbar-item">
   <div class="buttons">
     <a class="button is-small is-success" id="sign-up">
       <strong>Sign up</strong>
@@ -366,7 +366,7 @@ x[i].innerHTML = displayName;
 </div>`;
     let that = this;
 
-    div.querySelector('a#log-out').addEventListener('click', function(event) {
+    div.querySelector('a#log-out').addEventListener('click', function (event) {
       that.password = null;
       that.email = null;
       that.id = null;
@@ -376,11 +376,11 @@ x[i].innerHTML = displayName;
         that.load();
     });
 
-    div.querySelector('a#sign-up').addEventListener('click', function(event) {
+    div.querySelector('a#sign-up').addEventListener('click', function (event) {
       event.preventDefault();
       let content = {};
       content.innerHTML =
-`<div class="field">
+        `<div class="field">
   <label class="label">E-mail</label>
   <div class="control has-icons-left">
     <input id="sign-up-email" class="input" type="email" required placeholder="Enter your e-mail address">
@@ -392,7 +392,7 @@ x[i].innerHTML = displayName;
 </div>`;
       let modal = ModalDialog.run('Sign up', content.innerHTML, 'Cancel', 'Sign up');
       modal.querySelector('#sign-up-email').focus();
-      modal.querySelector('#sign-up-email').addEventListener('change', function(event) {
+      modal.querySelector('#sign-up-email').addEventListener('change', function (event) {
         event.target.setCustomValidity('');
         const email = event.target.value;
         const help = modal.querySelector('#sign-up-email-help');
@@ -405,11 +405,11 @@ x[i].innerHTML = displayName;
           return;
         }
         // check if this e-mail address is not already registered
-        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({email: email}) })
-          .then(function(response) {
+        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({ email: email }) })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             if (data.error) {
               help.innerHTML = data.error;
               event.target.setCustomValidity(data.error);
@@ -422,15 +422,15 @@ x[i].innerHTML = displayName;
             }
           });
       });
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         const email = modal.querySelector('#sign-up-email').value;
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({email: email}) })
-          .then(function(response) {
+        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({ email: email }) })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             modal.close();
             if (data.error)
               ModalDialog.run('Error', data.error);
@@ -443,11 +443,11 @@ x[i].innerHTML = displayName;
       });
     });
 
-    div.querySelector('a#log-in').addEventListener('click', function(event) {
+    div.querySelector('a#log-in').addEventListener('click', function (event) {
       event.preventDefault();
       let content = {};
       content.innerHTML =
-`<div class="field">
+        `<div class="field">
   <label class="label">E-mail</label>
   <div class="control has-icons-left">
     <input id="log-in-email" class="input" type="email" required placeholder="Enter your e-mail address">
@@ -469,11 +469,11 @@ x[i].innerHTML = displayName;
 <p id="log-in-help" class="help"></p>`;
       let modal = ModalDialog.run('Log in', content.innerHTML, 'Cancel', 'Log in');
       modal.querySelector('#log-in-email').focus();
-      modal.querySelector('#log-in-forgot').addEventListener('click', function(event) {
+      modal.querySelector('#log-in-forgot').addEventListener('click', function (event) {
         modal.close();
         let content = {};
         content.innerHTML =
-`<div class="field">
+          `<div class="field">
   <label class="label">E-mail</label>
   <div class="control has-icons-left">
     <input id="forgot-email" class="input" type="email" required placeholder="Enter your e-mail address"
@@ -485,22 +485,22 @@ x[i].innerHTML = displayName;
 </div>`;
         let forgot = ModalDialog.run('Forgot your password?', content.innerHTML, 'Cancel', 'Reset Password');
         forgot.querySelector('#forgot-email').focus();
-        forgot.querySelector('form').addEventListener('submit', function(event) {
+        forgot.querySelector('form').addEventListener('submit', function (event) {
           event.preventDefault();
           forgot.querySelector('button[type="submit"]').classList.add('is-loading');
-          that.forgotPassword(forgot.querySelector('#forgot-email').value, function() { forgot.close(); });
+          that.forgotPassword(forgot.querySelector('#forgot-email').value, function () { forgot.close(); });
         });
       });
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         let email = modal.querySelector('#log-in-email').value;
         let password = modal.querySelector('#log-in-password').value;
         that.email = email;
-        that.sha256Hash(password + that.title).then(function(hash) {
+        that.sha256Hash(password + that.title).then(function (hash) {
           that.password = hash;
-          that.login(function(error) {
+          that.login(function (error) {
             modal.querySelector('#log-in-help').innerHTML = error; // "Your e-mail or password is wrong, please try again.";
-          }, function(success) {
+          }, function (success) {
             modal.close();
           }, true);
         });
@@ -517,11 +517,11 @@ x[i].innerHTML = displayName;
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads == null)
         uploads = [];
-      fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
-        .then(function(response) {
+      fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({ email: this.email, password: this.password, uploads: uploads }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error) {
             that.password = null;
             if (error)
@@ -552,11 +552,11 @@ x[i].innerHTML = displayName;
     return hashHex;
   }
   forgotPassword(email, callback = null) {
-    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({email: email})})
-      .then(function(response) {
+    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({ email: email }) })
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         if (callback)
           callback();
         if (data.error)
