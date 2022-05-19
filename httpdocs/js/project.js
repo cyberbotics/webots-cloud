@@ -1,4 +1,5 @@
 import User from './user.js';
+import ModalDialog from './modal_dialog.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
@@ -21,8 +22,34 @@ export default class Project extends User {
           return response.json();
         })
         .then(function(data) {
+          let pushUrl = url.pathname + url.search + url.hash
+          if (url.search === data.uploadMessage) {
+            if (!that.id) {
+              let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+              if (uploads === null)
+                uploads = [];
+              if (!uploads.includes(data.animation.id))
+                uploads.push(data.animation.id);
+              window.localStorage.setItem('uploads', JSON.stringify(uploads));
+            } else {
+              fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
+                .then(function(response) {
+                  return response.json();
+                })
+                .then(function(data) {
+                  if (data.error) {
+                    that.password = null;
+                    that.email = '!';
+                    that.load('/');
+                    ModalDialog.run('Error', data.error);
+                  } else
+                    ModalDialog.run(`Upload associated`, `Your upload has successfully been associated with your webots.cloud account`);
+                });
+            }
+            pushUrl = url.pathname + url.hash;
+          }
           if (pushHistory)
-            window.history.pushState(null, name, url.pathname + url.search + url.hash);
+            window.history.pushState(null, name, pushUrl);
           if (data.error) { // no such animation
             that.notFound();
             resolve();

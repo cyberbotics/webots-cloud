@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.close();
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                                `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
+                                `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +
                                 `To prevent this, you should associate it with your webots.cloud account: ` +
                                 `log in or sign up for a new account now from this browser.`);
                 let uploads = JSON.parse(window.localStorage.getItem('uploads'));
@@ -704,8 +704,16 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-            else if (data.status == 1)
+            else if (data.status == 1) {
+              let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+              if (uploads !== null && uploads.includes(animation)) {
+                uploads.splice(uploads.indexOf(animation), 1);
+                if (uploads.length === 0)
+                  uploads = null;
+              }
+              window.localStorage.setItem('uploads', JSON.stringify(uploads));
               project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
+            }
           });
       });
     }
