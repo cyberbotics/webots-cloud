@@ -27,7 +27,7 @@ export default class Project extends User {
             that.notFound();
             resolve();
           } else {
-            that.runWebotsView(data.animation);
+            that.runWebotsView(data);
             resolve();
           }
         });
@@ -81,7 +81,6 @@ export default class Project extends User {
       let script = document.getElementById('webots-view-version');
 
       if (!script || (script && script.src !== src)) {
-        window.location.href = window.location.href;
         if (script && script.src !== src) {
           script.remove();
           window.location.href = window.location.href;
