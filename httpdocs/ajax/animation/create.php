@@ -52,11 +52,11 @@
 
   // check if uploading is done
   $uploading = (isset($_POST['uploading'])) ? intval($_POST['uploading']) : 1;
-  $uploadId = (isset($_POST['uploadId'])) ? intval($_POST['uploadId']) : 0;
+  $uploadId = (isset($_POST['uploadId'])) ? intval($_POST['uploadId']) : null;
   if (!$uploading && $uploadId) {
-    $query = "UPDATE animation SET uploading=$uploading WHERE id=$uploadId";
+    $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
     $mysqli->query($query) or error($mysqli->error);
-    die('{"status": "success"}');
+    die('{"status": "uploaded"}');
   }
 
   // get files ans variables from post

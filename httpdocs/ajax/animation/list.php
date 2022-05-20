@@ -30,7 +30,7 @@
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else {  // listing request
     // delete old and not popular animations
-    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)))";
+    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -43,18 +43,20 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    settype($row['id'], 'integer');
-    settype($row['user'], 'integer');
-    settype($row['duration'], 'integer');
-    settype($row['size'], 'integer');
-    settype($row['viewed'], 'integer');
-    settype($row['uploading'], 'boolean');
-    $row['title'] = htmlentities($row['title']);
-    $row['description'] = htmlentities($row['description']);
-    $row['version'] = htmlentities($row['version']);
-    $uri = '/' . $type . mysql_id_to_string($row['id']);
-    $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
-    array_push($animations, $row);
+    //if (!$row['uploading']) {
+      settype($row['uploading'], 'boolean');
+      settype($row['id'], 'integer');
+      settype($row['user'], 'integer');
+      settype($row['duration'], 'integer');
+      settype($row['size'], 'integer');
+      settype($row['viewed'], 'integer');
+      $row['title'] = htmlentities($row['title']);
+      $row['description'] = htmlentities($row['description']);
+      $row['version'] = htmlentities($row['version']);
+      $uri = '/' . $type . mysql_id_to_string($row['id']);
+      $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
+      array_push($animations, $row);
+    //}
   }
   if (isset($data->url)) {  // view request
     if (count($animations) === 0)
