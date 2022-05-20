@@ -48,6 +48,7 @@
     settype($row['duration'], 'integer');
     settype($row['size'], 'integer');
     settype($row['viewed'], 'integer');
+    settype($row['uploading'], 'boolean');
     $row['title'] = htmlentities($row['title']);
     $row['description'] = htmlentities($row['description']);
     $row['version'] = htmlentities($row['version']);
