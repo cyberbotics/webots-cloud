@@ -43,7 +43,7 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    //if (!$row['uploading']) {
+    if (!$row['uploading']) {
       settype($row['uploading'], 'boolean');
       settype($row['id'], 'integer');
       settype($row['user'], 'integer');
@@ -56,7 +56,7 @@
       $uri = '/' . $type . mysql_id_to_string($row['id']);
       $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
       array_push($animations, $row);
-    //}
+    }
   }
   if (isset($data->url)) {  // view request
     if (count($animations) === 0)
