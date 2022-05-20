@@ -22,8 +22,10 @@ export default class Project extends User {
           return response.json();
         })
         .then(function(data) {
-          let pushUrl = url.pathname + url.search + url.hash;
-          if (url.search === data.uploadMessage) {
+          let pushUrl;
+          if (url.search !== data.uploadMessage) 
+            pushUrl = url.pathname + url.search + url.hash;
+          else {
             if (!that.id) {
               let uploads = JSON.parse(window.localStorage.getItem('uploads'));
               if (uploads === null)
@@ -110,7 +112,7 @@ export default class Project extends User {
       if (!script || (script && script.src !== src)) {
         if (script && script.src !== src) {
           script.remove();
-          window.location.href = window.location.href;
+          window.location.reload();
         }
         script = document.createElement('script');
         script.type = 'module';
