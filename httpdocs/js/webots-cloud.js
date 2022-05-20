@@ -167,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
       const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
-      const uploading = data.uploading;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
@@ -175,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
-      row += `<td class="has-text-right is-size-7">${uploading}</td>`;
       return row;
     }
 
@@ -272,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th title="Webots release of the scene">Version</th>
                     <th title="Total size of the scene files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
-                    <th title="Upload status">Uploading</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -298,7 +296,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th title="Duration of the animation">Duration</th>
                     <th title="Total size of the animation files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
-                    <th title="Upload status">Uploading</th>
                   </tr>
                 </thead>
                 <tbody>
