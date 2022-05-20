@@ -270,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th title="Webots release of the scene">Version</th>
                     <th title="Total size of the scene files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
-                    
                   </tr>
                 </thead>
                 <tbody>
