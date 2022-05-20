@@ -129,7 +129,7 @@ export default class Project extends User {
             resolve();
           } else {
             that.setupWebotsView('run');
-            Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+            Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
             Project.webotsView.showQuit = false;
             resolve();
           }
@@ -149,7 +149,7 @@ export default class Project extends User {
           Project.webotsView.loadScene(`${reference}/scene.x3d`);
       } else {
         that.setupWebotsView('run');
-        Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+        Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
         Project.webotsView.showQuit = false;
       }
     });
