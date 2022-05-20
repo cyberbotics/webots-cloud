@@ -1,4 +1,5 @@
 import User from './user.js';
+import ModalDialog from './modal_dialog.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
@@ -21,13 +22,41 @@ export default class Project extends User {
           return response.json();
         })
         .then(function(data) {
+          let pushUrl;
+          if (url.search !== data.uploadMessage) 
+            pushUrl = url.pathname + url.search + url.hash;
+          else {
+            if (!that.id) {
+              let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+              if (uploads === null)
+                uploads = [];
+              if (!uploads.includes(data.animation.id))
+                uploads.push(data.animation.id);
+              window.localStorage.setItem('uploads', JSON.stringify(uploads));
+            } else {
+              fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
+                .then(function(response) {
+                  return response.json();
+                })
+                .then(function(data) {
+                  if (data.error) {
+                    that.password = null;
+                    that.email = '!';
+                    that.load('/');
+                    ModalDialog.run('Error', data.error);
+                  } else
+                    ModalDialog.run(`Upload associated`, `Your upload has successfully been associated with your webots.cloud account`);
+                });
+            }
+            pushUrl = url.pathname + url.hash;
+          }
           if (pushHistory)
-            window.history.pushState(null, name, url.pathname + url.search + url.hash);
+            window.history.pushState(null, name, pushUrl);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
           } else {
-            that.animationPage(data);
+            that.runWebotsView(data.animation);
             resolve();
           }
         });
@@ -69,20 +98,78 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  animationPage(data) {
-    const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-    this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-    if (data.duration > 0)
-      Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
-    else
-      Project.webotsView.loadScene(`${reference}/scene.x3d`);
-  }
-  runPage() {
-    this.setupWebotsView('run');
+  runWebotsView(data) {
+    let that = this;
+    let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    Project.webotsView.connect('https://beta.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
-    Project.webotsView.showQuit = false;
+    const version = data ? data.version : this.findGetParameter('version');
+    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
+
+    let promise = new Promise((resolve, reject) => {
+      let script = document.getElementById('webots-view-version');
+
+      if (!script || (script && script.src !== src)) {
+        if (script && script.src !== src) {
+          script.remove();
+          window.location.reload();
+        }
+        script = document.createElement('script');
+        script.type = 'module';
+        script.id = 'webots-view-version';
+        script.src = src;
+        script.onload = () => {
+          if (data) {
+            reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+            if (data.duration > 0)
+              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+            else
+              Project.webotsView.loadScene(`${reference}/scene.x3d`);
+            resolve();
+          } else {
+            that.setupWebotsView('run');
+            Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+            Project.webotsView.showQuit = false;
+            resolve();
+          }
+        };
+        script.onerror = () => {
+          console.warn('Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+          script.remove();
+          that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
+        };
+        document.body.appendChild(script);
+      } else if (data) {
+        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+        if (data.duration > 0)
+          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+        else
+          Project.webotsView.loadScene(`${reference}/scene.x3d`);
+      } else {
+        that.setupWebotsView('run');
+        Project.webotsView.connect('https://testing.webots.cloud/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+        Project.webotsView.showQuit = false;
+      }
+    });
+
+    promise.then(() => {
+      if (document.querySelector('#user-menu')) {
+        if (that.email && that.password) {
+          document.querySelector('#user-menu').style.display = 'auto';
+          document.querySelector('#log-in').style.display = 'none';
+          document.querySelector('#sign-up').style.display = 'none';
+          that.updateDisplayName();
+        } else {
+          document.querySelector('#user-menu').style.display = 'none';
+          document.querySelector('#log-in').style.display = 'flex';
+          document.querySelector('#sign-up').style.display = 'flex';
+        }
+        if (that.email === '!')
+          that.login();
+      }
+    });
   }
 }
 Project.current = null;

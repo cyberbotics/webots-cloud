@@ -161,14 +161,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
-      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url
+      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
       const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
-        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>`;
+        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -195,11 +197,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const delete_icon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}" title="Delete ${data.type} as administrator"></i>`;
       const delete_project = admin ? `<td class="has-text-centered">${delete_icon}</td>` : ``;
+      const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const row =
         `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
         `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/run?url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+        `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` + 
         `${delete_project}`;
@@ -263,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
                     <th title="Title of the scene">Title</th>
+                    <th title="Webots release of the scene">Version</th>
                     <th title="Total size of the scene files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
                   </tr>
@@ -286,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
                     <th title="Title of the animation">Title</th>
+                    <th title="Webots release of the animation">Version</th>
                     <th title="Duration of the animation">Duration</th>
                     <th title="Total size of the animation files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
@@ -310,7 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
                     <th title="Title of the simulation">Title</th>
-                    <th title="Version of the simulation">Version</th>
+                    <th title="Branch or Tag of the simulation">Branch/Tag</th>
+                    <th title="Webots release of the simulation">Version</th>
                     <th title="Type of simulation">Type</th>
                     <th title="Last update time">Updated</th>
                   </tr>
@@ -510,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.close();
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                                `The ${type_name} you just uploaded may be deleted anytime by anyone. ` +
+                                `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +
                                 `To prevent this, you should associate it with your webots.cloud account: ` +
                                 `log in or sign up for a new account now from this browser.`);
                 let uploads = JSON.parse(window.localStorage.getItem('uploads'));
@@ -697,8 +704,16 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-            else if (data.status == 1)
+            else if (data.status == 1) {
+              let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+              if (uploads !== null && uploads.includes(animation)) {
+                uploads.splice(uploads.indexOf(animation), 1);
+                if (uploads.length === 0)
+                  uploads = null;
+              }
+              window.localStorage.setItem('uploads', JSON.stringify(uploads));
               project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
+            }
           });
       });
     }
@@ -725,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    project.runPage();
+    project.runWebotsView();
   }
 
 });

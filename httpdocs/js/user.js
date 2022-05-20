@@ -175,7 +175,7 @@ export default class User extends Router {
                 else if (data.status == 1)
                   ModalDialog.run('Password changed', '<p>Your password was successfully changed.</p>');
                 else
-                  console.log('Error: ' + data.status);
+                  console.error('Error: ' + data.status);
                 that.email = email;
                 that.password = hash;
                 that.login();
@@ -540,6 +540,11 @@ x[i].innerHTML = displayName;
               that.load();
             if (success)
               success();
+            if (uploads.length != 0)
+              ModalDialog.run(`Uploads associated`,
+                              `Thank you for logging in!<br>` +
+                              `All scenes and animations that you have uploaded during this session have been associated with your webots.cloud account. ` +
+                              `Only you may delete them now.`);
           }
         });
     }
