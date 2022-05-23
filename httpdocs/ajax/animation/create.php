@@ -156,7 +156,6 @@
 
   $answer = array();
   $answer['id'] = $id;
-  $answer['idString'] = strval($id);
   $answer['total'] = $total;
   $answer['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
   $answer['title'] = $title;
