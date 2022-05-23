@@ -500,9 +500,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const type_name = (type == 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
-      modal.querySelector('button.cancel').addEventListener('click', function() {
-        cancelled = true;
-      });
+      modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
