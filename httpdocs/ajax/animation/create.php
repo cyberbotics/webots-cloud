@@ -51,8 +51,11 @@
   $mysqli->set_charset('utf8');
 
   // check if uploading is done
-  $uploading = (isset($_POST['uploading'])) ? intval($_POST['uploading']) : 1;
-  $uploadId = (isset($_POST['uploadId'])) ? intval($_POST['uploadId']) : null;
+  header('Content-Type: application/json');
+  $json = file_get_contents('php://input');
+  $data = json_decode($json);
+  $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
+  $uploadId = (isset($data->uploadId)) ? intval($data->uploadId) : null;
   if (!$uploading && $uploadId) {
     $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
     $mysqli->query($query) or error($mysqli->error);
@@ -67,7 +70,6 @@
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
-  header('Content-Type: application/json');
 
   // determine title, info and version
   $file = fopen($_FILES['scene-file']['tmp_name'], 'r') or error('Unable to open scene file');
