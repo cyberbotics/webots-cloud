@@ -518,14 +518,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
-              modal.close();
               fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: data.id})})
                 .then(function(response) {
                   return response.json();
                 })
                 .then(function(data) {
                   if (data.status !== "uploaded")
-                    console.warn(data.error);
+                    modal.error(data.error);
+                  else
+                    modal.close();
                 });
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
