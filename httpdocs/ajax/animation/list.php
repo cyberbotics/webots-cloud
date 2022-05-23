@@ -38,25 +38,22 @@
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
     }
-    $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
+    $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    if (!$row['uploading']) {
-      settype($row['uploading'], 'boolean');
-      settype($row['id'], 'integer');
-      settype($row['user'], 'integer');
-      settype($row['duration'], 'integer');
-      settype($row['size'], 'integer');
-      settype($row['viewed'], 'integer');
-      $row['title'] = htmlentities($row['title']);
-      $row['description'] = htmlentities($row['description']);
-      $row['version'] = htmlentities($row['version']);
-      $uri = '/' . $type . mysql_id_to_string($row['id']);
-      $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
-      array_push($animations, $row);
-    }
+    settype($row['id'], 'integer');
+    settype($row['user'], 'integer');
+    settype($row['duration'], 'integer');
+    settype($row['size'], 'integer');
+    settype($row['viewed'], 'integer');
+    $row['title'] = htmlentities($row['title']);
+    $row['description'] = htmlentities($row['description']);
+    $row['version'] = htmlentities($row['version']);
+    $uri = '/' . $type . mysql_id_to_string($row['id']);
+    $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
+    array_push($animations, $row);
   }
   if (isset($data->url)) {  // view request
     if (count($animations) === 0)
