@@ -523,20 +523,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(function(data) {
                   if (data.status !== "uploaded")
                     modal.error(data.error);
-                  else
+                  else {
                     modal.close();
+                    if (!project.id) {
+                      ModalDialog.run(`Anonymous ${type_name} uploaded`,
+                                      `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +
+                                      `To prevent this, you should associate it with your webots.cloud account: ` +
+                                      `log in or sign up for a new account now from this browser.`);
+                      let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+                      if (uploads === null)
+                        uploads = [];
+                      uploads.push(data.id);
+                      window.localStorage.setItem('uploads', JSON.stringify(uploads));
+                    }
+                  }
                 });
-              if (!project.id) {
-                ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                                `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +
-                                `To prevent this, you should associate it with your webots.cloud account: ` +
-                                `log in or sign up for a new account now from this browser.`);
-                let uploads = JSON.parse(window.localStorage.getItem('uploads'));
-                if (uploads === null)
-                  uploads = [];
-                uploads.push(data.id);
-                window.localStorage.setItem('uploads', JSON.stringify(uploads));
-              }
               const p = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
               project.load(`/${type_name}${(p > 1) ? ('?p=' + p) : ''}`);
             }
