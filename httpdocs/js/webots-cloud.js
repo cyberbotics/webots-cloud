@@ -516,7 +516,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
-              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: data.id})})
+              const id = data.id;
+              const total = data.total;
+              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: id})})
                 .then(function(response) {
                   return response.json();
                 })
@@ -533,12 +535,12 @@ document.addEventListener('DOMContentLoaded', function() {
                       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
                       if (uploads === null)
                         uploads = [];
-                      uploads.push(data.id);
+                      uploads.push(id);
                       window.localStorage.setItem('uploads', JSON.stringify(uploads));
                     }
                   }
                 });
-              const p = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+              const p = (total == 0) ? 1 : Math.ceil(total / page_limit);
               project.load(`/${type_name}${(p > 1) ? ('?p=' + p) : ''}`);
             }
           });
