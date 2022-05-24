@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` + 
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${delete_project}`;
       return row;
     }
@@ -494,11 +494,13 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
         </div>`;
+      let cancelled = false;
       const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const type_name = (type == 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${type_name}-file`);
       input.focus();
+      modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
@@ -513,8 +515,17 @@ document.addEventListener('DOMContentLoaded', function() {
           .then(function(data) {
             if (data.error)
               modal.error(data.error);
-            else {
-              modal.close();
+            else if (!cancelled) {
+              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: data.id})})
+                .then(function(response) {
+                  return response.json();
+                })
+                .then(function(data) {
+                  if (data.status !== "uploaded")
+                    modal.error(data.error);
+                  else
+                    modal.close();
+                });
               if (!project.id) {
                 ModalDialog.run(`Anonymous ${type_name} uploaded`,
                                 `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +

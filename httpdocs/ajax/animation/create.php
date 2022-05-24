@@ -43,6 +43,26 @@
     }
     return $value;
   }
+  // connect to database
+  require '../../../php/database.php';
+  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+  if ($mysqli->connect_errno)
+    error("Can't connect to MySQL database: $mysqli->connect_error");
+  $mysqli->set_charset('utf8');
+
+  // check if uploading is done
+  header('Content-Type: application/json');
+  $json = file_get_contents('php://input');
+  $data = json_decode($json);
+  $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
+  $uploadId = (isset($data->uploadId)) ? intval($data->uploadId) : null;
+  if (!$uploading && $uploadId) {
+    $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
+    $mysqli->query($query) or error($mysqli->error);
+    die('{"status": "uploaded"}');
+  }
+
+  // get files ans variables from post
   $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
@@ -50,7 +70,6 @@
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
-  header('Content-Type: application/json');
 
   // determine title, info and version
   $file = fopen($_FILES['scene-file']['tmp_name'], 'r') or error('Unable to open scene file');
@@ -71,6 +90,7 @@
     error('Missing WorldInfo title in x3d file');
   if (!isset($version))
     error('Missing version meta header node in x3d file');
+
   // determine duration
   if ($animation) {
     $duration = false;
@@ -86,12 +106,8 @@
       error('Missing duration');
   } else
     $duration = 0;
+
   // save entry in database
-  require '../../../php/database.php';
-  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-  if ($mysqli->connect_errno)
-    error("Can't connect to MySQL database: $mysqli->connect_error");
-  $mysqli->set_charset('utf8');
   $escaped_title = $mysqli->escape_string($title);
   $escaped_description = $mysqli->escape_string($description);
   $escaped_version = $mysqli->escape_string($version);
@@ -150,5 +166,6 @@
   $answer['viewed'] = 0;
   $answer['user'] = $user;
   $answer['uploaded'] = date("Y-m-d H:i:s");
+
   die(json_encode($answer));
  ?>

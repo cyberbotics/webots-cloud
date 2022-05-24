@@ -8,7 +8,8 @@ CREATE TABLE `animation` (
   `duration` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `viewed` int (11) NOT NULL,
-  `user` int(11) NOT NULL
+  `user` int(11) NOT NULL,
+  `uploading` BIT DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `animation`
