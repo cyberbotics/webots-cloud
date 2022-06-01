@@ -2,10 +2,10 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
-  let scene_page = 1;
-  let animation_page = 1;
-  let simulation_page = 1;
-  let server_page = 1;
+  let scenePage = 1;
+  let animationPage = 1;
+  let simulationPage = 1;
+  let serverPage = 1;
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -48,75 +48,78 @@ document.addEventListener('DOMContentLoaded', function() {
     return template.content.firstChild;
   }
 
-  function setPages(active_tab, page) {
-    if (active_tab === 'scene')
-      scene_page = page;
-    else if (active_tab === 'animation')
-      animation_page = page;
-    else if (active_tab === 'simulation')
-      simulation_page = page;
-    else if (active_tab === 'server')
-      server_page = page;
+  function setPages(activeTab, page) {
+    if (activeTab === 'scene')
+      scenePage = page;
+    else if (activeTab === 'animation')
+      animationPage = page;
+    else if (activeTab === 'simulation')
+      simulationPage = page;
+    else if (activeTab === 'server')
+      serverPage = page;
   }
 
-  function getPage(active_tab) {
-    if (active_tab === 'scene')
-      return scene_page;
-    if (active_tab === 'animation')
-      return animation_page;
-    if (active_tab === 'simulation')
-      return simulation_page;
-    if (active_tab === 'server')
-      return server_page;
+  function getPage(activeTab) {
+    if (activeTab === 'scene')
+      return scenePage;
+    if (activeTab === 'animation')
+      return animationPage;
+    if (activeTab === 'simulation')
+      return simulationPage;
+    if (activeTab === 'server')
+      return serverPage;
   }
 
   function homePage(project) {
-    let active_tab = document.location.pathname.substring(1);
+    let activeTab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
       page = 1;
 
-    setPages(active_tab, page);
+    setPages(activeTab, page);
 
-    const page_limit = 10;
-    if (active_tab === '')
-      active_tab = 'animation';
+    const pageLimit = 10;
+    if (activeTab === '')
+      activeTab = 'animation';
 
-    mainContainer(project, active_tab);
+    mainContainer(project, activeTab);
     initTabs();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    listAnimations('S', scene_page);
-    listAnimations('A', animation_page);
-    listSimulations(simulation_page);
-    listServers(server_page);
+    listAnimations('S', scenePage);
+    listAnimations('A', animationPage);
+    listSimulations(simulationPage);
+    listServers(serverPage);
 
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
-      const previous_disabled = (current == 1) ? ' disabled': ` href="${(current == 2) ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
-      const next_disabled = (current == max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
-      const one_is_current = (current == 1) ? ' is-current" aria-label="Page 1" aria-current="page"' : `" aria-label="Goto page 1" href="/${tab}"`;
+      const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
+        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
+      const nextDisabled = (current === max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
+      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
+        : `" aria-label="Goto page 1" href="/${tab}"`;
       content.innerHTML =
-        `<a class="pagination-previous"${previous_disabled}>Previous</a>
+        `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
-        <a class="pagination-link${one_is_current}>1</a></li>`;
+        <a class="pagination-link${oneIsCurrent}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
-        if (i == current - 2 || (i == current + 2 && i != max)) {
+        if (i === current - 2 || (i === current + 2 && i !== max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
           continue;
         }
-        if (i < current - 2 || (i > current + 2 && i != max))
+        if (i < current - 2 || (i > current + 2 && i !== max))
           continue;
-        if (i == current)
-          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}" aria-current="page">${i}</a></li>`;
+        if (i === current)
+          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
+            ` aria-current="page">${i}</a></li>`;
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="/${tab}?p=${i}">${i}</a></li>`;
       }
-      content.innerHTML += `</ul>` + `<a class="pagination-next"${next_disabled}>Next page</a>`;
+      content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
     }
 
@@ -160,17 +163,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
-      const type_name = (data.duration === 0) ? 'scene' : 'animation';
+      const typeName = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
-      const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
-      const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
-      const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
-      const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
+      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
+      const style = (data.user === 0) ? ' style="color:grey"' : (project.id === data.user
+        ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
+      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (project.id === data.user
+        ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
+      const deleteIcon = (data.user === 0 || project.id === data.user || admin)
+        ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
+      const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>` +
         `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>`;
+        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" ` +
+        ` title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -195,18 +202,21 @@ document.addEventListener('DOMContentLoaded', function() {
       else
         icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
-      const delete_icon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}" title="Delete ${data.type} as administrator"></i>`;
-      const delete_project = admin ? `<td class="has-text-centered">${delete_icon}</td>` : ``;
-      const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
+      const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"` +
+        ` title="Delete ${data.type} as administrator"></i>`;
+      const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
+      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const row =
-        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
-        `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" title="${data.description}">${title}</a></td>` +
+        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" ` +
+          ` title="GitHub stars"> ${data.stars}</a></td>` +
+        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" ` +
+           ` title="${data.description}">${title}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
+        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" ` +
+          ` title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `${delete_project}`;
+        `${deleteProject}`;
       return row;
     }
 
@@ -225,12 +235,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function serverRow(data) {
       const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+        `<br><i class="is-clickable fas fa-sync" id="sync-server-${data.id}" data-url="${data.url}" ` +
+        ` title="Re-synchronize now"></i> `
       );
       const started = data.started.replace(' ', `<br>`);
       const name = data.url.startsWith('https://') ? data.url.substring(8) : data.url.substring(7);
-      const accept = (data.load < data.share) ? "Is accepting public simulations" : "Is not accepting public simulations";
-      const color = (data.load < data.share) ? "green" : "red";
+      const accept = (data.load < data.share) ? 'Is accepting public simulations'
+        : 'Is not accepting public simulations';
+      const color = (data.load < data.share) ? 'green' : 'red';
       const row =
         `<td><a class="has-text-dark" href="${data.url}/monitor" target="_blank">${name}</a></td>` +
         `<td class="has-text-right is-size-7" title="Start time">${started}</td>` +
@@ -239,28 +251,28 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-centered" title="Current server load">${percent(data.load)}</td>`;
       return row;
     }
-    
-    function mainContainer(project, active_tab) {
+
+    function mainContainer(project, activeTab) {
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
           <ul>
-            <li data-tab="scene" ${(active_tab == 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="scene" ${(activeTab === 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Scene</a>
             </li>
-            <li data-tab="animation" ${(active_tab == 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
             </li>
-            <li data-tab="simulation" ${(active_tab == 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
             </li>
-            <li data-tab="server" ${(active_tab == 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+            <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
             </li>
           </ul>
         </div>
         <div id="tab-content">
-          <section class="section${(active_tab == 'scene') ? ' is-active' : ''}" data-content="scene">
+          <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -284,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </section>
-          <section class="section${(active_tab == 'animation') ? ' is-active' : ''}" data-content="animation">
+          <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -309,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </section>
-          <section class="section${(active_tab == 'simulation') ? ' is-active' : ''}" data-content="simulation">
+          <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -334,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </section>
-          <section class="section${(active_tab == 'server') ? ' is-active' : ''}" data-content="server">
+          <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -375,10 +387,10 @@ document.addEventListener('DOMContentLoaded', function() {
               t.classList.remove(ACTIVE_CLASS);
           });
           tab.classList.add(ACTIVE_CLASS);
-          active_tab = tab.getAttribute('data-tab');
-          page = getPage(active_tab);
-          window.history.pushState(null, document.title, '/' + active_tab + ((page == 1) ? '' : '?p=' + page));
-          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + active_tab;
+          activeTab = tab.getAttribute('data-tab');
+          page = getPage(activeTab);
+          window.history.pushState(null, document.title, '/' + activeTab + ((page === 1) ? '' : '?p=' + page));
+          document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
@@ -426,9 +438,10 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
-              parent.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
+              parent.querySelector('#delete-' + id).addEventListener('click',
+                function(event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
-            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
           }
         });
@@ -461,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addAnimation(type) {
       let content = {};
-      if (type == 'A')
+      if (type === 'A')
         content.innerHTML = `<div class="field">
           <label class="label">Webots animation</label>
           <div class="control has-icons-left">
@@ -495,10 +508,10 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
         </div>`;
       let cancelled = false;
-      const title = (type == 'A') ? 'Add an animation' : 'Add a scene';
+      const title = (type === 'A') ? 'Add an animation' : 'Add a scene';
       let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
-      const type_name = (type == 'A') ? 'animation' : 'scene';
-      let input = modal.querySelector(`#${type_name}-file`);
+      const typeName = (type === 'A') ? 'animation' : 'scene';
+      let input = modal.querySelector(`#${typeName}-file`);
       input.focus();
       modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
       modal.querySelector('form').addEventListener('submit', function(event) {
@@ -523,15 +536,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   return response.json();
                 })
                 .then(function(data) {
-                  if (data.status !== "uploaded")
+                  if (data.status !== 'uploaded')
                     modal.error(data.error);
                   else {
                     modal.close();
                     if (!project.id) {
-                      ModalDialog.run(`Anonymous ${type_name} uploaded`,
-                                      `The ${type_name} you just uploaded may be deleted anytime by anyone.<br>` +
-                                      `To prevent this, you should associate it with your webots.cloud account: ` +
-                                      `log in or sign up for a new account now from this browser.`);
+                      ModalDialog.run(`Anonymous ${typeName} uploaded`,
+                        `The ${typeName} you just uploaded may be deleted anytime by anyone.<br>` +
+                        `To prevent this, you should associate it with your webots.cloud account: ` +
+                        `log in or sign up for a new account now from this browser.`);
                       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
                       if (uploads === null)
                         uploads = [];
@@ -540,8 +553,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                   }
                 });
-              const p = (total == 0) ? 1 : Math.ceil(total / page_limit);
-              project.load(`/${type_name}${(p > 1) ? ('?p=' + p) : ''}`);
+              const p = (total === 0) ? 1 : Math.ceil(total / pageLimit);
+              project.load(`/${typeName}${(p > 1) ? ('?p=' + p) : ''}`);
             }
           });
       });
@@ -603,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
               const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
               updatePagination('simulation', page, total);
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
             }
@@ -612,24 +625,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listAnimations(type, page) {
-      const type_name = (type == 'A') ? 'animation' : 'scene';
-      const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      const offset = (page - 1) * page_limit;
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit, type: type})})
+      const typeName = (type === 'A') ? 'animation' : 'scene';
+      const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+      const offset = (page - 1) * pageLimit;
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit, type: type})})
         .then(function(response) {
           return response.json();
         })
         .then(function(data) {
           if (data.error)
-            ModalDialog.run(`${capitalized_type_name} listing error`, data.error);
+            ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            let parent = project.content.querySelector(`section[data-content="${type_name}"] > div > table > tbody`);
+            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
-              let node = parent.querySelector(`#${type_name}-${data.animations[i].id}`);
+              let node = parent.querySelector(`#${typeName}-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
@@ -637,15 +650,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
-            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
-            updatePagination(type_name, page, total);
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            updatePagination(typeName, page, total);
           }
         });
     }
 
     function listSimulations(page) {
-      let offset = (page - 1) * page_limit;
-      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+      let offset = (page - 1) * pageLimit;
+      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
         .then(function(response) {
           return response.json();
         })
@@ -654,7 +667,8 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run('Project listing error', data.error);
           else {
             if (project.email && project.email.endsWith('@cyberbotics.com'))
-              project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr').appendChild(document.createElement('th'));
+              project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
+                .appendChild(document.createElement('th'));
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
@@ -663,17 +677,18 @@ document.addEventListener('DOMContentLoaded', function() {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
               if (project.content.querySelector('#delete-' + id) !== null)
-                project.content.querySelector('#delete-' + id).addEventListener('click', function(event) { deleteSimulation(event, project); });
+                project.content.querySelector('#delete-' + id)
+                  .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
-            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
           }
         });
     }
 
     function listServers(page) {
-      let offset = (page - 1) * page_limit;
-      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: page_limit})})
+      let offset = (page - 1) * pageLimit;
+      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
         .then(function(response) {
           return response.json();
         })
@@ -687,17 +702,18 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
-            const total = (data.total == 0) ? 1 : Math.ceil(data.total / page_limit);
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('server', page, total);
           }
         });
     }
 
     function deleteAnimation(event, type, project, page) {
-      const animation = parseInt(event.target.id.substring((type == 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
-      const type_name = (type == 'A') ? 'animation' : 'scene';
-      const capitalized_type_name = type_name.charAt(0).toUpperCase() + type_name.slice(1);
-      let dialog = ModalDialog.run(`Really delete ${type_name}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete ${capitalized_type_name}`, 'is-danger');
+      const animation = parseInt(event.target.id.substring((type === 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
+      const typeName = (type === 'A') ? 'animation' : 'scene';
+      const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+      let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete ${capitalizedTypeName}`, 'is-danger');
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
@@ -717,8 +733,8 @@ document.addEventListener('DOMContentLoaded', function() {
           .then(function(data) {
             dialog.close();
             if (data.error)
-              ModalDialog.run(`${capitalized_type_name} deletion error`, data.error);
-            else if (data.status == 1) {
+              ModalDialog.run(`${capitalizedTypeName} deletion error`, data.error);
+            else if (data.status === 1) {
               let uploads = JSON.parse(window.localStorage.getItem('uploads'));
               if (uploads !== null && uploads.includes(animation)) {
                 uploads.splice(uploads.indexOf(animation), 1);
@@ -726,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   uploads = null;
               }
               window.localStorage.setItem('uploads', JSON.stringify(uploads));
-              project.load(`/${type_name}${(page > 1) ? ('?p=' + page) : ''}`);
+              project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
@@ -734,11 +750,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function deleteSimulation(event, project) {
       const id = event.target.id.substring(7);
-      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete simulation`, 'is-danger');
+      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete simulation`, 'is-danger');
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/project/delete.php', {method: 'post', body: JSON.stringify({user: project.id, password: project.password, id: id})})
+        fetch('ajax/project/delete.php', {method: 'post',
+          body: JSON.stringify({user: project.id, password: project.password, id: id})})
           .then(function(response) {
             return response.json();
           })
@@ -746,7 +764,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
-            else if (data.status == 1)
+            else if (data.status === 1)
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           });
       });
@@ -756,5 +774,4 @@ document.addEventListener('DOMContentLoaded', function() {
   function runPage(project) {
     project.runWebotsView();
   }
-
 });
