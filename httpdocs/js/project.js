@@ -13,17 +13,17 @@ export default class Project extends User {
   dynamicPage(url, pushHistory) {
     let that = this;
     let promise = new Promise((resolve, reject) => {
-      if (!url.pathname.startsWith('/A') && !url.pathname.startsWith('/M') && url.pathname.length != 8) {
+      if (!url.pathname.startsWith('/A') && !url.pathname.startsWith('/M') && url.pathname.length !== 8) {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post',body: JSON.stringify({url: url, type: url.pathname[1]})})
+      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
         .then(function(response) {
           return response.json();
         })
         .then(function(data) {
           let pushUrl;
-          if (url.search !== data.uploadMessage) 
+          if (url.search !== data.uploadMessage)
             pushUrl = url.pathname + url.search + url.hash;
           else {
             if (!that.id) {
@@ -71,7 +71,7 @@ export default class Project extends User {
     super.setup(title, anchors, content, fullpage);
   }
   findGetParameter(parameterName) {
-    let result = undefined;
+    let result;
     let tmp = [];
     let items = window.location.search.substr(1).split('&');
     for (let index = 0; index < items.length; index++) {
@@ -85,7 +85,7 @@ export default class Project extends User {
     const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     let template = document.createElement('template');
     template.innerHTML = `<section class="section" style="padding:0;height:100%">
-<div class="container" id="webots-view-container">${view}</div>`
+      <div class="container" id="webots-view-container">${view}</div>`;
     if (data) {
       const description = data.description.replace('\n', '<br>\n');
       template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
