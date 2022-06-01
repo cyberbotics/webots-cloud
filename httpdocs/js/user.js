@@ -170,9 +170,9 @@ export default class User extends Router {
               if (data.error)
                 ModalDialog.run('Account activation error', data.error);
               else {
-                if (data.status == 0)
+                if (data.status === 0)
                   ModalDialog.run('Welcome to ' + that.title, '<p>Your new account is up-and-ready.</p>');
-                else if (data.status == 1)
+                else if (data.status === 1)
                   ModalDialog.run('Password changed', '<p>Your password was successfully changed.</p>');
                 else
                   console.error('Error: ' + data.status);
@@ -240,8 +240,8 @@ export default class User extends Router {
       });
       document.querySelector('#delete-account').addEventListener('click', function(event) {
         let dialog = ModalDialog.run('Really delete account?',
-                                     '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
-                                     '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
+          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
+          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
         dialog.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
           dialog.querySelector('button[type="submit"]').classList.add('is-loading');
@@ -517,7 +517,8 @@ x[i].innerHTML = displayName;
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads == null)
         uploads = [];
-      fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
+      fetch('/ajax/user/authenticate.php', { method: 'post',
+        body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
         .then(function(response) {
           return response.json();
         })
@@ -536,15 +537,15 @@ x[i].innerHTML = displayName;
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
             window.localStorage.removeItem('uploads');
-            if (reload)  // the page content may need to be updated after loging in.
+            if (reload) // the page content may need to be updated after loging in.
               that.load();
             if (success)
               success();
-            if (uploads.length != 0)
+            if (uploads.length !== 0)
               ModalDialog.run(`Uploads associated`,
-                              `Thank you for logging in!<br>` +
-                              `All scenes and animations that you have uploaded during this session have been associated with your webots.cloud account. ` +
-                              `Only you may delete them now.`);
+                `Thank you for logging in!<br>` +
+                `All scenes and animations that you have uploaded during this session have been associated with your` +
+                `webots.cloud account. Only you may delete them now.`);
           }
         });
     }

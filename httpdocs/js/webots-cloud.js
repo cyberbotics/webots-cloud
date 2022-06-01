@@ -404,8 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
-              errorMsg = errorMsg + 
-                `<div class="help">More information at: 
+              errorMsg = errorMsg +
+                `<div class="help">More information at:
                   <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                     github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml
                   </a>
@@ -590,8 +590,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
-                errorMsg = errorMsg + 
-                  `<div class="help">More information at: 
+                errorMsg = errorMsg +
+                  `<div class="help">More information at:
                     <a target="_blank" href="https://github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml">
                       github.com/cyberbotics/webots-cloud/tree/beta#webotsyaml
                     </a>
@@ -731,7 +731,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
-  
+
     function deleteSimulation(event, project) {
       const id = event.target.id.substring(7);
       let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel', `Delete simulation`, 'is-danger');

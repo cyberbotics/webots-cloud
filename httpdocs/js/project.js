@@ -34,7 +34,8 @@ export default class Project extends User {
                 uploads.push(data.animation.id);
               window.localStorage.setItem('uploads', JSON.stringify(uploads));
             } else {
-              fetch('/ajax/user/authenticate.php', { method: 'post', body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
+              fetch('/ajax/user/authenticate.php', { method: 'post',
+                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
                 .then(function(response) {
                   return response.json();
                 })
@@ -45,7 +46,8 @@ export default class Project extends User {
                     that.load('/');
                     ModalDialog.run('Error', data.error);
                   } else
-                    ModalDialog.run(`Upload associated`, `Your upload has successfully been associated with your webots.cloud account`);
+                    ModalDialog.run(`Upload associated`,
+                      `Your upload has successfully been associated with your webots.cloud account`);
                 });
             }
             pushUrl = url.pathname + url.hash;
@@ -82,7 +84,8 @@ export default class Project extends User {
     return result;
   }
   setupWebotsView(page, data) {
-    const view = (!Project.webotsView) ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
+    const view = (!Project.webotsView)
+      ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     let template = document.createElement('template');
     template.innerHTML = `<section class="section" style="padding:0;height:100%">
       <div class="container" id="webots-view-container">${view}</div>`;
@@ -135,7 +138,8 @@ export default class Project extends User {
           }
         };
         script.onerror = () => {
-          console.warn('Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+          console.warn(
+            'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
           that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
         };
