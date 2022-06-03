@@ -144,7 +144,7 @@ export default class Project extends User {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
         that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`); // `${reference}/thumbnail.jpg`, 
         else
           Project.webotsView.loadScene(`${reference}/scene.x3d`);
       } else {
