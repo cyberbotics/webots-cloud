@@ -123,13 +123,15 @@ export default class Project extends User {
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
             that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
-              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+              Project.webotsView.loadAnimation(`${reference}/thumbnail.jpg`, `${reference}/scene.x3d`, `${reference}/animation.json`);
             else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`);
+              Project.webotsView.loadScene(`${reference}/thumbnail.jpg`, `${reference}/scene.x3d`);
             resolve();
           } else {
             that.setupWebotsView('run');
-            Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+            let dotIdx = url.lastIndexOf('/') + 1;
+            let thumbnailUrl = (url.slice(0, dotIdx) + "." + url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+            Project.webotsView.connect(thumbnailUrl, 'https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
             Project.webotsView.showQuit = false;
             resolve();
           }
@@ -144,12 +146,14 @@ export default class Project extends User {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
         that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`); // `${reference}/thumbnail.jpg`, 
+          Project.webotsView.loadAnimation(`${reference}/thumbnail.jpg`, `${reference}/scene.x3d`, `${reference}/animation.json`);
         else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`);
+          Project.webotsView.loadScene(`${reference}/thumbnail.jpg`, `${reference}/scene.x3d`);
       } else {
         that.setupWebotsView('run');
-        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
+        let dotIdx = url.lastIndexOf('/') + 1;
+        let thumbnailUrl = (url.slice(0, dotIdx) + "." + url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+        Project.webotsView.connect(thumbnailUrl, 'https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode, false, undefined, 300);
         Project.webotsView.showQuit = false;
       }
     });
