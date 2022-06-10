@@ -73,7 +73,7 @@ export default class Router {
   load(page = null, pushHistory = true) {
     let that = this;
     let promise = new Promise((resolve, reject) => {
-      if (page == null)
+      if (page === null)
         page = window.location.pathname + window.location.search + window.location.hash;
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
