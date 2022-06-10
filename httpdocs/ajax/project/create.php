@@ -48,7 +48,7 @@ $info = false;
 $title = '';
 $description = '';
 $line = strtok($world_content, "\r\n");
-$version = $mysqli->escape_string(substr($line, 10, 6));  // "#VRML_SIM R2022b utf8" -> "R2022b"
+$version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
 while ($line !== false) {
   if ($line == "WorldInfo {")
