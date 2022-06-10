@@ -21,37 +21,37 @@ export default class User extends Router {
     function resetPassword(id, token, email) {
       let content = {};
       content.innerHTML =
-`<div class="field">
-<label class="label">E-mail</label>
-<div class="control has-icons-left">
-  <input class="input" type="email" required readonly value="${email}">
-  <span class="icon is-small is-left">
-    <i class="fas fa-envelope"></i>
-  </span>
-</div>
-</div>
-<div class="field">
-<label class="label">Password</label>
-<div class="control has-icons-left">
-  <input id="choose-password" class="input" type="password" required autocomplete=new-password>
-  <span class="icon is-small is-left">
-    <i class="fas fa-lock"></i>
-  </span>
-</div>
-<div id="choose-password-help" class="help">
-  8 characters minimum, including at least a lowercase letter, an uppercase letter, a number and a symbol.
-</div>
-</div>
-<div class="field">
-<label class="label">Password (confirm)</label>
-<div class="control has-icons-left">
-  <input id="choose-confirm-password" class="input" type="password" required>
-  <span class="icon is-small is-left">
-    <i class="fas fa-lock"></i>
-  </span>
-</div>
-<div id="choose-confirm-help" class="help">&nbsp;</div>
-</div>`;
+        `<div class="field">
+        <label class="label">E-mail</label>
+        <div class="control has-icons-left">
+          <input class="input" type="email" required readonly value="${email}">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
+        </div>
+        <div class="field">
+        <label class="label">Password</label>
+        <div class="control has-icons-left">
+          <input id="choose-password" class="input" type="password" required autocomplete=new-password>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+        <div id="choose-password-help" class="help">
+          8 characters minimum, including at least a lowercase letter, an uppercase letter, a number and a symbol.
+        </div>
+        </div>
+        <div class="field">
+        <label class="label">Password (confirm)</label>
+        <div class="control has-icons-left">
+          <input id="choose-confirm-password" class="input" type="password" required>
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+        <div id="choose-confirm-help" class="help">&nbsp;</div>
+        </div>`;
       let choose = ModalDialog.run('Choose a password', content.innerHTML, 'Cancel', 'Ok');
       choose.querySelector('#choose-password').focus();
       choose.querySelector('button[type="submit"]').disabled = true;
@@ -193,46 +193,46 @@ export default class User extends Router {
       const hostname = document.location.hostname;
       const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
       template.innerHTML =
-`<section class="section">
-  <div class="container">
-    <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
-    <h2 class="subtitle pt-3">${that.email}</h2>
-  </div>
-</section>
-<section class="section" style="margin-top:0;padding-top:0">
-  <div class="container panel">
-    <p class="panel-heading">Gravatar Profile</p>
-    <div class="panel-block">
-      <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
-      <span name="displayName">${name}</span>
-    </div>
-    <div class="panel-block">
-      <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
-    </div>
-    <div class="panel-block">
-      <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
-    </div>
-  </div>
-  <div class="container panel">
-    <p class="panel-heading">Change Password</p>
-    <div class="panel-block">
-      We will send you a e-mail with a link to reset your password.
-    </div>
-    <div class="panel-block">
-      <button class="button is-link" id="change-password">Change Password</button>
-    </div>
-  </div>
-  <div class="container panel">
-    <p class="panel-heading">Delete Account</p>
-    <div class="panel-block">
-      All your data will be erased, including the scenes and animations you uploaded.
-      There is no undo.
-    </div>
-    <div class="panel-block">
-      <button class="button is-danger" id="delete-account">Delete my Account</button>
-    </div>
-  </div>
-</section>`;
+        `<section class="section">
+          <div class="container">
+            <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
+            <h2 class="subtitle pt-3">${that.email}</h2>
+          </div>
+        </section>
+        <section class="section" style="margin-top:0;padding-top:0">
+          <div class="container panel">
+            <p class="panel-heading">Gravatar Profile</p>
+            <div class="panel-block">
+              <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
+              <span name="displayName">${name}</span>
+            </div>
+            <div class="panel-block">
+              <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
+            </div>
+            <div class="panel-block">
+              <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Change Password</p>
+            <div class="panel-block">
+              We will send you a e-mail with a link to reset your password.
+            </div>
+            <div class="panel-block">
+              <button class="button is-link" id="change-password">Change Password</button>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Delete Account</p>
+            <div class="panel-block">
+              All your data will be erased, including the scenes and animations you uploaded.
+              There is no undo.
+            </div>
+            <div class="panel-block">
+              <button class="button is-danger" id="delete-account">Delete my Account</button>
+            </div>
+          </div>
+        </section>`;
       that.setup('settings', [], template.content);
       document.querySelector('#change-password').addEventListener('click', function(event) {
         event.target.classList.add('is-loading');
@@ -245,7 +245,8 @@ export default class User extends Router {
         dialog.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
           dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post', body: JSON.stringify({email: that.email, password: that.password})})
+          fetch('/ajax/user/delete.php', { method: 'post',
+            body: JSON.stringify({email: that.email, password: that.password})})
             .then(function(response) {
               return response.json();
             })
@@ -285,24 +286,24 @@ export default class User extends Router {
       let script = document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `let displayName = 'Anonymous';
-function User_profile(data) {
-if (data && data.entry && data.entry[0]) {
-displayName = data.entry[0].displayName;
-if (!displayName)
-displayName = data.entry[0].name.formatted;
-if (!displayName)
-displayName = data.entry[0].name.givenName;
-if (!displayName)
-displayName = data.entry[0].name.familyName;
-if (!displayName)
-displayName = 'Anonymous';
-} else
-displayName = 'Anonymous';
-let x = document.getElementsByName("displayName");
-let i;
-for (i = 0; i < x.length; i++)
-x[i].innerHTML = displayName;
-}`;
+        function User_profile(data) {
+        if (data && data.entry && data.entry[0]) {
+        displayName = data.entry[0].displayName;
+        if (!displayName)
+        displayName = data.entry[0].name.formatted;
+        if (!displayName)
+        displayName = data.entry[0].name.givenName;
+        if (!displayName)
+        displayName = data.entry[0].name.familyName;
+        if (!displayName)
+        displayName = 'Anonymous';
+        } else
+        displayName = 'Anonymous';
+        let x = document.getElementsByName("displayName");
+        let i;
+        for (i = 0; i < x.length; i++)
+        x[i].innerHTML = displayName;
+        }`;
       head.appendChild(script);
     } else
       User_profile();
@@ -346,24 +347,24 @@ x[i].innerHTML = displayName;
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
     div.innerHTML =
-`<div class="navbar-item">
-  <div class="buttons">
-    <a class="button is-small is-success" id="sign-up">
-      <strong>Sign up</strong>
-    </a>
-    <a class="button is-small is-light" id="log-in">
-      Log in
-    </a>
-  </div>
-</div>
-<div id="user-menu" class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
-  <div class="navbar-dropdown is-boxed">
-    <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
-    <div class="navbar-divider"></div>
-    <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
-  </div>
-</div>`;
+      `<div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-small is-success" id="sign-up">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-small is-light" id="log-in">
+            Log in
+          </a>
+        </div>
+      </div>
+      <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
+          <div class="navbar-divider"></div>
+          <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
+        </div>
+      </div>`;
     let that = this;
 
     div.querySelector('a#log-out').addEventListener('click', function(event) {
@@ -380,16 +381,16 @@ x[i].innerHTML = displayName;
       event.preventDefault();
       let content = {};
       content.innerHTML =
-`<div class="field">
-  <label class="label">E-mail</label>
-  <div class="control has-icons-left">
-    <input id="sign-up-email" class="input" type="email" required placeholder="Enter your e-mail address">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-  </div>
-  <div id="sign-up-email-help" class="help">We will send you an e-mail to verify this address.</div>
-</div>`;
+        `<div class="field">
+          <label class="label">E-mail</label>
+          <div class="control has-icons-left">
+            <input id="sign-up-email" class="input" type="email" required placeholder="Enter your e-mail address">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+          <div id="sign-up-email-help" class="help">We will send you an e-mail to verify this address.</div>
+        </div>`;
       let modal = ModalDialog.run('Sign up', content.innerHTML, 'Cancel', 'Sign up');
       modal.querySelector('#sign-up-email').focus();
       modal.querySelector('#sign-up-email').addEventListener('change', function(event) {
@@ -447,42 +448,42 @@ x[i].innerHTML = displayName;
       event.preventDefault();
       let content = {};
       content.innerHTML =
-`<div class="field">
-  <label class="label">E-mail</label>
-  <div class="control has-icons-left">
-    <input id="log-in-email" class="input" type="email" required placeholder="Enter your e-mail address">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-  </div>
-</div>
-<div class="field">
-  <label class="label">Password</label>
-  <div class="control has-icons-left">
-    <input id="log-in-password" class="input" type="password" required>
-    <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
-  </div>
-  <div class="has-text-right"><a id="log-in-forgot" class="help">Forgot your password?</a></div>
-</div>
-<p id="log-in-help" class="help"></p>`;
+        `<div class="field">
+          <label class="label">E-mail</label>
+          <div class="control has-icons-left">
+            <input id="log-in-email" class="input" type="email" required placeholder="Enter your e-mail address">
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+            <input id="log-in-password" class="input" type="password" required>
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+          <div class="has-text-right"><a id="log-in-forgot" class="help">Forgot your password?</a></div>
+        </div>
+        <p id="log-in-help" class="help"></p>`;
       let modal = ModalDialog.run('Log in', content.innerHTML, 'Cancel', 'Log in');
       modal.querySelector('#log-in-email').focus();
       modal.querySelector('#log-in-forgot').addEventListener('click', function(event) {
         modal.close();
         let content = {};
         content.innerHTML =
-`<div class="field">
-  <label class="label">E-mail</label>
-  <div class="control has-icons-left">
-    <input id="forgot-email" class="input" type="email" required placeholder="Enter your e-mail address"
-     value="${modal.querySelector('#log-in-email').value}">
-    <span class="icon is-small is-left">
-      <i class="fas fa-envelope"></i>
-    </span>
-  </div>
-</div>`;
+          `<div class="field">
+            <label class="label">E-mail</label>
+            <div class="control has-icons-left">
+              <input id="forgot-email" class="input" type="email" required placeholder="Enter your e-mail address"
+              value="${modal.querySelector('#log-in-email').value}">
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+          </div>`;
         let forgot = ModalDialog.run('Forgot your password?', content.innerHTML, 'Cancel', 'Reset Password');
         forgot.querySelector('#forgot-email').focus();
         forgot.querySelector('form').addEventListener('submit', function(event) {

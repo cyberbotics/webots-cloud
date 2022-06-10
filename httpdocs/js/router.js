@@ -39,24 +39,24 @@ export default class Router {
       document.body.removeChild(navbar);
     let template = document.createElement('template');
     template.innerHTML =
-`<nav id="navbar" class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="/">
-      <img src="https://cyberbotics.com/assets/images/webots.png" /> &nbsp; ${this.title}
-    </a>
-    <a class="navbar-burger burger" data-target="router-navbar">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
-  </div>
-  <div id="router-navbar" class="navbar-menu">
-    <div class="navbar-start">
-    </div>
-    <div class="navbar-end">
-    </div>
-  </div>
-</nav>`;
+      `<nav id="navbar" class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="https://cyberbotics.com/assets/images/webots.png" /> &nbsp; ${this.title}
+          </a>
+          <a class="navbar-burger burger" data-target="router-navbar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <div id="router-navbar" class="navbar-menu">
+          <div class="navbar-start">
+          </div>
+          <div class="navbar-end">
+          </div>
+        </div>
+      </nav>`;
     document.body.prepend(template.content.firstChild);
 
     // navbar-burger
@@ -119,15 +119,15 @@ export default class Router {
     const hostname = document.location.hostname;
     let template = document.createElement('template');
     template.innerHTML =
-`<section>
-<div class="hero-body">
-<div class="container">
-<h1 class="title"><i class="fas fa-exclamation-triangle"></i> Page not found (404 error)</h1>
-<p>The requested page: <a href="${url}">${url}</a> was not found.</p>
-<p>Please report any bug to <a href="mailto:webmaster@${hostname}">webmaster@${hostname}</a></p>
-</div>
-</div>
-</section>`;
+      `<section>
+      <div class="hero-body">
+      <div class="container">
+      <h1 class="title"><i class="fas fa-exclamation-triangle"></i> Page not found (404 error)</h1>
+      <p>The requested page: <a href="${url}">${url}</a> was not found.</p>
+      <p>Please report any bug to <a href="mailto:webmaster@${hostname}">webmaster@${hostname}</a></p>
+      </div>
+      </div>
+      </section>`;
     this.setup('page not found', [], template.content);
   }
   setup(title, anchors, content, fullpage = false) {
