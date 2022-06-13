@@ -162,15 +162,25 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const type_name = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const imageUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
+      const defaultImgUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const style = (data.user == 0) ? ' style="color:grey"' : (project.id == data.user ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
       const tooltip = (data.user == 0) ? `Delete this anonymous ${type_name}` : (project.id == data.user ? `Delete your ${type_name}` : (admin ? `Delete this ${type_name} as administrator` : ''));
       const delete_icon = (data.user == 0 || project.id == data.user || admin) ? `<i${style} class="is-clickable far fa-trash-alt" id="${type_name}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${delete_icon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      let row = `<td class="has-text-centered">${data.viewed}</td>` +
-        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>`;
+      let row = `<td class="has-text-centered">${data.viewed}</td>`;
+      row += `<td class="title-cell">
+                <a class="table-title has-text-dark" href="${url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${imageUrl}" onerror="this.src='${defaultImgUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -180,6 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
+      const dotIdx = data.url.lastIndexOf('/') + 1;
+      const imageUrl = (data.url.slice(0, dotIdx) + "." + data.url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      const defaultImgUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
@@ -198,11 +211,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const delete_icon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}" title="Delete ${data.type} as administrator"></i>`;
       const delete_project = admin ? `<td class="has-text-centered">${delete_icon}</td>` : ``;
       const version_url = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const row =
-        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">` +
-        `${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+      let row = `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
+        title="GitHub stars"> ${data.stars}</a></td>`;
+      row += `<td class="title-cell">
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${imageUrl}" onerror="this.src='${defaultImgUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `<td><a class="has-text-dark" href="${version_url}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +

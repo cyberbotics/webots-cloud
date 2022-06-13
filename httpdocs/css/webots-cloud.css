@@ -202,3 +202,62 @@ nav.pagination > a[disabled] {
 .modal-card {
   max-width: calc(100vw - 40px);
 }
+
+/* Thumbnails */
+
+.table-container {
+  overflow: visible;
+}
+
+.table-url {
+  padding-bottom: 10px;
+}
+
+.thumbnail {
+  opacity: 0;
+  position: relative;
+  pointer-events: none;
+}
+
+.thumbnail-container {
+  position: absolute;
+  top: 5px;
+  left: 120px;
+  height: 180px;
+  width: 640px;
+  background: rgba(38, 38, 38, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px black;
+  display: flex;
+  overflow: hidden;
+}
+
+.thumbnail-image {
+  height: 100%;
+  box-shadow: 0 0 10px black;
+  z-index: 2;
+}
+
+.thumbnail-description {
+  position: relative;
+  height: 100%;
+  color: white;
+  padding: 10px;
+  font-size: small;
+  overflow: hidden;
+  margin: auto;
+}
+
+.thumbnail-description-fade {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(rgba(38, 38, 38, 0) 80%, rgba(38, 38, 38, 1) 95%);
+  z-index: 1;
+}
+
+.table-title:hover ~ .thumbnail {
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+  transition-delay: 0.75s;
+}
