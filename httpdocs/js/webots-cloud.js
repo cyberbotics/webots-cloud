@@ -505,6 +505,16 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
         </div>
         <div class="field">
+          <label class="label">Webots thumbnail</label>
+          <div class="control has-icons-left">
+            <input id="thumbnail-file" name="thumbnail-file" class="input" type="file" required accept=".jpg">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the thumbnail file: <em>thumbnail.jpg</em></div>
+        </div>
+        <div class="field">
           <label class="label">Texture files</label>
           <div class="control has-icons-left">
             <input id="texture-files" name="textures[]" class="input" type="file" multiple accept=".jpg, .jpeg, .png, .hrd">
