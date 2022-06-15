@@ -126,14 +126,17 @@ export default class Project extends User {
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
             that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
-              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`);
+              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else {
             that.setupWebotsView('run');
+            let dotIdx = url.lastIndexOf('/') + 1;
+            let thumbnailUrl = (url.slice(0, dotIdx) + "." + url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
             Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-              false, undefined, 300);
+              false, undefined, 300, thumbnailUrl);
             Project.webotsView.showQuit = false;
             resolve();
           }
@@ -149,13 +152,16 @@ export default class Project extends User {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
         that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`);
+          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`);
+          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else {
         that.setupWebotsView('run');
+        let dotIdx = url.lastIndexOf('/') + 1;
+        let thumbnailUrl = (url.slice(0, dotIdx) + "." + url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-          false, undefined, 300);
+          false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
       }
     });
@@ -176,6 +182,10 @@ export default class Project extends User {
           that.login();
       }
     });
+  }
+  _isMobileDevice() {
+    // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 }
 Project.current = null;
