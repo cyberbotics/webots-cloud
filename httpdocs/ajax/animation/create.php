@@ -20,7 +20,7 @@
     return $value;
   }
   function parse_mf_string($line, $parameter) {
-    $n = 2;  // skiping '<' and node name (at least one character)
+    $n = 2; // skiping '<' and node name (at least one character)
     $start = strpos($line, " $parameter='\"", $n);
     $value = array();
     if ($start !== false) {
@@ -146,9 +146,9 @@
     }
   }
 
-  if ($type === 'S')  // scene
+  if ($type === 'S') // scene
     $extra_condition = 'duration=0';
-  else  // animation
+  else // animation
     $extra_condition = 'duration>0';
   $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
