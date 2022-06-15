@@ -168,11 +168,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const style = (data.user === 0) ? ' style="color:grey"' : (project.id === data.user
+      const style = (data.user === 0) ? ' style="color:grey"' : (parseInt(project.id) === data.user
         ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
-      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (project.id === data.user
+      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(project.id === data.user)
         ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
-      const deleteIcon = (data.user === 0 || project.id === data.user || admin)
+      const deleteIcon = (data.user === 0 || parseInt(project.id) === data.user || admin)
         ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ',`<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
