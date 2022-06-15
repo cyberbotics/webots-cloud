@@ -14,21 +14,21 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
-  if ($type == 'S')  // scene
+  if ($type == 'S') // scene
     $extra_condition = 'duration = 0';
-  else  // animation
+  else // animation
     $extra_condition = 'duration > 0';
-  if (isset($data->url)) {  // view request
+  if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
     $uploadMessage = "?upload=webots";
     if (str_ends_with($uri, $uploadMessage))
       $uri = substr($uri, 0, strrpos($uri, '?'));
-    $id = string_to_mysql_id(substr($uri, 2));  // skipping '/A'
+    $id = string_to_mysql_id(substr($uri, 2)); // skipping '/A'
     $query = "UPDATE animation SET viewed = viewed + 1 WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
-  } else {  // listing request
+  } else { // listing request
     // delete old and not popular animations
     $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
     $result = $mysqli->query($query) or error($mysqli->error);
@@ -55,7 +55,7 @@
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($animations, $row);
   }
-  if (isset($data->url)) {  // view request
+  if (isset($data->url)) { // view request
     if (count($animations) === 0)
       error("Animation not found.");
     $answer = array();
