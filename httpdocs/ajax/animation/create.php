@@ -67,10 +67,6 @@
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
   $thumbnailAvailable = (array_key_exists('thumbnail-file', $_FILES) && $_FILES['thumbnail-file']['tmp_name'] !== '') ? true : false;
-  if ($thumbnailAvailable)
-    error("Available");
-  else
-    error("Not available");
   $size = $thumbnailAvailable ? $_FILES['thumbnail-file']['size'] : 0;
 
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
