@@ -197,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
-      const dotIdx = data.url.lastIndexOf('/') + 1;
-      const thumbnailUrl = (data.url.slice(0, dotIdx) + "." + data.url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      const dotIndex = data.url.lastIndexOf('/') + 1;
+      const thumbnailUrl = (data.url.slice(0, dotIndex) + "." + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
