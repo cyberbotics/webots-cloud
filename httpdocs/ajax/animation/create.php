@@ -111,8 +111,8 @@
     $duration = 0;
 
   // save entry in database
-  $escaped_title = $mysqli->escape_string($title);
-  $escaped_description = $mysqli->escape_string($description);
+  $escaped_title = html_entity_decode($mysqli->escape_string($title), ENT_QUOTES);
+  $escaped_description = html_entity_decode($mysqli->escape_string($description), ENT_QUOTES);
   $escaped_version = $mysqli->escape_string($version);
   if ($user !== 0) {
     $result = $mysqli->query("SELECT password from user WHERE id=$user") or error($mysqli->error);
