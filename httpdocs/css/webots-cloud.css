@@ -13,6 +13,7 @@ body {
 .scrollable-body {
   height: calc(100% - 3.25rem);
   width: 100vw;
+  min-width: 325px;
   overflow-y: auto;
   overflow-x: hidden;
   position: absolute;
@@ -242,7 +243,9 @@ nav.pagination > a[disabled] {
 }
 
 .thumbnail-image {
-  height: 100%;
+  height: 180px;
+  width: 320px;
+  object-fit: cover;
   box-shadow: 0 0 10px black;
   z-index: 2;
 }
@@ -273,15 +276,19 @@ nav.pagination > a[disabled] {
 
 @media screen and (max-width: 850px) {
   .thumbnail-container {
-    left: 80px;
-    width: 480px;
+    left: 40px;
+    height: 144px;
+    width: 512px;
+  }
+
+  .thumbnail-image {
+    height: 144px;
+    width: 256px;
   }
 }
 
 @media screen and (max-width: 656px) {
   .thumbnail-container {
-    left: 40px;
-    height: 140px;
     width: 420px;
   }
 }
