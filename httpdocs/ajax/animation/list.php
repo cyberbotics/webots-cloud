@@ -63,7 +63,7 @@
     $answer['uploadMessage'] = $uploadMessage;
     die(json_encode($answer));
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition AND uploading = 0") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;

@@ -165,19 +165,29 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const typeName = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const style = (data.user === 0) ? ' style="color:grey"' : (project.id === data.user
+      const style = (data.user === 0) ? ' style="color:grey"' : (parseInt(project.id) === data.user
         ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
-      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (project.id === data.user
+      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(project.id === data.user)
         ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
-      const deleteIcon = (data.user === 0 || project.id === data.user || admin)
+      const deleteIcon = (data.user === 0 || parseInt(project.id) === data.user || admin)
         ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      let row = `<td class="has-text-centered">${data.viewed}</td>` +
-        `<td><a class="has-text-dark" href="${url}" title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" ` +
-        ` title="View Webots release">${data.version}</a></td>`;
+      let row = `<td class="has-text-centered">${data.viewed}</td>`;
+      row += `<td>
+                <a class="table-title has-text-dark" href="${url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
+        title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -187,6 +197,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
+      const dotIndex = data.url.lastIndexOf('/') + 1;
+      const thumbnailUrl = (data.url.slice(0, dotIndex) + "." + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
@@ -202,18 +215,23 @@ document.addEventListener('DOMContentLoaded', function() {
       else
         icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
-      const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"` +
-        ` title="Delete ${data.type} as administrator"></i>`;
+      const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
+        title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const row =
-        `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank" ` +
-          ` title="GitHub stars"> ${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="/run?version=${data.version}&url=${data.url}" ` +
-           ` title="${data.description}">${title}</a></td>` +
-        `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" ` +
-          ` title="View Webots release">${data.version}</a></td>` +
+      let row = `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
+        title="GitHub stars"> ${data.stars}</a></td>`;
+      row += `<td class="title-cell">
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
@@ -277,10 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-                    <th title="Title of the scene">Title</th>
+                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
                     <th title="Webots release of the scene">Version</th>
-                    <th title="Total size of the scene files">Size</th>
+                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
                     <th title="Upload date and time">Uploaded</th>
                   </tr>
                 </thead>
@@ -301,11 +319,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-bar"></i></th>
-                    <th title="Title of the animation">Title</th>
+                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Title of the animation" style="min-width: 120px;">Title</th>
                     <th title="Webots release of the animation">Version</th>
                     <th title="Duration of the animation">Duration</th>
-                    <th title="Total size of the animation files">Size</th>
+                    <th title="Total size of the animation files" style="text-align: right; min-width: 65px;">Size</th>
                     <th title="Upload date and time">Uploaded</th>
                   </tr>
                 </thead>
@@ -496,6 +514,16 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
+        </div>
+        <div class="field">
+          <label class="label">Webots thumbnail</label>
+          <div class="control has-icons-left">
+            <input id="thumbnail-file" name="thumbnail-file" class="input" type="file" accept=".jpg">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload the thumbnail file: <em>thumbnail.jpg</em></div>
         </div>
         <div class="field">
           <label class="label">Texture files</label>
