@@ -205,9 +205,15 @@ nav.pagination > a[disabled] {
 
 /* Thumbnails */
 
+.container {
+  position: relative;
+}
+
 .table-container {
+  position: relative;
   overflow: visible;
   overflow-x: unset;
+  z-index: 2;
 }
 
 .table-url {
