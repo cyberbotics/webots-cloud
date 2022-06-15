@@ -66,7 +66,13 @@
   $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
-  $size += $_FILES['thumbnail-file']['size'];
+  $thumbnailAvailable = (array_key_exists('thumbnail-file', $_FILES) && $_FILES['thumbnail-file']['tmp_name'] !== '') ? true : false;
+  if ($thumbnailAvailable)
+    error("Available");
+  else
+    error("Not available");
+  $size = $thumbnailAvailable ? $_FILES['thumbnail-file']['size'] : 0;
+
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
@@ -136,7 +142,7 @@
     error('Cannot move animation file.');
   if (!move_uploaded_file($_FILES['scene-file']['tmp_name'], "$folder/scene.x3d"))
     error('Cannot move scene file.');
-  if (!move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
+  if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
   if ($total > 0) {
     mkdir("$folder/textures");

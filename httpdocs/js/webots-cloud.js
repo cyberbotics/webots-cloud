@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="field">
           <label class="label">Webots thumbnail</label>
           <div class="control has-icons-left">
-            <input id="thumbnail-file" name="thumbnail-file" class="input" type="file" required accept=".jpg">
+            <input id="thumbnail-file" name="thumbnail-file" class="input" type="file" accept=".jpg">
             <span class="icon is-small is-left">
               <i class="fas fa-upload"></i>
             </span>
