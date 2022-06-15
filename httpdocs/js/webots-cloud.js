@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const typeName = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
-      const imgUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
-      const defaultImgUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
+      const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const style = (data.user === 0) ? ' style="color:grey"' : (project.id === data.user
         ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
@@ -177,11 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const uploaded = data.uploaded.replace(' ',`<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>`;
-      row += `<td class="title-cell">
+      row += `<td>
                 <a class="table-title has-text-dark" href="${url}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${imgUrl}" onerror="this.src='${defaultImgUrl}';"/>
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
                     <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
                   </div>
                 </div>
@@ -198,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIdx = data.url.lastIndexOf('/') + 1;
-      const imgUrl = (data.url.slice(0, dotIdx) + "." + data.url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-      const defaultImgUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
+      const thumbnailUrl = (data.url.slice(0, dotIdx) + "." + data.url.slice(dotIdx)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${imgUrl}" onerror="this.src='${defaultImgUrl}';"/>
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
                     <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
                   </div>
                 </div>
@@ -797,6 +797,19 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
+  }
+
+  function checkImage(url) {
+    var request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.send();
+    request.onload = function() {
+      if (request.status == 200)
+        console.log("image exists");
+      else
+        console.log("image doesn't exist");
+    }
+    return thumbnailUrl;
   }
 
   function runPage(project) {
