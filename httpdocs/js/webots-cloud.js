@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
       const deleteIcon = (data.user === 0 || parseInt(project.id) === data.user || admin)
         ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
-      const uploaded = data.uploaded.replace(' ',`<br>${deleteIcon} `);
+      const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>`;
       row += `<td>
