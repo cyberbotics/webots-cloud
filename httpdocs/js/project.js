@@ -101,12 +101,13 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  runWebotsView(data) {
+  runWebotsView(data, fallbackVersion) {
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    const version = data ? data.version : this.findGetParameter('version');
+    const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
+      (data ? data.version : this.findGetParameter('version'));
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
@@ -145,7 +146,7 @@ export default class Project extends User {
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
-          that.loadSimulation('https://cyberbotics.com/wwi/R2022b/WebotsView.js'); // if release not found, default to R2022b
+          that.runWebotsView(data, 'R2022b') // if release not found, default to R2022b
         };
         document.body.appendChild(script);
       } else if (data) {
