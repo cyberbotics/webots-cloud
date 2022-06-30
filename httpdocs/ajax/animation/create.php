@@ -20,7 +20,7 @@
     return $value;
   }
   function parse_mf_string($line, $parameter) {
-    $n = 2;  // skiping '<' and node name (at least one character)
+    $n = 2; // skiping '<' and node name (at least one character)
     $start = strpos($line, " $parameter='\"", $n);
     $value = array();
     if ($start !== false) {
@@ -43,14 +43,36 @@
     }
     return $value;
   }
+  // connect to database
+  require '../../../php/database.php';
+  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+  if ($mysqli->connect_errno)
+    error("Can't connect to MySQL database: $mysqli->connect_error");
+  $mysqli->set_charset('utf8');
+
+  // check if uploading is done
+  header('Content-Type: application/json');
+  $json = file_get_contents('php://input');
+  $data = json_decode($json);
+  $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
+  $uploadId = (isset($data->uploadId)) ? intval($data->uploadId) : null;
+  if (!$uploading && $uploadId) {
+    $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
+    $mysqli->query($query) or error($mysqli->error);
+    die('{"status": "uploaded"}');
+  }
+
+  // get files and variables from post
   $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
+  $thumbnailAvailable = (array_key_exists('thumbnail-file', $_FILES) && $_FILES['thumbnail-file']['tmp_name'] !== '') ? true : false;
+  $size += $thumbnailAvailable ? $_FILES['thumbnail-file']['size'] : 0;
+
   $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
   for($i = 0; $i < $total; $i++)
     $size += $_FILES['textures']['size'][$i];
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
-  header('Content-Type: application/json');
 
   // determine title, info and version
   $file = fopen($_FILES['scene-file']['tmp_name'], 'r') or error('Unable to open scene file');
@@ -71,6 +93,7 @@
     error('Missing WorldInfo title in x3d file');
   if (!isset($version))
     error('Missing version meta header node in x3d file');
+
   // determine duration
   if ($animation) {
     $duration = false;
@@ -86,14 +109,10 @@
       error('Missing duration');
   } else
     $duration = 0;
+
   // save entry in database
-  require '../../../php/database.php';
-  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-  if ($mysqli->connect_errno)
-    error("Can't connect to MySQL database: $mysqli->connect_error");
-  $mysqli->set_charset('utf8');
-  $escaped_title = $mysqli->escape_string($title);
-  $escaped_description = $mysqli->escape_string($description);
+  $escaped_title = html_entity_decode($mysqli->escape_string($title), ENT_QUOTES);
+  $escaped_description = html_entity_decode($mysqli->escape_string($description), ENT_QUOTES);
   $escaped_version = $mysqli->escape_string($version);
   if ($user !== 0) {
     $result = $mysqli->query("SELECT password from user WHERE id=$user") or error($mysqli->error);
@@ -119,6 +138,8 @@
     error('Cannot move animation file.');
   if (!move_uploaded_file($_FILES['scene-file']['tmp_name'], "$folder/scene.x3d"))
     error('Cannot move scene file.');
+  if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
+    error('Cannot move thumbnail file.');
   if ($total > 0) {
     mkdir("$folder/textures");
     for($i = 0; $i < $total; $i++) {
@@ -130,9 +151,9 @@
     }
   }
 
-  if ($type === 'S')  // scene
+  if ($type === 'S') // scene
     $extra_condition = 'duration=0';
-  else  // animation
+  else // animation
     $extra_condition = 'duration>0';
   $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
@@ -150,5 +171,6 @@
   $answer['viewed'] = 0;
   $answer['user'] = $user;
   $answer['uploaded'] = date("Y-m-d H:i:s");
+
   die(json_encode($answer));
  ?>

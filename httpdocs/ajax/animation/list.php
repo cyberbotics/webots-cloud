@@ -14,20 +14,23 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
-  if ($type == 'S')  // scene
+  if ($type == 'S') // scene
     $extra_condition = 'duration = 0';
-  else  // animation
+  else // animation
     $extra_condition = 'duration > 0';
-  if (isset($data->url)) {  // view request
+  if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
-    $id = string_to_mysql_id(substr($uri, 2));  // skipping '/A'
+    $uploadMessage = "?upload=webots";
+    if (str_ends_with($uri, $uploadMessage))
+      $uri = substr($uri, 0, strrpos($uri, '?'));
+    $id = string_to_mysql_id(substr($uri, 2)); // skipping '/A'
     $query = "UPDATE animation SET viewed = viewed + 1 WHERE id=$id";
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
-  } else {  // listing request
+  } else { // listing request
     // delete old and not popular animations
-    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)))";
+    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -35,7 +38,7 @@
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
     }
-    $query = "SELECT * FROM animation WHERE $extra_condition ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
+    $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY viewed DESC, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
@@ -52,12 +55,15 @@
     $row['url'] = 'https://' . $_SERVER['SERVER_NAME'] . $uri;
     array_push($animations, $row);
   }
-  if (isset($data->url)) {  // view request
+  if (isset($data->url)) { // view request
     if (count($animations) === 0)
       error("Animation not found.");
-    die(json_encode($animations[0]));
+    $answer = array();
+    $answer['animation'] = $animations[0];
+    $answer['uploadMessage'] = $uploadMessage;
+    die(json_encode($answer));
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition AND uploading = 0") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
