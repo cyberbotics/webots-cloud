@@ -72,6 +72,14 @@ div.table-container {
   display: flex;
 }
 
+#footer-terms-of-use {
+  margin: 1px 0 0 0;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
 #footer-github {
   margin: 0;
   position: absolute;
