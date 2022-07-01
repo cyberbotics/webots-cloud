@@ -97,6 +97,10 @@ div.table-container {
 }
 
 @media only screen and (max-width: 500px) {
+  #footer-terms-of-use {
+    display: none;
+  }
+
   #footer-github {
     top: 50%;
     left: 15px;
@@ -111,6 +115,10 @@ div.table-container {
 }
 
 @media only screen and (max-width: 350px) {
+  #footer-terms-of-use {
+    display: none;
+  }
+
   #footer-github {
     width: 100%;
     top: 50%;
@@ -144,6 +152,18 @@ div.table-container {
 
 #email {
   pointer-events: none;
+}
+
+#navbar-terms-of-use {
+  display: none;
+  position: relative;
+  right: 5px;
+}
+
+@media only screen and (max-width: 500px) {
+  #navbar-terms-of-use {
+    display: block;
+  }
 }
 
 /*  Tabs  */

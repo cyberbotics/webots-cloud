@@ -355,6 +355,9 @@ export default class User extends Router {
           <a class="button is-small is-light" id="log-in">
             Log in
           </a>
+          <a class="has-text-info" id="navbar-terms-of-use">
+            Terms of Use
+          </a>
         </div>
       </div>
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
