@@ -156,8 +156,14 @@ div.table-container {
 
 #navbar-terms-of-use {
   display: none;
-  position: relative;
-  right: 5px;
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  font-size: small;
+}
+
+#navbar-terms-of-use:hover {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
