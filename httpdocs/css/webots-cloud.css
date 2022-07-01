@@ -23,7 +23,7 @@ body {
 }
 
 body:after{
-  content: "testing version";
+  content: "beta version";
   position: fixed;
   width: 260px;
   height: 25px;
@@ -41,6 +41,7 @@ body:after{
   transform:rotate(45deg);
   z-index: 100;
   box-shadow: 2px 2px 5px #740f00;
+  display: none;
 }
 
 /*  Main Container  */
