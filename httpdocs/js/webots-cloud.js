@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     template.innerHTML =
       `<footer class="footer">
         <div class="content is-size-7" id="footer-terms-of-use">
-          <p><a class="has-text-white" target="_blank" href="#terms-of-use">Terms&nbsp;of&nbsp;use.</a></p>
+          <p><a class="has-text-white" href="terms-of-use">Terms&nbsp;of&nbsp;Use</a></p>
         </div>
         <div class="content has-text-centered" id="footer-github" style="margin-bottom:14px">
           <p>
