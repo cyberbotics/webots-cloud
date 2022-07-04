@@ -370,6 +370,8 @@ export default class User extends Router {
       </div>`;
     let that = this;
 
+    div.querySelector('a#navbar-terms-of-use').addEventListener('click', function(event) { that.load('terms-of-use'); });
+
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
       that.email = null;
