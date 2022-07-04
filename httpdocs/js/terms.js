@@ -40,7 +40,8 @@ export default class Terms {
             <h2 class="subtitle pt-4">Applicable Law</h2>
             <p>These terms are subject to Switzerland law.</p>
             <h2 class="subtitle pt-4">Applicable Law</h2>
-            <p>If you have any questions concerning the Terms of Service, please contact us at info@cyberbotics.com</p>
+            <p>If you have any questions concerning the Terms of Service, please contact us at 
+              <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
           </div>
         </section>`
       project.setup('terms-of-use', [], template.content);
