@@ -155,7 +155,7 @@ div.table-container {
   pointer-events: none;
 }
 
-#navbar-terms-of-use {
+#navbar-terms-of-use-signed-out {
   display: none;
   position: absolute;
   top: 14px;
@@ -163,12 +163,12 @@ div.table-container {
   font-size: small;
 }
 
-#navbar-terms-of-use:hover {
+#navbar-terms-of-use-signed-out:hover {
   cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
-  #navbar-terms-of-use {
+  #navbar-terms-of-use-signed-out {
     display: block;
   }
 }
