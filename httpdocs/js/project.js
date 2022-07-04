@@ -183,7 +183,7 @@ export default class Project extends User {
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
           document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'none';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'auto';
+          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'block';
         }
         if (that.email === '!')
           that.login();

@@ -332,7 +332,7 @@ export default class User extends Router {
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
           document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'none';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'auto';
+          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'block';
         }
         if (that.email === '!')
           that.login();
@@ -527,7 +527,7 @@ export default class User extends Router {
       document.querySelector('#log-in').style.display = 'none';
       document.querySelector('#sign-up').style.display = 'none';
       document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'auto';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
+      document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
       let that = this;
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads === null)
@@ -552,7 +552,7 @@ export default class User extends Router {
             document.querySelector('#log-in').style.display = 'none';
             document.querySelector('#sign-up').style.display = 'none';
             document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'auto';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
+            document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
             window.localStorage.removeItem('uploads');
             if (reload) // the page content may need to be updated after loging in.
               that.load();
