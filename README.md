@@ -85,7 +85,7 @@ webots.cloud parses the `webots.yaml` file at the root level of a repository to 
 
 ### Type
 
-Currently, we support 4 different types of repositories:
+Currently, we support 2 different types of repositories:
 
 #### Demo
 
