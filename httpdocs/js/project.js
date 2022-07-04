@@ -6,6 +6,7 @@ export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.load();
+    console.log("Project constructor called");
     this.termsOfService = new TermsAndPrivacy(routes, this);
   }
   static run(title, footer, routes) {
