@@ -17,9 +17,9 @@ export default class Terms {
             <p>In order to use our services, you may need to create an account with an e-mail address and a password. You are 
               responsible for keeping your password secure. Our <a target="_blank" href="https://webots.cloud/privacy-policy">
               Privacy Policy</a> informs you on what information we collect and how we use it.</p>
-            <h2 class="subtitle pt-6">Our Services</h2>
+            <h2 class="subtitle pt-4">Our Services</h2>
             <p>We provide you with the following services:</p>
-            <ul>https://testing.webots.cloud/scene
+            <ul>
               <li>Upload any Webots world file (<a target="_blank" href="https://webots.cloud/scene">scene</a>) and view it 
                 in 3D.</li>
               <li>Upload any Webots animation (<a target="_blank" href="https://webots.cloud/animation">animation</a>) and 
