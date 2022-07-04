@@ -332,7 +332,7 @@ export default class User extends Router {
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
           document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'none';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'block';
+          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'auto';
         }
         if (that.email === '!')
           that.login();
