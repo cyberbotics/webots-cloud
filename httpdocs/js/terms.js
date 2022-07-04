@@ -1,5 +1,6 @@
 export default class Terms {
   constructor(routes, project) {
+    console.log("Creating terms.");
     routes.push({url: '/terms-of-use', setup: termsOfUsePage});
     function termsOfUsePage() {
       const template = document.createElement('template');
