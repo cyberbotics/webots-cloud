@@ -105,6 +105,7 @@ export default class Router {
   dynamicPage(url, pushHistory) {
     let that = this;
     let promise = new Promise((resolve, reject) => {
+      console.log("dynamicPage -> notFound()");
       that.notFound();
       if (pushHistory)
         window.history.pushState(null, name, url.pathname + url.search + url.hash);
@@ -131,6 +132,7 @@ export default class Router {
     this.setup('page not found', [], template.content);
   }
   setup(title, anchors, content, fullpage = false) {
+    console.log("setup() title: " + title);
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
     let menu = '';
     for (let i = 0; i < anchors.length; i++)
