@@ -1,12 +1,12 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
-import Terms from './terms.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.load();
-    this.termsOfService = new Terms(routes, this);
+    this.termsOfService = new TermsAndPrivacy(routes, this);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
