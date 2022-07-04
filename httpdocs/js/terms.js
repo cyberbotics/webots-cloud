@@ -7,7 +7,7 @@ export default class Terms {
       template.innerHTML =
         `<section class="section">
           <div class="container content">
-            <h1 class="title pb-4"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Use</h1>
+            <h1 class="title pb-6"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Use</h1>
             <h2 class="subtitle pt-4">Introduction</h2>
             <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a>  is created, developed and operated by 
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered 
