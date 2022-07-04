@@ -12,7 +12,7 @@ export default class Project extends User {
       template.innerHTML =
         `<section class="section">
           <div class="container">
-            <h1 class="title pb-3"><i class="fas fa-pencil-square-o></i> Terms of Use</h1>
+            <h1 class="title pb-3"><i class="fas fa-pencil-square-o"></i> Terms of Use</h1>
             <h2 class="subtitle pt-3">Cyberbotics Ltd.</h2>
           </div>
         </section>`
