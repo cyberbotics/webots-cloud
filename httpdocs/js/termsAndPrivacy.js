@@ -105,7 +105,7 @@ export default class TermsAndPrivacy {
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
           </div>
         </section>`
-      project.setup('terms-of-use', [], template.content);
+      project.setup('privacy-policy', [], template.content);
     }
   }
 }
