@@ -18,19 +18,19 @@ export default class TermsAndPrivacy {
               agreement between you and Cyberbotics. They apply to your use of our services.</p>
             <h2 class="subtitle pt-4">Creating an account</h2>
             <p>In order to use our services, you may need to create an account with an e-mail address and a password. You are 
-              responsible for keeping your password secure. Our <a target="_blank" href="https://webots.cloud/privacy-policy">
+              responsible for keeping your password secure. Our <a target="_blank" href="privacy-policy">
               Privacy Policy</a> informs you on what information we collect and how we use it.</p>
             <h2 class="subtitle pt-4">Our services</h2>
             <p>We provide you with the following services:</p>
             <ul>
-              <li>Upload any Webots world file (<a target="_blank" href="https://webots.cloud/scene">scene</a>) and view it 
+              <li>Upload any Webots world file (<a target="_blank" href="scene">scene</a>) and view it 
                 in 3D.</li>
-              <li>Upload any Webots animation (<a target="_blank" href="https://webots.cloud/animation">animation</a>) and 
+              <li>Upload any Webots animation (<a target="_blank" href="animation">animation</a>) and 
                 play it back in 3D.</li>
               <li>Refer to a GitHub repository containing a Webots simulation (<a target="_blank" 
-                href="https://webots.cloud/simulation">simulation</a>), run it in the cloud and visualize the result in real 
+                href="simulation">simulation</a>), run it in the cloud and visualize the result in real 
                 time.</li>
-              <li>Register your own server (<a target="_blank" href="https://webots.cloud/server">server</a>) to run the 
+              <li>Register your own server (<a target="_blank" href="server">server</a>) to run the 
                 simulations.</Li>
             </ul>
             <h2 class="subtitle pt-4">Your content</h2>
@@ -45,7 +45,7 @@ export default class TermsAndPrivacy {
             <p>These terms are subject to Switzerland law.</p>
             <h2 class="subtitle pt-4">Privacy Policy</h2>
             <p>All information concerning data protection and privacy can be found here: 
-              <a href="https://webots.cloud/privacy-policy">Privacy Policy</a>.</p>
+              <a href="privacy-policy">Privacy Policy</a>.</p>
             <h2 class="subtitle pt-4">How to contact us?</h2>
             <p>If you have any questions concerning the Terms of Service, please contact us at 
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
@@ -88,7 +88,7 @@ export default class TermsAndPrivacy {
             </ul>
             <h4>Cookies</h4>
             <ul>
-              <li>We don’t use any cookies. Instead we use the more privacy-oriented local storage web technology.</li>
+              <li>We don't use any cookies. Instead we use the more privacy-oriented local storage web technology.</li>
             </ul>
             <h2 class="subtitle pt-4">For Which purpose do we collect your personal data?</h2>
             <ul>
