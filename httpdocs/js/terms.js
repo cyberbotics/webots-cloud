@@ -6,7 +6,7 @@ export default class Terms {
       const template = document.createElement('template');
       template.innerHTML =
         `<section class="section">
-          <div class="container">
+          <div class="container content">
             <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Use</h1>
             <h2 class="subtitle pt-6">Introduction</h2>
             <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a>  is created, developed and operated by 
