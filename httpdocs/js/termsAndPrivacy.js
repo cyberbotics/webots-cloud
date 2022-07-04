@@ -3,7 +3,6 @@ export default class TermsAndPrivacy {
     routes.push({ url: '/terms-of-use', setup: termsOfUsePage });
     routes.push({ url: '/privacy-policy', setup: privacyPolicyPage });
     function termsOfUsePage() {
-      console.log("termsOfUsePage");
       const template = document.createElement('template');
       template.innerHTML =
         `<section class="section">
@@ -52,7 +51,6 @@ export default class TermsAndPrivacy {
       project.setup('terms-of-use', [], template.content);
     }
     function privacyPolicyPage() {
-      console.log("privacyPolicyPage");
       const template = document.createElement('template');
       template.innerHTML =
         `<section class="section">
