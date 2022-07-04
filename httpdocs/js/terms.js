@@ -26,7 +26,7 @@ export default class Terms {
                 play it back in 3D.</li>
               <li>Refer to a GitHub repository containing a Webots simulation (<a target="_blank" 
                 href="https://webots.cloud/simulation">simulation</a>), run it in the cloud and visualize the result in real 
-                time (“simulation).</li>
+                time.</li>
               <li>Register your own server (<a target="_blank" href="https://webots.cloud/server">server</a>) to run the 
                 simulations.</Li>
             </ul>
