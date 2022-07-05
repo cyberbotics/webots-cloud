@@ -46,7 +46,8 @@ export default class TermsAndPrivacy {
             <p>These terms are subject to Switzerland law.</p>
             <h2 class="subtitle pt-4">Privacy Policy</h2>
             <p>All information concerning data protection and privacy can be found here: 
-              <a href="privacy-policy" onclick="window.scrollTo(0, 0);">Privacy Policy</a>.</p>
+              <a href="privacy-policy" onclick="document.getElementById('scrollable-body').scrollTo(0, 0);">Privacy 
+              Policy</a>.</p>
             <h2 class="subtitle pt-4">How to contact us?</h2>
             <p>If you have any questions concerning the Terms of Service, please contact us at 
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
