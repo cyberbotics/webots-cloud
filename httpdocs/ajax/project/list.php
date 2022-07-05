@@ -11,11 +11,11 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
-    $query1 = "SELECT DISTINCT viewed FROM project";
+    $query1 = "SELECT DISTINCT url FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $values .= $row['viewed'];
+      $values .= $row['url'];
       $values .= " ";
     }
     error("Values: $values");
