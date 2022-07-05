@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
-      console.log(data.url);
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
@@ -223,8 +222,9 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      let row = `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
-        title="GitHub stars"> ${data.stars}</a></td>`;
+      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>
+        </td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
+          title="GitHub stars"> ${data.stars}</a></td>`;
       row += `<td class="title-cell">
                 <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
                 <div class="thumbnail">
@@ -348,6 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
+                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
                     <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
                     <th title="Title of the simulation">Title</th>
                     <th title="Branch or Tag of the simulation">Branch/Tag</th>
