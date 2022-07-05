@@ -11,6 +11,8 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
+    $query1 = "ALTER TABLE project ADD viewed int(11) NOT NULL";
+    $result1 = $mysqli->query($query1) or error($mysqli->error);
     $query1 = "DESCRIBE project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $fields = "";
