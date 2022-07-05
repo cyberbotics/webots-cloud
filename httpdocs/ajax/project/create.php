@@ -84,9 +84,10 @@ $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
 $query = "SELECT viewed FROM project WHERE url=\"$url\"";
 $result = $mysqli->query($query) or error($mysqli->error);
-if ($result)
+if ($result) {
+  error("Gone here...");
   $viewed = mysqli_fetch_field($result);
-else
+} else
   $viewed = 0;
 error("Views: $viewed");
 if ($id === 0)
