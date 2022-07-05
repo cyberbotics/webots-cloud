@@ -11,36 +11,8 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
-    $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
-    $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE \"$tempUrl\"";
-    $mysqli->query($query) or error($mysqli->error);
-
-    $query1 = "SELECT viewed, url, id FROM project";
-    $result1 = $mysqli->query($query1) or error($mysqli->error);
-    $values = "";
-    while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      if ($row['url'] == $tempUrl) {
-        $values .= $row['url'];
-        $values .= ": viewed=";
-        $values .= $row['viewed'];
-        $values .= " id=";
-        $values .= $row['id'];
-      }
-    }
-    error("Result: $values");
-
-    $query1 = "SELECT DISTINCT url FROM project";
-    $result1 = $mysqli->query($query1) or error($mysqli->error);
-    $values = "";
-    while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $tempUrl = $row['url'];
-      $query = "UPDATE project SET viewed = 5 WHERE url = $tempUrl";
-      $values .= $row['url'];
-      $values .= " ";
-    }
-    error("Values: $values");
     $url = $data->url;
-    $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE $url";
+    $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE \"$url\"";
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }

@@ -194,16 +194,13 @@ export default class Project extends User {
     });
   }
   _updateSimulationViewCount(url) {
-    console.log("updateSimulationViewCount(" + url + ")");
     fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
-        if (data.status === 'updated')
-          console.log("View count updated...");
-        else
-          console.log(data.error);
+        if (data.error)
+          console.warn(data.error);
       });
   }
   _isMobileDevice() {
