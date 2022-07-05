@@ -369,9 +369,9 @@ export default class User extends Router {
         <div class="navbar-dropdown is-boxed">
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
-          <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
-          <div class="navbar-divider"></div>
           <a class="navbar-item" id="navbar-terms-of-use-signed-in"><i class="fas fa-shield-halved"> &nbsp; </i>Terms of Use</a>
+          <div class="navbar-divider"></div>
+          <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
         </div>
       </div>`;
     let that = this;
