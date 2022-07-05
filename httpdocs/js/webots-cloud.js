@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
+      console.log(data.url);
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
