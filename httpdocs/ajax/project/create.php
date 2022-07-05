@@ -105,6 +105,7 @@ $total = intval($count['count']);
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
+$answer['viewed'] = 0;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
