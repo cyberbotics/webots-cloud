@@ -16,7 +16,7 @@
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
       $tempUrl = $row['url'];
-      $query = "UPDATE project SET viewed = 5 WHERE url LIKE $tempUrl";
+      $query = "UPDATE project SET viewed = 5 WHERE url = $tempUrl";
       $values .= $row['url'];
       $values .= " ";
     }
