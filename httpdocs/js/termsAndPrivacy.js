@@ -18,7 +18,7 @@ export default class TermsAndPrivacy {
               agreement between you and Cyberbotics. They apply to your use of our services.</p>
             <h2 class="subtitle pt-4">Creating an account</h2>
             <p>In order to use our services, you may need to create an account with an e-mail address and a password. You are 
-              responsible for keeping your password secure. Our <a href="privacy-policy">
+              responsible for keeping your password secure. Our <a href="privacy-policy" onclick="window.scrollTo(0, 0);">
               Privacy Policy</a> informs you on what information we collect and how we use it.</p>
             <h2 class="subtitle pt-4">Our services</h2>
             <p>We provide you with the following services:</p>
@@ -45,7 +45,7 @@ export default class TermsAndPrivacy {
             <p>These terms are subject to Switzerland law.</p>
             <h2 class="subtitle pt-4">Privacy Policy</h2>
             <p>All information concerning data protection and privacy can be found here: 
-              <a href="privacy-policy">Privacy Policy</a>.</p>
+              <a href="privacy-policy" onclick="window.scrollTo(0, 0);">Privacy Policy</a>.</p>
             <h2 class="subtitle pt-4">How to contact us?</h2>
             <p>If you have any questions concerning the Terms of Service, please contact us at 
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
