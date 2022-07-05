@@ -12,8 +12,7 @@
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
     $url = $data->url;
-    $views = mt_rand(20,230);
-    $query = "UPDATE project SET viewed = $views WHERE url LIKE \"$url\"";
+    $query = "UPDATE project SET viewed = 243 WHERE url LIKE \"$url\"";
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }
