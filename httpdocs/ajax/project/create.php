@@ -89,12 +89,11 @@ if ($result) {
   $viewed = $row['viewed'];
 } else
   $viewed = 0;
-error("Views: $viewed");
 if ($id === 0)
   $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type) "
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
 else
-  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", "
+  $query = "UPDATE project SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
@@ -113,7 +112,7 @@ $total = intval($count['count']);
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
-$answer['viewed'] = 0;
+$answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
