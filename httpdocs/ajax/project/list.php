@@ -18,7 +18,7 @@
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query = "SELECT * FROM project ORDER BY stars DESC LIMIT $limit OFFSET $offset";
+  $query = "SELECT * FROM project ORDER BY viewed DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $projects = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {

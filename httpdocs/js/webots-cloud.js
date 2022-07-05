@@ -222,9 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>
-        </td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
-          title="GitHub stars"> ${data.stars}</a></td>`;
+      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
       row += `<td class="title-cell">
                 <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
                 <div class="thumbnail">
@@ -235,6 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
               </td>`;
       row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+        `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
+          title="GitHub stars"> ${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
@@ -349,9 +349,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
-                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
                     <th title="Title of the simulation">Title</th>
                     <th title="Branch or Tag of the simulation">Branch/Tag</th>
+                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
                     <th title="Webots release of the simulation">Version</th>
                     <th title="Type of simulation">Type</th>
                     <th title="Last update time">Updated</th>
