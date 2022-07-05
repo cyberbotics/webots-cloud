@@ -13,6 +13,7 @@
   if (isset($data->url)) {
     $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
     $query = "UPDATE project SET viewed=5 WHERE id=117";
+    $mysqli->query($query) or error($mysqli->error);
 
     $query1 = "SELECT viewed, url, id FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
