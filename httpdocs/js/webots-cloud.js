@@ -225,8 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let row = `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
         title="GitHub stars"> ${data.stars}</a></td>`;
       row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}" 
-                  onclick="updateSimulationViewCount(${data.id})">${title}</a>
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -807,15 +806,3 @@ document.addEventListener('DOMContentLoaded', function() {
     project.runWebotsView();
   }
 });
-
-updateSimulationViewCount(id) {
-  console.log("updateSimulationViewCount(" + id + ")");
-  fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({id: id})})
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      if (data.status === 'updated')
-        console.log("View count updated...");
-    });
-}

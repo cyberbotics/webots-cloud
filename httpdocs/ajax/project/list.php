@@ -10,9 +10,9 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  if (isset($data->id)) {
-    $id = intval($data->id);
-    //$query = "UPDATE project SET viewed = viewed + 1 WHERE id=$id";
+  if (isset($data->url)) {
+    $url = intval($data->url);
+    //$query = "UPDATE project SET viewed = viewed + 1 WHERE url=$url";
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }

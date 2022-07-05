@@ -170,6 +170,9 @@ export default class Project extends User {
     });
 
     promise.then(() => {
+      if (!data)
+        that._updateSimulationViewCount(url);
+
       if (document.querySelector('#user-menu')) {
         if (that.email && that.password) {
           document.querySelector('#user-menu').style.display = 'auto';
@@ -189,6 +192,17 @@ export default class Project extends User {
           that.login();
       }
     });
+  }
+  _updateSimulationViewCount(url) {
+    console.log("updateSimulationViewCount(" + url + ")");
+    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.status === 'updated')
+          console.log("View count updated...");
+      });
   }
   _isMobileDevice() {
     // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
