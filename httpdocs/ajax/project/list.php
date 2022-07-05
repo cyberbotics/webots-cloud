@@ -19,7 +19,7 @@
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
       $values .= $row['url'];
-      $values .= " \"n";
+      $values .= "        ";
     }
     error("Values: $values");
     $query1 = "SELECT DISTINCT url FROM project";
