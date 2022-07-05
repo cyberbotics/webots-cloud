@@ -112,6 +112,9 @@ export default class Project extends User {
       (data ? data.version : this.findGetParameter('version'));
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
+    if (!data)
+      that._updateSimulationViewCount(url);
+
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
 
@@ -170,9 +173,6 @@ export default class Project extends User {
     });
 
     promise.then(() => {
-      if (!data)
-        that._updateSimulationViewCount(url);
-
       if (document.querySelector('#user-menu')) {
         if (that.email && that.password) {
           document.querySelector('#user-menu').style.display = 'auto';
