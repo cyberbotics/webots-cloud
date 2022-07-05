@@ -21,7 +21,7 @@
       $values .= $row['url'];
       $values .= ": ";
       $values .= $row['viewed'];
-      $values .= "\r\n ";
+      $values .= "     ";
     }
     error("Result: $values");
 
