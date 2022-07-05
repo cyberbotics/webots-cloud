@@ -86,7 +86,6 @@ $query = "SELECT viewed FROM project WHERE url=\"$url\"";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($result) {
   $viewed = mysqli_fetch_field($result, 0);
-  error("Gone here...");
 } else
   $viewed = 0;
 error("Views: $viewed");
