@@ -10,6 +10,12 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
+  if (isset($data->id)) {
+    $id = intval($data->id);
+    //$query = "UPDATE project SET viewed = viewed + 1 WHERE id=$id";
+    $mysqli->query($query) or error($mysqli->error);
+    die('{"status":"updated"}');
+  }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM project ORDER BY stars DESC LIMIT $limit OFFSET $offset";

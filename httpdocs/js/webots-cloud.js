@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function simulationRow(data) {
-      console.log(data);
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
@@ -226,7 +225,8 @@ document.addEventListener('DOMContentLoaded', function() {
       let row = `<td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
         title="GitHub stars"> ${data.stars}</a></td>`;
       row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}" 
+                  onclick="updateSimulationViewCount(${data.id})">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -240,6 +240,18 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
       return row;
+    }
+
+    function updateSimulationViewCount(id) {
+      console.log("updateSimulationViewCount(" + id + ")");
+      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({id: id})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.status === 'updated')
+            console.log("View count updated...");
+        });
     }
 
     function percent(value) {
