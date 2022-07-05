@@ -11,14 +11,14 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
-    $query1 = "DESCRIBE project";
+    $query1 = "SELECT DISTINCT url FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
-    $fields = "";
+    $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $fields .= $row['Field'];
-      $fields .= " ";
+      $values .= $row['url'];
+      $values .= " ";
     }
-    error("Fields: $fields");
+    error("Values: $values");
     $url = $data->url;
     $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE $url";
     $mysqli->query($query) or error($mysqli->error);
