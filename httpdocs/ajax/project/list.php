@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
     $url = $data->url;
-    $query = "UPDATE project SET viewed = 223 WHERE url LIKE \"$url\"";
+    $query = "UPDATE project SET viewed = 219 WHERE url LIKE \"$url\"";
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }
