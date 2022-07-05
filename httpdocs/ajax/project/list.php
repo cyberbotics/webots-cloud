@@ -14,15 +14,16 @@
     $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
     $query = "UPDATE project SET viewed=5 WHERE url LIKE \"$tempUrl\"";
 
-    $query1 = "SELECT viewed, url FROM project";
+    $query1 = "SELECT viewed, url, id FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
       if ($row['url'] == $tempUrl) {
         $values .= $row['url'];
-        $values .= ": ";
+        $values .= ": viewed=";
         $values .= $row['viewed'];
-        $values .= "     ";
+        $values .= " id=";
+        $values .= $row['id'];
       }
     }
     error("Result: $values");
