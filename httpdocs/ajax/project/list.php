@@ -18,10 +18,12 @@
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $values .= $row['url'];
-      $values .= ": ";
-      $values .= $row['viewed'];
-      $values .= "     ";
+      if ($row['url'] == $tempUrl) {
+        $values .= $row['url'];
+        $values .= ": ";
+        $values .= $row['viewed'];
+        $values .= "     ";
+      }
     }
     error("Result: $values");
 
