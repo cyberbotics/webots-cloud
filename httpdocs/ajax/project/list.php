@@ -15,6 +15,8 @@
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
+      if ($row['url'] == $data->url)
+        error("Found it!");
       $values .= $row['url'];
       $values .= " ";
     }
