@@ -11,6 +11,14 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
+    $query1 = "DESCRIBE user";
+    $result1 = $mysqli->query($query1) or error($mysqli->error);
+    $fields = "";
+    while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
+      $fields .= $row['Field'];
+      $fields .= " ";
+    }
+    error("Fields: $fields");
     $query1 = "SELECT viewed FROM project WHERE url LIKE $url";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
