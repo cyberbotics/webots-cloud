@@ -11,8 +11,8 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
-    $query1 = "UPDATE project SET viewed=0";
-    $result1 = $mysqli->query($query1) or error($mysqli->error);
+    $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
+    $query = "UPDATE project SET viewed=5 WHERE url LIKE $tempUrl";
 
     $query1 = "SELECT DISTINCT viewed FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
