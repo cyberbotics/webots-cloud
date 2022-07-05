@@ -11,20 +11,10 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
-    $query1 = "ALTER TABLE project ADD viewed int(11) NOT NULL";
-    $result1 = $mysqli->query($query1) or error($mysqli->error);
-    $query1 = "DESCRIBE project";
-    $result1 = $mysqli->query($query1) or error($mysqli->error);
-    $fields = "";
-    while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $fields .= $row['Field'];
-      $fields .= " ";
-    }
-    error("Fields: $fields");
     $query1 = "SELECT viewed FROM project WHERE url LIKE $url";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
-      $temp = $row['url'];
+      $temp = $row['viewed'];
       error("viewed: $temp");
     }
     error("too far");
