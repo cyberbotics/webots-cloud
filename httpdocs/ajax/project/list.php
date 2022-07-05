@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
     $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
-    $query = "UPDATE project SET viewed=5 WHERE url LIKE $tempUrl";
+    $query = "UPDATE project SET viewed=5 WHERE url=\"$tempUrl\"";
 
     $query1 = "SELECT DISTINCT viewed FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
