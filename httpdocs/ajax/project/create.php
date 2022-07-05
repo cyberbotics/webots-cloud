@@ -82,9 +82,16 @@ $info_json = @file_get_contents("https://api.github.com/repos/$username/$reposit
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
+$query = "SELECT viewed FROM project WHERE url=\"$url\"";
+$result = $mysqli->query($query) or error($mysqli->error);
+if ($result)
+  $viewed = mysqli_fetch_field($result);
+else
+  $viewed = 0;
+error("Views: $viewed");
 if ($id === 0)
-  $query = "INSERT IGNORE INTO project(url, stars, title, description, version, competitors, type) "
-          ."VALUES(\"$url\", $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
+  $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
 else
   $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
