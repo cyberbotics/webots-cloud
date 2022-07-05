@@ -242,18 +242,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function updateSimulationViewCount(id) {
-      console.log("updateSimulationViewCount(" + id + ")");
-      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({id: id})})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          if (data.status === 'updated')
-            console.log("View count updated...");
-        });
-    }
-
     function percent(value) {
       const level = 150 + value;
       let red, green;
@@ -816,7 +804,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    console.log("runPage: project = " + project);
     project.runWebotsView();
   }
 });
+
+updateSimulationViewCount(id) {
+  console.log("updateSimulationViewCount(" + id + ")");
+  fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({id: id})})
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      if (data.status === 'updated')
+        console.log("View count updated...");
+    });
+}
