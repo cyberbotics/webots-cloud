@@ -14,13 +14,11 @@
     $query1 = "SELECT DISTINCT url FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
-    $i = 0;
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
       $tempUrl = $row['url'];
-      $query = "UPDATE project SET viewed = $i WHERE url LIKE $tempUrl";
+      $query = "UPDATE project SET viewed = 5 WHERE url LIKE $tempUrl";
       $values .= $row['url'];
       $values .= " ";
-      $i = $i + 1;
     }
     error("Values: $values");
     $url = $data->url;
