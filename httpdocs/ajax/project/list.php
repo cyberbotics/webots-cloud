@@ -12,8 +12,8 @@
   $mysqli->set_charset('utf8');
   if (isset($data->url)) {
     $url = intval($data->url);
-    //$query = "UPDATE project SET viewed = viewed + 1 WHERE url=$url";
-    //$mysqli->query($query) or error($mysqli->error);
+    $query = "UPDATE project SET viewed = viewed + 1 WHERE url=$url";
+    $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
