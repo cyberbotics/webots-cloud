@@ -82,10 +82,11 @@ $info_json = @file_get_contents("https://api.github.com/repos/$username/$reposit
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
-$query = "SELECT viewed FROM project WHERE url=\"$url\"";
+$query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($result) {
-  $viewed = mysqli_fetch_field($result, 0);
+  $row = mysqli_fetch_field($result);
+  $viewed = $row['viewed'];
 } else
   $viewed = 0;
 error("Views: $viewed");
