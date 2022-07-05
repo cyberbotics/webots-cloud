@@ -202,6 +202,8 @@ export default class Project extends User {
       .then(function(data) {
         if (data.status === 'updated')
           console.log("View count updated...");
+        else
+          console.log(data.error);
       });
   }
   _isMobileDevice() {
