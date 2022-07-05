@@ -14,7 +14,7 @@
     $tempUrl = "https://github.com/ThomasOliverKimble/orobot/blob/main/worlds/OroBOT_uneven.wbt";
     $query = "UPDATE project SET viewed=5 WHERE url=\"$tempUrl\"";
 
-    $query1 = "SELECT viewed FROM project";
+    $query1 = "SELECT viewed, url FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
