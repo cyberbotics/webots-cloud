@@ -18,10 +18,13 @@
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
     while($row = $result1->fetch_array(MYSQLI_ASSOC)) {
+      $values .= $row['url'];
+      $values .= ": ";
       $values .= $row['viewed'];
-      $values .= "  ";
+      $values .= "\r\n ";
     }
-    error("Values: $values");
+    error("Result: $values");
+
     $query1 = "SELECT DISTINCT url FROM project";
     $result1 = $mysqli->query($query1) or error($mysqli->error);
     $values = "";
