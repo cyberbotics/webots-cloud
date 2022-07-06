@@ -97,6 +97,13 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log("Searched for: " + searchString);
     });
 
+    document.getElementById("scene-search-input").addEventListener('keyup', function (event) {
+      if (event.key === 'Enter') {
+        const searchString = document.getElementById("scene-search-input").value;
+        console.log("Searched for: " + searchString);
+      }
+  });
+
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
     listSimulations(simulationPage);
