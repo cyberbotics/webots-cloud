@@ -300,8 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="scene-search" type="text" placeholder="Search for scene...">
-                  <span class="icon is-small is-right is-clickable">
+                  <input class="input is-small" id="scene-search-search" type="text" placeholder="Search for scene...">
+                  <span class="icon is-small is-right is-clickable" id="scene-search-click>
                     <i class="fas fa-search"></i>
                   </span>
                 </div>
