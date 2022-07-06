@@ -18,7 +18,6 @@
   }
   $parameter = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
     $mysqli->escape_string($data->sortBy) : "viewed";
-  error("Here 1");
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
   error("Here 2");
   if (isset($data->search)) {
