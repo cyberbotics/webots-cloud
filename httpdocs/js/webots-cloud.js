@@ -106,15 +106,29 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
+    document.getElementById("scene-sort").addEventListener('click', function(event) {
+      const order = document.getElementById("scene-sort").value;
+      console.log("Order by: " + order);
+     // listAnimations('S', scenePage, );
+    });
+  
     document.getElementById("scene-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
-      listAnimations('S', scenePage, searchString);
+      listAnimations('S', scenePage, 'default', searchString);
     });
+   /*  document.getElementById("scene-search-click").addEventListener('click', function(event) {
+      const searchString = document.getElementById("scene-search-input").value;
+      listAnimations('A', animationPage, searchString);
+    }); */
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
-      listAnimations('S', scenePage, searchString);
+      listAnimations('S', scenePage, 'default', searchString);
     });
+    /* document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
+      const searchString = document.getElementById("scene-search-input").value;
+      listAnimations('A', animationPage, searchString);
+    }); */
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
@@ -330,12 +344,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="select is-small select-sort-by" id="scene-sort">
                   <select>
                     <option>Sort by</option>
-                    <option>Views</option>
-                    <option>Title</option>
-                    <option>Version</option>
-                    <option>Duration</option>
-                    <option>Size</option>
-                    <option>Uploaded</option>
+                    <option value="viewed">Views</option>
+                    <option value="title">Title</option>
+                    <option value="version">Version</option>
+                    <option value="duration">Duration</option>
+                    <option value="size">Size</option>
+                    <option value="uploaded">Uploaded</option>
                   </select>
                 </div>
               </div>
@@ -700,12 +714,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function listAnimations(type, page, searchString) {
+    function listAnimations(type, page, order, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post', 
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, search: searchString})})
+        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, order: order, search: searchString})})
         .then(function(response) {
           return response.json();
         })
