@@ -42,6 +42,7 @@
       $searchString = $mysqli->escape_string($data->search);
       $extra_condition += " AND CHARINDEX($searchString, title) > 0";
     }
+    error("condition: $extra_condition");
     $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "viewed";
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
     $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
