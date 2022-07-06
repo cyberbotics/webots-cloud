@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
+    //THINGS GO HERE
+
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
     listSimulations(simulationPage);
@@ -296,26 +298,26 @@ document.addEventListener('DOMContentLoaded', function() {
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <div class="table-container">
-              <table class="table is-striped is-hoverable">
-                <div class="search-and-sort">
-                  <div class="control has-icons-left">
-                    <input class="input is-small" id="search-scene" type="text" placeholder="Search for scene...">
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-search"></i>
-                    </span>
-                  </div>
-                  <div class="select is-small" id="select-sort-by">
-                    <select>
-                      <option>Sort by</option>
-                      <option>Views</option>
-                      <option>Title</option>
-                      <option>Version</option>
-                      <option>Duration</option>
-                      <option>Size</option>
-                      <option>Uploaded</option>
-                    </select>
-                  </div>
+              <div class="search-and-sort">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="scene-search" type="text" placeholder="Search for scene...">
+                  <span class="icon is-small is-right">
+                    <i class="fas fa-search"></i>
+                  </span>
                 </div>
+                <div class="select is-small select-sort-by" id="scene-sort">
+                  <select>
+                    <option>Sort by</option>
+                    <option>Views</option>
+                    <option>Title</option>
+                    <option>Version</option>
+                    <option>Duration</option>
+                    <option>Size</option>
+                    <option>Uploaded</option>
+                  </select>
+                </div>
+              </div>
+              <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
                     <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
