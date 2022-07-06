@@ -15,9 +15,9 @@
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
-    $extra_condition = 'duration = 0';
+    $extra_condition = "duration = 0";
   else // animation
-    $extra_condition = 'duration > 0';
+    $extra_condition = "duration > 0";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
@@ -43,10 +43,9 @@
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
-      $searchCondition = "AND title LIKE '%$searchString%'";
-    } else
-      $searchCondition = "";
-    $query = "SELECT * FROM animation WHERE $extra_condition $searchCondition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
+      $extra_condition += " AND title LIKE '%$searchString%'";
+    }
+    $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
@@ -71,7 +70,7 @@
     $answer['uploadMessage'] = $uploadMessage;
     die(json_encode($answer));
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition $searchCondition AND uploading = 0") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition AND uploading = 0") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
