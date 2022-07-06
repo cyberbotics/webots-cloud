@@ -223,7 +223,6 @@ div.table-container {
   display: flex;
   width: 100%;
   max-width: 700px;
-  min-width: 325px;
   padding-bottom: 20px;
 }
 
