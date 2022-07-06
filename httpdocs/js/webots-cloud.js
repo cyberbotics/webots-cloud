@@ -136,6 +136,10 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations(simulationPage);
     listServers(serverPage);
 
+    if (project.email && project.email.endsWith('@cyberbotics.com'))
+      project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
+        .appendChild(document.createElement('th'));
+
     function updatePagination(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
@@ -795,9 +799,6 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
-            if (project.email && project.email.endsWith('@cyberbotics.com'))
-              project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
-                .appendChild(document.createElement('th'));
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
