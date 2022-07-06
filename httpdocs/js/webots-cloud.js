@@ -298,7 +298,12 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <div class="search-and-sort">
-                  <input class="input is-small" id="search-scene" type="text" placeholder="Search for scene...">
+                  <div class="control has-icons-left">
+                    <input class="input is-small" id="search-scene" type="text" placeholder="Search for scene...">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
                   <div class="select is-small">
                     <select>
                       <option>Sort by</option>
