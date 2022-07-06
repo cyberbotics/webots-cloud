@@ -92,7 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    //THINGS GO HERE
+    project.content.querySelector('#scene-search-click').addEventListener('click', function(event) {
+      const searchString = document.getElementById("scene-search-input").value;
+      console.log("Searched for: " + searchString) 
+    });
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
@@ -300,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="scene-search-search" type="text" placeholder="Search for scene...">
+                  <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scene...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click>
                     <i class="fas fa-search"></i>
                   </span>
