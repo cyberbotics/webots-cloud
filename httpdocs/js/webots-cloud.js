@@ -788,7 +788,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listSimulations(page) {
       let offset = (page - 1) * pageLimit;
-      fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
+      fetch('/ajax/project/list.php', {method: 'post',
+        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
         .then(function(response) {
           return response.json();
         })
