@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
-      if (event.key !== 'Enter') {
+      if (event.key === 'Enter') {
         const searchString = document.getElementById("scene-search-input").value;
         listAnimations('S', scenePage, searchString);
       }
