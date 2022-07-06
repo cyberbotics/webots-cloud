@@ -73,20 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return serverPage;
   }
 
-  function searchAnimations(type, event) {
-    if (event && event.key !== 'Enter')
-      return;
-
-    const searchString = document.getElementById("scene-search-input").value;
-
-    fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({search: searchString, type: type})})
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-      });
-  }
-
   function homePage(project) {
     let activeTab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
@@ -114,6 +100,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const sortBy = document.getElementById("animation-sort-select").value;
       listAnimations('A', animationPage, sortBy);
     });
+    document.getElementById("simulation-sort").addEventListener('click', function(event) {
+      const sortBy = document.getElementById("simulation-sort-select").value;
+      listSimulations(simulationPage, sortBy);
+    });
   
     document.getElementById("scene-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
@@ -123,6 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const searchString = document.getElementById("animation-search-input").value;
       listAnimations('A', animationPage, 'default', searchString);
     });
+    document.getElementById("simulation-search-click").addEventListener('click', function(event) {
+      const searchString = document.getElementById("simulation-search-input").value;
+      listSimulations(simulationPage, 'default', searchString);
+    });
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
@@ -131,6 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("animation-search-input").addEventListener('keyup', function(event) {
       const searchString = document.getElementById("animation-search-input").value;
       listAnimations('A', animationPage, 'default', searchString);
+    });
+    document.getElementById("simulation-search-input").addEventListener('keyup', function(event) {
+      const searchString = document.getElementById("simulation-search-input").value;
+      listSimulations(simulationPage, 'default', searchString);
     });
 
     listAnimations('S', scenePage);
