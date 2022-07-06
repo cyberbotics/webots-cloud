@@ -308,7 +308,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </thead>
                 <tbody>
                 </tbody>
-                <div class="search-and-sort">
+              </table>
+            </div>
+            <div class="search-and-sort">
                   <input class="input is-small" id="search-scene" type="text" placeholder="Search for scene...">
                   <div class="select is-small">
                     <select>
@@ -322,8 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </select>
                   </div>
                 </div>
-              </table>
-            </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
             <div class="container is-fullhd">
