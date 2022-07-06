@@ -423,6 +423,24 @@ document.addEventListener('DOMContentLoaded', function() {
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
             <div class="table-container">
+              <div class="search-and-sort">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
+                  <span class="icon is-small is-right is-clickable" id="simulation-search-click">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+                <div class="select is-small select-sort-by" id="simulation-sort">
+                  <select id="simulation-sort-select">
+                    <option>Sort by</option>
+                    <option value="viewed">Views</option>
+                    <option value="title">Title</option>
+                    <option value="stars">GitHub Stars</option>
+                    <option value="size">Size</option>
+                    <option value="updated">Updated</option>
+                  </select>
+                </div>
+              </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
