@@ -24,7 +24,6 @@
     $extra_condition = "WHERE title LIKE '%$searchString%'";
   } else
     $extra_condition = "";
-  error("extra condition: $extra_condition");
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM project $extra_condition ORDER BY $parameter DESC LIMIT $limit OFFSET $offset";
