@@ -110,24 +110,28 @@ document.addEventListener('DOMContentLoaded', function() {
       const sortBy = document.getElementById("scene-sort-select").value;
       listAnimations('S', scenePage, sortBy);
     });
+    document.getElementById("animation-sort").addEventListener('click', function(event) {
+      const sortBy = document.getElementById("animation-sort-select").value;
+      listAnimations('A', animationPage, sortBy);
+    });
   
     document.getElementById("scene-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
       listAnimations('S', scenePage, 'default', searchString);
     });
-   /*  document.getElementById("scene-search-click").addEventListener('click', function(event) {
-      const searchString = document.getElementById("scene-search-input").value;
+    document.getElementById("animation-search-click").addEventListener('click', function(event) {
+      const searchString = document.getElementById("animation-search-input").value;
       listAnimations('A', animationPage, searchString);
-    }); */
+    });
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
       listAnimations('S', scenePage, 'default', searchString);
     });
-    /* document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
-      const searchString = document.getElementById("scene-search-input").value;
+    document.getElementById("animation-search-input").addEventListener('keyup', function(event) {
+      const searchString = document.getElementById("animation-search-input").value;
       listAnimations('A', animationPage, searchString);
-    }); */
+    });
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
@@ -375,6 +379,25 @@ document.addEventListener('DOMContentLoaded', function() {
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
             <div class="table-container">
+              <div class="search-and-sort">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animation...">
+                  <span class="icon is-small is-right is-clickable" id="animation-search-click">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+                <div class="select is-small select-sort-by" id="animation-sort">
+                  <select id="animation-sort-select">
+                    <option>Sort by</option>
+                    <option value="viewed">Views</option>
+                    <option value="title">Title</option>
+                    <option value="version">Version</option>
+                    <option value="duration">Duration</option>
+                    <option value="size">Size</option>
+                    <option value="uploaded">Uploaded</option>
+                  </select>
+                </div>
+              </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
