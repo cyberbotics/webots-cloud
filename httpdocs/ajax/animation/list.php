@@ -39,9 +39,9 @@
       delete_animation($type, $id);
     }
     if (isset($data->search)) {
-      $searchString = $data->search;
-      $extra_condition += ` AND CONTAINS '"$searchString"'`;
+      $searchString = $mysqli->escape_string($data->search);
       error("gone here: $searchString");
+      //$extra_condition += ` AND CONTAINS '"$searchString"'`;
     }
     $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "viewed";
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
