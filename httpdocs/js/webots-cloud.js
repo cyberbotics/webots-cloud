@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.getElementById("animation-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("animation-search-input").value;
-      listAnimations('A', animationPage, searchString);
+      listAnimations('A', animationPage, 'default', searchString);
     });
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.getElementById("animation-search-input").addEventListener('keyup', function(event) {
       const searchString = document.getElementById("animation-search-input").value;
-      listAnimations('A', animationPage, searchString);
+      listAnimations('A', animationPage, 'default', searchString);
     });
 
     listAnimations('S', scenePage);

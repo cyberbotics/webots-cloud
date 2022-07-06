@@ -43,7 +43,6 @@
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
-      error("search: $searchString");
       $query = "SELECT * FROM animation WHERE $extra_condition AND title LIKE '%$searchString%' AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
     } else
      $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
