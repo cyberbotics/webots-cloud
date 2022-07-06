@@ -306,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <option>Uploaded</option>
               </select>
             </div>
-            </div>
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
