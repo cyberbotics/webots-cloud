@@ -93,15 +93,15 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    document.getElementById("scene-sort").addEventListener('click', function(event) {
+    document.getElementById("scene-sort-select").addEventListener('click', function(event) {
       const sortBy = document.getElementById("scene-sort-select").value;
       listAnimations('S', scenePage, sortBy);
     });
-    document.getElementById("animation-sort").addEventListener('click', function(event) {
+    document.getElementById("animation-sort-select").addEventListener('click', function(event) {
       const sortBy = document.getElementById("animation-sort-select").value;
       listAnimations('A', animationPage, sortBy);
     });
-    document.getElementById("simulation-sort").addEventListener('click', function(event) {
+    document.getElementById("simulation-sort-select").addEventListener('click', function(event) {
       const sortBy = document.getElementById("simulation-sort-select").value;
       listSimulations(simulationPage, sortBy);
     });
