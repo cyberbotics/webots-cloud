@@ -38,7 +38,7 @@
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
     }
-    $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "title";
+    $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "duration";
     $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter DESC, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
