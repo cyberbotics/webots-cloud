@@ -16,11 +16,11 @@
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }
-  error("Here 1");
   $parameter = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
     $mysqli->escape_string($data->sortBy) : "viewed";
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
   if (isset($data->search)) {
+    error("Here 2");
     $searchString = $mysqli->escape_string($data->search);
     $extra_condition = $searchString ? "WHERE title LIKE '%$searchString%'" : "";
   }
