@@ -297,9 +297,9 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <div class="search-and-sort">
               <input class="input" id="search-scene" type="text" placeholder="Search for scene...">
-              <div class="select is-small">
+              <div class="select">
                 <select>
-                  <option>Order by</option>
+                  <option>Sort by</option>
                   <option>Views</option>
                   <option>Title</option>
                   <option>Version</option>

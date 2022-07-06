@@ -212,6 +212,14 @@ div.table-container {
   }
 }
 
+/*  Search and sort  */
+
+.search-and-sort {
+  display: flex;
+  width: 75%;
+  padding-bottom: 20px;
+}
+
 /*  Webots view  */
 
 #webots-view-container {
