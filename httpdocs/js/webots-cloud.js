@@ -297,6 +297,17 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
+                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
+                    <th title="Webots release of the scene">Version</th>
+                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
+                    <th title="Upload date and time">Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
                 <div class="search-and-sort">
                   <input class="input is-small" id="search-scene" type="text" placeholder="Search for scene...">
                   <div class="select is-small">
@@ -311,17 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </select>
                   </div>
                 </div>
-                <thead>
-                  <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the scene">Version</th>
-                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
               </table>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
