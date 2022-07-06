@@ -295,6 +295,18 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
+            <div class="select is-info">
+              <select>
+                <option>Order by</option>
+                <option>Views</option>
+                <option>Title</option>
+                <option>Version</option>
+                <option>Duration</option>
+                <option>Size</option>
+                <option>Uploaded</option>
+              </select>
+            </div>
+            </div>
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
