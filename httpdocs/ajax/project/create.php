@@ -86,7 +86,6 @@ $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
-error("No further with viewed=$viewed");
 if ($id === 0)
   $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type) "
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
