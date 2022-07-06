@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="search-and-sort">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search" type="text" placeholder="Search for scene...">
-                  <span class="icon is-small is-right">
+                  <span class="icon is-small is-right is-clickable">
                     <i class="fas fa-search"></i>
                   </span>
                 </div>
