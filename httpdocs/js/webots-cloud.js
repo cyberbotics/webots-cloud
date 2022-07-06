@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="fas fa-search"></i>
                     </span>
                   </div>
-                  <div class="select is-small">
+                  <div class="select is-small" id="select-sort-by">
                     <select>
                       <option>Sort by</option>
                       <option>Views</option>
