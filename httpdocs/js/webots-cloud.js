@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
-            <div class="select is-info">
+            <div class="select is-small">
               <select>
                 <option>Order by</option>
                 <option>Views</option>
