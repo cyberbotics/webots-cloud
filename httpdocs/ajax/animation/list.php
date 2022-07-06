@@ -40,7 +40,7 @@
     }
     if (isset($data->search)) {
       $searchString = $data->search;
-      $extra_condition += " AND CONTAINS '\"$searchString\"'";
+      $extra_condition += ` AND CONTAINS '"$searchString"'`;
       error("gone here: $searchString");
     }
     $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "viewed";
