@@ -346,7 +346,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
                     <option value="version">Version</option>
-                    <option value="duration">Duration</option>
                     <option value="size">Size</option>
                     <option value="uploaded">Uploaded</option>
                   </select>
