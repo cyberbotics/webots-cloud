@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
         ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
-      const nextDisabled = (current === max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
+      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
         : `" aria-label="Goto page 1" href="${tab}"`;
       content.innerHTML =
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
         else
-          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="/${tab}?p=${i}">${i}</a></li>`;
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="${tab}?p=${i}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
