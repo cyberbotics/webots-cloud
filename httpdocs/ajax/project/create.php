@@ -85,8 +85,8 @@ $competitors = 0;
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($result->fetch_array(MYSQLI_ASSOC)) {
-  error("test 1");
   $row = $result->fetch_array(MYSQLI_ASSOC);
+  error("test 2");
   $viewed = $row['viewed'];
 } else
   $viewed = 0;
