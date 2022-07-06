@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (event.key === 'Enter') {
         const searchString = document.getElementById("scene-search-input").value;
         console.log("Searched for: " + searchString);
-        canvas.deactivateAll().renderAll();
+        document.deactivateAll().renderAll();
       }
   });
 
