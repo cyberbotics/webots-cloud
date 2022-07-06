@@ -73,6 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
       return serverPage;
   }
 
+  function searchAnimations(type, event) {
+    if (event && event.key !== 'Enter')
+      return;
+
+    const searchString = document.getElementById("scene-search-input").value;
+
+    fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({search: searchString, type: type})})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+      });
+  }
+
   function homePage(project) {
     let activeTab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
@@ -94,16 +108,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("scene-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
-      console.log("Searched for: " + searchString);
+      listAnimations('S', scenePage, searchString);
     });
 
-    document.getElementById("scene-search-input").addEventListener('keyup', function (event) {
-      if (event.key === 'Enter') {
+    document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
+      if (event.key !== 'Enter') {
         const searchString = document.getElementById("scene-search-input").value;
-        console.log("Searched for: " + searchString);
-        document.deactivateAll().renderAll();
+        listAnimations('S', scenePage, searchString);
       }
-  });
+    });
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
@@ -689,11 +702,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function listAnimations(type, page) {
+    function listAnimations(type, page, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit, type: type})})
+      fetch('/ajax/animation/list.php', {method: 'post', 
+        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, search: searchString})})
         .then(function(response) {
           return response.json();
         })

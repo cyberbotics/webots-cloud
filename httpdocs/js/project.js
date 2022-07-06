@@ -199,10 +199,8 @@ export default class Project extends User {
         return response.json();
       })
       .then(function(data) {
-        if (data.status === 'updated')
-          console.log("View count updated...");
-        else
-          console.log(data.error);
+        if (data.error)
+          console.warn(data.error);
       });
   }
   _isMobileDevice() {
