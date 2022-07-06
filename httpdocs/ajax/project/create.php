@@ -84,9 +84,10 @@ $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
-if ($result->fetch_array(MYSQLI_ASSOC))
-  $viewed = $result->fetch_array(MYSQLI_ASSOC)['viewed'];
-else
+if ($result->fetch_array(MYSQLI_ASSOC)) {
+  $row = $result->fetch_array(MYSQLI_ASSOC);
+  $viewed = $row['viewed'];
+} else
   $viewed = 0;
 error("No further with viewed=$viewed");
 if ($id === 0)
