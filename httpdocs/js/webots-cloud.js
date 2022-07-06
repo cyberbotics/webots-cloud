@@ -108,8 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById("scene-sort").addEventListener('click', function(event) {
       const order = document.getElementById("scene-sort-select").value;
-      console.log("Order by: " + order);
-     // listAnimations('S', scenePage, );
+      listAnimations('S', scenePage, order);
     });
   
     document.getElementById("scene-search-click").addEventListener('click', function(event) {

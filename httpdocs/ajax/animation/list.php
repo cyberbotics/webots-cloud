@@ -38,7 +38,7 @@
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
     }
-    $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "viewed";
+    $parameter = isset($data->sortBy) && $data->sortBy != "default" ? $mysqli->escape_string($data->sortBy) : "viewed";
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
