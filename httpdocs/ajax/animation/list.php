@@ -43,9 +43,10 @@
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
-      $query = "SELECT * FROM animation WHERE $extra_condition AND title LIKE '%$searchString%' AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
+      $searchCondition = "AND title LIKE '%$searchString%'";
     } else
-     $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
+      $searchCondition = "";
+    $query = "SELECT * FROM animation WHERE $extra_condition $searchCondition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
@@ -70,7 +71,7 @@
     $answer['uploadMessage'] = $uploadMessage;
     die(json_encode($answer));
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition AND uploading = 0") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM animation WHERE $extra_condition $searchCondition AND uploading = 0") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new stdClass;
   $answer->animations = $animations;
