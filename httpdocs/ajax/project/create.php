@@ -82,7 +82,7 @@ $info_json = @file_get_contents("https://api.github.com/repos/$username/$reposit
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
-$query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
+$query = "SELECT viewed FROM project WHERE url=\"$url\";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($result->fetch_array(MYSQLI_ASSOC)) {
   $row = $result->fetch_array(MYSQLI_ASSOC);
