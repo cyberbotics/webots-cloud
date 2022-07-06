@@ -16,6 +16,7 @@
     $mysqli->query($query) or error($mysqli->error);
     die('{"status":"updated"}');
   }
+  error("Here 1");
   $parameter = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
     $mysqli->escape_string($data->sortBy) : "viewed";
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
