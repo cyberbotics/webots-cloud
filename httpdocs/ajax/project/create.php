@@ -84,12 +84,13 @@ $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
-error("Gone here 1");
 if ($result) {
+  error("Gone here 2");
   $row = $result->fetch_array(MYSQLI_ASSOC);
   $viewed = $row['viewed'];
 } else
   $viewed = 0;
+error("Gone here 3");
 if ($id === 0)
   $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type) "
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
