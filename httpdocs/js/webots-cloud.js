@@ -295,21 +295,21 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
-            <div class="search-and-sort">
-              <input class="input" id="search-scene" type="text" placeholder="Search for scene...">
-              <div class="select">
-                <select>
-                  <option>Sort by</option>
-                  <option>Views</option>
-                  <option>Title</option>
-                  <option>Version</option>
-                  <option>Duration</option>
-                  <option>Size</option>
-                  <option>Uploaded</option>
-                </select>
-              </div>
-            </div>
             <div class="table-container">
+              <div class="search-and-sort">
+                <input class="input" id="search-scene" type="text" placeholder="Search for scene...">
+                <div class="select">
+                  <select>
+                    <option>Sort by</option>
+                    <option>Views</option>
+                    <option>Title</option>
+                    <option>Version</option>
+                    <option>Duration</option>
+                    <option>Size</option>
+                    <option>Uploaded</option>
+                  </select>
+                </div>
+              </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
