@@ -93,28 +93,28 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    document.getElementById("scene-sort-select").addEventListener('click touchstart', function(event) {
+    document.getElementById("scene-sort").addEventListener('touchstart', function(event) {
       const sortBy = document.getElementById("scene-sort-select").value;
       listAnimations('S', scenePage, sortBy);
     });
-    document.getElementById("animation-sort-select").addEventListener('click touchstart', function(event) {
+    document.getElementById("animation-sort").addEventListener('touchstart', function(event) {
       const sortBy = document.getElementById("animation-sort-select").value;
       listAnimations('A', animationPage, sortBy);
     });
-    document.getElementById("simulation-sort-select").addEventListener('click touchstart', function(event) {
+    document.getElementById("simulation-sort").addEventListener('touchstart', function(event) {
       const sortBy = document.getElementById("simulation-sort-select").value;
       listSimulations(simulationPage, sortBy);
     });
   
-    document.getElementById("scene-search-click").addEventListener('click touchstart', function(event) {
+    document.getElementById("scene-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("scene-search-input").value;
       listAnimations('S', scenePage, 'default', searchString);
     });
-    document.getElementById("animation-search-click").addEventListener('click touchstart', function(event) {
+    document.getElementById("animation-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("animation-search-input").value;
       listAnimations('A', animationPage, 'default', searchString);
     });
-    document.getElementById("simulation-search-click").addEventListener('click touchstart', function(event) {
+    document.getElementById("simulation-search-click").addEventListener('click', function(event) {
       const searchString = document.getElementById("simulation-search-input").value;
       listSimulations(simulationPage, 'default', searchString);
     });
