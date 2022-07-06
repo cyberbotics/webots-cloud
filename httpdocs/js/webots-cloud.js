@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     document.getElementById("scene-sort").addEventListener('click', function(event) {
-      const order = document.getElementById("scene-sort").value;
+      const order = document.getElementById("scene-sort-select").value;
       console.log("Order by: " + order);
      // listAnimations('S', scenePage, );
     });
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </span>
                 </div>
                 <div class="select is-small select-sort-by" id="scene-sort">
-                  <select>
+                  <select id="scene-sort-select">
                     <option>Sort by</option>
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
