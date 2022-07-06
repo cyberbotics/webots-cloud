@@ -92,13 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    if (document.getElementById("scene-search-click")) {
-      console.log("Found it");
-      document.getElementById("scene-search-click").addEventListener('click', function(event) {
-        const searchString = document.getElementById("scene-search-input").value;
-        console.log("Searched for: " + searchString);
-      });
-    }
+    document.getElementById("scene-search-click").addEventListener('click', function(event) {
+      const searchString = document.getElementById("scene-search-input").value;
+      console.log("Searched for: " + searchString);
+    });
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
