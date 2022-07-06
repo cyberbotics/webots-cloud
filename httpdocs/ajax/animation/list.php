@@ -38,14 +38,13 @@
       $mysqli->query("DELETE FROM animation WHERE id=$id");
       delete_animation($type, $id);
     }
-    if (isset($data->search)) {
-      $searchString = $mysqli->escape_string($data->search);
-      $extra_condition += " AND title LIKE '%$searchString%'";
-      error($extra_condition);
-    }
     $parameter = $data->sortBy = isset($data->sortBy) ? $data->sortBy : "viewed";
     $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
-    $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
+    if (isset($data->search)) {
+      $searchString = $mysqli->escape_string($data->search);
+      $query = "SELECT * FROM animation WHERE $extra_condition AND title LIKE '%$searchString%' AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
+    } else
+     $query = "SELECT * FROM animation WHERE $extra_condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
   }
   $result = $mysqli->query($query) or error($mysqli->error);
   $animations = array();
