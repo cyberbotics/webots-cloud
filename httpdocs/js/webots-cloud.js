@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
       const nextDisabled = (current === max) ? ' disabled' : ` href="/${tab}?p=${current + 1}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="/${tab}"`;
+        : `" aria-label="Goto page 1" href="${tab}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -438,7 +438,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
                     <option value="stars">GitHub Stars</option>
-                    <option value="size">Size</option>
                     <option value="updated">Updated</option>
                   </select>
                 </div>
