@@ -86,6 +86,8 @@ $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($result) {
   $row = $result->fetch_array(MYSQLI_ASSOC);
+  $count = count($row);
+  error("count=$count");
   if ($row['viewed'])
     $viewed = $row['viewed'];
   else
