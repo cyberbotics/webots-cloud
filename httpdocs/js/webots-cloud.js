@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     document.getElementById("scene-sort").addEventListener('click', function(event) {
-      const order = document.getElementById("scene-sort-select").value;
-      listAnimations('S', scenePage, order);
+      const sortBy = document.getElementById("scene-sort-select").value;
+      listAnimations('S', scenePage, sortBy);
     });
   
     document.getElementById("scene-search-click").addEventListener('click', function(event) {
@@ -713,12 +713,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function listAnimations(type, page, order, searchString) {
+    function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post', 
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, order: order, search: searchString})})
+        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
         .then(function(response) {
           return response.json();
         })
