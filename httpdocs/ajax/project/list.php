@@ -21,6 +21,7 @@
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
   if (isset($data->search))
     $searchString = $mysqli->escape_string($data->search);
+  error("gone here");
   $extra_condition = $searchString ? "WHERE title LIKE '%$searchString%'" : "";
   error("extra condition: " + $extra_condition);
   $offset = isset($data->offset) ? intval($data->offset) : 0;
