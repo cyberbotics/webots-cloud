@@ -147,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePagination(tab, current, max) {
       console.log("Update Pagination");
+      console.log("current:" + current);
+      console.log("max: " + max);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       content.innerHTML =
