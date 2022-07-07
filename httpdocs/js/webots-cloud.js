@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const style = (data.user === 0) ? ' style="color:grey"' : (parseInt(project.id) === data.user
         ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
-      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(project.id === data.user)
+      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(project.id) === data.user
         ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
       const deleteIcon = (data.user === 0 || parseInt(project.id) === data.user || admin)
         ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
