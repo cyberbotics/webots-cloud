@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    console.log("GONE HERE!");
     let activeTab = document.location.pathname.substring(1);
     let page = parseInt(new URL(document.location.href).searchParams.get('p'));
     if (!page)
@@ -142,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
-      console.log("tab: " + tab + " // current: " + current + " // max" + max);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
