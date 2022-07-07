@@ -1,9 +1,11 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
+    this.termsOfService = new TermsAndPrivacy(routes, this);
     this.load();
   }
   static run(title, footer, routes) {
@@ -173,11 +175,15 @@ export default class Project extends User {
           document.querySelector('#user-menu').style.display = 'auto';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
+          document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'auto';
+          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
           that.updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
+          document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'none';
+          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'auto';
         }
         if (that.email === '!')
           that.login();

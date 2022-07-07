@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
+        <div class="content is-size-7" id="footer-terms-of-use">
+          <p><a class="has-text-white" href="terms-of-use">Terms&nbsp;of&nbsp;Use</a></p>
+        </div>
         <div class="content has-text-centered" id="footer-github" style="margin-bottom:14px">
           <p>
             <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
@@ -295,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
                     <th title="Title of the scene" style="min-width: 120px;">Title</th>
                     <th title="Webots release of the scene">Version</th>
                     <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
@@ -319,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-bar"></i></th>
+                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
                     <th title="Title of the animation" style="min-width: 120px;">Title</th>
                     <th title="Webots release of the animation">Version</th>
                     <th title="Duration of the animation">Duration</th>
