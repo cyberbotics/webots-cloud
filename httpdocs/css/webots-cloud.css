@@ -81,38 +81,14 @@ div.table-container {
   position: relative;
 }
 
-@media only screen and (max-width: 500px) {
-  #footer-terms-of-service {
-    display: none;
-  }
-
-  #footer-github {
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-  }
-
-  #footer-cyberbotics {
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-  }
-}
-
 @media only screen and (max-width: 350px) {
-  #footer-terms-of-service {
-    display: none;
-  }
-
   #footer-github {
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: none;
   }
 
-  #footer-cyberbotics {
-    display: none;
+  .footer-right {
+    margin: 0 15px;
+    width: 100%;
   }
 }
 
