@@ -21,7 +21,7 @@
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $extra_condition = "WHERE SUBSTRING(url, 19, LEN(url)) LIKE '%$searchString%'";
+    $extra_condition = "WHERE LOWER(title) LIKE LOWER('%$searchString%')";
   } else
     $extra_condition = "";
   $offset = isset($data->offset) ? intval($data->offset) : 0;
