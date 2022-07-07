@@ -349,7 +349,7 @@ export default class User extends Router {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
-    const emailBeginning = this.email.substring(0, that.email.indexOf("@"));
+    const emailBeginning = this.email.substring(0, this.email.indexOf("@"));
     const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
