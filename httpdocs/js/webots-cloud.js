@@ -154,6 +154,22 @@ document.addEventListener('DOMContentLoaded', function() {
         <ul class="pagination-list">
           <li><a class="pagination-link is-current">1</a></li>
           <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
+          <li><a class="pagination-link">2</a></li>
         </ul>
         <a class="pagination-next">Next page</a>`;
       nav.innerHTML = content.innerHTML;
