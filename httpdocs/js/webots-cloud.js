@@ -79,21 +79,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    let activeTab = document.location.pathname.substring(1);
-    let page = parseInt(new URL(document.location.href).searchParams.get('p'));
-    if (!page)
-      page = 1;
+    const pageLimit = 10;
 
-    let search = parseInt(new URL(document.location.href).searchParams.get('search'));
-    console.log("Search: ''");
+    const activeTab = document.location.pathname.substring(1) === '' ? document.location.pathname.substring(1) : 'animation';
 
+    const page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
+      parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
+
+    const search = parseInt(new URL(document.location.href).searchParams.get('search')) ?
+      parseInt(new URL(document.location.href).searchParams.get('search')) : '';
+
+    const order = parseInt(new URL(document.location.href).searchParams.get('order')) ?
+      parseInt(new URL(document.location.href).searchParams.get('order')) : 'default';
+
+    console.log("activeTab: " + seaactiveTabrch);
+    console.log("page: " + page);
+    console.log("search: " + search);
+    console.log("order: " + order);
 
     setPages(activeTab, page);
-
-    const pageLimit = 10;
-    if (activeTab === '')
-      activeTab = 'animation';
-
     mainContainer(project, activeTab);
     initTabs();
 
@@ -101,47 +105,47 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    document.getElementById("scene-sort-select").addEventListener('change', function(event) {
-      const sortBy = document.getElementById("scene-sort-select").value;
+    document.getElementById('scene-sort-select').addEventListener('change', function(event) {
+      const sortBy = document.getElementById('scene-sort-select').value;
       listAnimations('S', scenePage, sortBy);
     });
-    document.getElementById("animation-sort-select").addEventListener('change', function(event) {
-      const sortBy = document.getElementById("animation-sort-select").value;
+    document.getElementById('animation-sort-select').addEventListener('change', function(event) {
+      const sortBy = document.getElementById('animation-sort-select').value;
       listAnimations('A', animationPage, sortBy);
     });
-    document.getElementById("simulation-sort-select").addEventListener('change', function(event) {
-      const sortBy = document.getElementById("simulation-sort-select").value;
+    document.getElementById('simulation-sort-select').addEventListener('change', function(event) {
+      const sortBy = document.getElementById('simulation-sort-select').value;
       listSimulations(simulationPage, sortBy);
     });
   
-    document.getElementById("scene-search-click").addEventListener('click', function(event) {
-      const searchString = document.getElementById("scene-search-input").value;
+    document.getElementById('scene-search-click').addEventListener('click', function(event) {
+      const searchString = document.getElementById('scene-search-input').value;
       listAnimations('S', scenePage, 'default', searchString);
     });
-    document.getElementById("animation-search-click").addEventListener('click', function(event) {
-      const searchString = document.getElementById("animation-search-input").value;
+    document.getElementById('animation-search-click').addEventListener('click', function(event) {
+      const searchString = document.getElementById('animation-search-input').value;
       listAnimations('A', animationPage, 'default', searchString);
     });
-    document.getElementById("simulation-search-click").addEventListener('click', function(event) {
-      const searchString = document.getElementById("simulation-search-input").value;
+    document.getElementById('simulation-search-click').addEventListener('click', function(event) {
+      const searchString = document.getElementById('simulation-search-input').value;
       listSimulations(simulationPage, 'default', searchString);
     });
 
-    document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
+    document.getElementById('scene-search-input').addEventListener('keyup', function(event) {
       if (event.key === 'Enter') {
-        const searchString = document.getElementById("scene-search-input").value;
+        const searchString = document.getElementById('scene-search-input').value;
         listAnimations('S', scenePage, 'default', searchString);
       }
     });
-    document.getElementById("animation-search-input").addEventListener('keyup', function(event) {
+    document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
       if (event.key === 'Enter') {
-        const searchString = document.getElementById("animation-search-input").value;
+        const searchString = document.getElementById('animation-search-input').value;
         listAnimations('A', animationPage, 'default', searchString);
       }
     });
-    document.getElementById("simulation-search-input").addEventListener('keyup', function(event) {
+    document.getElementById('simulation-search-input').addEventListener('keyup', function(event) {
       if (event.key === 'Enter') {
-        const searchString = document.getElementById("simulation-search-input").value;
+        const searchString = document.getElementById('simulation-search-input').value;
         listSimulations(simulationPage, 'default', searchString);
       }
     });
