@@ -54,15 +54,15 @@ div.table-container {
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 15px;
   transform: translate(-50%, -50%);
 }
 
 .footer-right {
   position: absolute;
-  top: 20px;
+  margin-top: 10px;
   right: 15px;
-  width: 400px;
+  width: 200px;
   display: flex;
   justify-content: space-between;
 }
