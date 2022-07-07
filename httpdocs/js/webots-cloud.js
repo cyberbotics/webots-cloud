@@ -153,14 +153,21 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<a class="pagination-previous">Previous</a>
-        <ul class="pagination-list">
-          <li><a class="pagination-link is-current">1</a></li>
-          <li><a class="pagination-link">2</a></li>
-          <li><a class="pagination-link">3</a></li>
-          <li><span class="pagination-ellipsis">&hellip;</span></li>
-          <li><a class="pagination-link">72</a></li>
-        </ul>
-        <a class="pagination-next">Next page</a>`;
+        <ul class="pagination-list">`;
+      for (let i = 2; i <= max; i++) {
+        if (i === current - 2 || (i === current + 2 && i !== max)) {
+          content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
+          continue;
+        }
+        if (i < current - 2 || (i > current + 2 && i !== max))
+          continue;
+        if (i === current)
+          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
+            ` aria-current="page">${i}</a></li>`;
+        else
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"</a></li>`;
+      }
+      content.innerHTML += `</ul><a class="pagination-next">Next page</a>`;
       nav.innerHTML = content.innerHTML;
     }
 
