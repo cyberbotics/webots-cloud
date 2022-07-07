@@ -2,15 +2,6 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
-  let loginButton = document.createElement('button');
-  loginButton.id = "testing-button";
-  loginButton.innerHTML = "Click me";
-  document.body.appendChild(loginButton);
-  loginButton.addEventListener("click", startWebotsCloud);
-});
-
-function startWebotsCloud() {
-  document.getElementById("testing-button").remove();
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
@@ -921,4 +912,4 @@ function startWebotsCloud() {
   function runPage(project) {
     project.runWebotsView();
   }
-}
+});
