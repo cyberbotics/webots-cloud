@@ -1,13 +1,13 @@
 export default class TermsAndPrivacy {
   constructor(routes, project) {
-    routes.push({ url: '/terms-of-use', setup: termsOfUsePage });
+    routes.push({ url: '/terms-of-service', setup: termsOfServicePage });
     routes.push({ url: '/privacy-policy', setup: privacyPolicyPage });
-    function termsOfUsePage() {
+    function termsOfServicePage() {
       const template = document.createElement('template');
       template.innerHTML =
         `<section class="section">
           <div class="container content">
-            <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Use</h1>
+            <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Service</h1>
             <ul>
               <li>Effective: 4 July 2022</li>
               <li>Last updated: 4 July 2022</li>
@@ -50,10 +50,10 @@ export default class TermsAndPrivacy {
               Policy</a>.</p>
             <h2 class="subtitle pt-4">How to contact us?</h2>
             <p>If you have any questions concerning the Terms of Service, please contact us at 
-              <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
+              <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a>.</p>
           </div>
         </section>`
-      project.setup('terms-of-use', [], template.content);
+      project.setup('terms-of-service', [], template.content);
     }
     function privacyPolicyPage() {
       const template = document.createElement('template');
@@ -70,7 +70,7 @@ export default class TermsAndPrivacy {
               with the Swiss UID CHE-104.504.228 (hereinafter “Cyberbotics” or “we”). We are committed to protect and respect 
               your privacy while using our services through <a target="_blank" href="https://webots.cloud">webots.cloud</a>. 
               This privacy policy explains how we manage data that identifies you (the "personal data") when you use our 
-              services. We recommend that you read this entire policy before using our services./p>
+              services. We recommend that you read this entire policy before using our services.</p>
             <h2 class="subtitle pt-4">What personal data do we collect?</h2>
             <h4>Information you provide to us</h4>
             <ul>
@@ -92,7 +92,7 @@ export default class TermsAndPrivacy {
             <ul>
               <li>We don't use any cookies. Instead we use the more privacy-oriented local storage web technology.</li>
             </ul>
-            <h2 class="subtitle pt-4">For Which purpose do we collect your personal data?</h2>
+            <h2 class="subtitle pt-4">For which purpose do we collect your personal data?</h2>
             <ul>
               <li>To provide you with our services: create and manage your account, display the content you upload.</li>
               <li>To contact you when needed.</li>
@@ -107,7 +107,7 @@ export default class TermsAndPrivacy {
               personal data may be archived or deleted.</p>
             <h2 class="subtitle pt-4">How to contact us?</h2>
             <p>If you have any questions concerning the Privacy Policy, please contact us at 
-              <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a></p>
+              <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a>.</p>
           </div>
         </section>`
       project.setup('privacy-policy', [], template.content);

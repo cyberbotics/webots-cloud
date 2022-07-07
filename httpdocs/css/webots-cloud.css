@@ -51,7 +51,7 @@ div.table-container {
   display: flex;
 }
 
-#footer-terms-of-use {
+#footer-terms-of-service {
   margin: 1px 0 0 0;
   position: absolute;
   top: 50%;
@@ -76,7 +76,7 @@ div.table-container {
 }
 
 @media only screen and (max-width: 500px) {
-  #footer-terms-of-use {
+  #footer-terms-of-service {
     display: none;
   }
 
@@ -94,7 +94,7 @@ div.table-container {
 }
 
 @media only screen and (max-width: 350px) {
-  #footer-terms-of-use {
+  #footer-terms-of-service {
     display: none;
   }
 
@@ -133,7 +133,7 @@ div.table-container {
   pointer-events: none;
 }
 
-#navbar-terms-of-use-signed-out {
+#navbar-terms-of-service-signed-out {
   display: none;
   position: absolute;
   top: 14px;
@@ -141,12 +141,12 @@ div.table-container {
   font-size: small;
 }
 
-#navbar-terms-of-use-signed-out:hover {
+#navbar-terms-of-service-signed-out:hover {
   cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
-  #navbar-terms-of-use-signed-out {
+  #navbar-terms-of-service-signed-out {
     display: block;
   }
 }

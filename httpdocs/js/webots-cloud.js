@@ -36,9 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
-        <div class="content is-size-7" id="footer-terms-of-use">
-          <p><a class="has-text-white" href="terms-of-use">Terms&nbsp;of&nbsp;Use</a></p>
-        </div>
         <div class="content has-text-centered" id="footer-github" style="margin-bottom:14px">
           <p>
             <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
@@ -46,6 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="content is-size-7" id="footer-cyberbotics">
           <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+        </div>
+        <div class="content is-size-7" id="footer-terms-of-service">
+          <p><a class="has-text-white" href="terms-of-service">Terms</a></p>
+        </div>
+        <div class="content is-size-7" id="footer-privacy-policy>
+          <p><a class="has-text-white" href="privacy-policy">Privacy</a></p>
         </div>
       </footer>`;
     return template.content.firstChild;
