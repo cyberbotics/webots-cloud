@@ -49,6 +49,7 @@ div.table-container {
   background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
   position: relative;
   display: flex;
+  justify-content: space-between;
 }
 
 #footer-github {
