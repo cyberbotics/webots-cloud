@@ -84,6 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!page)
       page = 1;
 
+    let search = parseInt(new URL(document.location.href).searchParams.get('search'));
+    console.log("Search: '" + search + "'");
+
+
     setPages(activeTab, page);
 
     const pageLimit = 10;
