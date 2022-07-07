@@ -48,65 +48,63 @@ div.table-container {
   padding-bottom: 0;
   background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
   position: relative;
-  display: flex;
-}
-
-#footer-terms-of-use {
-  margin: 1px 0 0 0;
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
 }
 
 #footer-github {
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#footer-cyberbotics {
-  margin: 1px 0 0 0;
-  position: absolute;
-  top: 50%;
-  right: 15px;
+  left: 15px;
   transform: translateY(-50%);
 }
 
-@media only screen and (max-width: 500px) {
-  #footer-terms-of-use {
-    display: none;
-  }
-
-  #footer-github {
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-  }
-  
-  #footer-cyberbotics {
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-  }
+.footer-right {
+  position: absolute;
+  right: 15px;
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
 }
 
-@media only screen and (max-width: 350px) {
-  #footer-terms-of-use {
+#footer-cyberbotics {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 1;
+}
+
+#footer-terms-of-service {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 2;
+}
+
+#footer-privacy-policy {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 3;
+}
+
+@media only screen and (max-width: 490px) {
+  #footer-github {
     display: none;
   }
 
-  #footer-github {
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .footer-right {
+    right: 0;
+    margin: 0 50px;
+    width: calc(100% - 100px);
+  }
+
+  #footer-cyberbotics {
+    order: 2;
   }
   
-  #footer-cyberbotics {
-    display: none;
+  #footer-terms-of-service {
+    order: 1;
+  }
+  
+  #footer-privacy-policy {
+    order: 3;
   }
 }
 
@@ -131,24 +129,6 @@ div.table-container {
 
 #email {
   pointer-events: none;
-}
-
-#navbar-terms-of-use-signed-out {
-  display: none;
-  position: absolute;
-  top: 14px;
-  right: 15px;
-  font-size: small;
-}
-
-#navbar-terms-of-use-signed-out:hover {
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 500px) {
-  #navbar-terms-of-use-signed-out {
-    display: block;
-  }
 }
 
 /*  Tabs  */
