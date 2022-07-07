@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       page = 1;
 
     let search = parseInt(new URL(document.location.href).searchParams.get('search'));
-    console.log("Search: '" + search + "'");
+    console.log("Search: ''");
 
 
     setPages(activeTab, page);
