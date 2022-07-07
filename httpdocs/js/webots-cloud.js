@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationPage = 1;
   let simulationPage = 1;
   let serverPage = 1;
+
+  let sceneOrder = 1;
+  let animationOrder = 1;
+  let simulationOrder = 1;
+
+  let sceneSearch = 1;
+  let animationSearch = 1;
+  let simulationSearch = 1;
+
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -78,6 +87,42 @@ document.addEventListener('DOMContentLoaded', function() {
       return serverPage;
   }
 
+  function setOrders(activeTab, order) {
+    if (activeTab === 'scene')
+      sceneOrder = order;
+    else if (activeTab === 'animation')
+      animationOrder = order;
+    else if (activeTab === 'simulation')
+      simulationOrder = order;
+  }
+
+  function getOrder(activeTab) {
+    if (activeTab === 'scene')
+      return sceneOrder;
+    if (activeTab === 'animation')
+      return animationOrder;
+    if (activeTab === 'simulation')
+      return simulationOrder;
+  }
+
+  function setSearches(activeTab, search) {
+    if (activeTab === 'scene')
+      sceneSearch = search;
+    else if (activeTab === 'animation')
+      animationSearch = search;
+    else if (activeTab === 'simulation')
+      simulationSearch = search;
+  }
+
+  function getSearch(activeTab) {
+    if (activeTab === 'scene')
+      return sceneSearch;
+    if (activeTab === 'animation')
+      return animationSearch;
+    if (activeTab === 'simulation')
+      return simulationSearch;
+  }
+
   function homePage(project) {
     const pageLimit = 10;
 
@@ -98,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("order: " + order);
 
     setPages(activeTab, page);
+    setOrders(activeTab, order);
+    setSearches(activeTab, search);
+
     mainContainer(project, activeTab);
     initTabs();
 
@@ -150,9 +198,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    listAnimations('S', scenePage);
-    listAnimations('A', animationPage);
-    listSimulations(simulationPage);
+    listAnimations('S', scenePage, order, search);
+    listAnimations('A', animationPage, order, search);
+    listSimulations(simulationPage, order, search);
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
@@ -162,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max, sortBy, searchString) {
       if (current > max) {
         let href = '/' + tab;
-        href += sortBy ? '?sort=' + sortBy : '';
+        href += sortBy && sortBy !== 'default' ? '?sort=' + sortBy : '';
         href += searchString ? '?search=' + searchString : '';
         project.load(href);
       }
@@ -541,7 +589,12 @@ document.addEventListener('DOMContentLoaded', function() {
           tab.classList.add(ACTIVE_CLASS);
           activeTab = tab.getAttribute('data-tab');
           page = getPage(activeTab);
-          window.history.pushState(null, document.title, '/' + activeTab + ((page === 1) ? '' : '?p=' + page));
+          order = getOrder(activeTab);
+          search = getSearch(activeTab);
+          window.history.pushState(null, document.title, '/' + activeTab +
+            ((page === 1) ? '' : '?p=' + page) +
+            ((order || order !== 'default') ? '' : '?order=' + order) +
+            ((search || search !== '') ? '' : '?search=' + search));
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
