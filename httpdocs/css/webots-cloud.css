@@ -55,7 +55,6 @@ div.table-container {
   position: absolute;
   top: 50%;
   left: 15px;
-  transform: translate(-50%, -50%);
 }
 
 .footer-right {
