@@ -202,8 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max, sortBy, searchString) {
-      hrefOrder = sortBy && sortBy !== 'default' ? '?order=' + sortBy : '';
-      hrefSearch = searchString && sortBy !== '' ? '?search=' + searchString : '';
+      const hrefOrder = sortBy && sortBy !== 'default' ? '?order=' + sortBy : '';
+      const hrefSearch = searchString && sortBy !== '' ? '?search=' + searchString : '';
       if (current > max)
         project.load('/' + tab + hrefOrder + hrefSearch);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
