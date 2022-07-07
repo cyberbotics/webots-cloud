@@ -188,7 +188,7 @@ export default class User extends Router {
       // we need to be logged in to view this page
       if (!that.password || !that.email)
         return false;
-      console.log(that.email);
+      console.log(that.email.substring(0, str.indexOf("@")));
       const template = document.createElement('template');
       const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
