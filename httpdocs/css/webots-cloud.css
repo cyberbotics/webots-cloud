@@ -53,22 +53,18 @@ div.table-container {
 
 #footer-github {
   position: relative;
-  top: 50%;
 }
 
 #footer-cyberbotics {
   position: relative;
-  top: 50%;
 }
 
 #footer-terms-of-service {
   position: relative;
-  top: 50%;
 }
 
 #footer-privacy-policy {
   position: relative;
-  top: 50%;
 }
 
 @media only screen and (max-width: 500px) {
