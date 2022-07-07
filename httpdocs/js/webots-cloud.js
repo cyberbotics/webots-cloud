@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<a class="pagination-previous">Previous</a>
-        <ul class="pagination-list">`;
+        <ul class="pagination-list">
+          <li> <a class="pagination-link${oneIsCurrent}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
         if (i === current - 2 || (i === current + 2 && i !== max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
