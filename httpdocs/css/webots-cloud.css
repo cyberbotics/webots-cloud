@@ -91,6 +91,10 @@ div.table-container {
     margin: 0 30px;
     width: calc(100% - 60px);
   }
+
+  #footer-cyberbotics {
+    margin: 6px 0 0 20px;
+  }
 }
 
 /*  Navbar  */
