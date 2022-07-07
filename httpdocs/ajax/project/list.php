@@ -31,6 +31,7 @@
   $projects = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $tempUrl = $row['url'];
+    error($tempUrl);
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
