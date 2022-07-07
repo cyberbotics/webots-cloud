@@ -378,7 +378,6 @@ export default class User extends Router {
 
     div.querySelector('a#navbar-terms-of-use-signed-in').addEventListener('click', function(event) { that.load('/terms-of-use'); });
     div.querySelector('a#navbar-terms-of-use-signed-out').addEventListener('click', function(event) { that.load('/terms-of-use'); });
-
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
       that.email = null;

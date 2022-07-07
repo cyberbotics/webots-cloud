@@ -22,28 +22,6 @@ body {
   left: 0;
 }
 
-body:after{
-  content: "beta version";
-  position: fixed;
-  width: 260px;
-  height: 25px;
-  background: #e00f00;
-  opacity: 0.95;
-  top: 38px;
-  right: -78px;
-  text-align: center;
-  font-size: 13px;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #fff;
-  line-height: 27px;
-  transform:rotate(45deg);
-  z-index: 100;
-  box-shadow: 2px 2px 5px #740f00;
-  display: none;
-}
-
 /*  Main Container  */
 
 #main-container {
@@ -107,7 +85,7 @@ div.table-container {
     left: 15px;
     transform: translateY(-50%);
   }
-  
+
   #footer-cyberbotics {
     top: 50%;
     right: 15px;
@@ -126,7 +104,7 @@ div.table-container {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  
+
   #footer-cyberbotics {
     display: none;
   }
