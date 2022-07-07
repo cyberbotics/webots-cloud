@@ -146,9 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<a class="pagination-previous">Previous</a>
-        <ul class="pagination-list"><li>
-        <a class="pagination-link>1</a></li>`;
-      content.innerHTML += `</ul>` + `<a class="pagination-next">Next page</a>`;
+        <ul class="pagination-list">
+          <li><a class="pagination-link>1</a></li>
+          <li><a class="pagination-link>2</a></li>
+        </ul>
+        <a class="pagination-next">Next page</a>`;
       nav.innerHTML = content.innerHTML;
     }
 
