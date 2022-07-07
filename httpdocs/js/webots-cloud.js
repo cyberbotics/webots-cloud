@@ -603,9 +603,10 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt">
-              https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt">
+              https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt
             </a>
+            WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
       let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
