@@ -87,6 +87,7 @@ div.table-container {
   }
 
   .footer-right {
+    right: 0;
     margin: 0 15px;
     width: calc(100% - 30px);
   }
