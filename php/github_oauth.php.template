@@ -1,0 +1,4 @@
+<?php  # Fill in with your GitHub OAuth credentials and copy this file to github_oauth.php
+  $github_oauth_client_id='123456789abcdef';
+  $github_oauth_client_secret = '************'; 
+?>
