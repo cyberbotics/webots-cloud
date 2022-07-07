@@ -142,6 +142,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePagination(tab, current, max) {
       console.log("Update Pagination");
+      let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
+      let content = {};
+      content.innerHTML =
+        `<a class="pagination-previous">Previous</a>
+        <ul class="pagination-list"><li>
+        <a class="pagination-link>1</a></li>`;
+      content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
+        nav.innerHTML = content.innerHTML;
     }
 
     function updatePaginationPrev(tab, current, max) {
