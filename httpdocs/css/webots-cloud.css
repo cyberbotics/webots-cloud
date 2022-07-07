@@ -51,6 +51,14 @@ div.table-container {
   display: flex;
 }
 
+#footer-terms-of-use {
+  margin: 1px 0 0 0;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
 #footer-github {
   margin: 0;
   position: absolute;
@@ -68,12 +76,16 @@ div.table-container {
 }
 
 @media only screen and (max-width: 500px) {
+  #footer-terms-of-use {
+    display: none;
+  }
+
   #footer-github {
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
   }
-
+  
   #footer-cyberbotics {
     top: 50%;
     right: 15px;
@@ -82,13 +94,17 @@ div.table-container {
 }
 
 @media only screen and (max-width: 350px) {
+  #footer-terms-of-use {
+    display: none;
+  }
+
   #footer-github {
     width: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
+  
   #footer-cyberbotics {
     display: none;
   }
@@ -115,6 +131,24 @@ div.table-container {
 
 #email {
   pointer-events: none;
+}
+
+#navbar-terms-of-use-signed-out {
+  display: none;
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  font-size: small;
+}
+
+#navbar-terms-of-use-signed-out:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 500px) {
+  #navbar-terms-of-use-signed-out {
+    display: block;
+  }
 }
 
 /*  Tabs  */
