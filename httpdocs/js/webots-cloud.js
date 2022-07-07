@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </td>`;
-      row += `<td><a class="has-text-dark" href="${githubAccount}" target="_blank" title="View GitHub account">${words[1]}</a></td>` +
+      row += `<td><a class="has-text-dark" href="${githubAccount}" target="_blank" title="View GitHub account">${words[0]}</a></td>` +
         `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
           title="GitHub stars"> ${data.stars}</a></td>` +
