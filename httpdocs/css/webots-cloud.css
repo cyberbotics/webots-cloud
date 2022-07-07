@@ -131,24 +131,6 @@ div.table-container {
   pointer-events: none;
 }
 
-#navbar-terms-of-service-signed-out {
-  display: none;
-  position: absolute;
-  top: 14px;
-  right: 15px;
-  font-size: small;
-}
-
-#navbar-terms-of-service-signed-out:hover {
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 500px) {
-  #navbar-terms-of-service-signed-out {
-    display: block;
-  }
-}
-
 /*  Tabs  */
 
 #tabs {
