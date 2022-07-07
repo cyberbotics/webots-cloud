@@ -67,28 +67,28 @@ div.table-container {
 }
 
 #footer-cyberbotics {
-  margin: 5px 0 0 0;
+  margin: 6px 0 0 0;
   position: relative;
 }
 
 #footer-terms-of-service {
-  margin: 5px 0 0 0;
+  margin: 6px 0 0 0;
   position: relative;
 }
 
 #footer-privacy-policy {
-  margin: 5px 0 0 0;
+  margin: 6px 0 0 0;
   position: relative;
 }
 
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 490px) {
   #footer-github {
     display: none;
   }
 
   .footer-right {
     margin: 0 15px;
-    width: 100%;
+    width: calc(100% - 30px);
   }
 }
 
