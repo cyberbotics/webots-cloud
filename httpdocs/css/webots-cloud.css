@@ -51,28 +51,24 @@ div.table-container {
   display: flex;
 }
 
-#footer-terms-of-service {
-  margin: 1px 0 0 0;
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-}
-
 #footer-github {
-  margin: 0;
-  position: absolute;
+  position: relative;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 #footer-cyberbotics {
-  margin: 1px 0 0 0;
-  position: absolute;
+  position: relative;
   top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
+}
+
+#footer-terms-of-service {
+  position: relative;
+  top: 50%;
+}
+
+#footer-privacy-policy {
+  position: relative;
+  top: 50%;
 }
 
 @media only screen and (max-width: 500px) {
