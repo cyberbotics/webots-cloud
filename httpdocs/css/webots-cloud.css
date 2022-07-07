@@ -69,16 +69,19 @@ div.table-container {
 #footer-cyberbotics {
   margin: 6px 0 0 0;
   position: relative;
+  order: 1;
 }
 
 #footer-terms-of-service {
   margin: 6px 0 0 0;
   position: relative;
+  order: 2;
 }
 
 #footer-privacy-policy {
   margin: 6px 0 0 0;
   position: relative;
+  order: 3;
 }
 
 @media only screen and (max-width: 490px) {
@@ -90,6 +93,18 @@ div.table-container {
     right: 0;
     margin: 0 50px;
     width: calc(100% - 100px);
+  }
+
+  #footer-cyberbotics {
+    order: 2;
+  }
+  
+  #footer-terms-of-service {
+    order: 1;
+  }
+  
+  #footer-privacy-policy {
+    order: 3;
   }
 }
 
