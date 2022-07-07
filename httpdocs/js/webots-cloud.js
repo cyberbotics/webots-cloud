@@ -202,19 +202,17 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max, sortBy, searchString) {
-      if (current > max) {
-        let href = '/' + tab;
-        href += sortBy && sortBy !== 'default' ? '?sort=' + sortBy : '';
-        href += searchString ? '?search=' + searchString : '';
-        project.load(href);
-      }
+      hrefOrder = sortBy && sortBy !== 'default' ? '?order=' + sortBy : '';
+      hrefSearch = searchString && sortBy !== '' ? '?search=' + searchString : '';
+      if (current > max)
+        project.load('/' + tab + hrefOrder + hrefSearch);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
-      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}"`;
+        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefOrder}${hrefSearch}"`;
+      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}${hrefOrder}${hrefSearch}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab}"`;
+        : `" aria-label="Goto page 1" href="${tab}${hrefOrder}${hrefSearch}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -230,14 +228,11 @@ document.addEventListener('DOMContentLoaded', function() {
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
         else
-          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}" href="${tab}?p=${i}">${i}</a></li>`;
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
+            href="${tab}?p=${i}${hrefOrder}${hrefSearch}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
-
-      //const pushUrl = window.location.href + tab + "?p=" + i;
-      //console.log(pushUrl);
-      //window.history.pushState(null, name, pushUrl);
     }
 
     function animationRow(data) {
