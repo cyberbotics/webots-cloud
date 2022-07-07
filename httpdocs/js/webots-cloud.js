@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function homePage(project) {
     const pageLimit = 10;
 
-    let activeTab = document.location.pathname.substring(1) === '' ? document.location.pathname.substring(1) : 'animation';
+    let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
     let page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
