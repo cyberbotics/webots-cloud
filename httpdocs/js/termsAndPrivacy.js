@@ -9,8 +9,8 @@ export default class TermsAndPrivacy {
           <div class="container content">
             <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Service</h1>
             <ul>
-              <li>Effective: 4 July 2022</li>
-              <li>Last updated: 4 July 2022</li>
+              <li>Effective: 7 July 2022</li>
+              <li>Last updated: 7 July 2022</li>
             </ul>
             <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a> website is created, developed and operated by 
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered 
@@ -58,8 +58,8 @@ export default class TermsAndPrivacy {
           <div class="container content">
             <h1 class="title pb-3"><i class="fa-solid fa-sm fa-lock"></i> Privacy Policy</h1>
             <ul>
-              <li>Effective: 4 July 2022</li>
-              <li>Last updated: 4 July 2022</li>
+              <li>Effective: 7 July 2022</li>
+              <li>Last updated: 7 July 2022</li>
             </ul>
             <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a> website is created, developed and operated by 
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered 
