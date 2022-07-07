@@ -146,33 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
-      console.log("Update Pagination");
-      console.log("current:" + current);
-      console.log("max: " + max);
-      let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
-      let content = {};
-      content.innerHTML =
-        `<a class="pagination-previous">Previous</a>
-        <ul class="pagination-list">
-          <li> <a class="pagination-link>1</a></li>`;
-      for (let i = 2; i <= max; i++) {
-        if (i === current - 2 || (i === current + 2 && i !== max)) {
-          content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
-          continue;
-        }
-        if (i < current - 2 || (i > current + 2 && i !== max))
-          continue;
-        if (i === current)
-          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
-            ` aria-current="page">${i}</a></li>`;
-        else
-          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"</a></li>`;
-      }
-      content.innerHTML += `</ul><a class="pagination-next">Next page</a>`;
-      nav.innerHTML = content.innerHTML;
-    }
-
-    function updatePaginationPrev(tab, current, max) {
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
