@@ -288,7 +288,7 @@ export default class User extends Router {
     if (typeof displayName === 'undefined') {
       let script = document.createElement('script');
       script.type = 'text/javascript';
-      script.innerHTML = `let displayName = ${emailBeginning};
+      script.innerHTML = `let displayName = '${emailBeginning}';
         function User_profile(data) {
         if (data && data.entry && data.entry[0]) {
         displayName = data.entry[0].displayName;
@@ -299,9 +299,9 @@ export default class User extends Router {
         if (!displayName)
         displayName = data.entry[0].name.familyName;
         if (!displayName)
-        displayName = ${emailBeginning};
+        displayName = '${emailBeginning}';
         } else
-        displayName = ${emailBeginning};
+        displayName = '${emailBeginning}';
         let x = document.getElementsByName("displayName");
         let i;
         for (i = 0; i < x.length; i++)
