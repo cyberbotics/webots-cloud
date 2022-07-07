@@ -151,9 +151,13 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-    function updatePagination(tab, current, max) {
-      if (current > max)
-        project.load('/' + tab);
+    function updatePagination(tab, current, max, sortBy, searchString) {
+      if (current > max) {
+        let href = '/' + tab;
+        href += sortBy ? '?sort=' + sortBy : '';
+        href += searchString ? '?search=' + searchString : '';
+        project.load(href);
+      }
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
@@ -830,7 +834,6 @@ document.addEventListener('DOMContentLoaded', function() {
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            console.log("Total: " + total);
             updatePagination('simulation', page, total, sortBy, searchString);
           }
         });
