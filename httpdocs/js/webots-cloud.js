@@ -152,12 +152,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
+      if (current > max)
+        current = 1;
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
         ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}"`;
       const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}"`;
-      const oneIsCurrent = (current === 1 || current > max) ? ' is-current" aria-label="Page 1" aria-current="page"'
+      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
         : `" aria-label="Goto page 1" href="${tab}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
