@@ -67,14 +67,17 @@ div.table-container {
 }
 
 #footer-cyberbotics {
+  margin: 0;
   position: relative;
 }
 
 #footer-terms-of-service {
+  margin: 0;
   position: relative;
 }
 
 #footer-privacy-policy {
+  margin: 0;
   position: relative;
 }
 
