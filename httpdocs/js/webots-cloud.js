@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       for (let word in words) {
-        console.log(word);
+        console.log(data.title + ": " + word);
       }
       const dotIndex = data.url.lastIndexOf('/') + 1;
       const thumbnailUrl = (data.url.slice(0, dotIndex) + "." + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
