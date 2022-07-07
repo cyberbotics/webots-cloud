@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const thumbnailUrl = (data.url.slice(0, dotIndex) + "." + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const githubAccount = `https://github.com/${words[0]}`;
-      const repository = userProfile + `/${words[1]}`;
+      const repository = githubAccount + `/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
