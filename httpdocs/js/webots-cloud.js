@@ -148,8 +148,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `<a class="pagination-previous">Previous</a>
         <ul class="pagination-list"><li>
         <a class="pagination-link>1</a></li>`;
-      content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
-        nav.innerHTML = content.innerHTML;
+      content.innerHTML += `</ul>` + `<a class="pagination-next">Next page</a>`;
+      nav.innerHTML = content.innerHTML;
     }
 
     function updatePaginationPrev(tab, current, max) {
