@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="content is-size-7" id="footer-terms-of-service">
           <p><a class="has-text-white" href="terms-of-service">Terms</a></p>
         </div>
-        <div class="content is-size-7" id="footer-privacy-policy>
+        <div class="content is-size-7" id="footer-privacy-policy">
           <p><a class="has-text-white" href="privacy-policy">Privacy</a></p>
         </div>
       </footer>`;
