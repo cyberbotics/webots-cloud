@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const order = parseInt(new URL(document.location.href).searchParams.get('order')) ?
       parseInt(new URL(document.location.href).searchParams.get('order')) : 'default';
 
-    console.log("activeTab: " + seaactiveTabrch);
+    console.log("activeTab: " + activeTab);
     console.log("page: " + page);
     console.log("search: " + search);
     console.log("order: " + order);
