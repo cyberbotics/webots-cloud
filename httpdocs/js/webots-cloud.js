@@ -173,8 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
 
-      const pushUrl = window.location.href;
-      console.log(pushUrl);
+      //const pushUrl = window.location.href + tab + "?p=" + i;
+      //console.log(pushUrl);
       //window.history.pushState(null, name, pushUrl);
     }
 
