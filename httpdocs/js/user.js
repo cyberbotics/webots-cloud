@@ -284,7 +284,7 @@ export default class User extends Router {
     const md5sum = md5(that.email.toLowerCase());
     let head = document.getElementsByTagName('head')[0];
     if (typeof displayName === 'undefined') {
-      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
+      const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf("@")) : 'Anonymous';
       let script = document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `let displayName = '${emailBeginning}';
@@ -349,7 +349,7 @@ export default class User extends Router {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
-    const emailBeginning = this.email.substring(0, this.email.indexOf("@"));
+    const emailBeginning = this.email ? this.email.substring(0, this.email.indexOf("@")) : 'Anonymous';
     const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
