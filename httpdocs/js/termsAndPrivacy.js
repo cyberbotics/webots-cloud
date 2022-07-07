@@ -12,7 +12,7 @@ export default class TermsAndPrivacy {
               <li>Effective: 4 July 2022</li>
               <li>Last updated: 4 July 2022</li>
             </ul>
-            <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a>  is created, developed and operated by 
+            <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a> website is created, developed and operated by 
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered 
               with the Swiss UID CHE-104.504.228 (hereinafter “Cyberbotics” or “we”). These Terms of Service are a legal 
               agreement between you and Cyberbotics. They apply to your use of our services.</p>
@@ -61,7 +61,7 @@ export default class TermsAndPrivacy {
               <li>Effective: 4 July 2022</li>
               <li>Last updated: 4 July 2022</li>
             </ul>
-            <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a>  is created, developed and operated by 
+            <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a> website is created, developed and operated by 
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered 
               with the Swiss UID CHE-104.504.228 (hereinafter “Cyberbotics” or “we”). We are committed to protect and respect 
               your privacy while using our services through <a target="_blank" href="https://webots.cloud">webots.cloud</a>. 
