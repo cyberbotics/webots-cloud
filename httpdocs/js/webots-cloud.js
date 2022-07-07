@@ -4,6 +4,7 @@ import ModalDialog from './modal_dialog.js';
 document.addEventListener('DOMContentLoaded', function() {
   let loginButton = document.createElement('button');
   loginButton.innerHTML = "Click me";
+  document.appendChild(loginButton);
   loginButton.addEventListener("click", startWebotsCloud);
 });
 
