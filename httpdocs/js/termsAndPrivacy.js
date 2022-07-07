@@ -7,7 +7,7 @@ export default class TermsAndPrivacy {
       template.innerHTML =
         `<section class="section">
           <div class="container content">
-            <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i>  Terms of Use</h1>
+            <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Use</h1>
             <ul>
               <li>Effective: 4 July 2022</li>
               <li>Last updated: 4 July 2022</li>
