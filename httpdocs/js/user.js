@@ -326,15 +326,11 @@ export default class User extends Router {
           document.querySelector('#user-menu').style.display = 'auto';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'auto';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'none';
           that.updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
-          document.querySelector('#navbar-terms-of-use-signed-in').style.display = 'none';
-          document.querySelector('#navbar-terms-of-use-signed-out').style.display = 'auto';
         }
         if (that.email === '!')
           that.login();
@@ -362,9 +358,6 @@ export default class User extends Router {
           <a class="button is-small is-light" id="log-in">
             Log in
           </a>
-          <a class="has-text-info is-small" id="navbar-terms-of-use-signed-out">
-            Terms of Use
-          </a>
         </div>
       </div>
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
@@ -372,19 +365,10 @@ export default class User extends Router {
         <div class="navbar-dropdown is-boxed">
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
-          <a class="navbar-item" id="navbar-terms-of-use-signed-in"><i class="fas fa-shield-halved"> &nbsp; </i>Terms of Use</a>
-          <div class="navbar-divider"></div>
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
         </div>
       </div>`;
     let that = this;
-
-    div.querySelector('a#navbar-terms-of-use-signed-in').addEventListener('click', function(event) {
-      that.load('/terms-of-use');
-    });
-    div.querySelector('a#navbar-terms-of-use-signed-out').addEventListener('click', function(event) {
-      that.load('/terms-of-use');
-    });
 
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
