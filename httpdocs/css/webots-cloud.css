@@ -48,12 +48,23 @@ div.table-container {
   padding-bottom: 0;
   background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
   position: relative;
-  display: flex;
-  justify-content: space-between;
 }
 
 #footer-github {
-  position: relative;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.footer-right {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #footer-cyberbotics {

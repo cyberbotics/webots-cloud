@@ -41,14 +41,16 @@ document.addEventListener('DOMContentLoaded', function() {
             <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
           </p>
         </div>
-        <div class="content is-size-7" id="footer-cyberbotics">
-          <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
-        </div>
-        <div class="content is-size-7" id="footer-terms-of-service">
-          <p><a class="has-text-white" href="terms-of-service">Terms</a></p>
-        </div>
-        <div class="content is-size-7" id="footer-privacy-policy">
-          <p><a class="has-text-white" href="privacy-policy">Privacy</a></p>
+        <div class="footer-right">
+          <div class="content is-size-7" id="footer-terms-of-service">
+            <p><a class="has-text-white" href="terms-of-service">Terms</a></p>
+          </div>
+          <div class="content is-size-7" id="footer-privacy-policy">
+            <p><a class="has-text-white" href="privacy-policy">Privacy</a></p>
+          </div>
+          <div class="content is-size-7" id="footer-cyberbotics">
+            <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
+          </div>
         </div>
       </footer>`;
     return template.content.firstChild;
