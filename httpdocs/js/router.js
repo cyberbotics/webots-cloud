@@ -24,7 +24,7 @@ export default class Router {
           event.preventDefault(); // prevent the browser from doing the navigation
           that.load(element.pathname + element.search + element.hash);
           if (element.hash === '')
-            window.scrollTo(0, 0);
+            document.getElementById('scrollable-body').scrollTo(0, 0);
         }
       }
     });
