@@ -21,7 +21,7 @@
   $order = $parameter == "title" || $parameter == "version" ? "ASC" : "DESC";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $extra_condition = "WHERE SUBSTRING(url, 10, 20) LIKE '%$searchString%'";
+    $extra_condition = "WHERE SUBSTRING(url, 19, LEN(URL)) LIKE '%$searchString%'";
   } else
     $extra_condition = "";
   $offset = isset($data->offset) ? intval($data->offset) : 0;
@@ -30,8 +30,6 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   $projects = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $tempUrl = $row['url'];
-    error($tempUrl);
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
