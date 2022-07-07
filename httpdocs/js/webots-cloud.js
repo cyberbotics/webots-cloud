@@ -252,12 +252,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
-      for (let i = 0; i < words.length; i++)
-        console.log(data.title + ": " + words[i]);
       const dotIndex = data.url.lastIndexOf('/') + 1;
       const thumbnailUrl = (data.url.slice(0, dotIndex) + "." + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
-      const repository = `https://github.com/${words[0]}/${words[1]}`;
+      const githubAccount = `https://github.com/${words[0]}`;
+      const repository = userProfile + `/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
@@ -286,7 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </td>`;
-      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+      row += `<td><a class="has-text-dark" href="${githubAccount}" target="_blank" title="View GitHub account">${words[1]}</a></td>` +
+        `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
           title="GitHub stars"> ${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
@@ -458,6 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
                     <th title="Title of the simulation">Title</th>
+                    <th title="GitHub account">GitHub Account</th>
                     <th title="Branch or Tag of the simulation">Branch/Tag</th>
                     <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
                     <th title="Webots release of the simulation">Version</th>
