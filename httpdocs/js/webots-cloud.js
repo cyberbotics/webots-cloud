@@ -124,16 +124,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById("scene-search-input").addEventListener('keyup', function(event) {
-      const searchString = document.getElementById("scene-search-input").value;
-      listAnimations('S', scenePage, 'default', searchString);
+      if (event.key === 'Enter') {
+        const searchString = document.getElementById("scene-search-input").value;
+        listAnimations('S', scenePage, 'default', searchString);
+      }
     });
     document.getElementById("animation-search-input").addEventListener('keyup', function(event) {
-      const searchString = document.getElementById("animation-search-input").value;
-      listAnimations('A', animationPage, 'default', searchString);
+      if (event.key === 'Enter') {
+        const searchString = document.getElementById("animation-search-input").value;
+        listAnimations('A', animationPage, 'default', searchString);
+      }
     });
     document.getElementById("simulation-search-input").addEventListener('keyup', function(event) {
-      const searchString = document.getElementById("simulation-search-input").value;
-      listSimulations(simulationPage, 'default', searchString);
+      if (event.key === 'Enter') {
+        const searchString = document.getElementById("simulation-search-input").value;
+        listSimulations(simulationPage, 'default', searchString);
+      }
     });
 
     listAnimations('S', scenePage);
@@ -794,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination(typeName, page, total);
+            updatePagination(typeName, page, total, sortBy, searchString);
           }
         });
     }
@@ -822,7 +828,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
+            console.log("Total: " + total);
+            updatePagination('simulation', page, total, sortBy, searchString);
           }
         });
     }
