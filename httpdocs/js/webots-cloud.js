@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePagination(tab, current, max) {
       if (current > max)
-        updatePagination(tab, 1, max)
+        project.load('/' + tab);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
