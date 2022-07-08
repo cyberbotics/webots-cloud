@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', function() {
       //const sortBy = getOrder(tab);
       //const searchString = getSearch(tab);
       const sortBy = 'default';
-      const searchString = NULL;
+      const searchString = null;
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
@@ -858,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
       //const sortBy = getOrder('simulation');
       //const searchString = getSearch('simulation');
       const sortBy = 'default';
-      const searchString = NULL;
+      const searchString = null;
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/project/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
