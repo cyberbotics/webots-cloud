@@ -844,8 +844,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listSimulations(page, sortBy, searchString) {
-      const sortBy = getSort('simulation');
-      const searchString = getSearch('simulation');
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/project/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
