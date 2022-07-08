@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
       const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
 
-      let url = new URL(document.location.href)
+      let url = new URL(document.location.origin + document.location.pathname);
       console.log("url: " + url.toString());
       if (getPage(activeTab) !== 1)
         url.searchParams.append('p', getPage(activeTab));
