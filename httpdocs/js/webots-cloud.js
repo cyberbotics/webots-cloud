@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
 
-      console.log("url: " + url.pathname.toString() + url.search.toString());
+      console.log("url: " + url.pathname + url.search);
 
       //window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
 
