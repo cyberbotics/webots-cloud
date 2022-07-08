@@ -174,22 +174,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('scene-search-input').addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        const searchString = document.getElementById('scene-search-input').value;
-        listAnimations('S', scenePage, 'default', searchString);
-      }
+      const searchString = document.getElementById('scene-search-input').value;
+      const order = getOrder('scene');
+      if (event.key === 'Enter')
+        listAnimations('S', scenePage, order, searchString);
+      else if (!searchString || searchString === '')
+        listAnimations('S', scenePage, order);
     });
     document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        const searchString = document.getElementById('animation-search-input').value;
-        listAnimations('A', animationPage, 'default', searchString);
-      }
+      const searchString = document.getElementById('animation-search-input').value;
+      const order = getOrder('animation');
+      if (event.key === 'Enter')
+        listAnimations('A', animationPage, order, searchString);
+      else if (!searchString || searchString === '')
+        listAnimations('A', animationPage, order);
     });
     document.getElementById('simulation-search-input').addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        const searchString = document.getElementById('simulation-search-input').value;
-        listSimulations(simulationPage, 'default', searchString);
-      }
+      const searchString = document.getElementById('simulation-search-input').value;
+      const order = getOrder('simulation');
+      if (event.key === 'Enter')
+        listSimulations(simulationPage, order, searchString);
+      else if (!searchString || searchString === '')
+        listSimulations(simulationPage, order);
     });
 
     listAnimations('S', scenePage, order, search);
