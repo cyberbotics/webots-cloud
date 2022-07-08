@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
 
-      window.history.pushState(null, document.title, '/' + url.pathname + url.search);
+      window.history.pushState(null, document.title, (url.pathname + url.search).toString());
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
