@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
     let page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
-      parseInt(new URL(document.location.href).searchParams.get('p')) : getPage(activeTab);
+      parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
     let search = parseInt(new URL(document.location.href).searchParams.get('search')) ?
       parseInt(new URL(document.location.href).searchParams.get('search')) : getSearch(activeTab);
     let order = parseInt(new URL(document.location.href).searchParams.get('order')) ?
