@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
-      window.history.pushState('search', '', (url.pathname + url.search).toString());
+      window.history.replaceState('search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
