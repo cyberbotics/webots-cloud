@@ -553,6 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initTabs() {
+      console.log("initTabs");
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
