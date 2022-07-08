@@ -152,9 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(type + '-search-input').addEventListener('click', pushHistoryForSearch);
     }
 
-    listAnimations('S', scenePage, sceneSort, sceneSearch);
-    listAnimations('A', animationPage, animationSort, animationSearch);
-    listSimulations(simulationPage, simulationSort, simulationSearch);
+    listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
+    listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
+    listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
