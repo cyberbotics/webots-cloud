@@ -818,11 +818,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listAnimations(type, page) {
-      //const tab = type === 'A' ? 'animation' : 'simulation';
-      //const sortBy = getOrder(tab);
-      //const searchString = getSearch(tab);
-      const sortBy = 'default';
-      const searchString = null;
+      const tab = type === 'A' ? 'animation' : 'simulation';
+      const sortBy = getOrder(tab);
+      const searchString = getSearch(tab);
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
@@ -856,10 +854,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listSimulations(page) {
-      //const sortBy = getOrder('simulation');
-      //const searchString = getSearch('simulation');
-      const sortBy = 'default';
-      const searchString = null;
+      const sortBy = getOrder('simulation');
+      const searchString = getSearch('simulation');
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/project/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
