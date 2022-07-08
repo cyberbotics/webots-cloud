@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type); });
+      document.getElementById(type + '-search-input').addEventListener('click', pushHistoryForSearch);
     }
 
     listAnimations('S', scenePage, sceneSort, sceneSearch);
@@ -159,6 +160,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
+
+    function pushHistoryForSearch() {
+      if (window.history.state !== 'search')
+        console.log(url.pathname.toString() + '/' + activeTab);
+        //window.history.pushState('search', '', (url.pathname + url.search).toString());
+    }
 
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
