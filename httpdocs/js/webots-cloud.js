@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationOrder = 'default';
   let simulationOrder = 'default';
 
-  let sceneSearch;
-  let animationSearch;
-  let simulationSearch;
+  let sceneSearch = '';
+  let animationSearch = '';
+  let simulationSearch = '';
 
   Project.run('webots.cloud', footer(), [
     {
