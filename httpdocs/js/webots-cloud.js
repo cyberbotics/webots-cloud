@@ -158,6 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    console.log("scenePage: " + scenePage);
+    console.log("sceneSort: " + sceneSort);
+    console.log("sceneSearch: " + sceneSearch);
+
     listAnimations('S', scenePage, sceneSort, sceneSearch);
     listAnimations('A', animationPage, animationSort, animationSearch);
     listSimulations(simulationPage, simulationSort, simulationSearch);
