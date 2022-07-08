@@ -563,6 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
           page = getPage(activeTab);
           order = getOrder(activeTab);
           search = getSearch(activeTab);
+          console.log("activeTab: " + activeTab);
           console.log("page: " + page);
           console.log("order: " + order);
           console.log("search: " + search + "\n\n");
