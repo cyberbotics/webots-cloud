@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
-      document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type); });
+      document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type, true); });
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -160,32 +160,34 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-    function searchAndSortTable(type) {
+    function searchAndSortTable(type, isSearch) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(activeTab) !== 1)
-        url.searchParams.append('p', getPage(activeTab));
-      if (getSort(activeTab) && getSort(activeTab) !== 'default')
-        url.searchParams.append('sort', getSort(activeTab));
-      if (getSearch(activeTab) && getSearch(activeTab) !== '')
-        url.searchParams.append('search', getSearch(activeTab));
+      if (getPage(type) !== 1 && !isSearch)
+        url.searchParams.append('p', getPage(type));
+      else
+        setPages(type, 1);
+      if (getSort(type) && getSort(type) !== 'default')
+        url.searchParams.append('sort', getSort(type));
+      if (getSearch(type) && getSearch(type) !== '')
+        url.searchParams.append('search', getSearch(type));
       window.history.replaceState('search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
-        listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
+        listAnimations('S', scenePage, getSort(type), getSearch(type));
       else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(activeTab), getSearch(activeTab));
+        listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(activeTab), getSearch(activeTab));
+        listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
-      if (current > max)
-        project.load('/' + tab + hrefSort + hrefSearch);
+/*       if (current > max)
+        project.load('/' + tab + hrefSort + hrefSearch); */
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
