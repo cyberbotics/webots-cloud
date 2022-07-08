@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
-      document.getElementById(type + '-search-input').addEventListener('keydown', function(e) { searchAndSortTable(type); });
+      document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type); });
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
