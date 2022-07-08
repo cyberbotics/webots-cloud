@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-    function searchAndSortTable(type, event) {
+    function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setOrders(type, document.getElementById(type + '-sort-select').value);
 
@@ -180,6 +180,13 @@ document.addEventListener('DOMContentLoaded', function() {
         ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
         ((getOrder(activeTab) && getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
         ((getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
+
+      if (type === 'scene')
+        listAnimations('S', scenePage);
+      else if (type === 'animation')
+        listAnimations('A', animationPage);
+      else if (type === 'simulation')
+        listSimulations(simulationPage);
     }
 
     function updatePagination(tab, current, max, sortBy, searchString) {
