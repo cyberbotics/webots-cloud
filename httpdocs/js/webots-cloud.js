@@ -128,12 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
-    let page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
+    let page = new URL(document.location.href).searchParams.get('p') ?
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
-    let search = parseInt(new URL(document.location.href).searchParams.get('search')) ?
-      parseInt(new URL(document.location.href).searchParams.get('search')) : getSearch(activeTab);
+    let search = new URL(document.location.href).searchParams.get('search') ?
+      (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
     let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
-      parseInt(new URL(document.location.href).searchParams.get('sort')) : getSort(activeTab);
+      (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
     setPages(activeTab, page);
     setSorts(activeTab, sort);
