@@ -178,10 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
 
-      const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
-      const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
-      const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
-
       let url = new URL(document.location.origin + document.location.pathname);
       if (getPage(activeTab) !== 1)
         url.searchParams.append('p', getPage(activeTab));
@@ -190,9 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
 
-      console.log("url: " + url.pathname + url.search);
-
-      //window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
+      window.history.pushState(null, document.title, '/' + url.pathname + url.search);
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
