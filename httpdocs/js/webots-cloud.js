@@ -180,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       window.history.pushState(null, document.title, '/' + activeTab +
         ((page === 1) ? '' : '?p=' + page) +
-        ((getOrder(activeTab) || getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
-        ((getSearch(activeTab) || getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
+        ((getOrder(activeTab) && getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
+        ((getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
     }
 
     function updatePagination(tab, current, max, sortBy, searchString) {
