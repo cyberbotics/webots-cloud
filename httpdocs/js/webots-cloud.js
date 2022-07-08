@@ -177,12 +177,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      let url = parseInt(new URL(document.location.href).searchParams.get('p'));
-      console.log("url: " + url);
-      const pageParameter = (getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab);
+      let url2 = parseInt(new URL(document.location.href).searchParams.get('p'));
+      console.log("url: " + url2);
+
+      const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
       const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
       const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
-      window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
+
+      let url = new URL(document.location.href)
+      if (getPage(activeTab) !== 1)
+        url.searchParams.append('p', getPage(activeTab));
+      if (getSort(activeTab) && getSort(activeTab) !== 'default')
+        url.searchParams.append('sort', getSort(activeTab));
+      if (getSearch(activeTab) && getSearch(activeTab) !== '')
+        url.searchParams.append('search', getSearch(activeTab));
+
+      //window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
