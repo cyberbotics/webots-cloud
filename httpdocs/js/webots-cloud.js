@@ -167,10 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
       setSorts(type, document.getElementById(type + '-sort-select').value);
       console.log(document.getElementById(type + '-search-input').value);
       let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(type) !== 1 && !isSearch)
+      if (getPage(type) !== 1)
         url.searchParams.append('p', getPage(type));
-      else
-        setPages(type, 1);
       if (getSort(type) && getSort(type) !== 'default')
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
