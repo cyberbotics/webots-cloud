@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          window.history.pushState({ tab : activeTab}, document.title, (url.pathname + url.search).toString());
+          window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           console.log(window.history);
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
