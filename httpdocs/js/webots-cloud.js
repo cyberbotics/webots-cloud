@@ -167,23 +167,23 @@ document.addEventListener('DOMContentLoaded', function() {
       setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(activeTab) !== 1 && !isSearch)
-        url.searchParams.append('p', getPage(activeTab));
+      if (getPage(type) !== 1 && !isSearch)
+        url.searchParams.append('p', getPage(type));
       else
-        setPages(activeTab, 1);
-      console.log("gone here");
-      if (getSort(activeTab) && getSort(activeTab) !== 'default')
-        url.searchParams.append('sort', getSort(activeTab));
-      if (getSearch(activeTab) && getSearch(activeTab) !== '')
-        url.searchParams.append('search', getSearch(activeTab));
+        setPages(type, 1);
+      if (getSort(type) && getSort(type) !== 'default')
+        url.searchParams.append('sort', getSort(type));
+      if (getSearch(type) && getSearch(type) !== '')
+        url.searchParams.append('search', getSearch(type));
+      console.log((url.pathname + url.search).toString());
       window.history.replaceState('search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
-        listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
+        listAnimations('S', scenePage, getSort(type), getSearch(type));
       else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(activeTab), getSearch(activeTab));
+        listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(activeTab), getSearch(activeTab));
+        listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
     function updatePagination(tab, current, max) {
