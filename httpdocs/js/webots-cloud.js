@@ -124,11 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    window.onpopstate = history.onpushstate = function(e) {
-      console.log('History has been modified!')
-      console.log(e)
-    };
-
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -154,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type); });
-      document.getElementById(type + '-search-input').addEventListener('click', pushHistoryForSearch);
+      //document.getElementById(type + '-search-input').addEventListener('click', pushHistoryForSearch);
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
