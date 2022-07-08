@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
       let url2 = parseInt(new URL(document.location.href));
-      console.log("url: " + url2);
+      console.log("url: " + url2.toString());
 
       const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
       const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
