@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
-      window.history.pushState(null, document.title, (url.pathname + url.search).toString());
+      window.location =  (url.pathname + url.search).toString();
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          window.history.pushState(null, document.title, (url.pathname + url.search).toString());
+          window.location = (url.pathname + url.search).toString();
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
