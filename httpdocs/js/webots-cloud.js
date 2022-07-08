@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type, isSearch) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      console.log(getSearch(type));
+      console.log(document.getElementById(type + '-sort-select').value));
       let url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
