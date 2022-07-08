@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function pushHistoryForSearch() {
+      console.log(window.history.state);
       if (window.history.state !== 'search')
         console.log(document.location.href);
         //window.history.pushState('search', '', (url.pathname + url.search).toString());
