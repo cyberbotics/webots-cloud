@@ -161,8 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function searchAndSortTable(type, isSearch) {
-      setSearches(type, document.getElementById(type + '-search-input').value);
-      setSorts(type, document.getElementById(type + '-sort-select').value);
+      if (isSearch)
+        setSearches(type, document.getElementById(type + '-search-input').value);
+      else
+        setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
@@ -186,8 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
-/*       if (current > max)
-        project.load('/' + tab + hrefSort + hrefSearch); */
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
