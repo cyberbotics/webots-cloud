@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="select is-small select-sort-by" id="scene-sort">
                   <select id="scene-sort-select">
-                    <option>Sort by</option>
+                    <option value="default">Sort by</option>
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
                     <option value="version">Version</option>
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="select is-small select-sort-by" id="animation-sort">
                   <select id="animation-sort-select">
-                    <option>Sort by</option>
+                    <option value="default">Sort by</option>
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
                     <option value="version">Version</option>
@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="select is-small select-sort-by" id="simulation-sort">
                   <select id="simulation-sort-select">
-                    <option>Sort by</option>
+                    <option value="default">Sort by</option>
                     <option value="viewed">Views</option>
                     <option value="title">Title</option>
                     <option value="stars">GitHub Stars</option>
