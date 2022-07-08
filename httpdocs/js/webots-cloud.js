@@ -179,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
       setSorts(type, document.getElementById(type + '-sort-select').value);
       let url = parseInt(new URL(document.location.href).searchParams.get('p'));
       console.log("url: " + url);
-      window.history.pushState(null, document.title, '/' + activeTab +
-        ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
-        ((getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '') +
-        ((getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
+      const pageParameter = (getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab);
+      const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
+      const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
+      window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
