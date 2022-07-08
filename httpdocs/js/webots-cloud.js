@@ -569,8 +569,8 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log("search: " + search + "\n\n");
           window.history.pushState(null, document.title, '/' + activeTab +
             ((page === 1) ? '' : '?p=' + page) +
-            ((order || order !== 'default') ? '' : '?order=' + order) +
-            ((search || search !== '') ? '' : '?search=' + search));
+            ((order && order !== 'default') ? '?order=' + order : '') +
+            ((search && search !== '') ? '?search=' + search : ''));
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
