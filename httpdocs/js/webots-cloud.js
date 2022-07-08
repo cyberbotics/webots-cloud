@@ -563,6 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
           page = getPage(activeTab);
           order = getOrder(activeTab);
           search = getSearch(activeTab);
+          console.log("Gone here...");
           window.history.pushState(null, document.title, '/' + activeTab +
             ((page === 1) ? '' : '?p=' + page) +
             ((order || order !== 'default') ? '' : '?order=' + order) +
