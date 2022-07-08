@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulationPage = 1;
   let serverPage = 1;
 
-  let sceneOrder = 'default';
-  let animationOrder = 'default';
-  let simulationOrder = 'default';
+  let sceneSort = 'default';
+  let animationSort = 'default';
+  let simulationSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
@@ -87,22 +87,22 @@ document.addEventListener('DOMContentLoaded', function() {
       return serverPage;
   }
 
-  function setOrders(activeTab, order) {
+  function setSorts(activeTab, sort) {
     if (activeTab === 'scene')
-      sceneOrder = order;
+      sceneSort = sort;
     else if (activeTab === 'animation')
-      animationOrder = order;
+      animationSort = sort;
     else if (activeTab === 'simulation')
-      simulationOrder = order;
+      simulationSort = sort;
   }
 
-  function getOrder(activeTab) {
+  function getSort(activeTab) {
     if (activeTab === 'scene')
-      return sceneOrder;
+      return sceneSort;
     if (activeTab === 'animation')
-      return animationOrder;
+      return animationSort;
     if (activeTab === 'simulation')
-      return simulationOrder;
+      return simulationSort;
   }
 
   function setSearches(activeTab, search) {
@@ -132,11 +132,11 @@ document.addEventListener('DOMContentLoaded', function() {
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
     let search = parseInt(new URL(document.location.href).searchParams.get('search')) ?
       parseInt(new URL(document.location.href).searchParams.get('search')) : getSearch(activeTab);
-    let order = parseInt(new URL(document.location.href).searchParams.get('order')) ?
-      parseInt(new URL(document.location.href).searchParams.get('order')) : getOrder(activeTab);
+    let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
+      parseInt(new URL(document.location.href).searchParams.get('sort')) : getSort(activeTab);
 
     setPages(activeTab, page);
-    setOrders(activeTab, order);
+    setSorts(activeTab, sort);
     setSearches(activeTab, search);
 
     mainContainer(project, activeTab);
@@ -158,9 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    listAnimations('S', scenePage);
-    listAnimations('A', animationPage);
-    listSimulations(simulationPage);
+    listAnimations('S', scenePage, sceneSort, sceneSearch);
+    listAnimations('A', animationPage, animationSort, animationSearch);
+    listSimulations(simulationPage, simulationSort, simulationSearch);
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
@@ -169,33 +169,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
-      setOrders(type, document.getElementById(type + '-sort-select').value);
+      setSorts(type, document.getElementById(type + '-sort-select').value);
 
       window.history.pushState(null, document.title, '/' + activeTab +
         ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
-        ((getOrder(activeTab) && getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
+        ((getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '') +
         ((getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
 
       if (type === 'scene')
-        listAnimations('S', scenePage);
+        listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
       else if (type === 'animation')
-        listAnimations('A', animationPage);
+        listAnimations('A', animationPage, getSort(activeTab), getSearch(activeTab));
       else if (type === 'simulation')
-        listSimulations(simulationPage);
+        listSimulations(simulationPage, getSort(activeTab), getSearch(activeTab));
     }
 
     function updatePagination(tab, current, max) {
-      const hrefOrder = getOrder(tab) && getOrder(tab) !== 'default' ? '?order=' + getOrder(tab) : '';
+      const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       if (current > max)
-        project.load('/' + tab + hrefOrder + hrefSearch);
+        project.load('/' + tab + hrefSort + hrefSearch);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefOrder}${hrefSearch}"`;
-      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}${hrefOrder}${hrefSearch}"`;
+        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
+      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab}${hrefOrder}${hrefSearch}"`;
+        : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ` aria-current="page">${i}</a></li>`;
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
-            href="${tab}?p=${i}${hrefOrder}${hrefSearch}">${i}</a></li>`;
+            href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
@@ -558,11 +558,11 @@ document.addEventListener('DOMContentLoaded', function() {
           tab.classList.add(ACTIVE_CLASS);
           activeTab = tab.getAttribute('data-tab');
           page = getPage(activeTab);
-          order = getOrder(activeTab);
+          sort = getSort(activeTab);
           search = getSearch(activeTab);
           window.history.pushState(null, document.title, '/' + activeTab +
             ((page === 1) ? '' : '?p=' + page) +
-            ((order && order !== 'default') ? '?order=' + order : '') +
+            ((sort && sort !== 'default') ? '?sort=' + sort : '') +
             ((search && search !== '') ? '?search=' + search : ''));
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -808,10 +808,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function listAnimations(type, page) {
+    function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
-      const sortBy = getOrder(typeName);
-      const searchString = getSearch(typeName);
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post', 
@@ -845,8 +843,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function listSimulations(page) {
-      const sortBy = getOrder('simulation');
+    function listSimulations(page, sortBy, searchString) {
+      const sortBy = getSort('simulation');
       const searchString = getSearch('simulation');
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/project/list.php', {method: 'post',
