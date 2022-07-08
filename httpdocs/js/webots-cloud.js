@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    console.log("Gone here: " + activeTab);
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -149,58 +150,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('scene-sort-select').addEventListener('change', function(event) {
       const sortBy = document.getElementById('scene-sort-select').value;
-      listAnimations('S', scenePage, sortBy);
+      listAnimations('S', scenePage, sortBy, sceneSearch);
     });
     document.getElementById('animation-sort-select').addEventListener('change', function(event) {
       const sortBy = document.getElementById('animation-sort-select').value;
-      listAnimations('A', animationPage, sortBy);
+      listAnimations('A', animationPage, sortBy, sceneSearch);
     });
     document.getElementById('simulation-sort-select').addEventListener('change', function(event) {
       const sortBy = document.getElementById('simulation-sort-select').value;
-      listSimulations(simulationPage, sortBy);
+      listSimulations(simulationPage, sortBy, sceneSearch);
     });
   
     document.getElementById('scene-search-click').addEventListener('click', function(event) {
       const searchString = document.getElementById('scene-search-input').value;
-      listAnimations('S', scenePage, 'default', searchString);
+      listAnimations('S', scenePage, sceneOrder, searchString);
     });
     document.getElementById('animation-search-click').addEventListener('click', function(event) {
       const searchString = document.getElementById('animation-search-input').value;
-      listAnimations('A', animationPage, 'default', searchString);
+      listAnimations('A', animationPage, sceneOrder, searchString);
     });
     document.getElementById('simulation-search-click').addEventListener('click', function(event) {
       const searchString = document.getElementById('simulation-search-input').value;
-      listSimulations(simulationPage, 'default', searchString);
+      listSimulations(simulationPage, sceneOrder, searchString);
     });
 
     document.getElementById('scene-search-input').addEventListener('keyup', function(event) {
       const searchString = document.getElementById('scene-search-input').value;
-      const order = getOrder('scene');
       if (event.key === 'Enter')
-        listAnimations('S', scenePage, order, searchString);
+        listAnimations('S', scenePage, sceneOrder, searchString);
       else if (!searchString || searchString === '')
-        listAnimations('S', scenePage, order);
+        listAnimations('S', scenePage, sceneOrder);
     });
     document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
       const searchString = document.getElementById('animation-search-input').value;
-      const order = getOrder('animation');
       if (event.key === 'Enter')
-        listAnimations('A', animationPage, order, searchString);
+        listAnimations('A', animationPage, sceneOrder, searchString);
       else if (!searchString || searchString === '')
-        listAnimations('A', animationPage, order);
+        listAnimations('A', animationPage, sceneOrder);
     });
     document.getElementById('simulation-search-input').addEventListener('keyup', function(event) {
       const searchString = document.getElementById('simulation-search-input').value;
-      const order = getOrder('simulation');
       if (event.key === 'Enter')
-        listSimulations(simulationPage, order, searchString);
+        listSimulations(simulationPage, sceneOrder, searchString);
       else if (!searchString || searchString === '')
-        listSimulations(simulationPage, order);
+        listSimulations(simulationPage, sceneOrder);
     });
 
-    listAnimations('S', scenePage, order, search);
-    listAnimations('A', animationPage, order, search);
-    listSimulations(simulationPage, order, search);
+    listAnimations('S', scenePage, sceneOrder, sceneSearch);
+    listAnimations('A', animationPage, sceneOrder, sceneSearch);
+    listSimulations(simulationPage, sceneOrder, sceneSearch);
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
@@ -239,6 +237,19 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
+    }
+
+    function searchAndSortTable(type, page) {
+      let currentSearch;
+      if (document.getElementById(type + '-search-input').value)
+        currentSearch = document.getElementById(type + '-search-input').value;
+      else
+        currentSearch
+
+      window.history.pushState(null, document.title, '/' + activeTab +
+        ((page === 1) ? '' : '?p=' + page) +
+        ((currentOrder || currentOrder !== 'default') ? '' : '?order=' + currentOrder) +
+        ((currentSearch || currentSearch !== '') ? '' : '?search=' + currentSearch));
     }
 
     function animationRow(data) {
