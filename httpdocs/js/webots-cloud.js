@@ -178,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
-      //const stateObj = { state: 'search-sort' };
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
