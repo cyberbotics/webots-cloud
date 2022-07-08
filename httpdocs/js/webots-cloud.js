@@ -163,30 +163,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      console.log(document.getElementById(type + '-search-input').value);
+
       let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(type) !== 1)
-        url.searchParams.append('p', getPage(type));
-      if (getSort(type) && getSort(type) !== 'default')
-        url.searchParams.append('sort', getSort(type));
-      if (getSearch(type) && getSearch(type) !== '')
-        url.searchParams.append('search', getSearch(type));
-      console.log((url.pathname + url.search).toString());
+      if (getPage(activeTab) !== 1)
+        url.searchParams.append('p', getPage(activeTab));
+      if (getSort(activeTab) && getSort(activeTab) !== 'default')
+        url.searchParams.append('sort', getSort(activeTab));
+      if (getSearch(activeTab) && getSearch(activeTab) !== '')
+        url.searchParams.append('search', getSearch(activeTab));
       window.history.replaceState('search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
-        listAnimations('S', scenePage, getSort(type), getSearch(type));
+        listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
       else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(type), getSearch(type));
+        listAnimations('A', animationPage, getSort(activeTab), getSearch(activeTab));
       else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(type), getSearch(type));
+        listSimulations(simulationPage, getSort(activeTab), getSearch(activeTab));
     }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
-/*       if (current > max)
-        project.load('/' + tab + hrefSort + hrefSearch); */
+      if (current > max)
+        project.load('/' + tab + hrefSort + hrefSearch);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
