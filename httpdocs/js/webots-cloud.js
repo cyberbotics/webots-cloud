@@ -177,21 +177,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      console.log("url true: " + document.location);
-      let url2 = new URL(document.location.href);
-      console.log("url: " + url2.toString());
 
       const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
       const sortParameter = (getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '';
       const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
 
       let url = new URL(document.location.href)
+      console.log("url: " + url.toString());
       if (getPage(activeTab) !== 1)
         url.searchParams.append('p', getPage(activeTab));
       if (getSort(activeTab) && getSort(activeTab) !== 'default')
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
+
+      console.log("url: " + url.toString());
 
       //window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
 
