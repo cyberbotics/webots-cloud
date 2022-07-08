@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
           page = getPage(activeTab);
           sort = getSort(activeTab);
           search = getSearch(activeTab);
-          let url = new URL(document.location.origin + document.location.pathname);
+          let url = new URL(document.location.origin + '/' + activeTab);
           if (getPage(activeTab) !== 1)
             url.searchParams.append('p', getPage(activeTab));
           if (getSort(activeTab) && getSort(activeTab) !== 'default')
