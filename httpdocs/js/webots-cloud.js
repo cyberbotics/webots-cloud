@@ -197,9 +197,13 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, sceneOrder);
     });
 
+    console.log("scenePage: " + scenePage);
+    console.log("sceneOrder: " + sceneOrder);
+    console.log("sceneSearch: " + sceneSearch + "\n\n");
+
     listAnimations('S', scenePage, sceneOrder, sceneSearch);
-    listAnimations('A', animationPage, sceneOrder, sceneSearch);
-    listSimulations(simulationPage, sceneOrder, sceneSearch);
+    listAnimations('A', animationPage, animationOrder, animationSearch);
+    listSimulations(simulationPage, simulationOrder, simulationSearch);
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
