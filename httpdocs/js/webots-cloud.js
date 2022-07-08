@@ -149,14 +149,16 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('animation-sort-select').addEventListener('change', function(event) {
       searchAndSortTable('animation', animationPage, event);
     });
-
-    document.getElementById('animation-search-input').addEventListener('change', function(event) {
+  
+    document.getElementById('animation-search-click').addEventListener('click', function(event) {
       searchAndSortTable('animation', animationPage, event);
     });
 
-    console.log("scenePage: " + scenePage);
-    console.log("sceneOrder: " + sceneOrder);
-    console.log("sceneSearch: " + sceneSearch + "\n\n");
+    document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
+      const searchString = document.getElementById('animation-search-input').value;
+      if (event.key === 'Enter' || !searchString || searchString === '') 
+        searchAndSortTable('animation', animationPage, event);
+    });
 
     listAnimations('S', scenePage, sceneOrder, sceneSearch);
     listAnimations('A', animationPage, animationOrder, animationSearch);
@@ -170,6 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type, event) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setOrders(type, document.getElementById(type + '-sort-select').value);
+
+      console.log("page: " + page);
+      console.log("order: " + getOrder(activeTab));
+      console.log("search: " + getSearch(activeTab) + "\n\n");
 
       window.history.pushState(null, document.title, '/' + activeTab +
         ((page === 1) ? '' : '?p=' + page) +
