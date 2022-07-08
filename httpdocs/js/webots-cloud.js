@@ -148,9 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
-      document.getElementById(type + '-search-input').addEventListener('keydown', function(e) {
-        searchAndSortTable(type, true);
-      });
+      document.getElementById(type + '-search-input').addEventListener('keydown', function(e) { searchAndSortTable(type); });
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-    function searchAndSortTable(type, isSearch) {
+    function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
       console.log(document.getElementById(type + '-search-input').value);
