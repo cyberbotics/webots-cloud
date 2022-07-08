@@ -158,12 +158,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    console.log("scenePage:   " + scenePage);
+    /* console.log("scenePage:   " + scenePage);
     console.log("page:        " + page);
     console.log("sceneSort:   " + sceneSort);
     console.log("sort:        " + sort);
     console.log("sceneSearch: " + sceneSearch);
-    console.log("search:      " + search);
+    console.log("search:      " + search); */
 
     listAnimations('S', scenePage, sceneSort, sceneSearch);
     listAnimations('A', animationPage, animationSort, animationSearch);
@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      let url2 = new URL(document.location);
+      console.log("url true: " + document.location);
+      let url2 = new URL(document.location.href);
       console.log("url: " + url2.toString());
 
       const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
