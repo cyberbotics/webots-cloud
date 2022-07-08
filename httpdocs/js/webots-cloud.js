@@ -161,9 +161,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function searchAndSortTable(type, isSearch) {
-      if (isSearch)
+      if (isSearch) {
         setSearches(type, document.getElementById(type + '-search-input').value);
-      else
+        const faIcon = getSearch(type).value.length > 0 ? 'fa-xmark' : 'fa-search';
+        let searchIcon = document.getElementById(type + '-search-icon');
+      } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
@@ -391,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search" id="scene-search-icon"></i>
                   </span>
                 </div>
                 <div class="select is-small select-sort-by" id="scene-sort">
@@ -433,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="control has-icons-right">
                   <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search" id="animation-search-icon"></i>
                   </span>
                 </div>
                 <div class="select is-small select-sort-by" id="animation-sort">
@@ -477,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="control has-icons-right">
                   <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-search" id="simulation-search-icon"></i>
                   </span>
                 </div>
                 <div class="select is-small select-sort-by" id="simulation-sort">
