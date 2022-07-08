@@ -162,10 +162,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function pushHistoryForSearch() {
-      if (window.history.state !== 'search') {
-        console.log(document.location.href);
+      if (window.history.state !== 'search')
         window.history.pushState('search', '', document.location.href);
-      }
     }
 
     function searchAndSortTable(type) {
