@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
   let simulationPage = 1;
   let serverPage = 1;
 
-  let sceneOrder = 1;
-  let animationOrder = 1;
-  let simulationOrder = 1;
+  let sceneOrder = 'default';
+  let animationOrder = 'default';
+  let simulationOrder = 'default';
 
-  let sceneSearch = 1;
-  let animationSearch = 1;
-  let simulationSearch = 1;
+  let sceneSearch;
+  let animationSearch;
+  let simulationSearch;
 
   Project.run('webots.cloud', footer(), [
     {
