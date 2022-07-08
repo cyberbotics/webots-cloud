@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function pushHistoryForSearch() {
       if (window.history.state !== 'search')
-        console.log(url.pathname.toString() + '/' + activeTab);
+        console.log(document.location + activeTab);
         //window.history.pushState('search', '', (url.pathname + url.search).toString());
     }
 
