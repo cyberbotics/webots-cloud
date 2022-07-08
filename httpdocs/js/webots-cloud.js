@@ -189,9 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage);
     }
 
-    function updatePagination(tab, current, max, sortBy, searchString) {
-      const hrefOrder = sortBy && sortBy !== 'default' ? '?order=' + sortBy : '';
-      const hrefSearch = searchString && sortBy !== '' ? '?search=' + searchString : '';
+    function updatePagination(tab, current, max) {
+      const hrefOrder = getOrder(tab) && getOrder(tab) !== 'default' ? '?order=' + getOrder(tab) : '';
+      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       if (current > max)
         project.load('/' + tab + hrefOrder + hrefSearch);
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
@@ -553,7 +553,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initTabs() {
-      console.log("initTabs");
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
@@ -845,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination(typeName, page, total, sortBy, searchString);
+            updatePagination(typeName, page, total);
           }
         });
     }
@@ -873,7 +872,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total, sortBy, searchString);
+            updatePagination('simulation', page, total);
           }
         });
     }
