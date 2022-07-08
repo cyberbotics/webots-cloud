@@ -132,11 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
-
     let search = parseInt(new URL(document.location.href).searchParams.get('search'));
-
-    let order = parseInt(new URL(document.location.href).searchParams.get('order')) ?
-      parseInt(new URL(document.location.href).searchParams.get('order')) : 'default';
+    let order = parseInt(new URL(document.location.href).searchParams.get('order'));
 
     setPages(activeTab, page);
     setOrders(activeTab, order);
