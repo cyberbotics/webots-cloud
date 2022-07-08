@@ -147,17 +147,17 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     document.getElementById('animation-sort-select').addEventListener('change', function(event) {
-      searchAndSortTable('animation', animationPage, event);
+      searchAndSortTable('animation');
     });
   
     document.getElementById('animation-search-click').addEventListener('click', function(event) {
-      searchAndSortTable('animation', animationPage, event);
+      searchAndSortTable('animation');
     });
 
     document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
       const searchString = document.getElementById('animation-search-input').value;
       if (event.key === 'Enter' || !searchString || searchString === '') 
-        searchAndSortTable('animation', animationPage, event);
+        searchAndSortTable('animation');
     });
 
     listAnimations('S', scenePage);
@@ -174,12 +174,12 @@ document.addEventListener('DOMContentLoaded', function() {
       setOrders(type, document.getElementById(type + '-sort-select').value);
 
       console.log("tab: " + activeTab);
-      console.log("page: " + page);
+      console.log("page: " + getPage(activeTab));
       console.log("order: " + getOrder(activeTab));
       console.log("search: " + getSearch(activeTab) + "\n\n");
 
       window.history.pushState(null, document.title, '/' + activeTab +
-        ((page === 1) ? '' : '?p=' + page) +
+        ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
         ((getOrder(activeTab) && getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
         ((getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : ''));
     }
