@@ -159,8 +159,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     console.log("scenePage: " + scenePage);
+    console.log("page: " + page);
     console.log("sceneSort: " + sceneSort);
+    console.log("sort: " + sort);
     console.log("sceneSearch: " + sceneSearch);
+    console.log("search: " + search);
 
     listAnimations('S', scenePage, sceneSort, sceneSearch);
     listAnimations('A', animationPage, animationSort, animationSearch);
