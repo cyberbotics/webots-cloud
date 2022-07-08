@@ -124,6 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    window.onpopstate = history.onpushstate = function(e) {
+      console.log('History has been modified!')
+      console.log(e)
+    };
+
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -571,7 +576,6 @@ document.addEventListener('DOMContentLoaded', function() {
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
-          console.log(window.history);
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
