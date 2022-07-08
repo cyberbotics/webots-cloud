@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const searchParameter = (getSearch(activeTab) && getSearch(activeTab) !== '') ? '?search=' + getSearch(activeTab) : '';
 
       let url = new URL(document.location.origin + document.location.pathname);
-      console.log("url: " + url.toString());
       if (getPage(activeTab) !== 1)
         url.searchParams.append('p', getPage(activeTab));
       if (getSort(activeTab) && getSort(activeTab) !== 'default')
@@ -191,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
 
-      console.log("url: " + url.toString());
+      console.log("url: " + url.pathname.toString() + url.search.toString());
 
       //window.history.pushState(null, document.title, '/' + activeTab + pageParameter + sortParameter + searchParameter);
 
