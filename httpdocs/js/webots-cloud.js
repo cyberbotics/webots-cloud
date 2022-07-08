@@ -124,10 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    console.log("Gone here: " + activeTab);
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
+
+    console.log("Gone here: " + activeTab);
 
     let page = parseInt(new URL(document.location.href).searchParams.get('p')) ?
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
