@@ -814,10 +814,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listAnimations(type, page) {
-      const tab = type === 'A' ? 'animation' : 'simulation';
-      const sortBy = getOrder(tab);
-      const searchString = getSearch(tab);
       const typeName = (type === 'A') ? 'animation' : 'scene';
+      const sortBy = getOrder(typeName);
+      const searchString = getSearch(typeName);
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post', 
