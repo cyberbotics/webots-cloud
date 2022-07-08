@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
       //const stateObj = { state: 'search-sort' };
-      window.history.pushState(null, '', (url.pathname + url.search).toString());
+      window.history.replaceState(null, '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(activeTab), getSearch(activeTab));
