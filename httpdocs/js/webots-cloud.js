@@ -185,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
         url.searchParams.append('search', getSearch(activeTab));
-
       window.history.pushState(null, document.title, (url.pathname + url.search).toString());
 
       if (type === 'scene')
@@ -572,10 +571,14 @@ document.addEventListener('DOMContentLoaded', function() {
           page = getPage(activeTab);
           sort = getSort(activeTab);
           search = getSearch(activeTab);
-          window.history.pushState(null, document.title, '/' + activeTab +
-            ((page === 1) ? '' : '?p=' + page) +
-            ((sort && sort !== 'default') ? '?sort=' + sort : '') +
-            ((search && search !== '') ? '?search=' + search : ''));
+          let url = new URL(document.location.origin + document.location.pathname);
+          if (getPage(activeTab) !== 1)
+            url.searchParams.append('p', getPage(activeTab));
+          if (getSort(activeTab) && getSort(activeTab) !== 'default')
+            url.searchParams.append('sort', getSort(activeTab));
+          if (getSearch(activeTab) && getSearch(activeTab) !== '')
+            url.searchParams.append('search', getSearch(activeTab));
+          window.history.pushState(null, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
