@@ -160,9 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
         searchAndSortTable('animation', animationPage, event);
     });
 
-    listAnimations('S', scenePage, sceneOrder, sceneSearch);
-    listAnimations('A', animationPage, animationOrder, animationSearch);
-    listSimulations(simulationPage, simulationOrder, simulationSearch);
+    listAnimations('S', scenePage);
+    listAnimations('A', animationPage);
+    listSimulations(simulationPage);
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
