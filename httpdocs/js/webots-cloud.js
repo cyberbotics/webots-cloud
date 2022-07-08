@@ -147,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     for (let type of ['scene', 'animation', 'simulation']) {
-      console.log("type: " + type);
       document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
         searchAndSortTable(type);
       });
