@@ -171,11 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setOrders(type, document.getElementById(type + '-sort-select').value);
 
-      console.log("tab: " + activeTab);
-      console.log("page: " + getPage(activeTab));
-      console.log("order: " + getOrder(activeTab));
-      console.log("search: " + getSearch(activeTab) + "\n\n");
-
       window.history.pushState(null, document.title, '/' + activeTab +
         ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
         ((getOrder(activeTab) && getOrder(activeTab) !== 'default') ? '?order=' + getOrder(activeTab) : '') +
