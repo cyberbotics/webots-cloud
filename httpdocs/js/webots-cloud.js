@@ -150,13 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
         searchAndSortTable(type);
       });
-      document.getElementById(type + '-search-click').addEventListener('change', function(event) {
+      document.getElementById(type + '-search-click').addEventListener('click', function(event) {
         searchAndSortTable(type);
       });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-        const searchString = document.getElementById(type + '-search-input').value;
-        if (event.key === 'Enter' || !searchString || searchString === '') 
-          searchAndSortTable(type);
+        searchAndSortTable(type);
       });
     }
 
