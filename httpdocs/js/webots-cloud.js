@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-
+      let url = parseInt(new URL(document.location.href));
+      console.log(url);
       window.history.pushState(null, document.title, '/' + activeTab +
         ((getPage(activeTab) === 1) ? '' : '?p=' + getPage(activeTab)) +
         ((getSort(activeTab) && getSort(activeTab) !== 'default') ? '?sort=' + getSort(activeTab) : '') +
