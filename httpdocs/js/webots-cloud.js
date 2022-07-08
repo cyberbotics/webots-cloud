@@ -387,7 +387,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
+                  <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes..."
+                    autocomplete="false">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
                     <i class="fas fa-search"></i>
                   </span>
@@ -429,7 +430,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
+                  <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations..."
+                    autocomplete="false">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
                     <i class="fas fa-search"></i>
                   </span>
@@ -473,7 +475,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
+                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations..."
+                    autocomplete="false">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
                     <i class="fas fa-search"></i>
                   </span>
