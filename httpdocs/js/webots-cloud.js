@@ -146,19 +146,21 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    document.getElementById('animation-sort-select').addEventListener('change', function(event) {
-      searchAndSortTable('animation');
-    });
-  
-    document.getElementById('animation-search-click').addEventListener('click', function(event) {
-      searchAndSortTable('animation');
-    });
-
-    document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
-      const searchString = document.getElementById('animation-search-input').value;
-      if (event.key === 'Enter' || !searchString || searchString === '') 
-        searchAndSortTable('animation');
-    });
+    const types = ['scene', 'animation', 'simulation'];
+    for (let type of types) {
+      console.log("type: " + type);
+      document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
+        searchAndSortTable(type);
+      });
+      document.getElementById(type + '-search-click').addEventListener('change', function(event) {
+        searchAndSortTable(type);
+      });
+      document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
+        const searchString = document.getElementById(type + '-search-input').value;
+        if (event.key === 'Enter' || !searchString || searchString === '') 
+          searchAndSortTable(type);
+      });
+    }
 
     listAnimations('S', scenePage);
     listAnimations('A', animationPage);
