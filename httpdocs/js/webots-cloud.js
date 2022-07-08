@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('p', getPage(activeTab));
       else
         setPages(activeTab, 1);
+      console.log("gone here");
       if (getSort(activeTab) && getSort(activeTab) !== 'default')
         url.searchParams.append('sort', getSort(activeTab));
       if (getSearch(activeTab) && getSearch(activeTab) !== '')
