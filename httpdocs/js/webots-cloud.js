@@ -146,52 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-    document.getElementById('scene-sort-select').addEventListener('change', function(event) {
-      const sortBy = document.getElementById('scene-sort-select').value;
-      listAnimations('S', scenePage, sortBy, sceneSearch);
-    });
     document.getElementById('animation-sort-select').addEventListener('change', function(event) {
-      const sortBy = document.getElementById('animation-sort-select').value;
-      listAnimations('A', animationPage, sortBy, sceneSearch);
-    });
-    document.getElementById('simulation-sort-select').addEventListener('change', function(event) {
-      const sortBy = document.getElementById('simulation-sort-select').value;
-      listSimulations(simulationPage, sortBy, sceneSearch);
-    });
-  
-    document.getElementById('scene-search-click').addEventListener('click', function(event) {
-      const searchString = document.getElementById('scene-search-input').value;
-      listAnimations('S', scenePage, sceneOrder, searchString);
-    });
-    document.getElementById('animation-search-click').addEventListener('click', function(event) {
-      const searchString = document.getElementById('animation-search-input').value;
-      listAnimations('A', animationPage, sceneOrder, searchString);
-    });
-    document.getElementById('simulation-search-click').addEventListener('click', function(event) {
-      const searchString = document.getElementById('simulation-search-input').value;
-      listSimulations(simulationPage, sceneOrder, searchString);
+      searchAndSortTable('animation', animationPage, event);
     });
 
-    document.getElementById('scene-search-input').addEventListener('keyup', function(event) {
-      const searchString = document.getElementById('scene-search-input').value;
-      if (event.key === 'Enter')
-        listAnimations('S', scenePage, sceneOrder, searchString);
-      else if (!searchString || searchString === '')
-        listAnimations('S', scenePage, sceneOrder);
-    });
-    document.getElementById('animation-search-input').addEventListener('keyup', function(event) {
-      const searchString = document.getElementById('animation-search-input').value;
-      if (event.key === 'Enter')
-        listAnimations('A', animationPage, sceneOrder, searchString);
-      else if (!searchString || searchString === '')
-        listAnimations('A', animationPage, sceneOrder);
-    });
-    document.getElementById('simulation-search-input').addEventListener('keyup', function(event) {
-      const searchString = document.getElementById('simulation-search-input').value;
-      if (event.key === 'Enter')
-        listSimulations(simulationPage, sceneOrder, searchString);
-      else if (!searchString || searchString === '')
-        listSimulations(simulationPage, sceneOrder);
+    document.getElementById('animation-search-input').addEventListener('change', function(event) {
+      searchAndSortTable('animation', animationPage, event);
     });
 
     console.log("scenePage: " + scenePage);
@@ -206,6 +166,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
+
+    function searchAndSortTable(type, event) {
+      setSearches(type, document.getElementById(type + '-search-input').value);
+      setOrders(type, document.getElementById(type + '-sort-select').value);
+
+      window.history.pushState(null, document.title, '/' + activeTab +
+        ((page === 1) ? '' : '?p=' + page) +
+        ((getOrder(activeTab) || getOrder(activeTab) !== 'default') ? '' : '?order=' + getOrder(activeTab)) +
+        ((getSearch(activeTab) || getSearch(activeTab) !== '') ? '' : '?search=' + getSearch(activeTab)));
+    }
 
     function updatePagination(tab, current, max, sortBy, searchString) {
       const hrefOrder = sortBy && sortBy !== 'default' ? '?order=' + sortBy : '';
@@ -239,19 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
-    }
-
-    function searchAndSortTable(type, page) {
-      let currentSearch;
-      if (document.getElementById(type + '-search-input').value)
-        currentSearch = document.getElementById(type + '-search-input').value;
-      else
-        currentSearch
-
-      window.history.pushState(null, document.title, '/' + activeTab +
-        ((page === 1) ? '' : '?p=' + page) +
-        ((currentOrder || currentOrder !== 'default') ? '' : '?order=' + currentOrder) +
-        ((currentSearch || currentSearch !== '') ? '' : '?search=' + currentSearch));
     }
 
     function animationRow(data) {
