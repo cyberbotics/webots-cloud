@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type) {
       setSearches(type, document.getElementById(type + '-search-input').value);
       setSorts(type, document.getElementById(type + '-sort-select').value);
-      let url2 = parseInt(new URL(document.location.href));
+      let url2 = parseInt(new URL(document.location));
       console.log("url: " + url2.toString());
 
       const pageParameter = (getPage(activeTab) !== 1) ? '?p=' + getPage(activeTab) : '';
