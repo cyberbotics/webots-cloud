@@ -590,8 +590,8 @@ document.addEventListener('DOMContentLoaded', function() {
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           
-          const searchString = document.getElementById(type + '-search-input');
-          const searchIcon = document.getElementById(type + '-search-icon');
+          const searchString = document.getElementById(activeTab + '-search-input');
+          const searchIcon = document.getElementById(activeTab + '-search-icon');
           console.log("In here...");
           console.log("Search Length: " + searchString.value.length);
           console.log("classList: " + searchIcon.classList);
