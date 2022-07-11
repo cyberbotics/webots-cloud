@@ -449,6 +449,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="scene-empty-search" style="display: none;">
+                <p id="scene-empty-search-text" style="display: none;"></p>
                 <i class="fas fa-xl fa-search"></i>
               </div>
             </div>
@@ -496,6 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="animation-empty-search" style="display: none;">
+                <p id="animation-empty-search-text" style="display: none;"></p>
                 <i class="fas fa-xl fa-search"></i>
               </div>
             </div>
@@ -542,6 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="simulation-empty-search" style="display: none;">
+                <p id="simulation-empty-search-text" style="display: none;"></p>
                 <i class="fas fa-xl fa-search"></i>
               </div>
             </div>
@@ -863,11 +866,10 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
-            let emptySearchElement = document.getElementById(typeName + '-empty-search');
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + typeName + 's.';
-              emptySearchElement.innerHTML = message;
-              emptySearchElement.style.display = 'block';
+              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
+              document.getElementById(typeName + '-empty-search').style.display = 'block';
             } else
               emptySearchElement.style.display = 'none';
             let line = ``;
@@ -903,13 +905,12 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
-            let emptySearchElement = document.getElementById('simulation-empty-search');
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations. wow';
-              emptySearchElement.innerHTML = message;
-              emptySearchElement.style.display = 'block';
+              document.getElementById('simulation-empty-search-text').innerHTML = message;
+              document.getElementById('simulation-empty-search').style.display = 'block';
             } else
-              emptySearchElement.style.display = 'none';
+            document.getElementById('simulation-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
