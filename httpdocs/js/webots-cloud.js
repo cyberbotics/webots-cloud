@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type, true); });
+      document.getElementById(type + '-search-click').addEventListener('click', function(e) { clearSearch(type); });
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -162,13 +163,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
-        const searchString = document.getElementById(type + '-search-input').value;
+        const searchString = document.getElementById(type + '-search-input');
         const searchIcon = document.getElementById(type + '-search-icon');
-        setSearches(type, searchString);
-        if (searchIcon.classList.contains('fa-search') && searchString.length > 0) {
+        setSearches(type, searchString.value);
+        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && searchString.length === 0) {
+          searchIcon.addEventListener();
+        } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
           searchIcon.classList.add('fa-search');
           searchIcon.classList.remove('fa-xmark');
         }
@@ -192,6 +194,16 @@ document.addEventListener('DOMContentLoaded', function() {
         listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
         listSimulations(simulationPage, getSort(type), getSearch(type));
+    }
+
+    function clearSearch(type) {
+      const searchString = document.getElementById(type + '-search-input');
+      const searchIcon = document.getElementById(type + '-search-icon');
+      if (searchIcon.classList.contains('fa-xmark') && searchString.value.length > 0) {
+        searchString.value = '';
+        searchIcon.classList.add('fa-search');
+        searchIcon.classList.remove('fa-xmark');
+      }
     }
 
     function updatePagination(tab, current, max) {
