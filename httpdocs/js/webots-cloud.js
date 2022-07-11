@@ -188,18 +188,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
+      console.log("Updating search");
       if (type === 'server')
         return;
       const searchString = document.getElementById(type + '-search-input');
       const searchIcon = document.getElementById(type + '-search-icon');
       if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
-        console.log("Gone here 1");
         searchIcon.classList.remove('fa-search');
         searchIcon.classList.add('fa-xmark');
-      } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
-        console.log("Gone here 2");
-        searchIcon.classList.add('fa-search');
-        searchIcon.classList.remove('fa-xmark');
       }
     }
 
