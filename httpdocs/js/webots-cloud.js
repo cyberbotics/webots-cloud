@@ -448,6 +448,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
+              <div class="empty-search" id="scene-empty-search" style="display: none;></div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -492,6 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
+              <div class="empty-search" id="animation-empty-search" style="display: none;></div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -535,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="simulation-empty-search">Test</div>
+              <div class="empty-search" id="simulation-empty-search" style="display: none;></div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -855,7 +857,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
-            let emptySearchElement = document.getElementById("simulation-empty-search");
+            let emptySearchElement = document.getElementById(type + '-empty-search');
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + type + 's.';
               emptySearchElement.innerHTML = message;
@@ -895,7 +897,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else {
-            let emptySearchElement = document.getElementById("simulation-empty-search");
+            let emptySearchElement = document.getElementById('simulation-empty-search');
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
               emptySearchElement.innerHTML = message;
