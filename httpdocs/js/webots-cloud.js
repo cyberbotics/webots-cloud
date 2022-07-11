@@ -188,6 +188,14 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
+    function clearSearch(type) {
+      const searchIcon = document.getElementById(type + '-search-icon');
+      if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
+        searchIcon.classList.add('fa-search');
+        searchIcon.classList.remove('fa-xmark');
+      }
+    }
+
     function updateSearchIcons(type) {
       if (type && type != 'server') {
         const searchIcon = document.getElementById(type + '-search-icon');
