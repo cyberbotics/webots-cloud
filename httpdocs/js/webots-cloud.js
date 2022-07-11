@@ -592,6 +592,9 @@ document.addEventListener('DOMContentLoaded', function() {
           
           const searchString = document.getElementById(type + '-search-input');
           const searchIcon = document.getElementById(type + '-search-icon');
+
+          console.log("Search Length: " + searchString.value.length);
+          console.log("classList: " + searchIcon.classList);
           if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
             console.log("Gone here 1");
             searchIcon.classList.remove('fa-search');
