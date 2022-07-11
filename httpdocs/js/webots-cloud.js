@@ -889,7 +889,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
-          else {
+          else if (data.status === 'none' && searchString) {
+            const message = 'Your search - ' + searchString + ' - did not match any simulations.';
+            project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = message;
+          } else {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
