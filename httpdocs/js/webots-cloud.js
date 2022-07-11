@@ -155,8 +155,10 @@ document.addEventListener('DOMContentLoaded', function() {
         searchAndSortTable(type, true);
       });
       document.getElementById(type + '-search-click').addEventListener('click', function(e) {
-        document.getElementById(type + '-search-input').value = '';
-        searchAndSortTable(type, true);
+        if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
+          document.getElementById(type + '-search-input').value = '';
+          searchAndSortTable(type, true);
+        }
       });
     }
 
