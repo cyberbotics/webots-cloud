@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
         const searchString = document.getElementById(type + '-search-input').value;
-        setSearches(type, searchString);
         const searchIcon = document.getElementById(type + '-search-icon');
+        setSearches(type, searchString);
         if (searchIcon.classList.contains('fa-search') && searchString.length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
