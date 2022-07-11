@@ -148,7 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(e) { addSimulation(); });
 
     for (let type of ['scene', 'animation', 'simulation']) {
-      document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
+      document.getElementById(type + '-sort-select').addEventListener('change', function(e) {
+        searchAndSortTable(type);
+      });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(e) {
         searchAndSortTable(type, true);
       });
