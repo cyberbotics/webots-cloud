@@ -163,10 +163,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function searchAndSortTable(type, isSearch) {
-      updateSearchIcons(type);
-      if (isSearch)
+      if (isSearch) {
+        updateSearchIcons(type);
         setSearches(type, document.getElementById(type + '-search-input').value);
-      else
+      } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
@@ -189,17 +189,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
-      console.log("updateSearchIcons");
-      if (!type || type === 'undefined') {
+      if (type && type != 'server') {
+        const searchIcon = document.getElementById(type + '-search-icon');
+        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
+          searchIcon.classList.remove('fa-search');
+          searchIcon.classList.add('fa-xmark');
+        }
+      } else {
         updateSearchIcons('scene');
         updateSearchIcons('animation');
         updateSearchIcons('simulation');
         return;
-      }
-      const searchIcon = document.getElementById(type + '-search-icon');
-      if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
-        searchIcon.classList.remove('fa-search');
-        searchIcon.classList.add('fa-xmark');
       }
     }
 
