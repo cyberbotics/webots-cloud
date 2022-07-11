@@ -890,7 +890,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
           else if (data.status === 'none' && searchString) {
-            const message = 'Your search - ' + searchString + ' - did not match any simulations.';
+            const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = message;
           } else {
             let line = ``;
