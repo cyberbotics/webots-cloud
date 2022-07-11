@@ -164,9 +164,14 @@ document.addEventListener('DOMContentLoaded', function() {
       if (isSearch) {
         const searchString = document.getElementById(type + '-search-input');
         setSearches(type, searchString);
-        const faIcon = searchString.value.length > 0 ? 'fa-xmark' : 'fa-search';
-        let searchIconClasses = document.getElementById(type + '-search-icon').classList;
-        console.log(searchIconClasses);
+        const searchIcon = document.getElementById(type + '-search-icon');
+        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+          searchIcon.classList.remove('fa-search');
+          searchIcon.classList.add('fa-xmark');
+        } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length > 0) {
+          searchIcon.classList.add('fa-search');
+          searchIcon.classList.remove('fa-xmark');
+        }
       } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
