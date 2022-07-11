@@ -893,12 +893,11 @@ document.addEventListener('DOMContentLoaded', function() {
           else {
             let emptySearchElement = document.getElementById("simulation-empty-search");
             if (data.total === 0 && searchString) {
-              console.log("In here");
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
               emptySearchElement.innerHTML = message;
-              emptySearchElement.style.display = 'auto';
-            } else
-              emptySearchElement.style.display = 'none';
+              //emptySearchElement.style.display = 'auto';
+            } //else
+              //emptySearchElement.style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
