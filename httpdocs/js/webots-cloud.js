@@ -448,7 +448,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="scene-empty-search" style="display: none;>search</div>
+              <div class="empty-search" id="scene-empty-search" style="display: none;>
+              </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -493,7 +494,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="animation-empty-search" style="display: none;>search</div>
+              <div class="empty-search" id="animation-empty-search" style="display: none;>
+              </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -537,7 +539,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="simulation-empty-search" style="display: none;>search</div>
+              <div class="empty-search" id="simulation-empty-search" style="display: none;>
+              </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
