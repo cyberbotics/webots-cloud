@@ -157,8 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
     listServers(serverPage);
 
-    updateSearchIcons();
-
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
@@ -191,10 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateSearchIcons(type) {  
       if (type && type !== 'server') {
-        const searchString = document.getElementById(type + '-search-input');
-        console.log('searchString: ' + searchString.value);
+        console.log('searchString: ' + getSearch(type);
         const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
         }
