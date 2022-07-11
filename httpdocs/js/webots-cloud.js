@@ -589,6 +589,18 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('search', getSearch(activeTab));
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
+          
+          const searchString = document.getElementById(type + '-search-input');
+          const searchIcon = document.getElementById(type + '-search-icon');
+          setSearches(type, searchString.value);
+          if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+            searchIcon.classList.remove('fa-search');
+            searchIcon.classList.add('fa-xmark');
+          } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
+            searchIcon.classList.add('fa-search');
+            searchIcon.classList.remove('fa-xmark');
+          }
+
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
