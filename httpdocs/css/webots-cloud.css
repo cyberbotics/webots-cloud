@@ -111,7 +111,7 @@ div.table-container {
 /*  Navbar  */
 
 #navbar {
-  background-color: #007acc;
+  background-color: palegreen;  /* #007acc; */
   box-shadow: 0 -15px 15px 15px rgba(0, 0, 0, 0.4);
 }
 
