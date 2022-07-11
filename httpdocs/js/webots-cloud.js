@@ -895,9 +895,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
               emptySearchElement.innerHTML = message;
-              //emptySearchElement.style.display = 'auto';
-            } //else
-              //emptySearchElement.style.display = 'none';
+              emptySearchElement.style.display = 'block';
+            } else
+              emptySearchElement.style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
