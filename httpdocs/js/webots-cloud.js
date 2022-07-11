@@ -163,16 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
-        const searchString = document.getElementById(type + '-search-input');
-        const searchIcon = document.getElementById(type + '-search-icon');
-        setSearches(type, searchString.value);
-        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
-          searchIcon.classList.remove('fa-search');
-          searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
-          searchIcon.classList.add('fa-search');
-          searchIcon.classList.remove('fa-xmark');
-        }
+        setSearches(type, document.getElementById(type + '-search-input').value);
+        updateSearchIcons(type);
       } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
@@ -195,14 +187,17 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
-    function clearSearch(type) {
+    function updateSearchIcons(type) {
       const searchString = document.getElementById(type + '-search-input');
       const searchIcon = document.getElementById(type + '-search-icon');
-      if (searchIcon.classList.contains('fa-xmark') && searchString.value.length > 0) {
-        searchString.value = '';
+      if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+        console.log("Gone here 1");
+        searchIcon.classList.remove('fa-search');
+        searchIcon.classList.add('fa-xmark');
+      } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
+        console.log("Gone here 2");
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
-        searchAndSortTable(type, true);
       }
     }
 
@@ -587,24 +582,9 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
+          updateSearchIcons(type)
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
-          
-          const searchString = document.getElementById(activeTab + '-search-input');
-          const searchIcon = document.getElementById(activeTab + '-search-icon');
-          console.log("In here...");
-          console.log("Search Length: " + searchString.value.length);
-          console.log("classList: " + searchIcon.classList);
-          if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
-            console.log("Gone here 1");
-            searchIcon.classList.remove('fa-search');
-            searchIcon.classList.add('fa-xmark');
-          } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
-            console.log("Gone here 2");
-            searchIcon.classList.add('fa-search');
-            searchIcon.classList.remove('fa-xmark');
-          }
-
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
