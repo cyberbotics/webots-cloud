@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
+      console.log("updateSearchIcons");
       if (!type || type === 'undefined') {
         updateSearchIcons('scene');
         updateSearchIcons('animation');
