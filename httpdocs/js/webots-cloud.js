@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchAndSortTable(type, true);
       });
       document.getElementById(type + '-search-click').addEventListener('click', function(e) {
-        document.getElementById(type + '-search-input').value = '';
+        setSearches(type) = '';
         searchAndSortTable(type, true);
       });
     }
