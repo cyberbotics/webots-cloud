@@ -124,6 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+
+
+    console.log("Gone here...");
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -188,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
-      console.log("Updating search");
       if (type === 'server')
         return;
       const searchString = document.getElementById(type + '-search-input');
