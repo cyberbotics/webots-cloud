@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-    updateSearchIcons();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(e) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(e) { addAnimation('A'); });
@@ -157,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
     listServers(serverPage);
+
+    updateSearchIcons();
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
