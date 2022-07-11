@@ -882,7 +882,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listSimulations(page, sortBy, searchString) {
       let offset = (page - 1) * pageLimit;
-      let emptySearchElement = document.getElementById("simulation-empty-search");
       fetch('/ajax/project/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
         .then(function(response) {
@@ -891,12 +890,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           if (data.error)
             ModalDialog.run('Project listing error', data.error);
-          else if (data.status === 'none' && searchString) {
-            const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
-            emptySearchElement.innerHTML = message;
-            //emptySearchElement.style.display = 'auto';
-          } else {
-            //emptySearchElement.style.display = 'none';
+          else {
+            let emptySearchElement = document.getElementById("simulation-empty-search");
+            if (data.total === 0 && searchString) {
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
+              emptySearchElement.innerHTML = message;
+              emptySearchElement.style.display = 'auto';
+            } else
+              emptySearchElement.style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';

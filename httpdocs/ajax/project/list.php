@@ -41,11 +41,8 @@
   }
   $result = $mysqli->query("SELECT COUNT(*) AS count FROM project $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
-  $total = intval($count['count']);
-  if ($total == 0)
-    die('{"status": "none"}');
   $answer = new StdClass;
   $answer->projects = $projects;
-  $answer->total = $total;
+  $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
