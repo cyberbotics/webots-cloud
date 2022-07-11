@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateSearchIcons(type) {  
       if (type && type !== 'server') {
-        console.log('searchString: ' + getSearch(type);
+        console.log('searchString: ' + getSearch(type));
         const searchIcon = document.getElementById(type + '-search-icon');
         if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
           searchIcon.classList.remove('fa-search');
