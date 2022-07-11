@@ -854,10 +854,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
-          else if (data.status === 'none' && searchString) {
-            const message = 'Your search - ' + searchString + ' - did not match any ' + typeName + 's.';
-            parent.innerHTML = message;
-          } else {
+          else {
+            let emptySearchElement = document.getElementById("simulation-empty-search");
+            if (data.total === 0 && searchString) {
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + type + 's.';
+              emptySearchElement.innerHTML = message;
+              emptySearchElement.style.display = 'block';
+            } else
+              emptySearchElement.style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
