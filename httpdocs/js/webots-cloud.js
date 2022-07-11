@@ -187,7 +187,8 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
-    function updateSearchIcons(type) {  
+    function updateSearchIcons(type) {
+      console.log("In here with type: " + type);
       if (type && type !== 'server') {
         console.log('searchString: ' + getSearch(type));
         const searchIcon = document.getElementById(type + '-search-icon');
