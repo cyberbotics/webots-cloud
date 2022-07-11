@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type, true); });
       document.getElementById(type + '-search-click').addEventListener('click', function(e) { clearSearch(type); });
+      updateSearchIcons(type);
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -557,7 +558,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initTabs() {
-      console.log("Gone here...");
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
