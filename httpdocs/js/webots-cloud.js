@@ -162,13 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
-        const searchString = document.getElementById(type + '-search-input');
+        const searchString = document.getElementById(type + '-search-input').value;
         setSearches(type, searchString);
         const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+        if (searchIcon.classList.contains('fa-search') && searchString.length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
+        } else if (searchIcon.classList.contains('fa-xmark') && searchString.length === 0) {
           searchIcon.classList.add('fa-search');
           searchIcon.classList.remove('fa-xmark');
         }
