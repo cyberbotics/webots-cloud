@@ -892,8 +892,8 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run('Project listing error', data.error);
           else {
             let emptySearchElement = document.getElementById("simulation-empty-search");
-            console.log(data.total);
             if (data.total === 0 && searchString) {
+              console.log("In here");
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
               emptySearchElement.innerHTML = message;
               emptySearchElement.style.display = 'auto';
