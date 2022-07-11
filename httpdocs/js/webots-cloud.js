@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ModalDialog.run('Project listing error', data.error);
           else {
             if (data.total === 0 && searchString) {
-              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations. wow';
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
               document.getElementById('simulation-empty-search-text').innerHTML = message;
               document.getElementById('simulation-empty-search').style.display = 'flex';
             } else
