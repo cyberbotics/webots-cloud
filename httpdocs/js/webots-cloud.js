@@ -905,7 +905,7 @@ document.addEventListener('DOMContentLoaded', function() {
           else {
             let emptySearchElement = document.getElementById('simulation-empty-search');
             if (data.total === 0 && searchString) {
-              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations. wow';
               emptySearchElement.innerHTML = message;
               emptySearchElement.style.display = 'block';
             } else
