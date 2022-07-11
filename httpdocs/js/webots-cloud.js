@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById(type + '-search-input').value = '';
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
+        searchAndSortTable(type, true);
       }
     }
 
