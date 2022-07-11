@@ -857,9 +857,9 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
-            let emptySearchElement = document.getElementById(type + '-empty-search');
+            let emptySearchElement = document.getElementById(typeName + '-empty-search');
             if (data.total === 0 && searchString) {
-              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + type + 's.';
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + typeName + 's.';
               emptySearchElement.innerHTML = message;
               emptySearchElement.style.display = 'block';
             } else
