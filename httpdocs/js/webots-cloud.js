@@ -188,18 +188,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
-      console.log("In here with type: " + type);
-      if (type && type !== 'server') {
-        console.log('searchString: ' + getSearch(type));
-        const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
-          searchIcon.classList.remove('fa-search');
-          searchIcon.classList.add('fa-xmark');
-        }
-      } else if (!type) {
+      if (!type || type === 'undefined') {
         updateSearchIcons('scene');
         updateSearchIcons('animation');
         updateSearchIcons('simulation');
+        return;
+      }
+      const searchIcon = document.getElementById(type + '-search-icon');
+      if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
+        searchIcon.classList.remove('fa-search');
+        searchIcon.classList.add('fa-xmark');
       }
     }
 
