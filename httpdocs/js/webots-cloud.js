@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="animation-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 5px;"></i>
+                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 10px;"></i>
                 <p id="animation-empty-search-text"></p>
               </div>
             </div>
