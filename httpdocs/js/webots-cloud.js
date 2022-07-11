@@ -592,11 +592,12 @@ document.addEventListener('DOMContentLoaded', function() {
           
           const searchString = document.getElementById(type + '-search-input');
           const searchIcon = document.getElementById(type + '-search-icon');
-          setSearches(type, searchString.value);
           if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+            console.log("Gone here 1");
             searchIcon.classList.remove('fa-search');
             searchIcon.classList.add('fa-xmark');
           } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
+            console.log("Gone here 2");
             searchIcon.classList.add('fa-search');
             searchIcon.classList.remove('fa-xmark');
           }
