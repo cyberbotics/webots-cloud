@@ -869,7 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + typeName + 's.';
               document.getElementById(typeName + '-empty-search-text').innerHTML = message;
-              document.getElementById(typeName + '-empty-search').style.display = 'block';
+              document.getElementById(typeName + '-empty-search').style.display = 'flex';
             } else
               document.getElementById(typeName + '-empty-search').style.display = 'none';
             let line = ``;
@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations. wow';
               document.getElementById('simulation-empty-search-text').innerHTML = message;
-              document.getElementById('simulation-empty-search').style.display = 'block';
+              document.getElementById('simulation-empty-search').style.display = 'flex';
             } else
               document.getElementById('simulation-empty-search').style.display = 'none';
             let line = ``;
