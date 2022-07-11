@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
-          searchIcon.addEventListener();
         } else if (searchIcon.classList.contains('fa-xmark') && searchString.value.length === 0) {
           searchIcon.classList.add('fa-search');
           searchIcon.classList.remove('fa-xmark');
