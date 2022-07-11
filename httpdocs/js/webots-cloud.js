@@ -193,22 +193,15 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
-    function clearSearch(type) {
-      const searchIcon = document.getElementById(type + '-search-icon');
-      if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length > 0) {
-        document.getElementById(type + '-search-input').value = '';
-        searchIcon.classList.remove('fa-xmark');
-        searchIcon.classList.add('fa-search');
-        searchAndSortTable(type, true);
-      }
-    }
-
     function updateSearchIcons(type) {
-      if (type && type != 'server') {
+      if (type && type !== 'server') {
         const searchIcon = document.getElementById(type + '-search-icon');
         if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
           searchIcon.classList.remove('fa-search');
           searchIcon.classList.add('fa-xmark');
+        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
+          searchIcon.classList.add('fa-search');
+          searchIcon.classList.remove('fa-xmark');
         }
       } else {
         updateSearchIcons('scene');
