@@ -188,6 +188,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateSearchIcons(type) {
+      if (type === 'server')
+        return;
       const searchString = document.getElementById(type + '-search-input');
       const searchIcon = document.getElementById(type + '-search-icon');
       if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
