@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (type === 'server')
         return;
       const searchString = document.getElementById(type + '-search-input');
-      console.log('searchString: ' + searchString);
+      console.log('searchString: ' + searchString.value);
       const searchIcon = document.getElementById(type + '-search-icon');
       if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
         searchIcon.classList.remove('fa-search');
