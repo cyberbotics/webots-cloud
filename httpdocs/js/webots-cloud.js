@@ -162,10 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function searchAndSortTable(type, isSearch) {
-      if (isSearch) {
+      updateSearchIcons(type);
+      if (isSearch)
         setSearches(type, document.getElementById(type + '-search-input').value);
-        updateSearchIcons(type);
-      } else
+      else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
       let url = new URL(document.location.origin + document.location.pathname);
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          updateSearchIcons(type)
+          updateSearchIcons(activeTab)
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
