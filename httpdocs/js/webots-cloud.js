@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
+    updateSearchIcons();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(e) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(e) { addAnimation('A'); });
