@@ -203,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchString.value = '';
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
+        searchAndSortTable(type, true);
       }
     }
 
