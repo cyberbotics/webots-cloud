@@ -449,8 +449,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="scene-empty-search" style="display: none;">
+                <i class="fas fa-l fa-search" style="color: lightgrey; padding-right: 10px;"></i>
                 <p id="scene-empty-search-text"></p>
-                <i class="fas fa-2xl fa-search" style="color:lightgrey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -497,8 +497,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="animation-empty-search" style="display: none;">
+                <i class="fas fa-l fa-search" style="color: lightgrey; padding-right: 10px;"></i>
                 <p id="animation-empty-search-text"></p>
-                <i class="fas fa-2xl fa-search" style="color:lightgrey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -544,8 +544,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="simulation-empty-search" style="display: none;">
+                <i class="fas fa-l fa-search" style="color: lightgrey; padding-right: 10px;"></i>
                 <p id="simulation-empty-search-text"></p>
-                <i class="fas fa-2xl fa-search" style="color:lightgrey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
