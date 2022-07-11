@@ -162,9 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
-        setSearches(type, document.getElementById(type + '-search-input').value);
-        const faIcon = getSearch(type).value.length > 0 ? 'fa-xmark' : 'fa-search';
-        let searchIcon = document.getElementById(type + '-search-icon');
+        const searchString = document.getElementById(type + '-search-input');
+        setSearches(type, searchString);
+        const faIcon = searchString.value.length > 0 ? 'fa-xmark' : 'fa-search';
+        let searchIconClasses = document.getElementById(type + '-search-icon').classList;
+        console.log(searchIconClasses);
       } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
