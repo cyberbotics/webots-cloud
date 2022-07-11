@@ -192,8 +192,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const searchIcon = document.getElementById(type + '-search-icon');
       if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length > 0) {
         document.getElementById(type + '-search-input').value = '';
-        searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
+        searchIcon.classList.add('fa-search');
         searchAndSortTable(type, true);
       }
     }
