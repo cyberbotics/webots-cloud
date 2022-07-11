@@ -188,21 +188,19 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
-    function updateSearchIcons(type) {
-      if (!type) {
+    function updateSearchIcons(type) {  
+      if (type && type !== 'server') {
+        const searchString = document.getElementById(type + '-search-input');
+        console.log('searchString: ' + searchString.value);
+        const searchIcon = document.getElementById(type + '-search-icon');
+        if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
+          searchIcon.classList.remove('fa-search');
+          searchIcon.classList.add('fa-xmark');
+        }
+      } else if (!type) {
         updateSearchIcons('scene');
         updateSearchIcons('animation');
         updateSearchIcons('simulation');
-        return;
-      }
-      if (type === 'server')
-        return;
-      const searchString = document.getElementById(type + '-search-input');
-      console.log('searchString: ' + searchString.value);
-      const searchIcon = document.getElementById(type + '-search-icon');
-      if (searchIcon.classList.contains('fa-search') && searchString.value.length > 0) {
-        searchIcon.classList.remove('fa-search');
-        searchIcon.classList.add('fa-xmark');
       }
     }
 
