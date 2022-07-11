@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="simulation-empty-search" style="display: none;">Test</div>
+              <div class="empty-search" id="simulation-empty-search">Test</div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
@@ -894,9 +894,9 @@ document.addEventListener('DOMContentLoaded', function() {
           else if (data.status === 'none' && searchString) {
             const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
             emptySearchElement.innerHTML = message;
-            emptySearchElement.style.display = 'auto';
+            //emptySearchElement.style.display = 'auto';
           } else {
-            emptySearchElement.style.display = 'none';
+            //emptySearchElement.style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
