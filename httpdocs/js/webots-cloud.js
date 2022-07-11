@@ -149,8 +149,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(e) { searchAndSortTable(type); });
-      document.getElementById(type + '-search-input').addEventListener('keyup', function(e) { searchAndSortTable(type, true); });
-      document.getElementById(type + '-search-click').addEventListener('click', function(e) { clearSearch(type); });
+      document.getElementById(type + '-search-input').addEventListener('keyup', function(e) {
+        searchAndSortTable(type, true);
+      });
+      document.getElementById(type + '-search-click').addEventListener('click', function(e) {
+        document.getElementById(type + '-search-input').value = '';
+        searchAndSortTable(type, true);
+      });
     }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -164,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchAndSortTable(type, isSearch) {
       if (isSearch) {
-        updateSearchIcons(type);
         setSearches(type, document.getElementById(type + '-search-input').value);
+        updateSearchIcons(type);
       } else
         setSorts(type, document.getElementById(type + '-sort-select').value);
 
