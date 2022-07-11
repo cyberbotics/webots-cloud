@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </table>
               <div class="empty-search" id="scene-empty-search" style="display: none;">
                 <p id="scene-empty-search-text" style="display: none;"></p>
-                <i class="fas fa-xl fa-search"></i>
+                <i class="fas fa-2xl fa-search" style="color:grey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </table>
               <div class="empty-search" id="animation-empty-search" style="display: none;">
                 <p id="animation-empty-search-text" style="display: none;"></p>
-                <i class="fas fa-xl fa-search"></i>
+                <i class="fas fa-2xl fa-search" style="color:grey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </table>
               <div class="empty-search" id="simulation-empty-search" style="display: none;">
                 <p id="simulation-empty-search-text" style="display: none;"></p>
-                <i class="fas fa-xl fa-search"></i>
+                <i class="fas fa-2xl fa-search" style="color:grey"></i>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById(typeName + '-empty-search-text').innerHTML = message;
               document.getElementById(typeName + '-empty-search').style.display = 'block';
             } else
-              emptySearchElement.style.display = 'none';
+              document.getElementById(typeName + '-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
@@ -910,7 +910,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('simulation-empty-search-text').innerHTML = message;
               document.getElementById('simulation-empty-search').style.display = 'block';
             } else
-            document.getElementById('simulation-empty-search').style.display = 'none';
+              document.getElementById('simulation-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
