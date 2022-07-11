@@ -124,9 +124,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-
-
-    console.log("Gone here...");
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -560,6 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initTabs() {
+      console.log("Gone here...");
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
