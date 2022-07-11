@@ -853,7 +853,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
-          else {
+          else if (data.status === 'none' && searchString) {
+            const message = 'Your search - ' + searchString + ' - did not match any ' + typeName + 's.';
+            parent.innerHTML = message;
+          } else {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
