@@ -363,7 +363,7 @@ export default class User extends Router {
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
         <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="/my-projects"><i class="fas fa-user-bounty-hunter"> &nbsp; </i>My projects</a>
+          <a class="navbar-item" href="/my-projects"><i class="fas fa-user"> &nbsp; </i>My projects</a>
           <div class="navbar-divider"></div>
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
