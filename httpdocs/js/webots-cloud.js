@@ -581,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Previous sort: ' + getSort(type));
             console.log('id: ' + 'scene-sort-' + getSort(type).split('-')[0]);
             const sortIcon = document.getElementById('scene-sort-' + getSort(type).split('-')[0]);
-            console.log(sortIcon);
             //document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).querySelector('.sort-icon').style.display = 'none';
           } else
             console.log('Previous sort: none');
@@ -591,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          console.log("display: " + title.querySelector('.sort-icon').style.display);
+          console.log("display: " + title.querySelector('.sort-icon').getComputedStyle());
 
           
 
