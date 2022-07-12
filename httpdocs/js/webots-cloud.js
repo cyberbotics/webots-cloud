@@ -578,25 +578,23 @@ document.addEventListener('DOMContentLoaded', function() {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
-          const sortBy = title.id.split('-')[2];
+          const sort = title.id.split('-')[2];
           let order
-          console.log("type: " + type);
 
-          if (previousSort === sortBy) {
+          if (previousSort === sort) {
             sortIcon.classList.toggle('fa-sort-down');
             sortIcon.classList.toggle('fa-sort-up');
-            order = sortIcon.classList.contains('fa-sort-down') ? 'desc' : 'asc';
+            sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
           } else if (previousSort !== 'default') {
             document.getElementById('scene-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
             if (sortIcon.classList.contains('fa-sort-up')) {
               sortIcon.classList.toggle('fa-sort-down');
               sortIcon.classList.toggle('fa-sort-up');
             }
-            order = 'desc'
+            sort += '-desc'
           }
-          console.log("type: " + type);
           title.querySelector('.sort-icon').style.display = 'inline';
-          setSorts(type, sortBy + '-' + order);
+          setSorts(type, sort);
           searchAndSortTable(type);
         })
       });
