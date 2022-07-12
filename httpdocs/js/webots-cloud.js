@@ -424,14 +424,17 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
-                      <i class="fas fa-chart-column"></i>
+                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                      <i class="fas fa-chart-column"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
+                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene"
+                      style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene" style="min-width: 100px;">
+                    <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
+                      style="min-width: 100px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
@@ -503,7 +506,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
+                  <input class="input is-small" id="simulation-search-input" type="text"
+                    placeholder="Search for simulations...">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
                     <i class="fas fa-search" id="simulation-search-icon"></i>
                   </span>
@@ -558,7 +562,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
             <div class="container is-fullhd">
               <div class="buttons">
-                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
+                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">
+                  Add your own server</button>
               </div>
             </div>
           </section>
