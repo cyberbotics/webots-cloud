@@ -929,7 +929,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
             if (sortBy && sortBy !== 'default')
-              document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+              console.log(document.getElementById(typeName + '-sort-' + sortBy));
+              //document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
@@ -965,8 +966,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
             document.getElementById('simulation-search-input').value = searchString;
-            if (sortBy && sortBy !== 'default')
-              document.getElementById('simulation-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+            //if (sortBy && sortBy !== 'default')
+              //document.getElementById('simulation-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
