@@ -37,10 +37,6 @@ div.table-container {
   min-height: 550px;
 }
 
-.column-title {
-  display: flex;
-}
-
 .sort-icon {
   display: auto;
   color: grey;
