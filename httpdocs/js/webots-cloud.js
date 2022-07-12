@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           if (getSort(type) && getSort(type) !== 'default') {
             console.log('Previous sort: ' + getSort(type));
-            const sortIcon = document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).querySelector('.sort-icon');
+            const sortIcon = document.querySelector('.scene-sort-' + getSort(type).split('-')[0]);
             console.log(sortIcon);
             //document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).querySelector('.sort-icon').style.display = 'none';
           } else
