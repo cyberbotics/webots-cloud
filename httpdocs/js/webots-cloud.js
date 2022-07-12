@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene">
+                    <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene" style="min-width: 100px;">
                       Version<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
