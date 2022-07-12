@@ -464,6 +464,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
+            <h1 class="title">Animations</h1>
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
@@ -513,6 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
+            <h1 class="title">Simulations</h1>
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
