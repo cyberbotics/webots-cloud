@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       Branch/Tag
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: center;">
                       <i class="far fa-star"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       style="min-width: 100px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="column-title" title="Type of simulation" style="text-align: right; min-width: 65px;">
+                    <th class="column-title" title="Type of simulation" style="text-align: center;">
                       Type
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
