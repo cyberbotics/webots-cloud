@@ -439,20 +439,20 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable" title="Popularity" style="text-align:center">
+                    <th class="is-clickable" id="scene-sort-viewed" title="Popularity" style="text-align:center">
                       <i class="fas fa-chart-column"></i>
                       <i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" title="Title of the scene" style="min-width: 120px;">
+                    <th class="is-clickable" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
                       Title<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" title="Webots release of the scene">
+                    <th class="is-clickable" id="scene-sort-version" title="Webots release of the scene">
                       Version<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" title="Total size of the scene files" style="text-align: right; min-width: 65px;">
-                      Size<i class="tab-sort fa-solid fa-sort-down"></i>
+                    <th class="is-clickable" id="scene-sort-size" title="Total size of the scene files"
+                      style="text-align: right; min-width: 65px;">Size<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" title="Upload date and time">
+                    <th class="is-clickable" id="scene-sort-uploaded" title="Upload date and time">
                       Uploaded<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                   </tr>
