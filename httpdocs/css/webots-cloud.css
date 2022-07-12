@@ -41,19 +41,18 @@ div.table-container {
   user-select: none;
 }
 
-.fa-sort-down {
-  display: auto;
+.sort-icon {
+  display: 'none';
   color: grey;
   position: relative;
   padding-left: 6px;
+}
+
+.fa-sort-down {
   top: -3px;
 }
 
 .fa-sort-up {
-  display: auto;
-  color: grey;
-  position: relative;
-  padding-left: 6px;
   top: 4px;
 }
 
