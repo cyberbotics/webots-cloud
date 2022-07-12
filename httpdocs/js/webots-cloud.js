@@ -579,7 +579,6 @@ document.addEventListener('DOMContentLoaded', function() {
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
           const sort = title.id.split('-')[2];
-          let order
 
           if (previousSort === sort) {
             sortIcon.classList.toggle('fa-sort-down');
