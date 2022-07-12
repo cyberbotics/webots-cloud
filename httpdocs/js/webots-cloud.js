@@ -480,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
                       style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none; left: -15px;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
                       style="min-width: 120px;">
