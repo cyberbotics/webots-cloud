@@ -42,7 +42,6 @@ div.table-container {
 }
 
 .sort-icon {
-  display: block;
   color: grey;
   position: relative;
   padding-left: 6px;
