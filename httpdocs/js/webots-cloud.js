@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
       (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
+    console.log(sort);
     setPages(activeTab, page);
     setSorts(activeTab, sort);
     setSearches(activeTab, search);
