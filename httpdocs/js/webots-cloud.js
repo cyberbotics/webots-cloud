@@ -606,11 +606,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initSortColumns(type) {
       const columnTitles = document.getElementsByClassName(type + '-sort');
-      columnTitles.forEach((title) => {
+      console.log(columnTitles);
+      /* columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
           console.log('id: ' + title.id);
         })
-      });
+      }); */
     }
 
     function initTabs() {
