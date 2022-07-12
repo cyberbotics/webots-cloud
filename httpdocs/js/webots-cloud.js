@@ -392,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mainContainer(project, activeTab) {
+      console.log("Gone here");
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -590,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          document.getElementById('icon-id').style.display = 'block';
+          document.getElementById('icon-id').style.display = 'auto';
 
           
 
