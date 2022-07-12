@@ -158,44 +158,6 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-    function searchAndSortTable(type, isSearch) {
-      let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(type) !== 1 && !isSearch)
-        url.searchParams.append('p', getPage(type));
-      else
-        setPages(type, 1);
-      if (getSort(type) && getSort(type) !== 'default')
-        url.searchParams.append('sort', getSort(type));
-      if (getSearch(type) && getSearch(type) !== '')
-        url.searchParams.append('search', getSearch(type));
-      window.history.replaceState('search', '', (url.pathname + url.search).toString());
-
-      if (type === 'scene')
-        listAnimations('S', scenePage, getSort(type), getSearch(type));
-      else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(type), getSearch(type));
-      else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(type), getSearch(type));
-    }
-
-    function updateSearchAndSortIcons(type) {
-      if (type && type !== 'server') {
-        const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
-          searchIcon.classList.remove('fa-search');
-          searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
-          searchIcon.classList.add('fa-search');
-          searchIcon.classList.remove('fa-xmark');
-        }
-      } else {
-        updateSearchAndSortIcons('scene');
-        updateSearchAndSortIcons('animation');
-        updateSearchAndSortIcons('simulation');
-        return;
-      }
-    }
-
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
@@ -660,6 +622,44 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    function searchAndSortTable(type, isSearch) {
+      let url = new URL(document.location.origin + document.location.pathname);
+      if (getPage(type) !== 1 && !isSearch)
+        url.searchParams.append('p', getPage(type));
+      else
+        setPages(type, 1);
+      if (getSort(type) && getSort(type) !== 'default')
+        url.searchParams.append('sort', getSort(type));
+      if (getSearch(type) && getSearch(type) !== '')
+        url.searchParams.append('search', getSearch(type));
+      window.history.replaceState('search', '', (url.pathname + url.search).toString());
+
+      if (type === 'scene')
+        listAnimations('S', scenePage, getSort(type), getSearch(type));
+      else if (type === 'animation')
+        listAnimations('A', animationPage, getSort(type), getSearch(type));
+      else if (type === 'simulation')
+        listSimulations(simulationPage, getSort(type), getSearch(type));
+    }
+
+    function updateSearchAndSortIcons(type) {
+      if (type && type !== 'server') {
+        const searchIcon = document.getElementById(type + '-search-icon');
+        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
+          searchIcon.classList.remove('fa-search');
+          searchIcon.classList.add('fa-xmark');
+        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
+          searchIcon.classList.add('fa-search');
+          searchIcon.classList.remove('fa-xmark');
+        }
+      } else {
+        updateSearchAndSortIcons('scene');
+        updateSearchAndSortIcons('animation');
+        updateSearchAndSortIcons('simulation');
+        return;
+      }
+    }
+
     function synchronizeSimulation(event) {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
@@ -927,6 +927,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
+            if (sortBy && sortBy !== 'default')
+              document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
@@ -962,6 +964,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
             document.getElementById('simulation-search-input').value = searchString;
+            if (sortBy && sortBy !== 'default')
+              document.getElementById('simulation-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
