@@ -412,7 +412,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
-            <h1 class="title">Scenes</h1>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
@@ -463,7 +462,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
-            <h1 class="title">Animations</h1>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
@@ -502,7 +500,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
-            <h1 class="title">Simulations</h1>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
@@ -542,7 +539,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
-            <h1 class="title">Servers</h1>
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
