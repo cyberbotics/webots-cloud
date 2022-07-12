@@ -416,6 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
+            <h1 class="title">Scenes</h1>
             <div class="table-container">
               <div class="search-and-sort">
                 <div class="control has-icons-right">
