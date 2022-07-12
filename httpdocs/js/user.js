@@ -192,7 +192,7 @@ export default class User extends Router {
       const template = document.createElement('template');
       template.innerHTML =
         `<div class="content">
-          <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
+          <section class="section" data-content="scene">
             <h1 class="title">Scenes</h1>
             <div class="table-container">
               <div class="search-and-sort">
@@ -234,7 +234,7 @@ export default class User extends Router {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
           </section>
-          <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
+          <section class="section" data-content="animation">
             <h1 class="title">Animations</h1>
             <div class="table-container">
               <div class="search-and-sort">
