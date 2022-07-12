@@ -578,19 +578,14 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('Project type: ' + type);
 
           if (getSort(type) && getSort(type) !== 'default') {
-            console.log('Previous sort: ' + getSort(type));
-            console.log('id: ' + 'scene-sort-' + getSort(type).split('-')[0]);
-            const sortIcon = document.getElementById('scene-sort-' + getSort(type).split('-')[0]);
-            //document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).querySelector('.sort-icon').style.display = 'none';
-          } else
-            console.log('Previous sort: none');
+            const sortElement = document.getElementById('scene-sort-' + getSort(type).split('-')[0]);
+            sortElement.querySelector('.sort-icon').style.display = 'none';
+          }
+          title.querySelector('.sort-icon').style.display = 'inline';
 
           const sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
-          console.log('Current sort: ' + sortBy);
           setSorts(type, sortBy);
           searchAndSortTable(type);
-
-          title.querySelector('.sort-icon').style.display = 'inline';
 
           
 
