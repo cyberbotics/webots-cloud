@@ -574,6 +574,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSortColumns() {
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
+          console.log("Title id: " + title.id);
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
@@ -592,7 +593,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             order = 'desc'
           }
-          console.log("Sort by: " + sortBy + '-' + order);
           title.querySelector('.sort-icon').style.display = 'inline';
           setSorts(type, sortBy + '-' + order);
           searchAndSortTable(type);
