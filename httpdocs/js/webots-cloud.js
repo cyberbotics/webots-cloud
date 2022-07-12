@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="scene-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                <i class="fas fa-xl fa-face-sad-cry" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
                 <p id="scene-empty-search-text"></p>
               </div>
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tbody>
               </table>
               <div class="empty-search" id="animation-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                <i class="fas fa-xl fa-face-sad-cry" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
                 <p id="animation-empty-search-text"></p>
               </div>
@@ -483,20 +483,42 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the simulation">Title</th>
-                    <th title="Branch or Tag of the simulation">Branch/Tag</th>
-                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-                    <th title="Webots release of the simulation">Version</th>
-                    <th title="Type of simulation">Type</th>
-                    <th title="Last update time">Updated</th>
+                    <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-title" title="Title of the simulation"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="simulation-sort-title" title="Branch or Tag of the simulation"
+                      style="min-width: 120px;">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
+                      style="text-align: right; min-width: 75px;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
+                      style="min-width: 100px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" title="Type of simulation" style="text-align: right; min-width: 65px;">
+                      Type
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
+                      style="text-align: right; min-width: 115px;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                 </tbody>
               </table>
               <div class="empty-search" id="simulation-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                <i class="fas fa-xl fa-face-sad-cry" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
                 <p id="simulation-empty-search-text"></p>
               </div>
