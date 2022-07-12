@@ -414,22 +414,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <h1 class="title">Scenes</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
                     <i class="fas fa-search" id="scene-search-icon"></i>
                   </span>
-                </div>
-                <div class="select is-small select-sort-by" id="scene-sort">
-                  <select id="scene-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
                 </div>
               </div>
               <table class="table is-striped is-hoverable">
@@ -473,23 +463,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
             <h1 class="title">Animations</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
                     <i class="fas fa-search" id="animation-search-icon"></i>
                   </span>
-                </div>
-                <div class="select is-small select-sort-by" id="animation-sort">
-                  <select id="animation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="duration">Duration</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
                 </div>
               </div>
               <table class="table is-striped is-hoverable">
@@ -523,21 +502,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
             <h1 class="title">Simulations</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
                     <i class="fas fa-search" id="simulation-search-icon"></i>
                   </span>
-                </div>
-                <div class="select is-small select-sort-by" id="simulation-sort">
-                  <select id="simulation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="stars">GitHub Stars</option>
-                    <option value="updated">Updated</option>
-                  </select>
                 </div>
               </div>
               <table class="table is-striped is-hoverable">
