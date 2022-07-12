@@ -604,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sortIcon.classList.toggle('fa-sort-up');
             sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
           } else if (previousSort !== 'default') {
-            document.getElementById('scene-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
+            document.getElementById(type + '-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
             if (sortIcon.classList.contains('fa-sort-up')) {
               sortIcon.classList.toggle('fa-sort-down');
               sortIcon.classList.toggle('fa-sort-up');
