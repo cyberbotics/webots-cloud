@@ -575,10 +575,15 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const type = title.id.split('-')[0];
-  
-          if (getSort(type) && getSort(type) !== 'default')
-            document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).style.display = 'none';
+          console.log('Project type: ' + type);
 
+          if (getSort(type) && getSort(type) !== 'default') {
+            console.log('Previous sort: ' + getSort(type));
+            document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).style.display = 'none';
+          } else
+            console.log('No previous sort.');
+
+          console.log('Current sort: ' + title.id.split('-')[2]);
           title.querySelector('.sort-icon').style.display = 'auto';
 
           
