@@ -576,25 +576,23 @@ document.addEventListener('DOMContentLoaded', function() {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
-          const previousSort = getSort(type) === 'default' ? 'default' : getSort(type).split('-')[0];
+          const previousSort = getSort(type).split('-')[0];
           let sort = title.id.split('-')[2];
-          console.log('title id: ' + title.id);
-          console.log('sort: ' + sort);
 
           if (previousSort === sort) {
-            console.log("gone here 1");
             sortIcon.classList.toggle('fa-sort-down');
             sortIcon.classList.toggle('fa-sort-up');
             sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
           } else if (previousSort !== 'default') {
-            console.log("gone here 2");
             document.getElementById('scene-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
             if (sortIcon.classList.contains('fa-sort-up')) {
               sortIcon.classList.toggle('fa-sort-down');
               sortIcon.classList.toggle('fa-sort-up');
             }
-            sort += '-desc'
-          }
+            sort += '-desc';
+          } else
+            sort += '-desc';
+
           title.querySelector('.sort-icon').style.display = 'inline';
           console.log(sort);
           setSorts(type, sort);
