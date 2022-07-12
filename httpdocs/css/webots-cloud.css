@@ -45,14 +45,14 @@ div.table-container {
   color: grey;
   position: absolute;
   padding-left: 6px;
-  top: -3px;
+  top: 40px;
 }
 
 .fa-sort-up {
   color: grey;
   position: absolute;
   padding-left: 6px;
-  top: 4px;
+  top: 47px;
 }
 
 /*  Footer  */
