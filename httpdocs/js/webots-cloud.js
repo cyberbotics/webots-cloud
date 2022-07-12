@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
                       style="text-align: right; min-width: 75px;">Size<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time">
+                    <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time" style="min-width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                   </tr>
