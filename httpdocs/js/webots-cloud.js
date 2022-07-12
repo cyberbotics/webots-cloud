@@ -477,10 +477,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the animation" style="min-width: 120px;">Title</th>
+                    <th title="Title of the animation">Title</th>
                     <th title="Webots release of the animation">Version</th>
                     <th title="Duration of the animation">Duration</th>
-                    <th title="Total size of the animation files" style="text-align: right; min-width: 65px;">Size</th>
+                    <th title="Total size of the animation files">Size</th>
                     <th title="Upload date and time">Uploaded</th>
                   </tr>
                 </thead>
