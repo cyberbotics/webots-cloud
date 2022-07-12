@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          document.getElementById('icon-id').style.display = 'auto';
+          document.getElementById('icon-id').style.display = 'block';
 
           
 
