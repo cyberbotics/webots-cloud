@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
             <h1 class="title">Scenes</h1>
             <div class="table-container">
-              <div class="search-bar" style="padding-bottom: 20px;">
+              <div class="search-bar" style="max-width: 320px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
             <h1 class="title">Animations</h1>
             <div class="table-container">
-              <div class="search-bar" style="padding-bottom: 20px;">
+              <div class="search-bar" style="max-width: 320px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
             <h1 class="title">Simulations</h1>
             <div class="table-container">
-              <div class="search-bar" style="padding-bottom: 20px;">
+              <div class="search-bar" style="max-width: 320px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
