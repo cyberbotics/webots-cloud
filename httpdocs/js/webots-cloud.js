@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
               sortIcon.classList.toggle('fa-sort-down');
               sortIcon.classList.toggle('fa-sort-up');
             }
-            order = 'asc'
+            order = 'desc'
           }
 
           title.querySelector('.sort-icon').style.display = 'inline';
