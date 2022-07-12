@@ -41,17 +41,17 @@ div.table-container {
   user-select: none;
 }
 
-.sort-icon {
-  color: grey;
-  position: relative;
-  padding-left: 6px;
-}
-
 .fa-sort-down {
+  color: grey;
+  position: absolute;
+  padding-left: 6px;
   top: -3px;
 }
 
 .fa-sort-up {
+  color: grey;
+  position: absolute;
+  padding-left: 6px;
   top: 4px;
 }
 
