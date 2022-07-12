@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTabs();
     initSort();
     initSearch();
-    updateSearchAndSortIcons();
+    updateSearchIcon();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
@@ -572,14 +572,14 @@ document.addEventListener('DOMContentLoaded', function() {
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           setSearches(type, document.getElementById(type + '-search-input').value);
-          updateSearchAndSortIcons(type);
+          updateSearchIcon(type);
           searchAndSortTable(type);
         });
         document.getElementById(type + '-search-click').addEventListener('click', function(event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
             document.getElementById(type + '-search-input').value = '';
             setSearches(type, document.getElementById(type + '-search-input').value);
-            updateSearchAndSortIcons(type);
+            updateSearchIcon(type);
             searchAndSortTable(type);
           }
         });
@@ -609,7 +609,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          updateSearchAndSortIcons(activeTab)
+          updateSearchIcon(activeTab)
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function() {
         listSimulations(simulationPage, getSort(type), getSearch(type));
     }
 
-    function updateSearchAndSortIcons(type) {
+    function updateSearchIcon(type) {
       if (type && type !== 'server') {
         const searchIcon = document.getElementById(type + '-search-icon');
         if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
@@ -654,9 +654,9 @@ document.addEventListener('DOMContentLoaded', function() {
           searchIcon.classList.remove('fa-xmark');
         }
       } else {
-        updateSearchAndSortIcons('scene');
-        updateSearchAndSortIcons('animation');
-        updateSearchAndSortIcons('simulation');
+        updateSearchIcon('scene');
+        updateSearchIcon('animation');
+        updateSearchIcon('simulation');
         return;
       }
     }
