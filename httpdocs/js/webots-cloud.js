@@ -928,9 +928,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
-            if (sortBy && sortBy !== 'default')
-              console.log(document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]));
-              //document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+            if (sortBy && sortBy !== 'default') {
+              const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
+              columnTitle.querySelector('.sort-icon').style.display = 'inline';
+            }
           }
         });
     }
