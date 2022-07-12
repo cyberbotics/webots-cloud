@@ -928,7 +928,8 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
             if (sortBy && sortBy !== 'default')
-              document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+              console.log("here");
+            document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
