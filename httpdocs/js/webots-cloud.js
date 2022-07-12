@@ -608,7 +608,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const columnTitles = document.querySelectorAll('.' + type + '-sort');
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
+          const sortIcon = title.querySelector('.column-sort');
+          console.log(sortIcon);
           console.log('id: ' + title.id);
+
         })
       });
     }
