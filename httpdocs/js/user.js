@@ -6,7 +6,6 @@ export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
-    this.routes.push({url: '/my-projects', setup: myProjectsPage});
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
@@ -184,102 +183,6 @@ export default class User extends Router {
             });
         });
       });
-    }
-    function myProjectsPage() {
-      if (!that.password || !that.email)
-        return false;
-
-      const template = document.createElement('template');
-      template.innerHTML =
-        `<div class="content">
-          <section class="section" data-content="scene">
-            <h1 class="title">Scenes</h1>
-            <div class="table-container">
-              <div class="search-and-sort">
-                <div class="control has-icons-right">
-                  <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
-                  <span class="icon is-small is-right is-clickable" id="scene-search-click">
-                    <i class="fas fa-search" id="scene-search-icon"></i>
-                  </span>
-                </div>
-                <div class="select is-small select-sort-by" id="scene-sort">
-                  <select id="scene-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
-              </div>
-              <table class="table is-striped is-hoverable">
-                <thead>
-                  <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the scene">Version</th>
-                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-              <div class="empty-search" id="scene-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
-                </i>
-                <p id="scene-empty-search-text"></p>
-              </div>
-            </div>
-            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
-          </section>
-          <section class="section" data-content="animation">
-            <h1 class="title">Animations</h1>
-            <div class="table-container">
-              <div class="search-and-sort">
-                <div class="control has-icons-right">
-                  <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
-                  <span class="icon is-small is-right is-clickable" id="animation-search-click">
-                    <i class="fas fa-search" id="animation-search-icon"></i>
-                  </span>
-                </div>
-                <div class="select is-small select-sort-by" id="animation-sort">
-                  <select id="animation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="duration">Duration</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
-              </div>
-              <table class="table is-striped is-hoverable">
-                <thead>
-                  <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the animation" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the animation">Version</th>
-                    <th title="Duration of the animation">Duration</th>
-                    <th title="Total size of the animation files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-              <div class="empty-search" id="animation-empty-search" style="display: none;">
-                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
-                </i>
-                <p id="animation-empty-search-text"></p>
-              </div>
-            </div>
-            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
-          </section>
-        </div>`;
-      that.setup('my-projects', [], template.content);
     }
     function settingsPage() {
       // we need to be logged in to view this page
@@ -460,8 +363,6 @@ export default class User extends Router {
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
         <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="/my-projects"><i class="fas fa-user"> &nbsp; </i>My projects</a>
-          <div class="navbar-divider"></div>
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
