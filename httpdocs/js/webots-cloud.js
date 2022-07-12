@@ -949,7 +949,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
-            if (sortBy && sortBy !== 'default') {
+            /* if (sortBy && sortBy !== 'default') {
               const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
               const sortIcon = columnTitle.querySelector('.sort-icon');
               columnTitle.querySelector('.sort-icon').style.display = 'inline';
@@ -957,7 +957,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sortIcon.classList.toggle('fa-sort-down');
                 sortIcon.classList.toggle('fa-sort-up');
               }
-            }
+            } */
           }
         });
     }
@@ -993,7 +993,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
             document.getElementById('simulation-search-input').value = searchString;
-            if (sortBy && sortBy !== 'default') {
+            /* if (sortBy && sortBy !== 'default') {
               const columnTitle = document.getElementById('simulation-sort-' + sortBy.split('-')[0]);
               columnTitle.querySelector('.sort-icon').style.display = 'inline';
               if (sortBy.split('-')[1] === 'asc') {
@@ -1001,7 +1001,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sortIcon.classList.toggle('fa-sort-down');
                 sortIcon.classList.toggle('fa-sort-up');
               }
-            }
+            } */
           }
         });
     }
