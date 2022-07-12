@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" id="icon-id" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          title.querySelector('.sort-icon').style.display = 'auto';
+          document.getElementById('icon-id').style.display = 'auto';
 
           
 
