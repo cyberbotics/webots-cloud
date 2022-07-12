@@ -392,7 +392,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mainContainer(project, activeTab) {
-      console.log("Gone here");
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -428,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" id="icon-id" style="display: none;"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -591,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          document.getElementById('icon-id').style.display = 'inline';
+          title.querySelector('.sort-icon').style.display = 'inline';
 
           
 
