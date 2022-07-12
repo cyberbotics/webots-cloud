@@ -281,7 +281,6 @@ export default class User extends Router {
   }
   updateDisplayName() {
     let that = this;
-    const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf("@")) : 'Anonymous';
     const md5sum = md5(that.email.toLowerCase());
     let head = document.getElementsByTagName('head')[0];
     if (typeof displayName === 'undefined') {
