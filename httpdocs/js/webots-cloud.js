@@ -576,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
-          const previousSort = getSort(type).split('-')[0];
+          const previousSort = getSort(type) === 'default' ? 'default' : getSort(type).split('-')[0];
           let sort = title.id.split('-')[2];
           console.log('title id: ' + title.id);
           console.log('sort: ' + sort);
