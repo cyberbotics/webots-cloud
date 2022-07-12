@@ -574,36 +574,28 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSortColumns() {
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
+          const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
+          const previousSort = getSort(type).split('-')[0];
+          const sortBy = title.id.split('-')[2];
+          let order
 
-          if (getSort(type) && getSort(type) !== 'default') {
-            if (getSort(type).split('-')[0] === title.id.split('-')[2])
-              console.log("same");
-            const sortElement = document.getElementById('scene-sort-' + getSort(type).split('-')[0]);
-            sortElement.querySelector('.sort-icon').style.display = 'none';
+          if (previousSort === sortBy) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+            order = sortIcon.classList.contains('fa-sort-down') ? 'desc' : 'asc';
+          } else if (previousSort !== 'default') {
+            document.getElementById('scene-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
+            if (sortIcon.classList.contains('fa-sort-up')) {
+              sortIcon.classList.toggle('fa-sort-down');
+              sortIcon.classList.toggle('fa-sort-up');
+            }
+            order = 'asc'
           }
+
           title.querySelector('.sort-icon').style.display = 'inline';
-
-          const sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
-          setSorts(type, sortBy);
+          setSorts(type, sortBy + '-' + order);
           searchAndSortTable(type);
-
-          
-
-/*           let sortBy;
-          
-          sortBy = getSort(type).split('-')[0];
-
-          sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
-          setSorts(type, sortBy);
-          console.log(type);
-          document.querySelectorAll('.sort-icon').style.display = 'none'; */
-/*           const sortIcon = title.querySelector('.' + type + '-sort-icon');
-          sortIcon.classList.toggle('fa-sort-down');
-          sortIcon.classList.toggle('fa-sort-up');
-          const order = sortIcon.classList.contains('fa-sort-down') ? 'desc' : 'asc';
-
-          searchAndSortTable(type); */
         })
       });
     }
