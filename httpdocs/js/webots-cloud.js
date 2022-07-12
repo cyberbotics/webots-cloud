@@ -988,8 +988,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
             document.getElementById('simulation-search-input').value = searchString;
-            //if (sortBy && sortBy !== 'default')
-              //document.getElementById('simulation-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+            if (sortBy && sortBy !== 'default') {
+              const columnTitle = document.getElementById('simulation-sort-' + sortBy.split('-')[0]);
+              columnTitle.querySelector('.sort-icon').style.display = 'inline';
+            }
           }
         });
     }
