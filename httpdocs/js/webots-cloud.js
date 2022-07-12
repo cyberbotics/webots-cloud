@@ -439,11 +439,22 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the scene">Version</th>
-                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
+                    <th title="Popularity" style="text-align:center">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="fa-solid fa-sort-down"></i>
+                    </th>
+                    <th title="Title of the scene" style="min-width: 120px;">
+                      Title<i class="fa-solid fa-sort-down"></i>
+                    </th>
+                    <th title="Webots release of the scene">
+                      Version<i class="fa-solid fa-sort-down"></i>
+                    </th>
+                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">
+                      Size<i class="fa-solid fa-sort-down"></i>
+                    </th>
+                    <th title="Upload date and time">
+                      Uploaded<i class="fa-solid fa-sort-down"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
