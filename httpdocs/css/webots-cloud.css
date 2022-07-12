@@ -163,6 +163,13 @@ div.table-container {
   font-size: 0.875rem;
 }
 
+.tab-sort {
+  color: grey;
+  position: relative;
+  top: -4px;
+  padding-left: 5px;
+}
+
 @media only screen and (max-width: 500px) {
   .panel-tabs > a {
     font-size: 12px;

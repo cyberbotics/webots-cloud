@@ -441,19 +441,19 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th title="Popularity" style="text-align:center">
                       <i class="fas fa-chart-column"></i>
-                      <i class="fa-solid fa-sort-down"></i>
+                      <i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                     <th title="Title of the scene" style="min-width: 120px;">
-                      Title<i class="fa-solid fa-sort-down"></i>
+                      Title<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                     <th title="Webots release of the scene">
-                      Version<i class="fa-solid fa-sort-down"></i>
+                      Version<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                     <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">
-                      Size<i class="fa-solid fa-sort-down"></i>
+                      Size<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                     <th title="Upload date and time">
-                      Uploaded<i class="fa-solid fa-sort-down"></i>
+                      Uploaded<i class="tab-sort fa-solid fa-sort-down"></i>
                     </th>
                   </tr>
                 </thead>
