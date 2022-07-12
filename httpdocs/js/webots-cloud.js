@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          console.log(title.querySelector('.sort-icon').style);
+          console.log(title.querySelector('.sort-icon').style.display);
 
           
 
