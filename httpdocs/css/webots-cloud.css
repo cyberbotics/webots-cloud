@@ -164,10 +164,10 @@ div.table-container {
 }
 
 .tab-sort {
-  color: grey;
+  color: lightgrey;
   position: relative;
-  top: -4px;
-  padding-left: 5px;
+  top: -3px;
+  padding-left: 6px;
 }
 
 @media only screen and (max-width: 500px) {
