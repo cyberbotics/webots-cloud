@@ -924,7 +924,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
-            document.getElementById('simulation-sort-select').value = sortBy;
             document.getElementById('simulation-search-input').value = searchString;
           }
         });
