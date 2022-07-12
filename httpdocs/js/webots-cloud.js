@@ -578,7 +578,8 @@ document.addEventListener('DOMContentLoaded', function() {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
-          const sort = previousSort === sort ? 'default' : title.id.split('-')[2];
+          const sort = title.id.split('-')[2];
+          console.log(sort);
 
           if (previousSort === sort) {
             sortIcon.classList.toggle('fa-sort-down');
@@ -593,6 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sort += '-desc'
           }
           title.querySelector('.sort-icon').style.display = 'inline';
+          console.log(sort);
           setSorts(type, sort);
           searchAndSortTable(type);
         })
