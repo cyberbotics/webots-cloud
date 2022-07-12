@@ -37,6 +37,14 @@ div.table-container {
   min-height: 550px;
 }
 
+.column-sort {
+  display: auto;
+  color: grey;
+  position: relative;
+  top: -3px;
+  padding-left: 6px;
+}
+
 /*  Footer  */
 
 .footer {
@@ -161,14 +169,6 @@ div.table-container {
 
 .tabs.is-small-medium {
   font-size: 0.875rem;
-}
-
-.tab-sort {
-  display: auto;
-  color: grey;
-  position: relative;
-  top: -3px;
-  padding-left: 6px;
 }
 
 @media only screen and (max-width: 500px) {

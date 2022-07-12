@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mainContainer(project, activeTab);
     initTabs();
     updateSearchIcons();
+    initSortColumns('scene');
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
@@ -439,21 +440,21 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable" id="scene-sort-viewed" title="Popularity" style="text-align:center">
+                    <th class="is-clickable scene-sort" id="scene-sort-viewed" title="Popularity" style="text-align:center">
                       <i class="fas fa-chart-column"></i>
-                      <i class="tab-sort fa-solid fa-sort-down"></i>
+                      <i class="column-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
-                      Title<i class="tab-sort fa-solid fa-sort-down"></i>
+                    <th class="is-clickable scene-sort" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
+                      Title<i class="column-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" id="scene-sort-version" title="Webots release of the scene">
-                      Version<i class="tab-sort fa-solid fa-sort-down"></i>
+                    <th class="is-clickable scene-sort" id="scene-sort-version" title="Webots release of the scene">
+                      Version<i class="column-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" id="scene-sort-size" title="Total size of the scene files"
-                      style="text-align: right; min-width: 65px;">Size<i class="tab-sort fa-solid fa-sort-down"></i>
+                    <th class="is-clickable scene-sort" id="scene-sort-size" title="Total size of the scene files"
+                      style="text-align: right; min-width: 65px;">Size<i class="column-sort fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable" id="scene-sort-uploaded" title="Upload date and time">
-                      Uploaded<i class="tab-sort fa-solid fa-sort-down"></i>
+                    <th class="is-clickable scene-sort" id="scene-sort-uploaded" title="Upload date and time">
+                      Uploaded<i class="column-sort fa-solid fa-sort-down"></i>
                     </th>
                   </tr>
                 </thead>
@@ -601,6 +602,15 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, [], template.content);
+    }
+
+    function initSortColumns(type) {
+      const columnTitles = document.getElementsByClassName(type + '-sort');
+      columnTitles.forEach((title) => {
+        title.addEventListener('click', function(e) {
+          console.log('id: ' + title.id);
+        })
+      });
     }
 
     function initTabs() {
