@@ -42,6 +42,12 @@
       $mysqli->escape_string($data->sortBy) : "viewed-desc";
     $parameter = explode("-", $sortBy)[0];
     $order = explode("-", $sortBy)[1];
+    if ($parameter == "title" || $parameter == "Version") {
+      if ($order == "asc")
+        $order = "desc";
+      else
+        $order = "asc";
+    }
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
       $extra_condition = "$extra_condition AND title LIKE '%$searchString%'";
