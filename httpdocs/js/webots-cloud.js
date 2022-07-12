@@ -133,12 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
     let search = new URL(document.location.href).searchParams.get('search') ?
       (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
-    let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
+    let sort = new URL(document.location.href).searchParams.get('sort') ?
       (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
-    console.log("page: " + page);
-    console.log("search: " + search);
-    console.log("sort: " + (new URL(document.location.href).searchParams.get('sort')).toString());
     setPages(activeTab, page);
     setSorts(activeTab, sort);
     setSearches(activeTab, search);
