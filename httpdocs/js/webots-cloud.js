@@ -583,8 +583,12 @@ document.addEventListener('DOMContentLoaded', function() {
           } else
             console.log('Previous sort: none');
 
-          console.log('Current sort: ' + title.id.split('-')[2]);
-          title.querySelector('.sort-icon').style.display = 'auto';
+          const sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
+          console.log('Current sort: ' + sortBy);
+          setSorts(type, sortBy);
+
+
+          //title.querySelector('.sort-icon').style.display = 'auto';
 
           
 
