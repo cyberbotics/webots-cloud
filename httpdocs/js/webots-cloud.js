@@ -149,16 +149,17 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     for (let type of ['scene', 'animation', 'simulation']) {
-      document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
-        searchAndSortTable(type);
-      });
       document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-        searchAndSortTable(type, true);
+        setSearches(type, document.getElementById(type + '-search-input').value);
+        updateSearchIcons(type);
+        searchAndSortTable(type);
       });
       document.getElementById(type + '-search-click').addEventListener('click', function(event) {
         if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
           document.getElementById(type + '-search-input').value = '';
-          searchAndSortTable(type, true);
+          setSearches(type, document.getElementById(type + '-search-input').value);
+          updateSearchIcons(type);
+          searchAndSortTable(type);
         }
       });
     }
@@ -173,12 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function searchAndSortTable(type, isSearch) {
-      if (isSearch) {
-        setSearches(type, document.getElementById(type + '-search-input').value);
-        updateSearchIcons(type);
-      } else
-        setSorts(type, document.getElementById(type + '-sort-select').value);
-
       let url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
@@ -605,8 +600,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initSortColumns() {
-      //setSorts(type, document.getElementById(type + '-sort-select').value);
-
       const columnTitles = document.querySelectorAll('.column-title');
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
@@ -615,7 +608,9 @@ document.addEventListener('DOMContentLoaded', function() {
           sortIcon.classList.toggle('fa-sort-up');
 
           const type = title.id.split('-')[0];
-          console.log(type);
+          const sortBy = title.id.split('-')[2];
+          setSorts(type, sortBy);
+          searchAndSortTable(type);
         })
       });
     }
