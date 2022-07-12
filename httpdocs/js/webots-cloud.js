@@ -490,13 +490,13 @@ document.addEventListener('DOMContentLoaded', function() {
                       style="min-width: 100px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
-                      style="text-align: right; min-width: 75px;">
-                      Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
                     <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
                       style="text-align: right; min-width: 75px;">
                       Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
+                      style="text-align: right; min-width: 75px;">
+                      Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
                       style="text-align: right; min-width: 115px;">
