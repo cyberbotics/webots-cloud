@@ -427,19 +427,19 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
-                      Title<i class="sort-icon fa-solid fa-sort-down"></i>
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene" style="min-width: 100px;">
-                      Version<i class="sort-icon fa-solid fa-sort-down"></i>
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
-                      style="text-align: right; min-width: 75px;">Size<i class="sort-icon fa-solid fa-sort-down"></i>
+                      style="text-align: right; min-width: 75px;">Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time" style="min-width: 115px;">
-                      Uploaded<i class="sort-icon fa-solid fa-sort-down"></i>
+                      Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
                 </thead>
