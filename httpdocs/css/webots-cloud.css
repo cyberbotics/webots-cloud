@@ -41,8 +41,15 @@ div.table-container {
   display: auto;
   color: grey;
   position: relative;
-  top: -3px;
   padding-left: 6px;
+}
+
+.fa-sort-down {
+  top: -3px;
+}
+
+.fa-sort-up {
+  top: 0px;
 }
 
 /*  Footer  */
