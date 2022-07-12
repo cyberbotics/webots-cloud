@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             order = 'desc'
           }
-
+          console.log("Sort by: " + sortBy + '-' + order);
           title.querySelector('.sort-icon').style.display = 'inline';
           setSorts(type, sortBy + '-' + order);
           searchAndSortTable(type);
