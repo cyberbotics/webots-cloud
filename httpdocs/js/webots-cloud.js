@@ -594,7 +594,6 @@ document.addEventListener('DOMContentLoaded', function() {
             sort += '-desc';
 
           title.querySelector('.sort-icon').style.display = 'inline';
-          console.log(sort);
           setSorts(type, sort);
           searchAndSortTable(type);
         })
