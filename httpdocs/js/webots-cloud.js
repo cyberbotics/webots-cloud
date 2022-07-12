@@ -606,9 +606,10 @@ document.addEventListener('DOMContentLoaded', function() {
           const sortIcon = title.querySelector('.sort-icon');
           sortIcon.classList.toggle('fa-sort-down');
           sortIcon.classList.toggle('fa-sort-up');
+          const order = sortIcon.classList.contains('fa-sort-down') ? 'desc' : 'asc';
 
           const type = title.id.split('-')[0];
-          const sortBy = title.id.split('-')[2];
+          const sortBy = title.id.split('-')[2] + '-' + order;
           setSorts(type, sortBy);
           searchAndSortTable(type);
         })
