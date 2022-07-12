@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Previous sort: ' + getSort(type));
             document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).style.display = 'none';
           } else
-            console.log('No previous sort.');
+            console.log('Previous sort: none');
 
           console.log('Current sort: ' + title.id.split('-')[2]);
           title.querySelector('.sort-icon').style.display = 'auto';
