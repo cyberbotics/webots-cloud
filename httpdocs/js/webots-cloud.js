@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-          title.querySelector('.sort-icon').style.display = 'auto';
+          console.log(title.querySelector('.sort-icon').style.display);
 
           
 
