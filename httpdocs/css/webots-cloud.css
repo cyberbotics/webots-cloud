@@ -164,7 +164,7 @@ div.table-container {
 }
 
 .tab-sort {
-  display: flex;
+  display: auto;
   color: grey;
   position: relative;
   top: -3px;
