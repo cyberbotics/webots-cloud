@@ -609,9 +609,8 @@ document.addEventListener('DOMContentLoaded', function() {
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.column-sort');
-          console.log(sortIcon);
-          console.log('id: ' + title.id);
-
+          sortIcon.element.classList.toggle('fa-sort-down');
+          sortIcon.element.classList.toggle('fa-sort-up');
         })
       });
     }
