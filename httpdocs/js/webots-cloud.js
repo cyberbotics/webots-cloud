@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 160px;">
+                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 300px;">
                       Title<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene">
