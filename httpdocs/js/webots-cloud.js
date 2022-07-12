@@ -605,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initSortColumns(type) {
-      const columnTitles = document.querySelectorAll('.' + type + '-sort');
+      const columnTitles = document.querySelectorAll('.column-title');
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
