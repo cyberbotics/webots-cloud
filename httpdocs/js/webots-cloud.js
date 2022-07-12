@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event { addSimulation(); });
+    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
     for (let type of ['scene', 'animation', 'simulation']) {
       document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
