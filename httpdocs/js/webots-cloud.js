@@ -605,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initSortColumns() {
-      setSorts(type, document.getElementById(type + '-sort-select').value);
+      //setSorts(type, document.getElementById(type + '-sort-select').value);
 
       const columnTitles = document.querySelectorAll('.column-title');
       columnTitles.forEach((title) => {
