@@ -141,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
+    initSortColumns();
     updateSearchIcons();
-    initSortColumns('scene');
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
@@ -604,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup(title, [], template.content);
     }
 
-    function initSortColumns(type) {
+    function initSortColumns() {
       const columnTitles = document.querySelectorAll('.column-title');
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
