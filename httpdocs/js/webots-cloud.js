@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', function() {
           sortIcon.classList.toggle('fa-sort-down');
           sortIcon.classList.toggle('fa-sort-up');
 
-          const type = title.id.split('-');
+          const type = title.id.split('-')[0];
           console.log(type);
         })
       });
