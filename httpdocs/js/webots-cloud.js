@@ -576,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
           setSorts(type, sortBy);
           console.log(type);
-          document.querySelectorAll('.' + type + '-sort-icon').style.display = 'none';
+          document.querySelectorAll('.scene-sort-icon').style.display = 'none';
 /*           const sortIcon = title.querySelector('.' + type + '-sort-icon');
           sortIcon.classList.toggle('fa-sort-down');
           sortIcon.classList.toggle('fa-sort-up');
