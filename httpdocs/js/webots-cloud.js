@@ -141,28 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-    initSortColumns();
+    initSort();
+    initSearch();
     updateSearchAndSortIcons();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
-
-    for (let type of ['scene', 'animation', 'simulation']) {
-      document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-        setSearches(type, document.getElementById(type + '-search-input').value);
-        updateSearchAndSortIcons(type);
-        searchAndSortTable(type);
-      });
-      document.getElementById(type + '-search-click').addEventListener('click', function(event) {
-        if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
-          document.getElementById(type + '-search-input').value = '';
-          setSearches(type, document.getElementById(type + '-search-input').value);
-          updateSearchAndSortIcons(type);
-          searchAndSortTable(type);
-        }
-      });
-    }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
@@ -591,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup(title, [], template.content);
     }
 
-    function initSortColumns() {
+    function initSort() {
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
@@ -618,6 +603,24 @@ document.addEventListener('DOMContentLoaded', function() {
           searchAndSortTable(type);
         })
       });
+    }
+
+    function initSearch() {
+      for (let type of ['scene', 'animation', 'simulation']) {
+        document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
+          setSearches(type, document.getElementById(type + '-search-input').value);
+          updateSearchAndSortIcons(type);
+          searchAndSortTable(type);
+        });
+        document.getElementById(type + '-search-click').addEventListener('click', function(event) {
+          if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
+            document.getElementById(type + '-search-input').value = '';
+            setSearches(type, document.getElementById(type + '-search-input').value);
+            updateSearchAndSortIcons(type);
+            searchAndSortTable(type);
+          }
+        });
+      }
     }
 
     function initTabs() {
