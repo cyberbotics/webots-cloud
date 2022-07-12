@@ -586,6 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const sortBy = title.id.split('-')[2] + '-' + 'asc';// order;
           console.log('Current sort: ' + sortBy);
           setSorts(type, sortBy);
+          searchAndSortTable(type);
 
 
           //title.querySelector('.sort-icon').style.display = 'auto';
