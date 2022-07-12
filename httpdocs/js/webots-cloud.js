@@ -929,7 +929,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(typeName + '-search-input').value = searchString;
             if (sortBy && sortBy !== 'default')
               console.log("here");
-            document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
+            console.log(sortBy);
+            //document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
     }
