@@ -605,12 +605,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initSortColumns() {
+      setSorts(type, document.getElementById(type + '-sort-select').value);
+
       const columnTitles = document.querySelectorAll('.column-title');
       columnTitles.forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
           sortIcon.classList.toggle('fa-sort-down');
           sortIcon.classList.toggle('fa-sort-up');
+
+          const type = title.id.split('-');
+          console.log(type);
         })
       });
     }
