@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           if (getSort(type) && getSort(type) !== 'default') {
             console.log('Previous sort: ' + getSort(type));
-            document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).style.display = 'none';
+            //document.querySelector('.scene-sort-' + getSort(type).split('-')[0]).style.display = 'none';
           } else
             console.log('Previous sort: none');
 
