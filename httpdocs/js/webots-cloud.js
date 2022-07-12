@@ -594,6 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             order = 'desc'
           }
+          console.log("type: " + type);
           title.querySelector('.sort-icon').style.display = 'inline';
           setSorts(type, sortBy + '-' + order);
           searchAndSortTable(type);
