@@ -427,21 +427,21 @@ document.addEventListener('DOMContentLoaded', function() {
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" id="sort-icon"></i>
+                      <i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
-                      Title<i class="sort-icon fa-solid fa-sort-down" id="sort-icon"></i>
+                      Title<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene" style="min-width: 100px;">
-                      Version<i class="sort-icon fa-solid fa-sort-down" id="sort-icon"></i>
+                      Version<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
                       style="text-align: right; min-width: 75px;">
-                      Size<i class="sort-icon fa-solid fa-sort-down" id="sort-icon"></i>
+                      Size<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
                       style="text-align: right; min-width: 115px;">
-                      Uploaded<i class="sort-icon fa-solid fa-sort-down" id="sort-icon"></i>
+                      Uploaded<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                   </tr>
                 </thead>
@@ -591,8 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setSorts(type, sortBy);
           searchAndSortTable(type);
 
-
-          title.getElementById('sort-icon').style.display = 'auto';
+          title.querySelector('.sort-icon').style.display = 'auto';
 
           
 
