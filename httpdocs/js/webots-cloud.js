@@ -929,7 +929,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
             if (sortBy && sortBy !== 'default')
-              console.log(document.getElementById(typeName + '-sort-' + sortBy));
+              console.log(document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]));
               //document.getElementById(typeName + '-sort-' + sortBy).querySelector('.sort-icon').style.display = 'inline';
           }
         });
