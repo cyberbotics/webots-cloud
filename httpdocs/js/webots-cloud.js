@@ -575,9 +575,10 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const type = title.id.split('-')[0];
-          console.log('Project type: ' + type);
 
           if (getSort(type) && getSort(type) !== 'default') {
+            if (getSort(type).split('-')[0] === title.id.split('-')[2])
+              console.log("same");
             const sortElement = document.getElementById('scene-sort-' + getSort(type).split('-')[0]);
             sortElement.querySelector('.sort-icon').style.display = 'none';
           }
