@@ -951,9 +951,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById(typeName + '-search-input').value = searchString;
             if (sortBy && sortBy !== 'default') {
               const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
+              const sortIcon = columnTitle.querySelector('.sort-icon');
               columnTitle.querySelector('.sort-icon').style.display = 'inline';
-              if (sortBy.split('-')[1] === 'asc') {
-                const sortIcon = columnTitle.querySelector('.sort-icon');
+              if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
                 sortIcon.classList.toggle('fa-sort-down');
                 sortIcon.classList.toggle('fa-sort-up');
               }
