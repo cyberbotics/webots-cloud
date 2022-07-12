@@ -440,11 +440,11 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center">
+                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity" style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
-                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 300px;">
+                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene" style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene">
