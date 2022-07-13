@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setPages(type, 1);
             updateSearchIcon(type);
             searchAndSortTable(type);
-          }, '1000')
+          }, '100')
         });
         document.getElementById(type + '-search-click').addEventListener('click', function(event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
