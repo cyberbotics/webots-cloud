@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
+  let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
     {
