@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'delay')
+      delaySearch = search;
   }
 
   function getSearch(activeTab) {
@@ -122,6 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'delay')
+      return delaySearch;
   }
 
   function homePage(project) {
@@ -602,12 +606,16 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-          setTimeout(() => {
-            setSearches(type, document.getElementById(type + '-search-input').value);
-            setPages(type, 1);
-            updateSearchIcon(type);
-            searchAndSortTable(type);
-          }, '300')
+          if (!getSearch('delay')) {
+            setSearches('delay', true);
+            setTimeout(() => {
+              setSearches(type, document.getElementById(type + '-search-input').value);
+              setPages(type, 1);
+              updateSearchIcon(type);
+              searchAndSortTable(type);
+              setSearches('delay', false);
+            }, '300')
+          }
         });
         document.getElementById(type + '-search-click').addEventListener('click', function(event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
