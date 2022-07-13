@@ -160,10 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
-      if (tab === 'simulation') {
-        console.log("current page: " + current);
-        console.log("max page: " + max);
-      }
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
@@ -597,6 +593,7 @@ document.addEventListener('DOMContentLoaded', function() {
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           setSearches(type, document.getElementById(type + '-search-input').value);
+          setPages(type, 1);
           updateSearchIcon(type);
           searchAndSortTable(type);
         });
