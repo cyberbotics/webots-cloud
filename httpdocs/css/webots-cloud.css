@@ -283,7 +283,7 @@ nav.pagination > a[disabled] {
 .table-title:hover ~ .thumbnail {
   opacity: 1;
   transition: all 0.2s ease-in-out;
-  transition-delay: 0.75s;
+  transition-delay: 0.5s;
 }
 
 @media screen and (max-width: 850px) {
