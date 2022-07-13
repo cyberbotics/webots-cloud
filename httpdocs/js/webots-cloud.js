@@ -602,10 +602,12 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-          setSearches(type, document.getElementById(type + '-search-input').value);
-          setPages(type, 1);
-          updateSearchIcon(type);
-          searchAndSortTable(type);
+          setTimeout(() => {
+            setSearches(type, document.getElementById(type + '-search-input').value);
+            setPages(type, 1);
+            updateSearchIcon(type);
+            searchAndSortTable(type);
+          }, '1000')
         });
         document.getElementById(type + '-search-click').addEventListener('click', function(event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
