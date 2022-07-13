@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
-                      style="min-width: 75px;">
+                      style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
-                      style="min-width: 75px;">
+                      style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
@@ -501,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
-                      style="min-width: 75px;">
+                      style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="column-title" title="Type of simulation" style="text-align: center;">
