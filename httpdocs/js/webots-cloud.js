@@ -160,6 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
+      console.log("current page: " + current);
+      console.log("max page: " + max);
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
@@ -948,7 +950,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
-            console.log(searchString);
             document.getElementById(typeName + '-search-input').value = searchString;
             /* if (sortBy && sortBy !== 'default') {
               const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
