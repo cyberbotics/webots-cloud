@@ -948,6 +948,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
+            console.log(searchString);
             document.getElementById(typeName + '-search-input').value = searchString;
             /* if (sortBy && sortBy !== 'default') {
               const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
