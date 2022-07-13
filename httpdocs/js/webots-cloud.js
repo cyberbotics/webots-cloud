@@ -160,8 +160,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .appendChild(document.createElement('th'));
 
     function updatePagination(tab, current, max) {
-      console.log("current page: " + current);
-      console.log("max page: " + max);
+      if (tab === 'simulation') {
+        console.log("current page: " + current);
+        console.log("max page: " + max);
+      }
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
