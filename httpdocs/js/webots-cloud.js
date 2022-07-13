@@ -142,8 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-    initSort();
-    initSearch();
+    initSort(sort);
+    initSearch(search);
     updateSearchIcon();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
@@ -560,7 +560,16 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup(title, [], template.content);
     }
 
-    function initSort() {
+    function initSort(sortBy) {
+      if (sortBy && sortBy !== 'default') {
+        const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
+        const sortIcon = columnTitle.querySelector('.sort-icon');
+        columnTitle.querySelector('.sort-icon').style.display = 'inline';
+        if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+          sortIcon.classList.toggle('fa-sort-down');
+          sortIcon.classList.toggle('fa-sort-up');
+        }
+      }
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
@@ -589,7 +598,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function initSearch() {
+    function initSearch(searchString) {
+      document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           setSearches(type, document.getElementById(type + '-search-input').value);
@@ -950,16 +960,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
-            document.getElementById(typeName + '-search-input').value = searchString;
-            /* if (sortBy && sortBy !== 'default') {
-              const columnTitle = document.getElementById(typeName + '-sort-' + sortBy.split('-')[0]);
-              const sortIcon = columnTitle.querySelector('.sort-icon');
-              columnTitle.querySelector('.sort-icon').style.display = 'inline';
-              if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
-                sortIcon.classList.toggle('fa-sort-down');
-                sortIcon.classList.toggle('fa-sort-up');
-              }
-            } */
           }
         });
     }
