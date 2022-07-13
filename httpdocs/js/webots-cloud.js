@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
+  let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
     {
@@ -47,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
       `<footer class="footer">
         <div class="content has-text-centered" id="footer-github" style="margin-bottom:14px">
           <p>
-            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots"><i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
+            <a class="has-text-white" target="_blank" href="https://github.com/cyberbotics/webots">
+              <i class="fab fa-github is-size-6"></i> open-source robot simulator</a>
           </p>
         </div>
         <div class="footer-right">
@@ -112,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'delay')
+      delaySearch = search;
   }
 
   function getSearch(activeTab) {
@@ -121,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'delay')
+      return delaySearch;
   }
 
   function homePage(project) {
@@ -132,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
     let search = new URL(document.location.href).searchParams.get('search') ?
       (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
-    let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
+    let sort = new URL(document.location.href).searchParams.get('sort') ?
       (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
     setPages(activeTab, page);
@@ -141,26 +147,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-    updateSearchIcons();
+    initSort(sort);
+    initSearch(search);
+    updateSearchIcon();
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
-
-    for (let type of ['scene', 'animation', 'simulation']) {
-      document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
-        searchAndSortTable(type);
-      });
-      document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-        searchAndSortTable(type, true);
-      });
-      document.getElementById(type + '-search-click').addEventListener('click', function(event) {
-        if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
-          document.getElementById(type + '-search-input').value = '';
-          searchAndSortTable(type, true);
-        }
-      });
-    }
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
@@ -170,50 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
-
-    function searchAndSortTable(type, isSearch) {
-      if (isSearch) {
-        setSearches(type, document.getElementById(type + '-search-input').value);
-        updateSearchIcons(type);
-      } else
-        setSorts(type, document.getElementById(type + '-sort-select').value);
-
-      let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(type) !== 1 && !isSearch)
-        url.searchParams.append('p', getPage(type));
-      else
-        setPages(type, 1);
-      if (getSort(type) && getSort(type) !== 'default')
-        url.searchParams.append('sort', getSort(type));
-      if (getSearch(type) && getSearch(type) !== '')
-        url.searchParams.append('search', getSearch(type));
-      window.history.replaceState('search', '', (url.pathname + url.search).toString());
-
-      if (type === 'scene')
-        listAnimations('S', scenePage, getSort(type), getSearch(type));
-      else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(type), getSearch(type));
-      else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(type), getSearch(type));
-    }
-
-    function updateSearchIcons(type) {
-      if (type && type !== 'server') {
-        const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
-          searchIcon.classList.remove('fa-search');
-          searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
-          searchIcon.classList.add('fa-search');
-          searchIcon.classList.remove('fa-xmark');
-        }
-      } else {
-        updateSearchIcons('scene');
-        updateSearchIcons('animation');
-        updateSearchIcons('simulation');
-        return;
-      }
-    }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
@@ -416,34 +365,39 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
-            <h1 class="title">Scenes</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
                     <i class="fas fa-search" id="scene-search-icon"></i>
                   </span>
                 </div>
-                <div class="select is-small select-sort-by" id="scene-sort">
-                  <select id="scene-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the scene" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the scene">Version</th>
-                    <th title="Total size of the scene files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
+                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
+                      style="text-align: right; min-width: 75px;">
+                      Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
+                      style="text-align: right; min-width: 115px;">
+                      Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -464,36 +418,43 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
-            <h1 class="title">Animations</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
                     <i class="fas fa-search" id="animation-search-icon"></i>
                   </span>
                 </div>
-                <div class="select is-small select-sort-by" id="animation-sort">
-                  <select id="animation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="duration">Duration</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th title="Popularity" style="text-align:center"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the animation" style="min-width: 120px;">Title</th>
-                    <th title="Webots release of the animation">Version</th>
-                    <th title="Duration of the animation">Duration</th>
-                    <th title="Total size of the animation files" style="text-align: right; min-width: 65px;">Size</th>
-                    <th title="Upload date and time">Uploaded</th>
+                    <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
+                      style="text-align: right; min-width: 75px;">
+                      Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
+                      style="text-align: right; min-width: 75px;">
+                      Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
+                      style="text-align: right; min-width: 115px;">
+                      Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -514,35 +475,47 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
-            <h1 class="title">Simulations</h1>
             <div class="table-container">
-              <div class="search-and-sort">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
+                  <input class="input is-small" id="simulation-search-input" type="text"
+                    placeholder="Search for simulations...">
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
                     <i class="fas fa-search" id="simulation-search-icon"></i>
                   </span>
-                </div>
-                <div class="select is-small select-sort-by" id="simulation-sort">
-                  <select id="simulation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="stars">GitHub Stars</option>
-                    <option value="updated">Updated</option>
-                  </select>
                 </div>
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the simulation">Title</th>
-                    <th title="Branch or Tag of the simulation">Branch/Tag</th>
-                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-                    <th title="Webots release of the simulation">Version</th>
-                    <th title="Type of simulation">Type</th>
-                    <th title="Last update time">Updated</th>
+                    <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-title" title="Title of the simulation"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="simulation-sort-title" title="Branch or Tag of the simulation">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" title="Type of simulation" style="text-align: center;">
+                      Type
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
+                      style="text-align: right;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -563,7 +536,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
-            <h1 class="title">Servers</h1>
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -583,13 +555,79 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
             <div class="container is-fullhd">
               <div class="buttons">
-                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">Add your own server</button>
+                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">
+                  Add your own server</button>
               </div>
             </div>
           </section>
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, [], template.content);
+    }
+
+    function initSort(sortBy) {
+      if (sortBy && sortBy !== 'default') {
+        const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
+        const sortIcon = columnTitle.querySelector('.sort-icon');
+        columnTitle.querySelector('.sort-icon').style.display = 'inline';
+        if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+          sortIcon.classList.toggle('fa-sort-down');
+          sortIcon.classList.toggle('fa-sort-up');
+        }
+      }
+      document.querySelectorAll('.column-title').forEach((title) => {
+        title.addEventListener('click', function(e) {
+          const sortIcon = title.querySelector('.sort-icon');
+          const type = title.id.split('-')[0];
+          const previousSort = getSort(type).split('-')[0];
+          let sort = title.id.split('-')[2];
+
+          if (previousSort === sort) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+            sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
+          } else if (previousSort !== 'default') {
+            document.getElementById(type + '-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
+            if (sortIcon.classList.contains('fa-sort-up')) {
+              sortIcon.classList.toggle('fa-sort-down');
+              sortIcon.classList.toggle('fa-sort-up');
+            }
+            sort += '-desc';
+          } else
+            sort += '-desc';
+
+          title.querySelector('.sort-icon').style.display = 'inline';
+          setSorts(type, sort);
+          searchAndSortTable(type);
+        })
+      });
+    }
+
+    function initSearch(searchString) {
+      document.getElementById(activeTab + '-search-input').value = searchString;
+      for (let type of ['scene', 'animation', 'simulation']) {
+        document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
+          if (!getSearch('delay')) {
+            setSearches('delay', true);
+            setTimeout(() => {
+              setSearches(type, document.getElementById(type + '-search-input').value);
+              setPages(type, 1);
+              updateSearchIcon(type);
+              searchAndSortTable(type);
+              setSearches('delay', false);
+            }, '300')
+          }
+        });
+        document.getElementById(type + '-search-click').addEventListener('click', function(event) {
+          if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
+            document.getElementById(type + '-search-input').value = '';
+            setSearches(type, document.getElementById(type + '-search-input').value);
+            setPages(type, 1);
+            updateSearchIcon(type);
+            searchAndSortTable(type);
+          }
+        });
+      }
     }
 
     function initTabs() {
@@ -615,7 +653,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          updateSearchIcons(activeTab)
+          updateSearchIcon(activeTab)
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -627,6 +665,44 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         });
       });
+    }
+
+    function searchAndSortTable(type, isSearch) {
+      let url = new URL(document.location.origin + document.location.pathname);
+      if (getPage(type) !== 1 && !isSearch)
+        url.searchParams.append('p', getPage(type));
+      else
+        setPages(type, 1);
+      if (getSort(type) && getSort(type) !== 'default')
+        url.searchParams.append('sort', getSort(type));
+      if (getSearch(type) && getSearch(type) !== '')
+        url.searchParams.append('search', getSearch(type));
+      window.history.replaceState('search', '', (url.pathname + url.search).toString());
+
+      if (type === 'scene')
+        listAnimations('S', scenePage, getSort(type), getSearch(type));
+      else if (type === 'animation')
+        listAnimations('A', animationPage, getSort(type), getSearch(type));
+      else if (type === 'simulation')
+        listSimulations(simulationPage, getSort(type), getSearch(type));
+    }
+
+    function updateSearchIcon(type) {
+      if (type && type !== 'server') {
+        const searchIcon = document.getElementById(type + '-search-icon');
+        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
+          searchIcon.classList.remove('fa-search');
+          searchIcon.classList.add('fa-xmark');
+        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
+          searchIcon.classList.add('fa-search');
+          searchIcon.classList.remove('fa-xmark');
+        }
+      } else {
+        updateSearchIcon('scene');
+        updateSearchIcon('animation');
+        updateSearchIcon('simulation');
+        return;
+      }
     }
 
     function synchronizeSimulation(event) {
@@ -895,8 +971,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
-            document.getElementById(typeName + '-sort-select').value = sortBy;
-            document.getElementById(typeName + '-search-input').value = searchString;
           }
         });
     }
@@ -931,8 +1005,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
-            document.getElementById('simulation-sort-select').value = sortBy;
             document.getElementById('simulation-search-input').value = searchString;
+            /* if (sortBy && sortBy !== 'default') {
+              const columnTitle = document.getElementById('simulation-sort-' + sortBy.split('-')[0]);
+              columnTitle.querySelector('.sort-icon').style.display = 'inline';
+              if (sortBy.split('-')[1] === 'asc') {
+                const sortIcon = columnTitle.querySelector('.sort-icon');
+                sortIcon.classList.toggle('fa-sort-down');
+                sortIcon.classList.toggle('fa-sort-up');
+              }
+            } */
           }
         });
     }
