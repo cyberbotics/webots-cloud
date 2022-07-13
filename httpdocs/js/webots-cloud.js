@@ -601,6 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
             document.getElementById(type + '-search-input').value = '';
             setSearches(type, document.getElementById(type + '-search-input').value);
+            setPages(type, 1);
             updateSearchIcon(type);
             searchAndSortTable(type);
           }
