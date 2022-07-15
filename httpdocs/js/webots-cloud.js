@@ -271,7 +271,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
-      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
+        'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
@@ -599,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
           title.querySelector('.sort-icon').style.display = 'inline';
           setSorts(type, sort);
           searchAndSortTable(type);
-        })
+        });
       });
     }
 
@@ -615,7 +616,7 @@ document.addEventListener('DOMContentLoaded', function() {
               updateSearchIcon(type);
               searchAndSortTable(type);
               setSearches('delay', false);
-            }, '300')
+            }, '300');
           }
         });
         document.getElementById(type + '-search-click').addEventListener('click', function(event) {
@@ -653,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-          updateSearchIcon(activeTab)
+          updateSearchIcon(activeTab);
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -701,7 +702,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
-        return;
       }
     }
 
@@ -940,7 +940,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/animation/list.php', {method: 'post', 
+      fetch('/ajax/animation/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
         .then(function(response) {
           return response.json();
@@ -1006,15 +1006,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
             document.getElementById('simulation-search-input').value = searchString;
-            /* if (sortBy && sortBy !== 'default') {
-              const columnTitle = document.getElementById('simulation-sort-' + sortBy.split('-')[0]);
-              columnTitle.querySelector('.sort-icon').style.display = 'inline';
-              if (sortBy.split('-')[1] === 'asc') {
-                const sortIcon = columnTitle.querySelector('.sort-icon');
-                sortIcon.classList.toggle('fa-sort-down');
-                sortIcon.classList.toggle('fa-sort-up');
-              }
-            } */
           }
         });
     }
