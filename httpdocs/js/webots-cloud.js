@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <p><a class="has-text-white" href="terms-of-service">Terms</a></p>
           </div>
           <div class="content is-size-7" id="footer-privacy-policy">
-            <p><a class="has-text-white" href="benchmark.html">Privacy</a></p>
+            <p><a class="has-text-white" href="robotbenchmark.html">Privacy</a></p>
           </div>
           <div class="content is-size-7" id="footer-cyberbotics">
             <p><a class="has-text-white" target="_blank" href="https://cyberbotics.com">Cyberbotics&nbsp;Ltd.</a></p>
