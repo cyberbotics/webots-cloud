@@ -2,7 +2,7 @@
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 if (strlen($uri) == 8 && in_array($uri[1], array('A', 'S')))
   $found = file_exists('storage' . $uri);
-elseif (in_array($uri, array('/settings', '/scene', '/animation', '/demo', '/server', '/simulation')))
+elseif (in_array($uri, array('/settings', '/terms-of-service', '/privacy-policy', '/scene', '/animation', '/demo', '/server', '/simulation')))
   $found = true;
 else
   $found = false;
