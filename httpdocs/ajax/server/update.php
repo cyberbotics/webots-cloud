@@ -1,4 +1,3 @@
-
 <?php # This script updates the status of a simulation server
   function error($message) {
     die("{\"error\":\"$message\"}");
@@ -9,6 +8,9 @@
     $mysqli->query("DELETE FROM server WHERE url=\"$url\"") or error($mysqli->error);
     error($message);
   }
+  header("Access-Control-Allow-Origin: *");
+  header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+  header("Access-Control-Allow-Headers: Content-Type, Authorization");
   header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
