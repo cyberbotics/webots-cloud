@@ -86,7 +86,7 @@ export default class User extends Router {
       template.innerHTML =
       `<section class="section">
         <div class="tile is-ancestor">
-          <div class="tile is-4 is-parent">
+          <div class="tile is-8 is-parent">
             <div class="tile is-child box">
               <p class="title">Three</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
@@ -94,8 +94,8 @@ export default class User extends Router {
               <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
             </div>
           </div>
-          <div class="tile is-parent">
-            <div class="tile is-vertical is-child box">
+          <div class="tile is-vertical is-parent">
+            <div class="tile is-child box">
               <p class="title">One</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
             </div>
