@@ -236,7 +236,7 @@ nav.pagination > a[disabled] {
 .thumbnail {
   display: auto;
   opacity: 0;
-  position: relative;
+  position: fixed;
   pointer-events: none;
 }
 
@@ -307,11 +307,6 @@ nav.pagination > a[disabled] {
 @media screen and (max-width: 565px) {
   .thumbnail {
     display: none;
-  }
-
-  .table-container {
-    overflow: auto;
-    overflow-x: auto;
   }
 }
 
