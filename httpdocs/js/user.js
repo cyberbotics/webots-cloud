@@ -84,14 +84,16 @@ export default class User extends Router {
         </section>`;
 
       template.innerHTML =
-        `<section class="section">
+      `<section class="section">
           <div class="tile is-vertical is-parent is-8">
-            <article class="tile is-child notification is-warning box">
-              <p class="title">My Projects</p>
-              <div class="content">
-                ${projectsTable}
-              </div>
-            </article>
+            <div class="tile is-child">
+              <article class="tile is-child notification is-warning box">
+                <p class="title">My Projects</p>
+                <div class="content">
+                  ${projectsTable}
+                </div>
+              </article>
+            </div>
           </div>
           <div class="tile is-vertical is-parent">
             <div class="tile is-child is-success box">
