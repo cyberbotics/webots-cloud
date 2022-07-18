@@ -16,7 +16,7 @@
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
     $extra_condition = "duration = 0";
-  else if ($type == 'S') // animation
+  else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
   else // my-projects
     $extra_condition = "";
