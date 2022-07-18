@@ -12,18 +12,14 @@ export default class User extends Router {
     this.sort = 'default';
     let that = this;
 
-    console.log(that.page);
-
     function myProjectsPage() {
-      console.log(that.page);
       that.page = new URL(document.location.href).searchParams.get('p') ?
-        parseInt(new URL(document.location.href).searchParams.get('p')) : this.page;
+        parseInt(new URL(document.location.href).searchParams.get('p')) : that.page;
       that.search = new URL(document.location.href).searchParams.get('search') ?
         (new URL(document.location.href).searchParams.get('search')).toString() : this.search;
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
         (new URL(document.location.href).searchParams.get('sort')).toString() : this.sort;
 
-      console.log(that.page);
 
       // we need to be logged in to view this page
       if (!that.password || !that.email)
@@ -104,11 +100,9 @@ export default class User extends Router {
         </div>
       </section>`;
       that.setup('settings', [], template.content);
-      console.log(that.page);
       listMyProjects(that.page, that.sort, that.search);
     }
     function updatePagination(current, max) {
-      console.log('current page: ' + current);
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
       const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
       let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
@@ -212,7 +206,6 @@ export default class User extends Router {
       return row;
     }
     function listMyProjects(page, sortBy, searchString) {
-      console.log(page);
       const pageLimit = 10;
       const user = parseInt(that.id);
       const offset = (page - 1) * pageLimit;
