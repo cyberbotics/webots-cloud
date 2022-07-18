@@ -113,7 +113,7 @@ export default class User extends Router {
               <div id="tab-content">
                 <section class="section${(that.stats === 'week') ? ' is-active' : ''}" style="padding: 0;"
                   data-content="week">
-                  <a>Views:</a>
+                  <p><strong>Views:</strong></p>
                 </section>
               </div>
               <div id="tab-content">
