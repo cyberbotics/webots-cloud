@@ -6,6 +6,7 @@ export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
+    this.routes.push({url: '/my-projects', setup: myProjectsPage});
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
@@ -17,6 +18,71 @@ export default class User extends Router {
           result = decodeURIComponent(tmp[1]);
       }
       return result;
+    }
+    function myProjectsPage() {
+      // we need to be logged in to view this page
+      if (!that.password || !that.email)
+       return false;
+     const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
+     const template = document.createElement('template');
+     const md5sum = md5(that.email.toLowerCase());
+     const hostname = document.location.hostname;
+     const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
+     template.innerHTML =
+       `<section class="section" data-content="user-scene">
+        <div class="table-container">
+          <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+            <div class="control has-icons-right">
+              <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
+              <span class="icon is-small is-right is-clickable" id="scene-search-click">
+                <i class="fas fa-search" id="scene-search-icon"></i>
+              </span>
+            </div>
+          </div>
+          <table class="table is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
+                  style="text-align:center; min-width: 65px;">
+                  <i class="fas fa-chart-column"></i>
+                  <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="scene-sort-title" title="Title of the scene"
+                  style="min-width: 120px;">
+                  Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
+                  style="min-width: 85px;">
+                  Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
+                  style="text-align: right; min-width: 75px;">
+                  Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
+                  style="text-align: right; min-width: 115px;">
+                  Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="empty-search" id="scene-empty-search" style="display: none;">
+            <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+            </i>
+            <p id="scene-empty-search-text"></p>
+          </div>
+        </div>
+        <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+        </nav>
+        <div class="container is-fullhd">
+          <div class="buttons">
+            <button class="button" id="add-a-new-scene">Add a new scene</button>
+          </div>
+        </div>
+      </section>`;
+      that.setup('settings', [], template.content);
     }
     function resetPassword(id, token, email) {
       let content = {};
@@ -363,6 +429,8 @@ export default class User extends Router {
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
         <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item" href="/my-projects"><i class="fas fa-user"> &nbsp; </i>My projects</a>
+          <div class="navbar-divider"></div>
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
