@@ -122,6 +122,7 @@ export default class User extends Router {
         size = Math.round(size);
       size += ' <small>' + unit + '</small>';
       let duration;
+      console.log(data.duration);
       if (data.duration) {
         let millisecond = data.duration % 1000;
         let second = Math.trunc(data.duration / 1000) % 60;
@@ -176,7 +177,6 @@ export default class User extends Router {
     }
     function listMyProjects(page, sortBy, searchString) {
       const pageLimit = 10;
-      console.log(that.id);
       const user = parseInt(that.id);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
