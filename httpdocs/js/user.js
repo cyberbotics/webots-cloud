@@ -145,7 +145,6 @@ export default class User extends Router {
       } else
         duration = '-';
       const type = (data.duration === 0) ? 'scene' : 'animation';
-      console.log(data.url);
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
