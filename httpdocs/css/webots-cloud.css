@@ -317,7 +317,7 @@ nav.pagination > a[disabled] {
 }
 
 
-@media screen and (min-width: 625px) {
+@media screen and (min-width: 950px) {
   .tile:not(.is-child) {
       display: flex;
   }
