@@ -38,6 +38,11 @@ div.table-container {
   max-width: 800px;
 }
 
+div.pagination {
+  max-width: 800px;
+}
+
+
 .column-title {
   user-select: none;
 }

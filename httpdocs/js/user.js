@@ -13,6 +13,7 @@ export default class User extends Router {
     let that = this;
 
     function myProjectsPage() {
+      console.log("myProjectPage");
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
       that.search = new URL(document.location.href).searchParams.get('search') ?
@@ -73,8 +74,8 @@ export default class User extends Router {
               </i>
               <p id="my-projects-empty-search-text"></p>
             </div>
-            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
           </div>
+          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
         </section>`;
       template.innerHTML =
       `<section class="section">
@@ -111,7 +112,7 @@ export default class User extends Router {
     function updatePagination(current, max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
       const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
-      let nav = document.querySelector(`section[data-content="my-projects"] > div > nav`);
+      let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
         ? ('/my-projects') : ('/my-projects?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
