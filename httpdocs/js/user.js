@@ -155,6 +155,18 @@ export default class User extends Router {
       const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>`;
+      row += `<td>
+                <a class="table-title has-text-dark" href="${url}">${title}</a>
+                <div class="my-projects-thumbnail">
+                  <div class="my-projects-thumbnail-container">
+                    <img class="my-projects-thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="my-projects-thumbnail-description">
+                      ${data.description}
+                      <div class="my-projects-thumbnail-description-fade"/>
+                    </p>
+                  </div>
+                </div>
+              </td>`;
       row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
         title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
