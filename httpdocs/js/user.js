@@ -109,7 +109,7 @@ export default class User extends Router {
       let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
       let content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/my-projects') : ('/my-projects' + '?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
+        ? ('/my-projects') : ('/my-projects?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
       const nextDisabled = (current === max) ? ' disabled' : ` href="my-projects?p=${current + 1}${hrefSort}${hrefSearch}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
         : `" aria-label="Goto page 1" href="my-projects${hrefSort}${hrefSearch}"`;
