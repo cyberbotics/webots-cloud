@@ -85,9 +85,9 @@ export default class User extends Router {
 
       template.innerHTML =
       `<section class="section">
-        <div class="tile is-ancestor" style="min-width: 625px;">
+        <div class="tile is-ancestor">
           <div class="tile is-8 is-parent">
-            <div class="tile is-child box">
+            <div class="tile is-child box" style="min-width: 625px;">
               <p class="title">Three</p>
               <div class="content">
                 ${projectsTable}
