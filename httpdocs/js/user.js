@@ -97,30 +97,10 @@ export default class User extends Router {
               <p class="title">Stats</p>
               <div class="tabs is-centered is-small">
                 <ul>
-                  <li class="is-active">
-                    <a>
-                      <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-                      <span>Pictures</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
-                      <span>Music</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
-                      <span>Videos</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
-                      <span>Documents</span>
-                    </a>
-                  </li>
+                  <li class="is-active"><a>This week</a></li>
+                  <li><a>This month</a></li>
+                  <li><a>This year</a></li>
+                  <li><a>All time</a></li>
                 </ul>
               </div>
             </div>
