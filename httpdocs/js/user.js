@@ -13,17 +13,6 @@ export default class User extends Router {
     this.sort = 'default';
     let that = this;
 
-    function findGetParameter(parameterName) {
-      let result = null;
-      let tmp = [];
-      let items = location.search.substr(1).split('&');
-      for (let index = 0; index < items.length; index++) {
-        tmp = items[index].split('=');
-        if (tmp[0] === parameterName)
-          result = decodeURIComponent(tmp[1]);
-      }
-      return result;
-    }
     function myProjectsPage() {
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : this.page;
@@ -502,6 +491,17 @@ export default class User extends Router {
             });
         });
       });
+    }
+    function findGetParameter(parameterName) {
+      let result = null;
+      let tmp = [];
+      let items = location.search.substr(1).split('&');
+      for (let index = 0; index < items.length; index++) {
+        tmp = items[index].split('=');
+        if (tmp[0] === parameterName)
+          result = decodeURIComponent(tmp[1]);
+      }
+      return result;
     }
     // account creation: entering the password
     const token = findGetParameter('token');
