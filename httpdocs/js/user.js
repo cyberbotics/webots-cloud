@@ -88,7 +88,7 @@ export default class User extends Router {
 <div class="tile is-ancestor">
   <div class="tile is-vertical is-8">
     <div class="tile is-parent">
-      <article class="tile is-child notification">
+      <article class="tile is-child notification box">
         <p class="title">My Projects</p>
         <div class="content">
           ${projectsTable}
