@@ -26,7 +26,7 @@ export default class User extends Router {
        return false;
       const template = document.createElement('template');
       const projectsTable =
-        `<section class="section" data-content="user-my-projects" style="padding: 0">
+        `<section class="section" data-content="my-projects" style="padding: 0">
           <div class="table-container">
             <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
               <div class="control has-icons-right">
