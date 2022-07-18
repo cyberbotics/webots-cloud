@@ -173,7 +173,7 @@ export default class User extends Router {
     }
     function listMyProjects(page, sortBy, searchString) {
       const pageLimit = 10;
-      const user = that.id;
+      const user = 'A';//that.id;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, type: user, sortBy: sortBy, search: searchString})})
