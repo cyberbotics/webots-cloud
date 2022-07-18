@@ -102,6 +102,7 @@ export default class User extends Router {
       that.setup('settings', [], template.content);
     }
     function listMyProjects(page, sortBy, searchString) {
+      const pageLimit = 10;
       const user = that.id;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
