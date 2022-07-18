@@ -90,11 +90,13 @@ export default class User extends Router {
           </div>
           <div class="tile is-vertical is-parent">
             <div class="tile is-child box">
-              <p class="title">Project of the week</p>
+              <p class="title">Top Project</p>
+              <section class="section" id="my-projects-top" style="padding: 0;">
+              </section>
             </div>
             <div class="tile is-child box">
-              <p class="title">Stats</p>
-              <section class="section" style="padding: 0;">
+              <p class="title">Information</p>
+              <section class="section" id="my-projects-information" style="padding: 0;">
                 <p style="padding-bottom: 10px;"><strong>First Upload:</strong></p>
                 <p style="padding-bottom: 10px;"><strong>Total Animations:</strong></p>
                 <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong></p>
