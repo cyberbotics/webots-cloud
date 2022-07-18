@@ -20,7 +20,6 @@
     $extra_condition = "duration > 0";
   else // my-projects
     $extra_condition = "user = ";
-  error("type: $type");
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
@@ -42,6 +41,7 @@
       if (is_string($type))
         delete_animation($type, $id);
     }
+    error("type: $type");
     $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
       $mysqli->escape_string($data->sortBy) : "viewed-desc";
     $parameter = explode("-", $sortBy)[0];
