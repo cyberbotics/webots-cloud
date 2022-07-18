@@ -111,20 +111,24 @@ export default class User extends Router {
                 </ul>
               </div>
               <div id="tab-content">
-                <section class="section${(that.stats === 'week') ? ' is-active' : ''}" data-content="week">
+                <section class="section${(that.stats === 'week') ? ' is-active' : ''}" style="padding: 0;"
+                  data-content="week">
                   <a>Views:</a>
                 </section>
               </div>
               <div id="tab-content">
-                <section class="section${(that.stats === 'month') ? ' is-active' : ''}" data-content="month">
+                <section class="section${(that.stats === 'month') ? ' is-active' : ''}" style="padding: 0;"
+                  data-content="month">
                 </section>
               </div>
               <div id="tab-content">
-                <section class="section${(that.stats === 'year') ? ' is-active' : ''}" data-content="year">
+                <section class="section${(that.stats === 'year') ? ' is-active' : ''}" style="padding: 0;"
+                  data-content="year">
                 </section>
               </div>
               <div id="tab-content">
-                <section class="section${(that.stats === 'all') ? ' is-active' : ''}" data-content="all">
+                <section class="section${(that.stats === 'all') ? ' is-active' : ''}" style="padding: 0;"
+                  data-content="all">
                 </section>
               </div>
             </div>
