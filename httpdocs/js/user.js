@@ -83,7 +83,7 @@ export default class User extends Router {
         <div class="tile is-ancestor">
           <div class="tile is-7 is-parent">
             <div class="tile is-child box" style="overflow-X: auto">
-              <p class="title">My Projects</p>
+              <p class="title" style="margin-bottom: 15;">My Projects</p>
               <div class="content">
                 ${projectsTable}
               </div>
