@@ -108,6 +108,13 @@ export default class User extends Router {
       </section>`;
       that.setup('settings', [], template.content);
       listMyProjects(that.page, that.sort, that.search);
+      showTopProject();
+    }
+    function showTopProject() {
+      let topProjectWebotsView = document.createElement('div');
+      topProjectWebotsView.id = 'my-projects-top-webots-view';
+      topProjectWebotsView.innerHTML = '<webots-view id="webots-view-top" style="height:100%; width:100%; display:block;"></webots-view>';
+      document.getElementById('my-projects-top').append(topProjectWebotsView);
     }
     function updatePagination(current, max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
