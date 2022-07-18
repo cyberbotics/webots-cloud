@@ -27,7 +27,7 @@ export default class User extends Router {
       const template = document.createElement('template');
       const projectsTable =
         `<section class="section" data-content="my-projects" style="padding: 0">
-          <div class="table-container my-projects-table">
+          <div class="table-container my-projects-table mx-auto">
             <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
               <div class="control has-icons-right">
                 <input class="input is-small" id="my-projects-search-input" type="text" placeholder="Search for projects...">
@@ -36,7 +36,7 @@ export default class User extends Router {
                 </span>
               </div>
             </div>
-            <table class="table is-striped is-hoverable mx-auto">
+            <table class="table is-striped is-hoverable">
               <thead>
                 <tr>
                   <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
