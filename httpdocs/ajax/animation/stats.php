@@ -10,6 +10,9 @@ $mysqli = new mysqli($database_host, $database_username, $database_password, $da
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
+$time = isset($data->time) ? $data->time : "week";
+
+$query = "SELECT id FROM animation WHERE uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)";
 
 die(json_encode($answer));
 ?>

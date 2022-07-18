@@ -10,6 +10,7 @@ export default class User extends Router {
     this.page = 1;
     this.search = '';
     this.sort = 'default';
+    this.stats = 'week';
     let that = this;
 
     function myProjectsPage() {
@@ -96,11 +97,32 @@ export default class User extends Router {
               <p class="title">Stats</p>
               <div class="tabs is-centered is-small">
                 <ul>
-                  <li class="is-active"><a>Week</a></li>
-                  <li><a>Month</a></li>
-                  <li><a>Year</a></li>
-                  <li><a>All</a></li>
+                  <li data-tab="animation" class="data-tab${(this.stats === 'week') ? ' is-active' : ''}">
+                    <a>Week</a>
+                  </li>
+                  <li data-tab="animation" class="data-tab${(this.stats === 'month') ? ' is-active' : ''}">
+                    <a>Month</a>
+                  </li>
+                  <li data-tab="animation" class="data-tab${(this.stats === 'year') ? ' is-active' : ''}">
+                    <a>Year</a>
+                  </li>
+                  <li data-tab="animation" class="data-tab${(this.stats === 'all') ? ' is-active' : ''}">
+                    <a>All</a>
+                  </li>
                 </ul>
+                <div id="tab-content">
+                  <section class="section${(this.stats === 'week') ? ' is-active' : ''}" data-content="week">
+                  <a>Views:</a>
+                </div>
+                <div id="tab-content">
+                  <section class="section${(this.stats === 'month') ? ' is-active' : ''}" data-content="week">
+                </div>
+                <div id="tab-content">
+                  <section class="section${(this.stats === 'year') ? ' is-active' : ''}" data-content="week">
+                </div>
+                <div id="tab-content">
+                  <section class="section${(this.stats === 'all') ? ' is-active' : ''}" data-content="week">
+                </div>
               </div>
             </div>
           </div>
