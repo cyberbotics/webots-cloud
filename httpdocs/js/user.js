@@ -123,7 +123,7 @@ export default class User extends Router {
       size += ' <small>' + unit + '</small>';
       let duration;
       console.log(data.duration);
-      if (data.duration) {
+      if (data.duration != 0) {
         let millisecond = data.duration % 1000;
         let second = Math.trunc(data.duration / 1000) % 60;
         let minute = Math.trunc(data.duration / 60000) % 60;
