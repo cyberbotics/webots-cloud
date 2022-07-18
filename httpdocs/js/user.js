@@ -4,6 +4,7 @@ import md5 from './md5.min.js';
 
 export default class User extends Router {
   constructor(title, footer, routes) {
+    console.log("gone in here");
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
     this.routes.push({url: '/my-projects', setup: myProjectsPage});
