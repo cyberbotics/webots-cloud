@@ -96,8 +96,8 @@ export default class User extends Router {
               <p class="title">Stats</p>
               <section class="section" style="padding: 0;">
                 <p style="padding-bottom: 10px;"><strong>First Upload:</strong></p>
-                <p><strong>Total Animations:</strong></p>
-                <p><strong>Total Scenes:</strong></p>
+                <p style="padding-bottom: 10px;"><strong>Total Animations:</strong></p>
+                <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong></p>
                 <p><strong>Total Views:</strong></p>
               </section>
             </div>
