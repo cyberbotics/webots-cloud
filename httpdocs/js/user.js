@@ -4,12 +4,11 @@ import md5 from './md5.min.js';
 
 export default class User extends Router {
   constructor(title, footer, routes) {
-    console.log("gone in here");
+    console.log("Constructor");
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
     this.routes.push({url: '/my-projects', setup: myProjectsPage});
     let that = this;
-    myProjectsPage();
     listMyProjects(1, 'default', '');
     function findGetParameter(parameterName) {
       let result = null;
@@ -23,6 +22,7 @@ export default class User extends Router {
       return result;
     }
     function myProjectsPage() {
+      console.log("myProjectsPage");
       // we need to be logged in to view this page
       if (!that.password || !that.email)
        return false;
