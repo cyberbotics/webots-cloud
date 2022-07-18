@@ -9,6 +9,7 @@ export default class User extends Router {
     this.routes.push({url: '/settings', setup: settingsPage});
     this.routes.push({url: '/my-projects', setup: myProjectsPage});
     let that = this;
+    myProjectsPage();
     listMyProjects(1, 'default', '');
     function findGetParameter(parameterName) {
       let result = null;
