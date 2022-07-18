@@ -454,6 +454,7 @@ export default class User extends Router {
           } else
             document.getElementById('my-projects-empty-search').style.display = 'none';
           let line = ``;
+          console.log(data.animations[1]);
           for (let i = 0; i < data.animations.length; i++)
             line += '<tr>' + this.myProjectsRow(data.animations[i]) + '</tr>';
           let parent = that.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
