@@ -323,7 +323,7 @@ nav.pagination > a[disabled] {
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 949px) {
   .tile:not(.is-child) {
       display: block;
   }
