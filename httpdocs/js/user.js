@@ -21,11 +21,6 @@ export default class User extends Router {
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
         (new URL(document.location.href).searchParams.get('sort')).toString() : that.sort;
 
-
-      console.log("page: " + that.page);
-      console.log("search: " + that.search);
-      console.log("sort: " + that.sort);
-
       // we need to be logged in to view this page
       if (!that.password || !that.email)
        return false;
@@ -133,7 +128,7 @@ export default class User extends Router {
             ` aria-current="page">${i}</a></li>`;
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
-            href="$my-projects?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
+            href="/my-projects?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
