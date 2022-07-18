@@ -68,8 +68,8 @@ export default class Project extends User {
     return promise;
   }
   setup(title, anchors, content, fullpage = false) {
-    if (document.querySelector('webots-view'))
-      document.querySelector('webots-view').remove();
+    if (document.getElementById('my-projects-top-webots-view'))
+      document.querySelector('my-projects-top-webots-view').remove();
     if (Project.webotsView) {
       document.querySelector('webots-view').close();
       document.querySelector('#main-container').classList.remove('webotsView');
