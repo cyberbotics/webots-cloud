@@ -322,3 +322,9 @@ nav.pagination > a[disabled] {
       display: flex;
   }
 }
+
+@media screen and (max-width: 950px) {
+  .tile:not(.is-child) {
+      display: block;
+  }
+}
