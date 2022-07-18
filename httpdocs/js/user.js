@@ -95,26 +95,18 @@ export default class User extends Router {
         </div>
       </article>
     </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-danger">
-        <p class="title">Wide tile</p>
-        <p class="subtitle">Aligned with the right tile</p>
-        <div class="content">
-          <!-- Content -->
-        </div>
-      </article>
-    </div>
   </div>
-  <div class="tile is-parent">
-    <article class="tile is-child notification is-success">
-      <div class="content">
-        <p class="title">Tall tile</p>
-        <p class="subtitle">With even more content</p>
-        <div class="content">
-          <!-- Content -->
-        </div>
-      </div>
-    </article>
+  <div class="tile is-vertical is-parent">
+    <div class="tile is-child box is-success">
+      <p class="title">One</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
+        Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+    </div>
+    <div class="tile is-child box is-primary">
+      <p class="title">Two</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut.
+        Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+    </div>
   </div>
 </div>
         <div class="tile is-ancestor">
