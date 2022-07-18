@@ -16,8 +16,10 @@
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
     $extra_condition = "duration = 0";
-  else // animation
+  else if ($type == 'S') // animation
     $extra_condition = "duration > 0";
+  else // my-projects
+    $extra_condition = "";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
