@@ -74,9 +74,8 @@ export default class User extends Router {
               </i>
               <p id="my-projects-empty-search-text"></p>
             </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination"></nav>
           </div>
-          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-          </nav>
         </section>`;
       template.innerHTML =
       `<section class="section">
