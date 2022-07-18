@@ -74,7 +74,7 @@ export default class User extends Router {
           </article>
         </div>
       </div>`;
-     template2.innerHTML =
+     /* template.innerHTML =
        `<section class="section" data-content="user-scene">
         <div class="table-container">
           <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
@@ -126,7 +126,7 @@ export default class User extends Router {
         </div>
         <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
         </nav>
-      </section>`;
+      </section>`; */
       that.setup('settings', [], template.content);
     }
     function resetPassword(id, token, email) {
