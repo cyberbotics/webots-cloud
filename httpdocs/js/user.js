@@ -17,9 +17,9 @@ export default class User extends Router {
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : that.page;
       that.search = new URL(document.location.href).searchParams.get('search') ?
-        (new URL(document.location.href).searchParams.get('search')).toString() : this.search;
+        (new URL(document.location.href).searchParams.get('search')).toString() : that.search;
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
-        (new URL(document.location.href).searchParams.get('sort')).toString() : this.sort;
+        (new URL(document.location.href).searchParams.get('sort')).toString() : that.sort;
 
 
       console.log("page: " + that.page);
