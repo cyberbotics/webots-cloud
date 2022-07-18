@@ -23,6 +23,8 @@ export default class User extends Router {
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
         (new URL(document.location.href).searchParams.get('sort')).toString() : this.sort;
 
+      console.log(that.page);
+
       // we need to be logged in to view this page
       if (!that.password || !that.email)
        return false;
