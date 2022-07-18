@@ -87,7 +87,7 @@ export default class User extends Router {
       `<section class="section">
         <div class="tile is-ancestor">
           <div class="tile is-8 is-parent">
-            <div class="tile is-child box" style="min-width: 590px;">
+            <div class="tile is-child box">
               <p class="title">Three</p>
               <div class="content">
                 ${projectsTable}
