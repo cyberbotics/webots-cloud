@@ -79,11 +79,11 @@ export default class User extends Router {
           </nav>
         </section>`;
       template.innerHTML =
-      `<section class="section">
+      `<section class="section is-large">
         <div class="tile is-ancestor">
           <div class="tile is-7 is-parent">
             <div class="tile is-child box" style="overflow-X: auto">
-              <p class="title" style="margin-bottom: 15;">My Projects</p>
+              <p class="title">My Projects</p>
               <div class="content">
                 ${projectsTable}
               </div>
@@ -172,7 +172,7 @@ export default class User extends Router {
       return row;
     }
     function listMyProjects(page, sortBy, searchString) {
-      const pageLimit = 7;
+      const pageLimit = 8;
       const user = 'A';//that.id;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
