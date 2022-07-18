@@ -317,56 +317,6 @@ nav.pagination > a[disabled] {
 
 /* My Projects Tiles*/
 
-div.table-container.my-projects-table {
-  min-height: 0px;
-}
-
-.my-projects-thumbnail {
-  display: auto;
-  opacity: 1;
-  position: relative;
-  pointer-events: none;
-}
-
-.my-projects-thumbnail-container {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  height: 126px;
-  width: 448px;
-  background: rgba(38, 38, 38, 1);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 10px black;
-  display: flex;
-  overflow: hidden;
-  
-}
-
-.my-projects-thumbnail-image {
-  height: 126px;
-  width: 224px;
-  object-fit: cover;
-  box-shadow: 0 0 10px black;
-  z-index: 2;
-}
-
-.table-title:hover ~ .my-projects-thumbnail {
-  opacity: 1;
-  transition: all 0.2s ease-in-out;
-  transition-delay: 0.5s;
-}
-
-@media screen and (max-width: 650px) {
-  .my-projects-thumbnail {
-    display: none;
-  }
-
-  .my-projects-table-container {
-    overflow: auto;
-    overflow-x: auto;
-  }
-}
-
 @media screen and (min-width: 950px) {
   .tile:not(.is-child) {
       display: flex;
