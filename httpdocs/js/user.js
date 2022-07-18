@@ -15,6 +15,7 @@ export default class User extends Router {
     console.log(that.page);
 
     function myProjectsPage() {
+      console.log(that.page);
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : this.page;
       that.search = new URL(document.location.href).searchParams.get('search') ?
