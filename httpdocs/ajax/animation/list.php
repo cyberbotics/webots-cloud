@@ -20,6 +20,7 @@
     $extra_condition = "duration > 0";
   else // my-projects
     $extra_condition = "user = ";
+  error("type: $type");
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
