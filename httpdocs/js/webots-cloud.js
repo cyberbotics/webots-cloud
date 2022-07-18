@@ -5,18 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
-  let myProjectsPage = 1;
   let serverPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
-  let myProjectsSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
-  let myProjectsSearch = '';
   let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
@@ -77,8 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
       animationPage = page;
     else if (activeTab === 'simulation')
       simulationPage = page;
-    else if (activeTab === 'my-projects')
-      myProjectsPage = page;
     else if (activeTab === 'server')
       serverPage = page;
   }
@@ -90,8 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationPage;
     if (activeTab === 'simulation')
       return simulationPage;
-    if (activeTab === 'my-projects')
-      return myProjectsPage;
     if (activeTab === 'server')
       return serverPage;
   }
@@ -103,8 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
-    else if (activeTab === 'my-projects')
-      myProjectsSort = sort;
   }
 
   function getSort(activeTab) {
@@ -114,8 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
-    if (activeTab === 'my-projects')
-      return myProjectsSort;
   }
 
   function setSearches(activeTab, search) {
@@ -125,8 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
-    else if (activeTab === 'my-projects')
-      myProjectsSearch = search;
     else if (activeTab === 'delay')
       delaySearch = search;
   }
@@ -138,14 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
-    if (activeTab === 'my-projects')
-      return myProjectsSearch;
     if (activeTab === 'delay')
       return delaySearch;
   }
 
   function homePage(project) {
-    console.log("Starting here...");
     const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -173,10 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
-    listSimulations(simulationPage, getSort('my-projects'), getSearch('my-projects'));
+    listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
     listServers(serverPage);
-    if (project.id)
-      listAnimations(project.id, animationPage, getSort('animation'), getSearch('animation'));
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
@@ -955,8 +937,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listAnimations(type, page, sortBy, searchString) {
-      const typeName = (type === 'A') ? 'animation' : (type === 'S' ? 'scene' : 'my-project');
-      console.log(typeName);
+      const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
@@ -989,7 +970,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            //updatePagination(typeName, page, total);
+            updatePagination(typeName, page, total);
           }
         });
     }
