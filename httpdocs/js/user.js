@@ -31,8 +31,8 @@ export default class User extends Router {
       template.innerHTML =
       `<section class="section is-medium">
 <div class="tile is-ancestor">
-  <div class="tile is-parent is-vertical is-8">
-    <div class="tile is-vertical">
+  <div class="tile is-vertical is-8">
+    <div class="tile is-parent">
       <article class="tile is-child notification is-primary">
         <p class="title">Projects</p>
         <p class="subtitle">projects list goes here</p>
