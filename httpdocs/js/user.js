@@ -140,18 +140,14 @@ export default class User extends Router {
           duration = hour + duration;
         }
       }
-      const admin = that.email ? that.email.endsWith('@cyberbotics.com') : false;
-      const typeName = (data.duration === 0) ? 'scene' : 'animation';
+      const type = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const style = (data.user === 0) ? ' style="color:grey"' : (parseInt(that.id) === data.user
-        ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
-      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(that.id) === data.user
-        ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
-      const deleteIcon = (data.user === 0 || parseInt(that.id) === data.user || admin)
-        ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
+      const style = ' style="color:#007acc"';
+      const tooltip = `Delete your ${type}`;
+      const deleteIcon = `<i${style} class="is-clickable far fa-trash-alt" id="${type}-${data.id}" title="${tooltip}"></i>`;
       const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>`;
@@ -175,7 +171,7 @@ export default class User extends Router {
       return row;
     }
     function listMyProjects(page, sortBy, searchString) {
-      const pageLimit = 7;
+      const pageLimit = 10;
       const user = 'A';//that.id;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
