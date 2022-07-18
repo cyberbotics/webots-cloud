@@ -103,6 +103,7 @@ export default class User extends Router {
       listMyProjects(that.page, that.sort, that.search);
     }
     function updatePagination(current, max) {
+      console.log("current page: " + current);
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
       const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
       let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
