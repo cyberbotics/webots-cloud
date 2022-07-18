@@ -109,13 +109,13 @@ export default class User extends Router {
       showTopProject();
     }
     function showTopProject() {
-      that.topProjectWebotsView = document.createElement('webots-view');
+      /* that.topProjectWebotsView = document.createElement('webots-view');
       that.topProjectWebotsView.id = 'my-projects-top-webots-view';
       document.getElementById('my-projects-top').append(that.topProjectWebotsView);
 
       const reference = 'https://testing.webots.cloud/storage/Acdx3l6';
       that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
-        false, false, `${reference}/thumbnail.jpg`);
+        false, false, `${reference}/thumbnail.jpg`); */
     }
     function updatePagination(current, max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';

@@ -86,9 +86,6 @@ export default class Project extends User {
     return result;
   }
   setupWebotsView(page, data) {
-    const topWebotsView = document.getElementById('my-projects-top-webots-view');
-    if (topWebotsView && topWebotsView !== 'undefined')
-      document.querySelector('my-projects-top-webots-view').remove();
     const view = (!Project.webotsView)
       ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
     let template = document.createElement('template');
