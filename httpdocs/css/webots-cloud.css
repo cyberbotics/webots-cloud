@@ -319,7 +319,18 @@ nav.pagination > a[disabled] {
 /* My Projects Tiles*/
 
 div.table-container.my-projects-table {
-  min-height: 600px;
+  min-height: 0px;
+}
+
+.my-projects-thumbnail-container {
+  left: 40px;
+  height: 144px;
+  width: 512px;
+}
+
+.my-projects-thumbnail-image {
+  height: 144px;
+  width: 256px;
 }
 
 @media screen and (min-width: 950px) {
