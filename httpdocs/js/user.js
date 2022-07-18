@@ -193,7 +193,7 @@ export default class User extends Router {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + myProjectsRow(data.animations[i]) + '</tr>';
-            let parent = project.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
+            let parent = that.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
               let node = parent.querySelector(`#my-projects-${data.animations[i].id}`);
