@@ -96,10 +96,10 @@ export default class User extends Router {
               <p class="title">Stats</p>
               <div class="tabs is-centered is-small">
                 <ul>
-                  <li class="is-active"><a>This week</a></li>
-                  <li><a>This month</a></li>
-                  <li><a>This year</a></li>
-                  <li><a>All time</a></li>
+                  <li class="is-active"><a>Week</a></li>
+                  <li><a>Month</a></li>
+                  <li><a>Year</a></li>
+                  <li><a>All</a></li>
                 </ul>
               </div>
             </div>
