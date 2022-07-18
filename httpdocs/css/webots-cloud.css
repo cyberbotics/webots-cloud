@@ -323,14 +323,25 @@ div.table-container.my-projects-table {
 }
 
 .my-projects-thumbnail-container {
+  position: absolute;
+  top: 5px;
   left: 40px;
   height: 144px;
   width: 512px;
+  background: rgba(38, 38, 38, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px black;
+  display: flex;
+  overflow: hidden;
+  
 }
 
 .my-projects-thumbnail-image {
   height: 144px;
   width: 256px;
+  object-fit: cover;
+  box-shadow: 0 0 10px black;
+  z-index: 2;
 }
 
 @media screen and (min-width: 950px) {

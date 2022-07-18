@@ -158,8 +158,8 @@ export default class User extends Router {
       row += `<td>
                 <a class="table-title has-text-dark" href="${url}">${title}</a>
                 <div class="thumbnail">
-                  <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                  <div class="my-projects-thumbnail-container">
+                    <img class="my-projects-thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
                     <p class="thumbnail-description">
                       ${data.description}
                       <div class="thumbnail-description-fade"/>
