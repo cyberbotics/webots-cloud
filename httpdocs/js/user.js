@@ -111,15 +111,12 @@ export default class User extends Router {
       showTopProject();
     }
     function showTopProject() {
-      let topProjectWebotsView = document.createElement('div');
-      topProjectWebotsView.id = 'my-projects-top-webots-view';
-      topProjectWebotsView.innerHTML = '<webots-view id="webots-view-top" style="height:100%; width:100%; display:block;"></webots-view>';
-      document.getElementById('my-projects-top').append(topProjectWebotsView);
-
-      that.webotsViewTop = document.getElementById('webots-view-top');
+      that.topProjectWebotsView = document.createElement('webots-view');
+      that.topProjectWebotsView.id = 'my-projects-top-webots-view';
 
       const reference = 'https://testing.webots.cloud/storage/Acdx3l6';
-      that.webotsViewTop.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false, false, `${reference}/thumbnail.jpg`);
+      that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
+        false, false, `${reference}/thumbnail.jpg`);
     }
     function updatePagination(current, max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';

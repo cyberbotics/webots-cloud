@@ -318,6 +318,12 @@ nav.pagination > a[disabled] {
 
 /* My Projects Tiles*/
 
+#my-projects-top-webots-view {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 @media screen and (min-width: 950px) {
   .tile:not(.is-child) {
       display: flex;
