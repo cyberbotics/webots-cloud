@@ -181,7 +181,7 @@ export default class User extends Router {
         })
         .then(function(data) {
           if (data.error)
-            ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
+            ModalDialog.run(`User project listing error`, data.error);
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any projects.';
