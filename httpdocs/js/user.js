@@ -96,31 +96,31 @@ export default class User extends Router {
               <p class="title">Stats</p>
               <div class="tabs is-centered is-small">
                 <ul>
-                  <li data-tab="animation" class="data-tab${(this.stats === 'week') ? ' is-active' : ''}">
+                  <li data-tab="animation" class="data-tab${(that.stats === 'week') ? ' is-active' : ''}">
                     <a>Week</a>
                   </li>
-                  <li data-tab="animation" class="data-tab${(this.stats === 'month') ? ' is-active' : ''}">
+                  <li data-tab="animation" class="data-tab${(that.stats === 'month') ? ' is-active' : ''}">
                     <a>Month</a>
                   </li>
-                  <li data-tab="animation" class="data-tab${(this.stats === 'year') ? ' is-active' : ''}">
+                  <li data-tab="animation" class="data-tab${(that.stats === 'year') ? ' is-active' : ''}">
                     <a>Year</a>
                   </li>
-                  <li data-tab="animation" class="data-tab${(this.stats === 'all') ? ' is-active' : ''}">
+                  <li data-tab="animation" class="data-tab${(that.stats === 'all') ? ' is-active' : ''}">
                     <a>All</a>
                   </li>
                 </ul>
                 <div id="tab-content">
-                  <section class="section${(this.stats === 'week') ? ' is-active' : ''}" data-content="week">
+                  <section class="section${(that.stats === 'week') ? ' is-active' : ''}" data-content="week">
                   <a>Views:</a>
                 </div>
                 <div id="tab-content">
-                  <section class="section${(this.stats === 'month') ? ' is-active' : ''}" data-content="week">
+                  <section class="section${(that.stats === 'month') ? ' is-active' : ''}" data-content="week">
                 </div>
                 <div id="tab-content">
-                  <section class="section${(this.stats === 'year') ? ' is-active' : ''}" data-content="week">
+                  <section class="section${(that.stats === 'year') ? ' is-active' : ''}" data-content="week">
                 </div>
                 <div id="tab-content">
-                  <section class="section${(this.stats === 'all') ? ' is-active' : ''}" data-content="week">
+                  <section class="section${(that.stats === 'all') ? ' is-active' : ''}" data-content="week">
                 </div>
               </div>
             </div>
