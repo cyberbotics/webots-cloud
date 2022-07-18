@@ -352,7 +352,7 @@ div.table-container.my-projects-table {
   z-index: 2;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (min-width: 650px) {
   .my-projects-thumbnail {
     display: none;
   }
