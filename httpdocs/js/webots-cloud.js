@@ -14,10 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
-<<<<<<< HEAD
-=======
   let delaySearch = false;
->>>>>>> main
 
   Project.run('webots.cloud', footer(), [
     {
@@ -117,11 +114,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
-<<<<<<< HEAD
-=======
     else if (activeTab === 'delay')
       delaySearch = search;
->>>>>>> main
   }
 
   function getSearch(activeTab) {
@@ -131,11 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
-<<<<<<< HEAD
-=======
     if (activeTab === 'delay')
       return delaySearch;
->>>>>>> main
   }
 
   function homePage(project) {
@@ -147,11 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
       parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
     let search = new URL(document.location.href).searchParams.get('search') ?
       (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
-<<<<<<< HEAD
-    let sort = parseInt(new URL(document.location.href).searchParams.get('sort')) ?
-=======
     let sort = new URL(document.location.href).searchParams.get('sort') ?
->>>>>>> main
       (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
     setPages(activeTab, page);
@@ -160,36 +147,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-<<<<<<< HEAD
-    updateSearchIcons();
-=======
     initSort(sort);
     initSearch(search);
     updateSearchIcon();
->>>>>>> main
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
 
-<<<<<<< HEAD
-    for (let type of ['scene', 'animation', 'simulation']) {
-      document.getElementById(type + '-sort-select').addEventListener('change', function(event) {
-        searchAndSortTable(type);
-      });
-      document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
-        searchAndSortTable(type, true);
-      });
-      document.getElementById(type + '-search-click').addEventListener('click', function(event) {
-        if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
-          document.getElementById(type + '-search-input').value = '';
-          searchAndSortTable(type, true);
-        }
-      });
-    }
-
-=======
->>>>>>> main
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
@@ -199,53 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
 
-<<<<<<< HEAD
-    function searchAndSortTable(type, isSearch) {
-      if (isSearch) {
-        setSearches(type, document.getElementById(type + '-search-input').value);
-        updateSearchIcons(type);
-      } else
-        setSorts(type, document.getElementById(type + '-sort-select').value);
-
-      let url = new URL(document.location.origin + document.location.pathname);
-      if (getPage(type) !== 1 && !isSearch)
-        url.searchParams.append('p', getPage(type));
-      else
-        setPages(type, 1);
-      if (getSort(type) && getSort(type) !== 'default')
-        url.searchParams.append('sort', getSort(type));
-      if (getSearch(type) && getSearch(type) !== '')
-        url.searchParams.append('search', getSearch(type));
-      window.history.replaceState('search', '', (url.pathname + url.search).toString());
-
-      if (type === 'scene')
-        listAnimations('S', scenePage, getSort(type), getSearch(type));
-      else if (type === 'animation')
-        listAnimations('A', animationPage, getSort(type), getSearch(type));
-      else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(type), getSearch(type));
-    }
-
-    function updateSearchIcons(type) {
-      if (type && type !== 'server') {
-        const searchIcon = document.getElementById(type + '-search-icon');
-        if (searchIcon.classList.contains('fa-search') && getSearch(type).length > 0) {
-          searchIcon.classList.remove('fa-search');
-          searchIcon.classList.add('fa-xmark');
-        } else if (searchIcon.classList.contains('fa-xmark') && getSearch(type).length === 0) {
-          searchIcon.classList.add('fa-search');
-          searchIcon.classList.remove('fa-xmark');
-        }
-      } else {
-        updateSearchIcons('scene');
-        updateSearchIcons('animation');
-        updateSearchIcons('simulation');
-        return;
-      }
-    }
-
-=======
->>>>>>> main
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
@@ -353,12 +271,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
-<<<<<<< HEAD
-      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-=======
       const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
         'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
->>>>>>> main
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
@@ -452,32 +366,14 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="tab-content">
           <section class="section${(activeTab === 'scene') ? ' is-active' : ''}" data-content="scene">
-            <h1 class="title">Scenes</h1>
             <div class="table-container">
-<<<<<<< HEAD
-              <div class="search-and-sort">
-=======
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
->>>>>>> main
                 <div class="control has-icons-right">
                   <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for scenes...">
                   <span class="icon is-small is-right is-clickable" id="scene-search-click">
                     <i class="fas fa-search" id="scene-search-icon"></i>
                   </span>
                 </div>
-<<<<<<< HEAD
-                <div class="select is-small select-sort-by" id="scene-sort">
-                  <select id="scene-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
-=======
->>>>>>> main
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -523,33 +419,14 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
-            <h1 class="title">Animations</h1>
             <div class="table-container">
-<<<<<<< HEAD
-              <div class="search-and-sort">
-=======
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
->>>>>>> main
                 <div class="control has-icons-right">
                   <input class="input is-small" id="animation-search-input" type="text" placeholder="Search for animations...">
                   <span class="icon is-small is-right is-clickable" id="animation-search-click">
                     <i class="fas fa-search" id="animation-search-icon"></i>
                   </span>
                 </div>
-<<<<<<< HEAD
-                <div class="select is-small select-sort-by" id="animation-sort">
-                  <select id="animation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="version">Version</option>
-                    <option value="duration">Duration</option>
-                    <option value="size">Size</option>
-                    <option value="uploaded">Uploaded</option>
-                  </select>
-                </div>
-=======
->>>>>>> main
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -599,47 +476,19 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
-            <h1 class="title">Simulations</h1>
             <div class="table-container">
-<<<<<<< HEAD
-              <div class="search-and-sort">
-                <div class="control has-icons-right">
-                  <input class="input is-small" id="simulation-search-input" type="text" placeholder="Search for simulations...">
-=======
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
                   <input class="input is-small" id="simulation-search-input" type="text"
                     placeholder="Search for simulations...">
->>>>>>> main
                   <span class="icon is-small is-right is-clickable" id="simulation-search-click">
                     <i class="fas fa-search" id="simulation-search-icon"></i>
                   </span>
                 </div>
-<<<<<<< HEAD
-                <div class="select is-small select-sort-by" id="simulation-sort">
-                  <select id="simulation-sort-select">
-                    <option value="default">Sort by</option>
-                    <option value="viewed">Views</option>
-                    <option value="title">Title</option>
-                    <option value="stars">GitHub Stars</option>
-                    <option value="updated">Updated</option>
-                  </select>
-                </div>
-=======
->>>>>>> main
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-<<<<<<< HEAD
-                    <th style="text-align:center" title="Popularity"><i class="fas fa-chart-column"></i></th>
-                    <th title="Title of the simulation">Title</th>
-                    <th title="Branch or Tag of the simulation">Branch/Tag</th>
-                    <th style="text-align:center" title="Number of GitHub stars"><i class="far fa-star"></i></th>
-                    <th title="Webots release of the simulation">Version</th>
-                    <th title="Type of simulation">Type</th>
-                    <th title="Last update time">Updated</th>
-=======
                     <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
                       style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
@@ -668,7 +517,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       style="text-align: right;">
                       Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
->>>>>>> main
                   </tr>
                 </thead>
                 <tbody>
@@ -689,7 +537,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
-            <h1 class="title">Servers</h1>
             <div class="table-container">
               <table class="table is-striped is-hoverable">
                 <thead>
@@ -807,11 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-<<<<<<< HEAD
-          updateSearchIcons(activeTab)
-=======
           updateSearchIcon(activeTab);
->>>>>>> main
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -1097,11 +940,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
-<<<<<<< HEAD
-      fetch('/ajax/animation/list.php', {method: 'post', 
-=======
       fetch('/ajax/animation/list.php', {method: 'post',
->>>>>>> main
         body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
         .then(function(response) {
           return response.json();
@@ -1132,8 +971,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
-            document.getElementById(typeName + '-sort-select').value = sortBy;
-            document.getElementById(typeName + '-search-input').value = searchString;
           }
         });
     }
@@ -1168,10 +1005,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
-<<<<<<< HEAD
-            document.getElementById('simulation-sort-select').value = sortBy;
-=======
->>>>>>> main
             document.getElementById('simulation-search-input').value = searchString;
           }
         });
