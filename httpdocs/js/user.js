@@ -118,7 +118,7 @@ export default class User extends Router {
 
       that.webotsViewTop = document.getElementById('webots-view-top');
 
-      const reference = 'storage/A30cdx3l6';
+      const reference = 'https://testing.webots.cloud/storage/A30cdx3l6';
       that.webotsViewTop.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false, false, `${reference}/thumbnail.jpg`);
     }
     function updatePagination(current, max) {
