@@ -170,8 +170,7 @@ export default class User extends Router {
               </td>`;
       row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
         title="View Webots release">${data.version}</a></td>`;
-      if (data.duration !== 0)
-        row += `<td class="has-text-right">${duration}</td>`;
+      row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
       return row;
     }
