@@ -19,9 +19,8 @@
   else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
   else // my-projects
-    $extra_condition = "user = ";
+    $extra_condition = "user = ${type}";
   if (isset($data->url)) { // view request
-    error("In here 1");
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
     $uploadMessage = "?upload=webots";
@@ -32,10 +31,10 @@
     $mysqli->query($query) or error($mysqli->error);
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else { // listing request
-    error("In here 2");
     // delete old and not popular animations
     $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
     $result = $mysqli->query($query) or error($mysqli->error);
+    error("In here");
     require '../../../php/animation.php';
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
