@@ -28,66 +28,71 @@ export default class User extends Router {
       const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
       const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
+
+      const projectsTable =
+        `<section class="section" data-content="user-scene">
+        <div class="table-container">
+          <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+            <div class="control has-icons-right">
+              <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for projects...">
+              <span class="icon is-small is-right is-clickable" id="scene-search-click">
+                <i class="fas fa-search" id="scene-search-icon"></i>
+              </span>
+            </div>
+          </div>
+          <table class="table is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
+                  style="text-align:center; min-width: 65px;">
+                  <i class="fas fa-chart-column"></i>
+                  <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
+                  style="min-width: 120px;">
+                  Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
+                  style="min-width: 85px;">
+                  Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
+                  style="text-align: right; min-width: 75px;">
+                  Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
+                  style="text-align: right; min-width: 75px;">
+                  Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+                <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
+                  style="text-align: right; min-width: 115px;">
+                  Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <div class="empty-search" id="scene-empty-search" style="display: none;">
+            <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+            </i>
+            <p id="scene-empty-search-text"></p>
+          </div>
+        </div>
+        <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+        </nav>
+      </section>`;
+
       template.innerHTML =
       `<section class="section is-medium">
 <div class="tile is-ancestor">
   <div class="tile is-vertical is-8">
     <div class="tile is-parent">
       <article class="tile is-child notification is-primary">
-        <p class="title">Projects</p>
-        <p class="subtitle">projects list goes here</p>
-        <section class="section" data-content="user-scene">
-          <div class="table-container">
-            <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
-              <div class="control has-icons-right">
-                <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for projects...">
-                <span class="icon is-small is-right is-clickable" id="scene-search-click">
-                  <i class="fas fa-search" id="scene-search-icon"></i>
-                </span>
-              </div>
-            </div>
-            <table class="table is-striped is-hoverable">
-              <thead>
-                <tr>
-                  <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
-                    style="text-align:center; min-width: 65px;">
-                    <i class="fas fa-chart-column"></i>
-                    <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                  <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
-                    style="min-width: 120px;">
-                    Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                  <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
-                    style="min-width: 85px;">
-                    Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                  <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
-                    style="text-align: right; min-width: 75px;">
-                    Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                  <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
-                    style="text-align: right; min-width: 75px;">
-                    Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                  <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
-                    style="text-align: right; min-width: 115px;">
-                    Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-            <div class="empty-search" id="scene-empty-search" style="display: none;">
-              <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
-              </i>
-              <p id="scene-empty-search-text"></p>
-            </div>
-          </div>
-          <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-          </nav>
-        </section>
+        <p class="title">My Projects</p>
+        <div class="content">
+          ${projectsTable}
+        </div>
       </article>
     </div>
     <div class="tile is-parent">
@@ -158,59 +163,6 @@ export default class User extends Router {
           </div>
         </div>
       </section>`;
-     /* template.innerHTML =
-       `<section class="section" data-content="user-scene">
-        <div class="table-container">
-          <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
-            <div class="control has-icons-right">
-              <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for projects...">
-              <span class="icon is-small is-right is-clickable" id="scene-search-click">
-                <i class="fas fa-search" id="scene-search-icon"></i>
-              </span>
-            </div>
-          </div>
-          <table class="table is-striped is-hoverable">
-            <thead>
-              <tr>
-                <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
-                  style="text-align:center; min-width: 65px;">
-                  <i class="fas fa-chart-column"></i>
-                  <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-                <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
-                  style="min-width: 120px;">
-                  Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-                <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
-                  style="min-width: 85px;">
-                  Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-                <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
-                  style="text-align: right; min-width: 75px;">
-                  Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-                <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
-                  style="text-align: right; min-width: 75px;">
-                  Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-                <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
-                  style="text-align: right; min-width: 115px;">
-                  Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-          <div class="empty-search" id="scene-empty-search" style="display: none;">
-            <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
-            </i>
-            <p id="scene-empty-search-text"></p>
-          </div>
-        </div>
-        <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
-        </nav>
-      </section>`; */
       that.setup('settings', [], template.content);
     }
     function resetPassword(id, token, email) {
