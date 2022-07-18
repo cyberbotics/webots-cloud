@@ -318,7 +318,7 @@ nav.pagination > a[disabled] {
 
 /* My Projects Tiles*/
 
-div.table-container .my-projects-table {
+div.table-container.my-projects-table {
   min-height: 400px;
 }
 
