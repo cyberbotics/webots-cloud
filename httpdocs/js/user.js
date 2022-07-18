@@ -121,25 +121,29 @@ export default class User extends Router {
       else
         size = Math.round(size);
       size += ' <small>' + unit + '</small>';
-      let millisecond = data.duration % 1000;
-      let second = Math.trunc(data.duration / 1000) % 60;
-      let minute = Math.trunc(data.duration / 60000) % 60;
-      let hour = Math.trunc(data.duration / 3600000);
-      if (millisecond < 10)
-        millisecond = '00' + millisecond;
-      else if (millisecond < 100)
-        millisecond = '0' + millisecond;
-      let duration = second + ':' + millisecond;
-      if (data.duration >= 60000) {
-        if (second < 10)
-          duration = '0' + duration;
-        duration = minute + ':' + duration;
-        if (data.duration > 3600000) {
-          if (minute < 10)
+      let duration;
+      if (data.duration) {
+        let millisecond = data.duration % 1000;
+        let second = Math.trunc(data.duration / 1000) % 60;
+        let minute = Math.trunc(data.duration / 60000) % 60;
+        let hour = Math.trunc(data.duration / 3600000);
+        if (millisecond < 10)
+          millisecond = '00' + millisecond;
+        else if (millisecond < 100)
+          millisecond = '0' + millisecond;
+        duration = second + ':' + millisecond;
+        if (data.duration >= 60000) {
+          if (second < 10)
             duration = '0' + duration;
-          duration = hour + duration;
+          duration = minute + ':' + duration;
+          if (data.duration > 3600000) {
+            if (minute < 10)
+              duration = '0' + duration;
+            duration = hour + duration;
+          }
         }
-      }
+      } else
+        duration = '-';
       const type = (data.duration === 0) ? 'scene' : 'animation';
       const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
