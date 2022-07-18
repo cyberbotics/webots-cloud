@@ -35,6 +35,7 @@ body {
 
 div.table-container {
   min-height: 550px;
+  max-width: 900px;
 }
 
 .column-title {
