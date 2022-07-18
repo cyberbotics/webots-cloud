@@ -335,7 +335,6 @@ nav.pagination > a[disabled] {
   }
 
   .tile.is-8 {
-    flex: none;
     width: 100%;
   }
 }
