@@ -68,11 +68,10 @@ export default class Project extends User {
     return promise;
   }
   setup(title, anchors, content, fullpage = false) {
-    document.querySelector('webots-view').close();
-    if (Project.webotsView) {
+    if (document.querySelector('webots-view'))
       document.querySelector('webots-view').close();
+    if (Project.webotsView)
       document.querySelector('#main-container').classList.remove('webotsView');
-    }
     super.setup(title, anchors, content, fullpage);
   }
   findGetParameter(parameterName) {
