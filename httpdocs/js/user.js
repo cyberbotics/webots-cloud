@@ -99,6 +99,7 @@ export default class User extends Router {
         </div>
       </section>`;
       that.setup('settings', [], template.content);
+      console.log(that.page);
       listMyProjects(that.page, that.sort, that.search);
     }
     function updatePagination(current, max) {
@@ -206,6 +207,7 @@ export default class User extends Router {
       return row;
     }
     function listMyProjects(page, sortBy, searchString) {
+      console.log(page);
       const pageLimit = 10;
       const user = parseInt(that.id);
       const offset = (page - 1) * pageLimit;
