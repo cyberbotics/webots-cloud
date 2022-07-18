@@ -95,7 +95,7 @@ export default class User extends Router {
             <div class="tile is-child box">
               <p class="title">Stats</p>
               <section class="section" style="padding: 0;">
-                <p><strong>First Upload:</strong></p>
+                <h2><strong>First Upload:</strong></h2>
                 <p><strong>Total Animations:</strong></p>
                 <p><strong>Total Scenes:</strong></p>
                 <p><strong>Total Views:</strong></p>
