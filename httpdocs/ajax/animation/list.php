@@ -24,6 +24,7 @@
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
     $uploadMessage = "?upload=webots";
+    error("type: $type");
     if (str_ends_with($uri, $uploadMessage))
       $uri = substr($uri, 0, strrpos($uri, '?'));
     $id = string_to_mysql_id(substr($uri, 2)); // skipping '/A'
@@ -41,7 +42,6 @@
       if (is_string($type))
         delete_animation($type, $id);
     }
-    error("type: $type");
     $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
       $mysqli->escape_string($data->sortBy) : "viewed-desc";
     $parameter = explode("-", $sortBy)[0];
