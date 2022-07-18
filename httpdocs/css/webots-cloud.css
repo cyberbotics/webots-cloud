@@ -316,6 +316,7 @@ nav.pagination > a[disabled] {
   }
 }
 
+/* My Projects Tiles*/
 
 @media screen and (min-width: 950px) {
   .tile:not(.is-child) {
