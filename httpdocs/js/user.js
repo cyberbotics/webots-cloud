@@ -94,43 +94,12 @@ export default class User extends Router {
             </div>
             <div class="tile is-child box">
               <p class="title">Stats</p>
-              <div class="tabs is-centered is-small">
-                <ul>
-                  <li data-tab="animation" class="data-tab${(that.stats === 'week') ? ' is-active' : ''}">
-                    <a>Week</a>
-                  </li>
-                  <li data-tab="animation" class="data-tab${(that.stats === 'month') ? ' is-active' : ''}">
-                    <a>Month</a>
-                  </li>
-                  <li data-tab="animation" class="data-tab${(that.stats === 'year') ? ' is-active' : ''}">
-                    <a>Year</a>
-                  </li>
-                  <li data-tab="animation" class="data-tab${(that.stats === 'all') ? ' is-active' : ''}">
-                    <a>All</a>
-                  </li>
-                </ul>
-              </div>
-              <div id="tab-content">
-                <section class="section${(that.stats === 'week') ? ' is-active' : ''}" style="padding: 0;"
-                  data-content="week">
-                  <p><strong>Views:</strong></p>
-                </section>
-              </div>
-              <div id="tab-content">
-                <section class="section${(that.stats === 'month') ? ' is-active' : ''}" style="padding: 0;"
-                  data-content="month">
-                </section>
-              </div>
-              <div id="tab-content">
-                <section class="section${(that.stats === 'year') ? ' is-active' : ''}" style="padding: 0;"
-                  data-content="year">
-                </section>
-              </div>
-              <div id="tab-content">
-                <section class="section${(that.stats === 'all') ? ' is-active' : ''}" style="padding: 0;"
-                  data-content="all">
-                </section>
-              </div>
+              <section class="section" style="padding: 0;">
+                <p><strong>First Upload:</strong></p>
+                <p><strong>Total Animations:</strong></p>
+                <p><strong>Total Scenes:</strong></p>
+                <p><strong>Total Views:</strong></p>
+              </section>
             </div>
           </div>
         </div>
