@@ -315,3 +315,10 @@ nav.pagination > a[disabled] {
     overflow-x: auto;
   }
 }
+
+
+@media screen and (min-width: 625px) {
+  .tile:not(.is-child) {
+      display: flex;
+  }
+}
