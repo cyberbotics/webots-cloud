@@ -12,14 +12,15 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
+  $type = isset($data->type) ? (is_string($data->type) ? strtoupper($data->type[0]) : intval($data->type)) : 'A';
+  error("type: $type");
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
     $extra_condition = "duration = 0";
   else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
   else // my-projects
-    $extra_condition = "";
+    $extra_condition = "user = ";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
