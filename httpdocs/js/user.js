@@ -29,7 +29,7 @@ export default class User extends Router {
       const hostname = document.location.hostname;
       const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
       template.innerHTML =
-      `<section class="section is-large">
+      `<section class="section is-medium">
         <div class="tile is-ancestor">
           <div class="tile is-vertical is-8">
             <div class="tile">
