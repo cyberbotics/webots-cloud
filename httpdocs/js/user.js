@@ -36,7 +36,7 @@ export default class User extends Router {
                 </span>
               </div>
             </div>
-            <table class="table is-striped is-hoverable">
+            <table class="table is-striped is-hoverable mx-auto" style="max-width=900px">
               <thead>
                 <tr>
                   <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
