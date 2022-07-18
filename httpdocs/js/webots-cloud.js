@@ -159,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
     listServers(serverPage);
-    Project.listMyProjects(1, 'default', '');
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
