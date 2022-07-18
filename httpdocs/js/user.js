@@ -95,7 +95,7 @@ export default class User extends Router {
             </div>
             <div class="tile is-child box">
               <p class="title">Stats</p>
-              <div class="tabs is-boxed">
+              <div class="tabs is-centered is-small">
                 <ul>
                   <li class="is-active">
                     <a>
