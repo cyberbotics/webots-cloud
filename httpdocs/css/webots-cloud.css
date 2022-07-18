@@ -323,7 +323,7 @@ div.table-container.my-projects-table {
 
 .my-projects-thumbnail {
   display: auto;
-  opacity: 0;
+  opacity: 1;
   position: relative;
   pointer-events: none;
 }
