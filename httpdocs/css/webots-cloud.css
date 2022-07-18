@@ -326,8 +326,8 @@ div.table-container.my-projects-table {
   position: absolute;
   top: 5px;
   left: 5px;
-  height: 144px;
-  width: 512px;
+  height: 126px;
+  width: 384px;
   background: rgba(38, 38, 38, 1);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px black;
@@ -337,8 +337,8 @@ div.table-container.my-projects-table {
 }
 
 .my-projects-thumbnail-image {
-  height: 144px;
-  width: 256px;
+  height: 126px;
+  width: 192px;
   object-fit: cover;
   box-shadow: 0 0 10px black;
   z-index: 2;
