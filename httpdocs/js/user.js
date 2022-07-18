@@ -101,6 +101,76 @@ export default class User extends Router {
       </section>`;
       that.setup('settings', [], template.content);
     }
+    function myProjectsRow(data) {
+      let size = data.size;
+      let unit;
+      if (size < 1024)
+        unit = 'bytes';
+      else if (size < 1024 * 1014) {
+        size = size / 1024;
+        unit = 'K';
+      } else if (size < 1024 * 1024 * 1024) {
+        size = size / (1024 * 1024);
+        unit = 'M';
+      } else {
+        size = size / (1024 * 1024 * 1024);
+        unit = 'G';
+      }
+      if (size < 100)
+        size = Math.round(10 * size) / 10;
+      else
+        size = Math.round(size);
+      size += ' <small>' + unit + '</small>';
+      let millisecond = data.duration % 1000;
+      let second = Math.trunc(data.duration / 1000) % 60;
+      let minute = Math.trunc(data.duration / 60000) % 60;
+      let hour = Math.trunc(data.duration / 3600000);
+      if (millisecond < 10)
+        millisecond = '00' + millisecond;
+      else if (millisecond < 100)
+        millisecond = '0' + millisecond;
+      let duration = second + ':' + millisecond;
+      if (data.duration >= 60000) {
+        if (second < 10)
+          duration = '0' + duration;
+        duration = minute + ':' + duration;
+        if (data.duration > 3600000) {
+          if (minute < 10)
+            duration = '0' + duration;
+          duration = hour + duration;
+        }
+      }
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      const typeName = (data.duration === 0) ? 'scene' : 'animation';
+      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
+      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
+      const style = (data.user === 0) ? ' style="color:grey"' : (parseInt(project.id) === data.user
+        ? ' style="color:#007acc"' : (admin ? ' style="color:red"' : ''));
+      const tooltip = (data.user === 0) ? `Delete this anonymous ${typeName}` : (parseInt(project.id) === data.user
+        ? `Delete your ${typeName}` : (admin ? `Delete this ${typeName} as administrator` : ''));
+      const deleteIcon = (data.user === 0 || parseInt(project.id) === data.user || admin)
+        ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
+      const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
+      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      let row = `<td class="has-text-centered">${data.viewed}</td>`;
+      row += `<td>
+                <a class="table-title has-text-dark" href="${url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
+        title="View Webots release">${data.version}</a></td>`;
+      if (data.duration !== 0)
+        row += `<td class="has-text-right">${duration}</td>`;
+      row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
+      return row;
+    }
     function listMyProjects(page, sortBy, searchString) {
       const pageLimit = 10;
       const user = that.id;
@@ -122,7 +192,7 @@ export default class User extends Router {
               document.getElementById('my-projects-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
-              line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
+              line += '<tr>' + myProjectsRow(data.animations[i]) + '</tr>';
             let parent = project.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
