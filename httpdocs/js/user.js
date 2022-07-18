@@ -13,6 +13,7 @@ export default class User extends Router {
     let that = this;
 
     function myProjectsPage() {
+      console.log("myProjectPage");
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : that.page;
       that.search = new URL(document.location.href).searchParams.get('search') ?
@@ -20,6 +21,10 @@ export default class User extends Router {
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
         (new URL(document.location.href).searchParams.get('sort')).toString() : this.sort;
 
+
+      console.log("page: " + that.page);
+      console.log("search: " + that.search);
+      console.log("sort: " + that.sort);
 
       // we need to be logged in to view this page
       if (!that.password || !that.email)
@@ -103,7 +108,6 @@ export default class User extends Router {
       listMyProjects(that.page, that.sort, that.search);
     }
     function updatePagination(current, max) {
-      console.log("current page: " + current);
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
       const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
       let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
