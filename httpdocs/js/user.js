@@ -20,19 +20,18 @@ export default class User extends Router {
       return result;
     }
     function myProjectsPage() {
-      console.log(that.id);
       // we need to be logged in to view this page
       if (!that.password || !that.email)
        return false;
       const template = document.createElement('template');
       const projectsTable =
-        `<section class="section" data-content="user-scene" style="padding: 0">
+        `<section class="section" data-content="user-my-projects" style="padding: 0">
           <div class="table-container">
             <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
               <div class="control has-icons-right">
-                <input class="input is-small" id="scene-search-input" type="text" placeholder="Search for projects...">
-                <span class="icon is-small is-right is-clickable" id="scene-search-click">
-                  <i class="fas fa-search" id="scene-search-icon"></i>
+                <input class="input is-small" id="my-projects-search-input" type="text" placeholder="Search for projects...">
+                <span class="icon is-small is-right is-clickable" id="my-projects-search-click">
+                  <i class="fas fa-search" id="my-projects-search-icon"></i>
                 </span>
               </div>
             </div>
@@ -69,10 +68,10 @@ export default class User extends Router {
               <tbody>
               </tbody>
             </table>
-            <div class="empty-search" id="scene-empty-search" style="display: none;">
+            <div class="empty-search" id="my-projects-empty-search" style="display: none;">
               <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
               </i>
-              <p id="scene-empty-search-text"></p>
+              <p id="my-projects-empty-search-text"></p>
             </div>
           </div>
           <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
@@ -102,7 +101,7 @@ export default class User extends Router {
       that.setup('settings', [], template.content);
     }
     function listMyProjects(page, sortBy, searchString) {
-      const user = that.email;
+      const user = that.id;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, type: user, sortBy: sortBy, search: searchString})})
@@ -114,27 +113,27 @@ export default class User extends Router {
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
             if (data.total === 0 && searchString) {
-              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + typeName + 's.';
-              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
-              document.getElementById(typeName + '-empty-search').style.display = 'flex';
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any projects.';
+              document.getElementById('my-projects-empty-search-text').innerHTML = message;
+              document.getElementById('my-projects-empty-search').style.display = 'flex';
             } else
-              document.getElementById(typeName + '-empty-search').style.display = 'none';
+              document.getElementById('my-projects-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
+            let parent = project.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
-              let node = parent.querySelector(`#${typeName}-${data.animations[i].id}`);
+              let node = parent.querySelector(`#my-projects-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, user, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination(typeName, page, total);
+            //updatePagination(typeName, page, total);
           }
         });
     }
