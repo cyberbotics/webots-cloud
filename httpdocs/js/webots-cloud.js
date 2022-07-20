@@ -709,7 +709,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
+      fetch('ajax/project/create.php', {method: 'post',
+        body: JSON.stringify({url: url, id: id, search: getSearch('simulation'), sort: getSort('simulation')})})
         .then(function(response) {
           return response.json();
         })
