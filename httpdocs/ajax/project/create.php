@@ -102,10 +102,9 @@ if ($mysqli->affected_rows != 1) {
 }
 
 # return answer
-$search = $data->search;
-$sort = $data->sort;
-error("search: $search    //     sort: $sort");
-$result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
+$search = isset($data->search) ? $data->search : "";
+$extra_condition = $search != "" ? "WHERE LOWER(title) LIKE LOWER('%$search%')" : "";
+$result = $mysqli->query("SELECT COUNT(*) AS count FROM project $extra_condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
 
