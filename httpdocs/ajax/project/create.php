@@ -102,6 +102,8 @@ if ($mysqli->affected_rows != 1) {
 }
 
 # return answer
+$search = isset($data->search) ? intval($data->search) : 'nothing';
+error($search);
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
@@ -117,6 +119,6 @@ $answer['description'] = $description;
 $answer['version'] = $version;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
-$answer['total'] =  $total;
+$answer['total'] = $total;
 die(json_encode($answer));
 ?>
