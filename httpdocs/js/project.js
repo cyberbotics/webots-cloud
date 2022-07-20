@@ -1,6 +1,6 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
-import TermsAndPrivacy from './termsAndPrivacy.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
@@ -69,7 +69,7 @@ export default class Project extends User {
   }
   setup(title, anchors, content, fullpage = false) {
     if (Project.webotsView) {
-      document.querySelector('webots-view').close();
+      Project.webotsView.close();
       document.querySelector('#main-container').classList.remove('webotsView');
     }
     super.setup(title, anchors, content, fullpage);

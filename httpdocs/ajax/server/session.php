@@ -10,9 +10,6 @@ function return_url($url) {
   else
     error("wrong URL protocol in $url");
 }
-header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 require '../../../php/database.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)

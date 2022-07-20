@@ -16,9 +16,6 @@
       $length = min($colon, $slash) - $start;
     return substr($url, $start, $length);
   }
-  header("Access-Control-Allow-Origin: *");
-  header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-  header("Access-Control-Allow-Headers: Content-Type, Authorization");
   header('Content-Type: application/json');
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
