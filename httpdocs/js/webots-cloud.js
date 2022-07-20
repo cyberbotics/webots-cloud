@@ -706,11 +706,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function synchronizeSimulation(event) {
+      const searchString = getSearch('simulation');
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post',
-        body: JSON.stringify({url: url, id: id, search: getSearch('simulation')})})
+      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
         .then(function(response) {
           return response.json();
         })
