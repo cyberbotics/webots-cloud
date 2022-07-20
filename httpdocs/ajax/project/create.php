@@ -102,8 +102,9 @@ if ($mysqli->affected_rows != 1) {
 }
 
 # return answer
-$search = $data->search != "" ? $data->search : 'nothing';
-error($search);
+$search = $data->search;
+$sort = $data->sort;
+error("search: $search    //     sort: $sort");
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
