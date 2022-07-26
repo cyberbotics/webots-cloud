@@ -686,7 +686,6 @@ document.addEventListener('DOMContentLoaded', function() {
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
           updateSearchIcon(activeTab);
-          //console.log("history pushState: " + (url.pathname + url.search).toString());
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
@@ -710,7 +709,6 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
-      //console.log("history pushState: " + (url.pathname + url.search).toString());
       window.history.replaceState(type + '-search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')

@@ -119,7 +119,6 @@ export default class Router {
   notFound() {
     const pathname = window.location.pathname;
     const url = window.location.origin + pathname;
-    //console.log("history pushState: " + url);
     window.history.pushState('404 Not Found', '404 Not Found', url);
     const hostname = document.location.hostname;
     let template = document.createElement('template');
