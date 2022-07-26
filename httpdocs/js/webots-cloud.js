@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(forwardHistoryButton);
 
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
+  backHistoryButton.addEventListener('click', function(e) { console.log(window.history); window.history.back() });
+  forwardHistoryButton.addEventListener('click', function(e) { console.log(window.history); window.history.forward() });
 
   let scenePage = 1;
   let animationPage = 1;
