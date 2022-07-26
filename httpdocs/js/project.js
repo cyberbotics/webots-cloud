@@ -4,6 +4,7 @@ import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
+    console.log("In here...");
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
     this.load('', false);
