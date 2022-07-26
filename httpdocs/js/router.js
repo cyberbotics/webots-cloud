@@ -86,7 +86,7 @@ export default class Router {
           const route = that.routes[i];
           if (url.pathname === route.url) {
             if (pushHistory)
-              //window.history.pushState(null, name, url.pathname + url.search + url.hash);
+              window.history.pushState({'page': page}, '', url.pathname + url.search + url.hash);
             route.setup(that);
             found = true;
             resolve();
@@ -104,12 +104,11 @@ export default class Router {
     return promise;
   }
   dynamicPage(url, pushHistory) {
-    console.log("Wow in here");
     let that = this;
     let promise = new Promise((resolve, reject) => {
       that.notFound();
       if (pushHistory)
-        window.history.pushState(null, name, url.pathname + url.search + url.hash);
+        window.history.pushState({'page': url.pathname + url.search + url.hash}, '', url.pathname + url.search + url.hash);
       resolve();
     });
     return promise;
@@ -117,7 +116,7 @@ export default class Router {
   notFound() {
     const pathname = window.location.pathname;
     const url = window.location.origin + pathname;
-    window.history.pushState('404 Not Found', '404 Not Found', url);
+    window.history.pushState({'page': '404-Not-Found'}, '', url);
     const hostname = document.location.hostname;
     let template = document.createElement('template');
     template.innerHTML =
