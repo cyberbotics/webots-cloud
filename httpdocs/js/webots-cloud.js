@@ -605,7 +605,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initSearch(searchString) {
-      document.getElementById(activeTab + '-search-input').value = searchString;
+      if (activeTab !== 'server')
+        document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
