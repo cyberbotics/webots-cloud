@@ -8,24 +8,24 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.className = 'button is-small is-light is-danger'
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
-  historyButton.style.top = '100px';
-  historyButton.style.right = '50px';
+  historyButton.style.top = '10px';
+  historyButton.style.right = '250px';
   document.body.appendChild(historyButton);
 
   let backHistoryButton = document.createElement('a');
   backHistoryButton.className = 'button is-small is-light is-info'
   backHistoryButton.innerHTML = '←';
   backHistoryButton.style.position = 'fixed';
-  backHistoryButton.style.top = '100px';
-  backHistoryButton.style.right = '120px';
+  backHistoryButton.style.top = '10px';
+  backHistoryButton.style.right = '320px';
   document.body.appendChild(backHistoryButton);
 
   let forwardHistoryButton = document.createElement('a');
   forwardHistoryButton.className = 'button is-small is-light is-info'
   forwardHistoryButton.innerHTML = '→';
   forwardHistoryButton.style.position = 'fixed';
-  forwardHistoryButton.style.top = '100px';
-  forwardHistoryButton.style.right = '10px';
+  forwardHistoryButton.style.top = '10px';
+  forwardHistoryButton.style.right = '210px';
   document.body.appendChild(forwardHistoryButton);
 
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
