@@ -2,6 +2,18 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+  let historyButtonDiv = document.createElement('div');
+  historyButtonDiv.className = 'history-button-div';
+  historyButtonDiv.style.position = 'fixed';
+  historyButtonDiv.style.top = '100px';
+  historyButtonDiv.style.right = '100px';
+  document.body.prependChild(historyButtonDiv);
+  let historyButton = document.createElement('button');
+  historyButton.id = 'history-button';
+  historyButton.innerHTML = 'History';
+  historyButtonDiv.appendChild(historyButton);
+
+
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
