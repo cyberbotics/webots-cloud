@@ -7,8 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
   historyButton.style.top = '100px';
-  historyButton.style.right = '10px';
+  historyButton.style.right = '110px';
   document.body.appendChild(historyButton);
+
+  let backHistoryButton = document.createElement('a');
+  backHistoryButton.className = 'button is-small is-light is-warning'
+  backHistoryButton.innerHTML = '←';
+  backHistoryButton.style.position = 'fixed';
+  backHistoryButton.style.top = '100px';
+  backHistoryButton.style.right = '60px';
+  document.body.appendChild(backHistoryButton);
+
+  let forwardHistoryButton = document.createElement('a');
+  forwardHistoryButton.className = 'button is-small is-light is-warning'
+  forwardHistoryButton.innerHTML = '→';
+  forwardHistoryButton.style.position = 'fixed';
+  forwardHistoryButton.style.top = '100px';
+  forwardHistoryButton.style.right = '10px';
+  document.body.appendChild(forwardHistoryButton);
 
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
 
