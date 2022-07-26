@@ -690,10 +690,10 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
-      if (!url.search) {
+/*       if (!url.search) {
         console.log("no search with state: " + window.history.state['search']);
-      }
-      window.history.replaceState({ 'page': type, 'search': url.search }, '', (url.pathname + url.search).toString());
+      } */
+      window.history.pushState({ 'page': type, 'search': url.search }, '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(type), getSearch(type));
