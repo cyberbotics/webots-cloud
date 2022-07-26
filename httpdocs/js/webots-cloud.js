@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
   historyButton.style.top = '11px';
-  historyButton.style.right = '150px';
+  historyButton.style.right = '200px';
   historyButton.style.zIndex = '300000';
   document.body.appendChild(historyButton);
 
