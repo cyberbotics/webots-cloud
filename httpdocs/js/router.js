@@ -29,8 +29,7 @@ export default class Router {
       }
     });
     window.onpopstate = function(event) {
-      console.log(document.location.pathname + document.location.search + document.location.hash);
-      that.load(document.location.pathname + document.location.search + document.location.hash);
+      that.load(document.location.pathname + document.location.search + document.location.hash, false);
       event.preventDefault();
     };
   }
