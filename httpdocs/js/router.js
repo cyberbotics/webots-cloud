@@ -87,7 +87,7 @@ export default class Router {
           if (url.pathname === route.url) {
             if (pushHistory) {
               //console.log("history pushState: " + url.pathname + url.search + url.hash);
-              window.history.pushState(null, name, url.pathname + url.search + url.hash);
+              //window.history.pushState(null, name, url.pathname + url.search + url.hash);
             }
             route.setup(that);
             found = true;
@@ -110,7 +110,7 @@ export default class Router {
       that.notFound();
       if (pushHistory) {
         //console.log("history pushState: " + url.pathname + url.search + url.hash);
-        window.history.pushState(null, name, url.pathname + url.search + url.hash);
+        //window.history.pushState(null, name, url.pathname + url.search + url.hash);
       }
       resolve();
     });
