@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('search', getSearch(type));
       if (!url.search) {
         console.log("no search with state: ");
-        console.log(window.history.state);
+        console.log(window.history.state.search);
       }
       window.history.replaceState({ 'page': type, 'search': url.search }, '', (url.pathname + url.search).toString());
 
