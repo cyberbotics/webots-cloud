@@ -85,10 +85,8 @@ export default class Router {
         for (let i = 0; i < that.routes.length; i++) {
           const route = that.routes[i];
           if (url.pathname === route.url) {
-            if (pushHistory) {
-              //console.log("history pushState: " + url.pathname + url.search + url.hash);
-              window.history.pushState(null, name, url.pathname + url.search + url.hash);
-            }
+            if (pushHistory)
+              //window.history.pushState(null, name, url.pathname + url.search + url.hash);
             route.setup(that);
             found = true;
             resolve();

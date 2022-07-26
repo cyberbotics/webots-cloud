@@ -54,7 +54,6 @@ export default class Project extends User {
             }
             pushUrl = url.pathname + url.hash;
           }
-          console.log("Gone in here");
           if (pushHistory)
             window.history.pushState(null, name, pushUrl);
           if (data.error) { // no such animation
