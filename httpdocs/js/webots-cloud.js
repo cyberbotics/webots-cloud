@@ -709,7 +709,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
       console.log("history pushState: " + (url.pathname + url.search).toString());
-      window.history.pushState(type + '-search', '', (url.pathname + url.search).toString());
+      window.history.replaceState(type + '-search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(type), getSearch(type));
