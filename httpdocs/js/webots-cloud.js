@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.style.position = 'fixed';
   historyButton.style.top = '10px';
   historyButton.style.right = '250px';
+  historyButton.style.zIndex = '300000';
   document.body.appendChild(historyButton);
 
   let backHistoryButton = document.createElement('a');
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   backHistoryButton.style.position = 'fixed';
   backHistoryButton.style.top = '10px';
   backHistoryButton.style.right = '320px';
+  backHistoryButton.style.zIndex = '300000';
   document.body.appendChild(backHistoryButton);
 
   let forwardHistoryButton = document.createElement('a');
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
   forwardHistoryButton.style.position = 'fixed';
   forwardHistoryButton.style.top = '10px';
   forwardHistoryButton.style.right = '210px';
+  forwardHistoryButton.style.zIndex = '300000';
   document.body.appendChild(forwardHistoryButton);
 
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
