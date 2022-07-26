@@ -71,11 +71,11 @@ export default class Router {
     }
   }
   load(page = null, pushHistory = true) {
-    console.log("In here: page=" + page);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (page === null)
         page = window.location.pathname + window.location.search + window.location.hash;
+      console.log("In here: page=" + page);
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
       if (url.pathname === '/404.php') {
