@@ -13,6 +13,8 @@ export default class Project extends User {
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
+    console.log("project.dynamicPage");
+    console.log("    pushHistory (" + pushHistory + "): " + window.history);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (!url.pathname.startsWith('/A') && !url.pathname.startsWith('/M') && url.pathname.length !== 8) {
