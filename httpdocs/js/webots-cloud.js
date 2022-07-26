@@ -687,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url.searchParams.append('search', getSearch(activeTab));
           updateSearchIcon(activeTab);
           //console.log("history pushState: " + (url.pathname + url.search).toString());
-          window.history.replaceState(activeTab, document.title, (url.pathname + url.search).toString());
+          window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
