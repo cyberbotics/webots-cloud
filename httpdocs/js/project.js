@@ -45,7 +45,7 @@ export default class Project extends User {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
-                    that.load('');
+                    that.load('/');
                     ModalDialog.run('Error', data.error);
                   } else
                     ModalDialog.run(`Upload associated`,
