@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   backHistoryButton.innerHTML = '←';
   backHistoryButton.style.position = 'fixed';
   backHistoryButton.style.top = '100px';
-  backHistoryButton.style.right = '150px';
+  backHistoryButton.style.right = '120px';
   document.body.appendChild(backHistoryButton);
 
   let forwardHistoryButton = document.createElement('a');
