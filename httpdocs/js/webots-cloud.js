@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
   historyButton.style.top = '100px';
-  historyButton.style.right = '110px';
+  historyButton.style.right = '60px';
   document.body.appendChild(historyButton);
 
   let backHistoryButton = document.createElement('a');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   backHistoryButton.innerHTML = '←';
   backHistoryButton.style.position = 'fixed';
   backHistoryButton.style.top = '100px';
-  backHistoryButton.style.right = '60px';
+  backHistoryButton.style.right = '110px';
   document.body.appendChild(backHistoryButton);
 
   let forwardHistoryButton = document.createElement('a');
