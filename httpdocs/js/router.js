@@ -96,6 +96,7 @@ export default class Router {
           }
         }
         if (!found) {
+          console.log("Yes in here");
           that.dynamicPage(url, pushHistory).then(() => {
             resolve();
           });
