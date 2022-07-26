@@ -6,7 +6,7 @@ export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
-    this.load();
+    this.load('', false);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
