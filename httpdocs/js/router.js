@@ -30,6 +30,7 @@ export default class Router {
     });
     window.onpopstate = function(event) {
       that.load(document.location.pathname + document.location.search + document.location.hash);
+      event.preventDefault();
     };
   }
   resetNavbar() {
