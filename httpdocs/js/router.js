@@ -85,8 +85,10 @@ export default class Router {
         for (let i = 0; i < that.routes.length; i++) {
           const route = that.routes[i];
           if (url.pathname === route.url) {
-            if (pushHistory)
+            if (pushHistory) {
+              console.log("history pushState: " + url.pathname + url.search + url.hash);
               window.history.pushState(null, name, url.pathname + url.search + url.hash);
+            }
             route.setup(that);
             found = true;
             resolve();
@@ -106,8 +108,10 @@ export default class Router {
     let that = this;
     let promise = new Promise((resolve, reject) => {
       that.notFound();
-      if (pushHistory)
+      if (pushHistory) {
+        console.log("history pushState: " + url.pathname + url.search + url.hash);
         window.history.pushState(null, name, url.pathname + url.search + url.hash);
+      }
       resolve();
     });
     return promise;
@@ -115,7 +119,8 @@ export default class Router {
   notFound() {
     const pathname = window.location.pathname;
     const url = window.location.origin + pathname;
-    window.history.pushState(null, '404 Not Found', url);
+    console.log("history pushState: " + url);
+    window.history.pushState('404 Not Found', '404 Not Found', url);
     const hostname = document.location.hostname;
     let template = document.createElement('template');
     template.innerHTML =

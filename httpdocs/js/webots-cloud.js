@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(forwardHistoryButton);
 
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
-  backHistoryButton.addEventListener('click', function(e) { console.log(window.history); window.history.back() });
-  forwardHistoryButton.addEventListener('click', function(e) { console.log(window.history); window.history.forward() });
+  backHistoryButton.addEventListener('click', function(e) { window.history.back(); console.log(window.history); });
+  forwardHistoryButton.addEventListener('click', function(e) { window.history.forward(); console.log(window.history); });
 
   let scenePage = 1;
   let animationPage = 1;
@@ -684,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
           updateSearchIcon(activeTab);
+          console.log("history pushState: " + (url.pathname + url.search).toString());
           window.history.pushState(activeTab, document.title, (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
           CONTENT.forEach((item) => {
