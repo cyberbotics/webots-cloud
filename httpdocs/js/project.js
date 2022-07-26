@@ -6,7 +6,7 @@ export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
-    //this.load();
+    this.load();
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
@@ -45,7 +45,7 @@ export default class Project extends User {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
-                    that.load('/');
+                    that.load('');
                     ModalDialog.run('Error', data.error);
                   } else
                     ModalDialog.run(`Upload associated`,
