@@ -2,9 +2,8 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
-  let historyButton = document.createElement('button');
+  let historyButton = document.createElement('a');
   historyButton.className = 'button is-warning'
-  historyButton.id = 'history-button';
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
   historyButton.style.top = '100px';
