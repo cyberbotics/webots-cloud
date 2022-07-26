@@ -29,7 +29,6 @@ export default class Router {
       }
     });
     window.onpopstate = function(event) {
-      console.log(event);
       that.load(document.location.pathname + document.location.search + document.location.hash, false);
       event.preventDefault();
     };
