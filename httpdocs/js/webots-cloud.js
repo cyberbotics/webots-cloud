@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.style.zIndex = '300000';
   document.body.appendChild(historyButton);
 
-  historyButton.addEventListener('click', function(e) { console.log(window.history); });
+  historyButton.addEventListener('click', function(e) { console.log(window.history); console.log('State: ' + window.history.state); });
 
   let scenePage = 1;
   let animationPage = 1;
