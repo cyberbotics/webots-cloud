@@ -6,7 +6,7 @@ export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
-    this.load();
+    this.load(null, false);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
@@ -55,7 +55,7 @@ export default class Project extends User {
             pushUrl = url.pathname + url.hash;
           }
           if (pushHistory)
-            window.history.pushState(null, name, pushUrl);
+            window.history.pushState(null, '', pushUrl);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
