@@ -71,6 +71,7 @@ export default class Router {
     }
   }
   load(page = null, pushHistory = true) {
+    console.log("In here: page=" + page);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (page === null)
