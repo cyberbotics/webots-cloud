@@ -691,8 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
       if (!url.search) {
-        console.log("no search with state: ");
-        console.log(window.history.state['search']);
+        console.log("no search with state: " + window.history.state['search']);
       }
       window.history.replaceState({ 'page': type, 'search': url.search }, '', (url.pathname + url.search).toString());
 
