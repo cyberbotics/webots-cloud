@@ -2,6 +2,8 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('popstate', (event) => { console.log(event); });
+
   let historyButton = document.createElement('a');
   historyButton.className = 'button is-small is-light is-danger'
   historyButton.innerHTML = 'History';
