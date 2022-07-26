@@ -708,6 +708,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
+      console.log("history pushState: " + (url.pathname + url.search).toString());
       window.history.pushState(type + '-search', '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
