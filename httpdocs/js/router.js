@@ -105,6 +105,7 @@ export default class Router {
     return promise;
   }
   dynamicPage(url, pushHistory) {
+    console.log("Wow in here");
     let that = this;
     let promise = new Promise((resolve, reject) => {
       that.notFound();
