@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButtonDiv.style.position = 'fixed';
   historyButtonDiv.style.top = '100px';
   historyButtonDiv.style.right = '100px';
-  document.body.prependChild(historyButtonDiv);
+  document.body.appendChild(historyButtonDiv);
   let historyButton = document.createElement('button');
   historyButton.id = 'history-button';
   historyButton.innerHTML = 'History';
