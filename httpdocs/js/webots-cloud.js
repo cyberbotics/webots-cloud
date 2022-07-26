@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.className = 'button is-small is-light is-danger'
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
-  historyButton.style.top = '10px';
+  historyButton.style.top = '11px';
   historyButton.style.right = '250px';
   historyButton.style.zIndex = '300000';
   document.body.appendChild(historyButton);
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   backHistoryButton.className = 'button is-small is-light is-info'
   backHistoryButton.innerHTML = '←';
   backHistoryButton.style.position = 'fixed';
-  backHistoryButton.style.top = '10px';
+  backHistoryButton.style.top = '11px';
   backHistoryButton.style.right = '320px';
   backHistoryButton.style.zIndex = '300000';
   document.body.appendChild(backHistoryButton);
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
   forwardHistoryButton.className = 'button is-small is-light is-info'
   forwardHistoryButton.innerHTML = '→';
   forwardHistoryButton.style.position = 'fixed';
-  forwardHistoryButton.style.top = '10px';
+  forwardHistoryButton.style.top = '11px';
   forwardHistoryButton.style.right = '210px';
   forwardHistoryButton.style.zIndex = '300000';
   document.body.appendChild(forwardHistoryButton);
