@@ -9,31 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.innerHTML = 'History';
   historyButton.style.position = 'fixed';
   historyButton.style.top = '11px';
-  historyButton.style.right = '250px';
+  historyButton.style.right = '150px';
   historyButton.style.zIndex = '300000';
   document.body.appendChild(historyButton);
 
-  let backHistoryButton = document.createElement('a');
-  backHistoryButton.className = 'button is-small is-light is-info'
-  backHistoryButton.innerHTML = '←';
-  backHistoryButton.style.position = 'fixed';
-  backHistoryButton.style.top = '11px';
-  backHistoryButton.style.right = '320px';
-  backHistoryButton.style.zIndex = '300000';
-  document.body.appendChild(backHistoryButton);
-
-  let forwardHistoryButton = document.createElement('a');
-  forwardHistoryButton.className = 'button is-small is-light is-info'
-  forwardHistoryButton.innerHTML = '→';
-  forwardHistoryButton.style.position = 'fixed';
-  forwardHistoryButton.style.top = '11px';
-  forwardHistoryButton.style.right = '210px';
-  forwardHistoryButton.style.zIndex = '300000';
-  document.body.appendChild(forwardHistoryButton);
-
   historyButton.addEventListener('click', function(e) { console.log(window.history); });
-  backHistoryButton.addEventListener('click', function(e) { window.history.back(); console.log(window.history); });
-  forwardHistoryButton.addEventListener('click', function(e) { window.history.forward(); console.log(window.history); });
 
   let scenePage = 1;
   let animationPage = 1;
