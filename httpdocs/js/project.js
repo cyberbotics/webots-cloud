@@ -54,10 +54,8 @@ export default class Project extends User {
             }
             pushUrl = url.pathname + url.hash;
           }
-          if (pushHistory) {
-            console.log('push state 1');
+          if (pushHistory)
             window.history.pushState(null, '', pushUrl);
-          }
           if (data.error) { // no such animation
             that.notFound();
             resolve();
