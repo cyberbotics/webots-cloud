@@ -7,7 +7,7 @@ export default class Project extends User {
     console.log("In here...");
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
-    this.load('', false);
+    this.load(null, false);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);

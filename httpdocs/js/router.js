@@ -75,6 +75,7 @@ export default class Router {
     let promise = new Promise((resolve, reject) => {
       if (page === null)
         page = window.location.pathname + window.location.search + window.location.hash;
+      console.log("Loading page=" + page);
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
       if (url.pathname === '/404.php') {
