@@ -152,9 +152,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let sort = new URL(document.location.href).searchParams.get('sort') ?
       (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
-    /* setPages(activeTab, page);
+    setPages(activeTab, page);
     setSorts(activeTab, sort);
-    setSearches(activeTab, search); */
+    setSearches(activeTab, search);
 
     mainContainer(project, activeTab);
     initTabs();
