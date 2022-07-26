@@ -110,10 +110,8 @@ export default class Router {
     let that = this;
     let promise = new Promise((resolve, reject) => {
       that.notFound();
-      if (pushHistory) {
-        //console.log("history pushState: " + url.pathname + url.search + url.hash);
-        //window.history.pushState(null, name, url.pathname + url.search + url.hash);
-      }
+      if (pushHistory)
+        window.history.pushState(null, name, url.pathname + url.search + url.hash);
       resolve();
     });
     return promise;
