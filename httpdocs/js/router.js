@@ -83,7 +83,6 @@ export default class Router {
         resolve();
       } else {
         let found = false;
-        console.log('scene search: ' + getSearches('scene'));
         for (let i = 0; i < that.routes.length; i++) {
           const route = that.routes[i];
           if (url.pathname === route.url) {
