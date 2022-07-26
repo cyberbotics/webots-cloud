@@ -75,7 +75,7 @@ export default class Router {
     let promise = new Promise((resolve, reject) => {
       if (page === null)
         page = window.location.pathname + window.location.search + window.location.hash;
-      console.log("In here: page=" + page);
+      //console.log("In here: page=" + page);
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
       if (url.pathname === '/404.php') {
@@ -86,7 +86,7 @@ export default class Router {
         for (let i = 0; i < that.routes.length; i++) {
           const route = that.routes[i];
           if (url.pathname === route.url) {
-            console.log("hello");
+            console.log("url.pathname === route.url");
             /* if (pushHistory)
               window.history.pushState({ 'page': url.pathname + url.search + url.hash }, '',
                 url.pathname + url.search + url.hash); */
