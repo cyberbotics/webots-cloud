@@ -73,7 +73,8 @@ export default class Router {
   load(page = null, pushHistory = true) {
     console.log("project.dynamicPage");
     console.log("pushHistory (" + pushHistory + ")");
-    console.log(window.history);
+    for (let i = 0; i < window.history.length; i++)
+      console.log(window.history[i]);
     let that = this;
     let promise = new Promise((resolve, reject) => {
       if (page === null)
