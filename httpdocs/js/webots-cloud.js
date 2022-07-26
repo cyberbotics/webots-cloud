@@ -11,12 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   historyButton.style.right = '10px';
   document.body.appendChild(historyButton);
 
-  historyButton.addEventListener('click', function(e) {
-    console.log("project.dynamicPage");
-    console.log("pushHistory (" + pushHistory + ")");
-    for (let i = 0; i < window.history.length; i++)
-      console.log(window.history.state);
-  });
+  historyButton.addEventListener('click', function(e) { console.log(window.history); });
 
   let scenePage = 1;
   let animationPage = 1;
