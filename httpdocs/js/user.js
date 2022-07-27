@@ -256,7 +256,7 @@ export default class User extends Router {
                 let p = (data.animations.length === 1) ? that.page - 1 : that.page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function(event) { deleteAnimation(event, user, project, p); });
+                node.addEventListener('click', function(event) { console.log('deleted');});//deleteAnimation(event, user, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
