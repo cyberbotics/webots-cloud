@@ -236,9 +236,8 @@ nav.pagination > a[disabled] {
 .thumbnail {
   display: auto;
   opacity: 0;
-  position: relative;
+  position: fixed;
   pointer-events: none;
-  transform: scale(1);
 }
 
 .thumbnail-container {
@@ -313,5 +312,35 @@ nav.pagination > a[disabled] {
   .table-container {
     overflow: auto;
     overflow-x: auto;
+  }
+}
+
+/* My Projects Tiles*/
+
+#my-projects-top-webots-view {
+  position: relative;
+  height: calc(100% - 60px);
+  width: 100%;
+}
+
+@media screen and (min-width: 950px) {
+  .tile:not(.is-child) {
+      display: flex;
+  }
+
+  .tile.is-7 {
+    flex: none;
+    width: 66.66667%;
+  }
+}
+
+@media screen and (max-width: 949px) {
+  .tile:not(.is-child) {
+      display: block;
+  }
+
+  .tile.is-7 {
+    flex: none;
+    width: 100%;
   }
 }

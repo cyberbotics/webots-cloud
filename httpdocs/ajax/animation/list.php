@@ -12,12 +12,14 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
+  $type = isset($data->type) ? (is_string($data->type) ? strtoupper($data->type[0]) : intval($data->type)) : 'A';
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
     $extra_condition = "duration = 0";
-  else // animation
+  else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
+  else // my-projects
+    $extra_condition = "user = ${type}";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
@@ -36,7 +38,8 @@
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
       $mysqli->query("DELETE FROM animation WHERE id=$id");
-      delete_animation($type, $id);
+      if (is_string($type))
+        delete_animation($type, $id);
     }
     $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
       $mysqli->escape_string($data->sortBy) : "viewed-desc";

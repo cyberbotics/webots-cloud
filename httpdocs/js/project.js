@@ -1,6 +1,6 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
-import TermsAndPrivacy from './termsAndPrivacy';
+import TermsAndPrivacy from './termsAndPrivacy.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {

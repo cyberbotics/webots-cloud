@@ -6,17 +6,340 @@ export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
+    this.routes.push({url: '/my-projects', setup: myProjectsPage});
+    this.page = 1;
+    this.search = '';
+    this.sort = 'default';
+    this.stats = 'week';
     let that = this;
-    function findGetParameter(parameterName) {
-      let result = null;
-      let tmp = [];
-      let items = location.search.substr(1).split('&');
-      for (let index = 0; index < items.length; index++) {
-        tmp = items[index].split('=');
-        if (tmp[0] === parameterName)
-          result = decodeURIComponent(tmp[1]);
+    function myProjectsPage() {
+      that.page = new URL(document.location.href).searchParams.get('p') ?
+        parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
+      that.search = new URL(document.location.href).searchParams.get('search') ?
+        (new URL(document.location.href).searchParams.get('search')).toString() : that.search;
+      that.sort = new URL(document.location.href).searchParams.get('sort') ?
+        (new URL(document.location.href).searchParams.get('sort')).toString() : that.sort;
+
+      // we need to be logged in to view this page
+      if (!that.password || !that.email)
+       return false;
+      const template = document.createElement('template');
+      const projectsTable =
+        `<section class="section" data-content="my-projects" style="padding: 0">
+          <div class="table-container my-projects-table mx-auto">
+            <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+              <div class="control has-icons-right">
+                <input class="input is-small" id="my-projects-search-input" type="text" placeholder="Search for projects...">
+                <span class="icon is-small is-right is-clickable" id="my-projects-search-click">
+                  <i class="fas fa-search" id="my-projects-search-icon"></i>
+                </span>
+              </div>
+            </div>
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
+                    style="text-align:center; min-width: 65px;">
+                    <i class="fas fa-chart-column"></i>
+                    <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                  <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
+                    style="min-width: 120px;">
+                    Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                  <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
+                    style="min-width: 85px;">
+                    Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                  <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
+                    style="text-align: right; min-width: 75px;">
+                    Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                  <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
+                    style="text-align: right; min-width: 75px;">
+                    Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                  <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
+                    style="text-align: right; min-width: 115px;">
+                    Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <div class="empty-search" id="my-projects-empty-search" style="display: none;">
+              <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+              </i>
+              <p id="my-projects-empty-search-text"></p>
+            </div>
+          </div>
+          <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
+        </section>`;
+      template.innerHTML =
+      `<section class="section">
+        <div class="tile is-ancestor">
+          <div class="tile is-7 is-parent">
+            <div class="tile is-child box" style="overflow-X: auto">
+              <p class="title">My Projects</p>
+              <div class="content">
+                ${projectsTable}
+              </div>
+            </div>
+          </div>
+          <div class="tile is-vertical is-parent">
+            <div class="tile is-child box" id="my-projects-top">
+              <p class="title">Top Project</p>
+            </div>
+            <div class="tile is-child box">
+              <p class="title">Information</p>
+              <section class="section" id="my-projects-information" style="padding: 0;">
+                <p style="padding-bottom: 10px;"><strong>First Upload:</strong></p>
+                <p style="padding-bottom: 10px;"><strong>Total Animations:</strong></p>
+                <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong></p>
+                <p><strong>Total Views:</strong></p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>`;
+      that.setup('settings', [], template.content);
+      listMyProjects(that.page, that.sort, that.search);
+      showTopProject();
+    }
+    function showTopProject() {
+      /* that.topProjectWebotsView = document.createElement('webots-view');
+      that.topProjectWebotsView.id = 'my-projects-top-webots-view';
+      document.getElementById('my-projects-top').append(that.topProjectWebotsView);
+
+      const reference = 'https://testing.webots.cloud/storage/Acdx3l6';
+      that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
+        false, false, `${reference}/thumbnail.jpg`); */
+    }
+    function updatePagination(current, max) {
+      const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
+      const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
+      let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
+      let content = {};
+      const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
+        ? ('/my-projects') : ('/my-projects?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
+      const nextDisabled = (current === max) ? ' disabled' : ` href="my-projects?p=${current + 1}${hrefSort}${hrefSearch}"`;
+      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
+        : `" aria-label="Goto page 1" href="my-projects${hrefSort}${hrefSearch}"`;
+      content.innerHTML =
+        `<a class="pagination-previous"${previousDisabled}>Previous</a>
+        <ul class="pagination-list"><li>
+        <a class="pagination-link${oneIsCurrent}>1</a></li>`;
+      for (let i = 2; i <= max; i++) {
+        if (i === current - 2 || (i === current + 2 && i !== max)) {
+          content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
+          continue;
+        }
+        if (i < current - 2 || (i > current + 2 && i !== max))
+          continue;
+        if (i === current)
+          content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
+            ` aria-current="page">${i}</a></li>`;
+        else
+          content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
+            href="/my-projects?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
       }
-      return result;
+      content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
+      nav.innerHTML = content.innerHTML;
+    }
+    function myProjectsRow(data) {
+      let size = data.size;
+      let unit;
+      if (size < 1024)
+        unit = 'bytes';
+      else if (size < 1024 * 1014) {
+        size = size / 1024;
+        unit = 'K';
+      } else if (size < 1024 * 1024 * 1024) {
+        size = size / (1024 * 1024);
+        unit = 'M';
+      } else {
+        size = size / (1024 * 1024 * 1024);
+        unit = 'G';
+      }
+      if (size < 100)
+        size = Math.round(10 * size) / 10;
+      else
+        size = Math.round(size);
+      size += ' <small>' + unit + '</small>';
+      let duration;
+      if (data.duration) {
+        let millisecond = data.duration % 1000;
+        let second = Math.trunc(data.duration / 1000) % 60;
+        let minute = Math.trunc(data.duration / 60000) % 60;
+        let hour = Math.trunc(data.duration / 3600000);
+        if (millisecond < 10)
+          millisecond = '00' + millisecond;
+        else if (millisecond < 100)
+          millisecond = '0' + millisecond;
+        duration = second + ':' + millisecond;
+        if (data.duration >= 60000) {
+          if (second < 10)
+            duration = '0' + duration;
+          duration = minute + ':' + duration;
+          if (data.duration > 3600000) {
+            if (minute < 10)
+              duration = '0' + duration;
+            duration = hour + duration;
+          }
+        }
+      } else
+        duration = '-';
+      const type = (data.duration === 0) ? 'scene' : 'animation';
+      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const thumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';//url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
+      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
+      const style = ' style="color:#007acc"';
+      const tooltip = `Delete your ${type}`;
+      const deleteIcon = `<i${style} class="is-clickable far fa-trash-alt" id="${type}-${data.id}" title="${tooltip}"></i>`;
+      const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
+      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      let row = `<td class="has-text-centered">${data.viewed}</td>`;
+      row += `<td>
+                <a class="table-title has-text-dark" href="${url}">${title}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="thumbnail-description">
+                      ${data.description}
+                      <div class="thumbnail-description-fade"/>
+                    </p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
+        title="View Webots release">${data.version}</a></td>`;
+      row += `<td class="has-text-right">${duration}</td>`;
+      row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
+      return row;
+    }
+    function listMyProjects(page, sortBy, searchString) {
+      const pageLimit = 10;
+      const user = parseInt(that.id);
+      const offset = (page - 1) * pageLimit;
+      fetch('/ajax/animation/list.php', {method: 'post',
+        body: JSON.stringify({offset: offset, limit: pageLimit, type: user, sortBy: sortBy, search: searchString})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run(`User project listing error`, data.error);
+          else {
+            if (data.total === 0 && searchString) {
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any projects.';
+              document.getElementById('my-projects-empty-search-text').innerHTML = message;
+              document.getElementById('my-projects-empty-search').style.display = 'flex';
+            } else
+              document.getElementById('my-projects-empty-search').style.display = 'none';
+            let line = ``;
+            for (let i = 0; i < data.animations.length; i++)
+              line += '<tr>' + myProjectsRow(data.animations[i]) + '</tr>';
+            let parent = that.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
+            parent.innerHTML = line;
+            for (let i = 0; i < data.animations.length; i++) {
+              let node = parent.querySelector(`#my-projects-${data.animations[i].id}`);
+              if (node) {
+                let p = (data.animations.length === 1) ? page - 1 : page;
+                if (p === 0)
+                  p = 1;
+                node.addEventListener('click', function(event) { deleteAnimation(event, user, project, p); });
+              }
+            }
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            updatePagination(page, total);
+          }
+        });
+    }
+
+    function settingsPage() {
+      // we need to be logged in to view this page
+      if (!that.password || !that.email)
+        return false;
+      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
+      const template = document.createElement('template');
+      const md5sum = md5(that.email.toLowerCase());
+      const hostname = document.location.hostname;
+      const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
+      template.innerHTML =
+        `<section class="section">
+          <div class="container">
+            <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
+            <h2 class="subtitle pt-3">${that.email}</h2>
+          </div>
+        </section>
+        <section class="section" style="margin-top:0;padding-top:0">
+          <div class="container panel">
+            <p class="panel-heading">Gravatar Profile</p>
+            <div class="panel-block">
+              <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
+              <span name="displayName">${name}</span>
+            </div>
+            <div class="panel-block">
+              <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
+            </div>
+            <div class="panel-block">
+              <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Change Password</p>
+            <div class="panel-block">
+              We will send you a e-mail with a link to reset your password.
+            </div>
+            <div class="panel-block">
+              <button class="button is-link" id="change-password">Change Password</button>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Delete Account</p>
+            <div class="panel-block">
+              All your data will be erased, including the scenes and animations you uploaded.
+              There is no undo.
+            </div>
+            <div class="panel-block">
+              <button class="button is-danger" id="delete-account">Delete my Account</button>
+            </div>
+          </div>
+        </section>`;
+      that.setup('settings', [], template.content);
+      document.querySelector('#change-password').addEventListener('click', function(event) {
+        event.target.classList.add('is-loading');
+        that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
+      });
+      document.querySelector('#delete-account').addEventListener('click', function(event) {
+        let dialog = ModalDialog.run('Really delete account?',
+          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
+          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
+        dialog.querySelector('form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+          fetch('/ajax/user/delete.php', { method: 'post',
+            body: JSON.stringify({email: that.email, password: that.password})})
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              dialog.close();
+              if (data.error)
+                ModalDialog.run('Error', data.error);
+              else {
+                ModalDialog.run('Account deleted',
+                  '<p>Your account was successfully deleted.</p><p>All you data was erased.</p>');
+                that.password = null;
+                that.email = null;
+                that.id = null;
+                that.load('/');
+              }
+            });
+        });
+      });
     }
     function resetPassword(id, token, email) {
       let content = {};
@@ -184,88 +507,16 @@ export default class User extends Router {
         });
       });
     }
-    function settingsPage() {
-      // we need to be logged in to view this page
-      if (!that.password || !that.email)
-        return false;
-      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
-      const template = document.createElement('template');
-      const md5sum = md5(that.email.toLowerCase());
-      const hostname = document.location.hostname;
-      const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
-      template.innerHTML =
-        `<section class="section">
-          <div class="container">
-            <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
-            <h2 class="subtitle pt-3">${that.email}</h2>
-          </div>
-        </section>
-        <section class="section" style="margin-top:0;padding-top:0">
-          <div class="container panel">
-            <p class="panel-heading">Gravatar Profile</p>
-            <div class="panel-block">
-              <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
-              <span name="displayName">${name}</span>
-            </div>
-            <div class="panel-block">
-              <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
-            </div>
-            <div class="panel-block">
-              <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
-            </div>
-          </div>
-          <div class="container panel">
-            <p class="panel-heading">Change Password</p>
-            <div class="panel-block">
-              We will send you a e-mail with a link to reset your password.
-            </div>
-            <div class="panel-block">
-              <button class="button is-link" id="change-password">Change Password</button>
-            </div>
-          </div>
-          <div class="container panel">
-            <p class="panel-heading">Delete Account</p>
-            <div class="panel-block">
-              All your data will be erased, including the scenes and animations you uploaded.
-              There is no undo.
-            </div>
-            <div class="panel-block">
-              <button class="button is-danger" id="delete-account">Delete my Account</button>
-            </div>
-          </div>
-        </section>`;
-      that.setup('settings', [], template.content);
-      document.querySelector('#change-password').addEventListener('click', function(event) {
-        event.target.classList.add('is-loading');
-        that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
-      });
-      document.querySelector('#delete-account').addEventListener('click', function(event) {
-        let dialog = ModalDialog.run('Really delete account?',
-          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
-          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
-        dialog.querySelector('form').addEventListener('submit', function(event) {
-          event.preventDefault();
-          dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post',
-            body: JSON.stringify({email: that.email, password: that.password})})
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              dialog.close();
-              if (data.error)
-                ModalDialog.run('Error', data.error);
-              else {
-                ModalDialog.run('Account deleted',
-                  '<p>Your account was successfully deleted.</p><p>All you data was erased.</p>');
-                that.password = null;
-                that.email = null;
-                that.id = null;
-                that.load('/');
-              }
-            });
-        });
-      });
+    function findGetParameter(parameterName) {
+      let result = null;
+      let tmp = [];
+      let items = location.search.substr(1).split('&');
+      for (let index = 0; index < items.length; index++) {
+        tmp = items[index].split('=');
+        if (tmp[0] === parameterName)
+          result = decodeURIComponent(tmp[1]);
+      }
+      return result;
     }
     // account creation: entering the password
     const token = findGetParameter('token');
@@ -363,6 +614,8 @@ export default class User extends Router {
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
         <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item" href="/my-projects"><i class="fas fa-user"> &nbsp; </i>My projects</a>
+          <div class="navbar-divider"></div>
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
