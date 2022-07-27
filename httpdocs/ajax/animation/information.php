@@ -32,7 +32,13 @@
     $totalScenes = $row['counter'];
   }
 
-  error("totalScenes: $totalScenes  //  totalAnimations: $totalAnimations");
+  $query = "SELECT viewed SUM(*) AS totalViews FROM animation WHERE user=$user AND duration>0";
+  $result = $mysqli->query($query) or error($mysqli->error);
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $totalViews = $row['totalViews'];
+  }
+
+  error("totalScenes: $totalScenes  //  totalAnimations: $totalAnimations  //  totalViews: $totalViews");
 
   $answer = array();
   $answer['totalScenes'] = $totalScenes;
