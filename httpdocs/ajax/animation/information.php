@@ -11,6 +11,7 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   $user = isset($data->user) ? intval($data->user) : false;
+
   if (!$user)
     error("User information error.");
 
@@ -38,10 +39,10 @@
     $totalViews = $row['totalViews'];
   }
 
-  error("firstUpload: $firstUpload  //  totalScenes: $totalScenes  //  totalAnimations: $totalAnimations  //  totalViews: $totalViews");
-
   $answer = array();
+  $answer['firstUpload'] = $firstUpload;
   $answer['totalScenes'] = $totalScenes;
-  $answer['totalScenes'] = $uploadMessage;
+  $answer['totalAnimations'] = $totalAnimations;
+  $answer['totalViews'] = $totalViews;
   die(json_encode($answer));
  ?>
