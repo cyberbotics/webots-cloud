@@ -328,7 +328,7 @@ nav.pagination > a[disabled] {
   width: 100%;
 }
 
-@media screen and (min-width: 950px) {
+@media screen and (min-width: 1110px) {
   .tile:not(.is-child) {
       display: flex;
   }
@@ -339,7 +339,7 @@ nav.pagination > a[disabled] {
   }
 }
 
-@media screen and (max-width: 949px) {
+@media screen and (max-width: 1109px) {
   .tile:not(.is-child) {
       display: block;
   }
