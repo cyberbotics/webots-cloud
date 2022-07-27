@@ -239,7 +239,7 @@ export default class User extends Router {
                 'Your search - <strong>' + that.search + '</strong> - did not match any projects.' :
                 'You have not uploaded any projects yet.';
               const iconClassList = that.search || that.search !== '' ?
-                ['fas', 'fa-xl', 'fa-search'] : ['fas', 'fa-xl', 'fa-sad'];
+                'fas fa-xl fa-search' : 'fas fa-xl fa-sad';
               document.getElementById('no-project-icon').classList = iconClassList;
               document.getElementById('my-projects-empty-search-text').innerHTML = message;
               document.getElementById('my-projects-empty-search').style.display = 'flex';
