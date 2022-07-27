@@ -266,8 +266,8 @@ export default class User extends Router {
           setTimeout(() => {
             that.search = document.getElementById('my-projects-search-input').value;
             that.page = 1;
-            updateMyProjectsSearchIcon('my-projects');
-            searchAndSortTable('my-projects');
+            updateMyProjectsSearchIcon();
+            searchAndSortMyProjectsTable();
             that.delay = false;
           }, '300');
         }
