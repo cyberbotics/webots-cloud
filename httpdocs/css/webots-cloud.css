@@ -360,15 +360,6 @@ nav.pagination > a[disabled] {
 }
 
 @media screen and (max-width: 740px) {
-  .tile:not(.is-child) {
-      display: block;
-  }
-
-  .tile.is-60 {
-    flex: none;
-    width: 100%;
-  }
-
   #my-projects-top {
     min-height: 500px;
     aspect-ratio: none;
