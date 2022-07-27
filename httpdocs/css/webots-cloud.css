@@ -35,6 +35,11 @@ body {
 
 div.table-container {
   min-height: 550px;
+  max-width: 800px;
+}
+
+.pagination {
+  max-width: 800px;
 }
 
 .column-title {
