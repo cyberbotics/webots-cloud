@@ -39,16 +39,16 @@
     $totalViews = $row['totalViews'];
   }
 
-  /* $query = "SELECT title, id, viewed FROM animation WHERE user=$user AND ORDER BY viewed DESC";
+  $query = "SELECT SUM(viewed) AS totalViews FROM animation WHERE user=$user AND ORDER BY viewed DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $topTitle = $row['title'];
-    $topId = $row['topId'];
-    $topViews = $row['topViews'];
+    $topTitle = $row['totalViews'];
+    /* $topId = $row['topId'];
+    $topViews = $row['topViews']; */
     break;
-  }  */
+  }
 
-  //error("Top Project: $topTitle");
+  error("Top Project: $topTitle");
 
   $answer = array();
   $answer['topTitle'] = "Bioloid Dog";//$topTitle;
