@@ -326,7 +326,7 @@ nav.pagination > a[disabled] {
   min-height: 500px;
 }
 
-#my-projects-top {
+#my-projects-top-container {
   height: 100%;
 }
 
