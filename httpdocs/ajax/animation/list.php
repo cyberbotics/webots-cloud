@@ -19,7 +19,7 @@
     $extra_condition = "duration = 0";
   else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
-  else if ($user != 0) // my-projects
+  else if (!$user) // my-projects
     $extra_condition = "user = ${user}";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
