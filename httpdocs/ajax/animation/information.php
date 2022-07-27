@@ -44,18 +44,21 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
     $topViews = $row['viewed'];
-    $type = $row['duration'] == 0 ? "S" : "A";
-    $topId = $type . $row['id'];
+    $topType = $row['duration'] == 0 ? "S" : "A";
+    $topId = $row['id'];
     break;
   }
 
+  require '../../../php/mysql_id_string.php';
+  $topId = $topType . mysql_id_to_string($topId);
+
   $answer = array();
-  $answer['topTitle'] = $topTitle;
-  $answer['topId'] = $topId;
-  $answer['topViews'] = $topViews;
   $answer['firstUpload'] = $firstUpload;
   $answer['totalScenes'] = $totalScenes;
   $answer['totalAnimations'] = $totalAnimations;
   $answer['totalViews'] = $totalViews;
+  $answer['topTitle'] = $topTitle;
+  $answer['topId'] = $topId;
+  $answer['topViews'] = $topViews;
   die(json_encode($answer));
  ?>
