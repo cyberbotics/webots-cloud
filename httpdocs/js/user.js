@@ -38,28 +38,28 @@ export default class User extends Router {
             <table class="table is-striped is-hoverable">
               <thead>
                 <tr>
-                  <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
+                  <th class="is-clickable column-title" id="my-projects-sort-viewed" title="Popularity"
                     style="text-align:center; min-width: 65px;">
                     <i class="fas fa-chart-column"></i>
                     <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
-                  <th class="is-clickable column-title" id="animation-sort-title" title="Title of the animation"
+                  <th class="is-clickable column-title" id="my-projects-sort-title" title="Title of the animation"
                     style="min-width: 120px;">
                     Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
-                  <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
+                  <th class="is-clickable column-title" id="my-projects-sort-version" title="Webots release of the animation"
                     style="min-width: 85px;">
                     Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
-                  <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
+                  <th class="is-clickable column-title" id="my-projects-sort-duration" title="Duration of the animation"
                     style="text-align: right; min-width: 75px;">
                     Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
-                  <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
+                  <th class="is-clickable column-title" id="my-projects-sort-size" title="Total size of the animation files"
                     style="text-align: right; min-width: 75px;">
                     Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
-                  <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
+                  <th class="is-clickable column-title" id="my-projects-sort-uploaded" title="Upload date and time"
                     style="text-align: right; min-width: 115px;">
                     Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                   </th>
