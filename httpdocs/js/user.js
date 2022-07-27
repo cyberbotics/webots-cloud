@@ -118,8 +118,8 @@ export default class User extends Router {
         else {
           document.getElementById('my-projects-information').innerHTML =
             `<p style="padding-bottom: 10px;"><strong>First Upload:</strong>${data.firstUpload}</p>
-            <p style="padding-bottom: 10px;"><strong>Total Animations:</strong>${data.totalAnimations}</p>
             <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong>${data.totalScenes}</p>
+            <p style="padding-bottom: 10px;"><strong>Total Animations:</strong>${data.totalAnimations}</p>
             <p><strong>Total Views:</strong>${data.totalViews}</p>`
         }
       });
