@@ -627,7 +627,7 @@ export default class User extends Router {
       that.password = null;
       that.email = null;
       that.id = null;
-      if (window.location.pathname === '/settings')
+      if (window.location.pathname === '/settings' || window.location.pathname === '/my-projects')
         that.load('/');
       else
         that.load();
