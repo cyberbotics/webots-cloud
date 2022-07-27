@@ -95,10 +95,6 @@ export default class User extends Router {
             <div class="tile is-child box">
               <p class="title">Information</p>
               <section class="section" id="my-projects-information" style="padding: 0;">
-                <p style="padding-bottom: 10px;"><strong>First Upload:</strong></p>
-                <p style="padding-bottom: 10px;"><strong>Total Animations:</strong></p>
-                <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong></p>
-                <p><strong>Total Views:</strong></p>
               </section>
             </div>
           </div>
@@ -109,6 +105,24 @@ export default class User extends Router {
       initMyProjectsSearch();
       initMyProjectsSort();
       showTopProject();
+      showInformation();
+    }
+    function showInformation() {
+      fetch('/ajax/animation/info.php', {method: 'post', body: JSON.stringify({user: that.id})})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.error)
+          ModalDialog.run(`Information error`, data.error);
+        else {
+          document.getElementById('my-projects-information').innerHTML =
+            `<p style="padding-bottom: 10px;"><strong>First Upload:</strong>${data.firstUpload}</p>
+            <p style="padding-bottom: 10px;"><strong>Total Animations:</strong>${data.totalAnimations}</p>
+            <p style="padding-bottom: 10px;"><strong>Total Scenes:</strong>${data.totalScenes}</p>
+            <p><strong>Total Views:</strong>${data.totalViews}</p>`
+        }
+      });
     }
     function showTopProject() {
       that.topProjectWebotsView = document.createElement('webots-view');
