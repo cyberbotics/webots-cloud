@@ -43,8 +43,8 @@
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
-    $topId = $row['topId'];
-    $topViews = $row['topViews'];
+    $topId = $row['id'];
+    $topViews = $row['viewed'];
     break;
   }
 
