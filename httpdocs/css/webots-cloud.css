@@ -333,9 +333,9 @@ nav.pagination > a[disabled] {
       display: flex;
   }
 
-  .tile.is-6 {
+  .tile.is-60 {
     flex: none;
-    width: 66.66667%;
+    width: 60%;
   }
 }
 
@@ -344,7 +344,7 @@ nav.pagination > a[disabled] {
       display: block;
   }
 
-  .tile.is-6 {
+  .tile.is-60 {
     flex: none;
     width: 100%;
   }
