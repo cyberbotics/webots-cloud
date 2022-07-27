@@ -79,7 +79,7 @@ export default class User extends Router {
       template.innerHTML =
       `<section class="section">
         <div class="tile is-ancestor">
-          <div class="tile is-7 is-parent">
+          <div class="tile is-6 is-parent">
             <div class="tile is-child box" style="overflow-X: auto">
               <p class="title">My Projects</p>
               <div class="content">
