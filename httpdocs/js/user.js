@@ -260,6 +260,7 @@ export default class User extends Router {
         });
     }
     function initMyProjectsSort() {
+      console.log(that.sort);
       if (that.sort && that.sort !== 'default') {
         const columnTitle = document.getElementById('my-projects-sort-' + that.sort.split('-')[0]);
         const sortIcon = columnTitle.querySelector('.sort-icon');
