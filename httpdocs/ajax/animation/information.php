@@ -15,45 +15,44 @@
   if (!$user)
     error("User information error.");
 
-  $query = "SELECT MIN(uploaded) AS firstUpload FROM animation WHERE user=$user";
+  $query = "SELECT MIN(uploaded) AS firstUpload FROM animation WHERE user = $user";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $firstUpload = $row['firstUpload'];
   }
 
-  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration>0";
+  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user = $user AND duration>0";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $totalAnimations = $row['counter'];
   }
 
-  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration=0";
+  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user = $user AND duration=0";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $totalScenes = $row['counter'];
   }
 
-  $query = "SELECT SUM(viewed) AS totalViews FROM animation WHERE user=$user";
+  $query = "SELECT SUM(viewed) AS totalViews FROM animation WHERE user = $user";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $totalViews = $row['totalViews'];
   }
 
-  $query = "SELECT title, id, viewed FROM animation WHERE user=$user ORDER BY viewed DESC";
+  $query = "SELECT title, id, viewed FROM animation WHERE user = $user ORDER BY viewed DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
-    $topId = $row['id'];
     $topViews = $row['viewed'];
+    $type = $row['duration'] == 0 ? "S" : "A";
+    $topId = $type . $row['id'];
     break;
   }
 
-  error("Top Project: $topTitle");
-
   $answer = array();
-  $answer['topTitle'] = "Bioloid Dog";//$topTitle;
-  $answer['topId'] = "Acdx3l6";//$topId;
-  $answer['topViews'] = 1110;//$topViews;
+  $answer['topTitle'] = $topTitle;
+  $answer['topId'] = $topId;
+  $answer['topViews'] = $topViews;
   $answer['firstUpload'] = $firstUpload;
   $answer['totalScenes'] = $totalScenes;
   $answer['totalAnimations'] = $totalAnimations;
