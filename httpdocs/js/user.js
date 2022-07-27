@@ -134,9 +134,14 @@ export default class User extends Router {
 
       document.getElementById('my-projects-title').innerHTML = data.topTitle;
 
-      const reference = 'https://testing.webots.cloud/storage/' + data.topId;
-      that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
-        false, false, `${reference}/thumbnail.jpg`);
+      const reference = window.location.origin + '/storage/' + data.topId;
+
+      if (data.topId[0] === 'S')
+        that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), false,
+          `${reference}/thumbnail.jpg`);
+      else
+        that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
+          that.isMobileDevice(), false, `${reference}/thumbnail.jpg`);
     }
     function updateMyProjectsPagination(max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';

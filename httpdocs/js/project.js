@@ -133,9 +133,9 @@ export default class Project extends User {
             that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
               Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+                this.isMobileDevice(), `${reference}/thumbnail.jpg`);
             else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+              Project.webotsView.loadScene(`${reference}/scene.x3d`, this.isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else {
             that.setupWebotsView('run');
@@ -159,9 +159,9 @@ export default class Project extends User {
         that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
           Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+            this.isMobileDevice(), `${reference}/thumbnail.jpg`);
         else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+          Project.webotsView.loadScene(`${reference}/scene.x3d`, this.isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else {
         that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
@@ -198,10 +198,6 @@ export default class Project extends User {
         if (data.error)
           console.warn(data.error);
       });
-  }
-  _isMobileDevice() {
-    // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 }
 Project.current = null;

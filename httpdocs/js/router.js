@@ -154,4 +154,8 @@ export default class Router {
       document.querySelector('body').classList.add('has-navbar-fixed-top');
     }
   }
+  isMobileDevice() {
+    // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
 }
