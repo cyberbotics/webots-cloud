@@ -13,6 +13,7 @@ export default class User extends Router {
     this.delay = false;
     let that = this;
     function myProjectsPage() {
+      console.log('my-projects page.');
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
       that.search = new URL(document.location.href).searchParams.get('search') ?
