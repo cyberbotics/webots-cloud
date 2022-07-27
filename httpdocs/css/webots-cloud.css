@@ -362,6 +362,6 @@ nav.pagination > a[disabled] {
 @media screen and (max-width: 740px) {
   #my-projects-top {
     min-height: 500px;
-    aspect-ratio: none;
+    width: 100%;
   }
 }
