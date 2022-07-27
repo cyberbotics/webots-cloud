@@ -14,13 +14,10 @@
   if (!$user)
     error("User information error.");
 
-  $query = "SELECT title FROM animation WHERE user=$user";
+  $query = "SELECT count(*) AS counter FROM animation WHERE user=$user AND duration=0";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $titles = "";
-  $i = 1;
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $titles .= strval($i) . ": " . $row['title'] . " ";
-    $i += 1;
+    $titles = $row['counter'];
   }
   error($titles);
 
