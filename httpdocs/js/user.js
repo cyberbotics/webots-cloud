@@ -10,7 +10,7 @@ export default class User extends Router {
     this.page = 1;
     this.search = '';
     this.sort = 'default';
-    this.stats = 'week';
+    this.delay = false;
     let that = this;
     function myProjectsPage() {
       that.page = new URL(document.location.href).searchParams.get('p') ?
@@ -105,6 +105,7 @@ export default class User extends Router {
       </section>`;
       that.setup('settings', [], template.content);
       listMyProjects(that.page, that.sort, that.search);
+      initMyProjectsSearch();
       showTopProject();
     }
     function showTopProject() {
@@ -256,6 +257,54 @@ export default class User extends Router {
             updatePagination(page, total);
           }
         });
+    }
+    function initMyProjectsSearch() {
+      document.getElementById('my-projects-search-input').value = that.search;
+      document.getElementById('my-projects-search-input').addEventListener('keyup', function(event) {
+        if (!that.delay) {
+          that.delay = true;
+          setTimeout(() => {
+            that.search = document.getElementById('my-projects-search-input').value;
+            that.page = 1;
+            updateMSearchIcon('my-projects');
+            searchAndSortTable('my-projects');
+            that.delay = false;
+          }, '300');
+        }
+      });
+      document.getElementById('my-projects-search-click').addEventListener('click', function(event) {
+        if (document.getElementById('my-projects-search-icon').classList.contains('fa-xmark')) {
+          document.getElementById('my-projects-search-input').value = '';
+          that.search = document.getElementById('my-projects-search-input').value;
+          that.page = 1;
+          updateMyProjectsSearchIcon();
+          searchAndSortMyProjectsTable();
+        }
+      });
+    }
+    function searchAndSortMyProjectsTable(isSearch) {
+      let url = new URL(document.location.origin + document.location.pathname);
+      if (that.page !== 1 && !isSearch)
+        url.searchParams.append('p', that.page);
+      else
+        that.page = 1;
+      if (that.search && that.search !== 'default')
+        url.searchParams.append('sort', that.search);
+      if (that.search && that.search !== '')
+        url.searchParams.append('search', that.search);
+      window.history.replaceState(null, '', (url.pathname + url.search).toString());
+
+      listMyProjects(that.page, that.sort, that.search);
+    }
+    function updateMyProjectsSearchIcon() {
+      const searchIcon = document.getElementById('my-projects-search-icon');
+      if (searchIcon.classList.contains('fa-search') && that.search.length > 0) {
+        searchIcon.classList.remove('fa-search');
+        searchIcon.classList.add('fa-xmark');
+      } else if (searchIcon.classList.contains('fa-xmark') && that.search.length === 0) {
+        searchIcon.classList.add('fa-search');
+        searchIcon.classList.remove('fa-xmark');
+      }
     }
 
     function settingsPage() {
