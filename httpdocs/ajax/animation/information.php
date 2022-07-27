@@ -39,10 +39,13 @@
     $totalViews = $row['totalViews'];
   }
 
-  $query = "SELECT FIRST_VALUE(title) AS topTitle OVER (ORDER BY viewed DESC) FROM animation WHERE user=$user";
+  $query = "SELECT title, id, viewed FROM animation WHERE user=$user AND ORDER BY viewed DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $topTitle = $row['topTitle'];
+    $topTitle = $row['title'];
+    $topId = $row['topId'];
+    $topViews = $row['topViews'];
+    break;
   } 
 
   error("Top Project: $topTitle");
