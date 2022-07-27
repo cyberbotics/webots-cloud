@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.body.appendChild(closeWebotsViewButton);
 
   closeWebotsViewButton.addEventListener('click', function(e) {
-    let webotsView = document.getElementById('webots-view');
+    let webotsView = document.querySelector('webots-view');
     if (webotsView) {
       console.log('Closing webots view...');
       webotsView.close();
