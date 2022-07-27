@@ -277,7 +277,7 @@ export default class User extends Router {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
           const previousSort = that.sort.split('-')[0];
-          let sort = title.id.split('-')[2];
+          let sort = title.id.split('-')[3];
 
           if (previousSort === sort) {
             sortIcon.classList.toggle('fa-sort-down');
