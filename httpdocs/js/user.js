@@ -123,6 +123,7 @@ export default class User extends Router {
           ModalDialog.run(`User information request error`, data.error);
         else if (data.status !== 'no uploads') {
           showTopProject(data);
+          showTopProject(data);
           showInformation(data);
         }
       });
