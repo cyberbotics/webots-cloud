@@ -112,6 +112,10 @@ export default class Project extends User {
       (data ? data.version : this.findGetParameter('version'));
     const src = 'https://cyberbotics.com/wwi/testing' + version + '/WebotsView.js';
 
+    document.querySelector('toolbar').addEventListener('load', function(){
+      console.log('toolbar is loaded.')
+    });
+
     if (!data)
       that._updateSimulationViewCount(url);
 
