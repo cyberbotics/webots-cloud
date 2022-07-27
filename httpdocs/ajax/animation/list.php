@@ -19,7 +19,7 @@
     $extra_condition = "duration = 0";
   else if ($type == 'A') // animation
     $extra_condition = "duration > 0";
-  else if (!$user) // my-projects
+  else if ($user != 0) // my-projects
     $extra_condition = "user = ${user}";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
@@ -39,8 +39,10 @@
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
       $mysqli->query("DELETE FROM animation WHERE id=$id");
-      if (is_string($type))
-        delete_animation($type, $id);
+      if (intval($row['duration']) == 0)
+        delete_animation('S', $id);
+      else
+        delete_animation('A', $id);
     }
     $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
       $mysqli->escape_string($data->sortBy) : "viewed-desc";
