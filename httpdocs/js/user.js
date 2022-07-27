@@ -89,7 +89,7 @@ export default class User extends Router {
           </div>
           <div class="tile is-vertical is-parent">
             <div class="tile is-child box" id="my-projects-top">
-              <p class="title">Top Project: <span id="top-project-title" class="is-size-4 has-text-weight-normal"></span></p>
+              <p class="title">Top Project: <span id="my-projects-title" class="is-size-4 has-text-weight-normal"></span></p>
               <div id="my-projects-top-container"></div>
             </div>
             <div class="tile is-child box">
@@ -114,6 +114,9 @@ export default class User extends Router {
       that.topProjectWebotsView = document.createElement('webots-view');
       that.topProjectWebotsView.id = 'my-projects-top-webots-view';
       document.getElementById('my-projects-top-container').append(that.topProjectWebotsView);
+
+      const title = 'Bioloid Dog';
+      document.getElementById('my-projects-title').innerHTML = title;
 
       const reference = 'https://testing.webots.cloud/storage/Acdx3l6';
       that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
