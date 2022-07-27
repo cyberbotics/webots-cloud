@@ -137,8 +137,7 @@ export default class User extends Router {
       const reference = window.location.origin + '/storage/' + data.topId;
 
       if (data.topId[0] === 'S')
-        that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), false,
-          `${reference}/thumbnail.jpg`);
+        that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), `${reference}/thumbnail.jpg`);
       else
         that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
           that.isMobileDevice(), false, `${reference}/thumbnail.jpg`);
