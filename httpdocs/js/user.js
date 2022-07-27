@@ -69,7 +69,7 @@ export default class User extends Router {
               </tbody>
             </table>
             <div class="empty-search" id="my-projects-empty-search" style="display: none;">
-              <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+              <i class="fas fa-xl fa-search" id="no-project-icon" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
               </i>
               <p id="my-projects-empty-search-text"></p>
             </div>
@@ -238,6 +238,9 @@ export default class User extends Router {
               const message = that.search || that.search !== '' ?
                 'Your search - <strong>' + that.search + '</strong> - did not match any projects.' :
                 'You have not uploaded any projects yet.';
+              const iconClassList = that.search || that.search !== '' ?
+                ['fas', 'fa-xl', 'fa-search'] : ['fas', 'fa-xl', 'fa-sad'];
+              document.getElementById('no-project-icon').classList = iconClassList;
               document.getElementById('my-projects-empty-search-text').innerHTML = message;
               document.getElementById('my-projects-empty-search').style.display = 'flex';
             } else
