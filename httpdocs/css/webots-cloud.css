@@ -354,7 +354,6 @@ nav.pagination > a[disabled] {
   }
 
   #my-projects-top {
-    min-height: none;
     aspect-ratio: 4 / 3;
   }
 }
