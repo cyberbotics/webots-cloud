@@ -14,15 +14,28 @@
   if (!$user)
     error("User information error.");
 
-  $query = "SELECT count(*) AS counter FROM animation WHERE user=$user AND duration=0";
+  $query = "SELECT viewed SUM(*) AS views FROM animation WHERE user=$user AND duration>0";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $titles = $row['counter'];
+    $totalViews = $row['views'];
   }
-  error($titles);
+
+  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration=0";
+  $result = $mysqli->query($query) or error($mysqli->error);
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $totalScenes = $row['counter'];
+  }
+
+  $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration=0";
+  $result = $mysqli->query($query) or error($mysqli->error);
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $totalScenes = $row['counter'];
+  }
+
+  error("totalScenes: $totalScenes");
 
   $answer = array();
-  $answer['animation'] = $animations[0];
-  $answer['uploadMessage'] = $uploadMessage;
+  $answer['totalScenes'] = $totalScenes;
+  $answer['totalScenes'] = $uploadMessage;
   die(json_encode($answer));
  ?>
