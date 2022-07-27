@@ -14,11 +14,11 @@
   if (!$user)
     error("User information error.");
 
-  /* $query = "SELECT viewed SUM(*) AS views FROM animation WHERE user=$user AND duration>0";
+  $query = "SELECT MIN(uploaded) AS firstUpload FROM animation WHERE user=$user";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $totalViews = $row['views'];
-  } */
+    $firstUpload = $row['firstUpload'];
+  }
 
   $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration>0";
   $result = $mysqli->query($query) or error($mysqli->error);
@@ -38,7 +38,7 @@
     $totalViews = $row['totalViews'];
   }
 
-  error("totalScenes: $totalScenes  //  totalAnimations: $totalAnimations  //  totalViews: $totalViews");
+  error("firstUpload: $firstUpload  //  totalScenes: $totalScenes  //  totalAnimations: $totalAnimations  //  totalViews: $totalViews");
 
   $answer = array();
   $answer['totalScenes'] = $totalScenes;
