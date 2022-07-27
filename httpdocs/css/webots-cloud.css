@@ -348,4 +348,8 @@ nav.pagination > a[disabled] {
     flex: none;
     width: 100%;
   }
+
+  #my-projects-top {
+    aspect-ratio: 16 / 9;
+  }
 }
