@@ -13,13 +13,6 @@ export default class User extends Router {
     this.delay = false;
     let that = this;
     function myProjectsPage() {
-      let webotsView = document.querySelector('webots-view');
-      if (webotsView) {
-        console.log('Closing webots view...');
-        webotsView.close();
-        webotsView.remove();
-      }
-      console.log('my-projects page.');
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
       that.search = new URL(document.location.href).searchParams.get('search') ?
