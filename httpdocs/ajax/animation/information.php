@@ -14,11 +14,11 @@
   if (!$user)
     error("User information error.");
 
-  $query = "SELECT viewed SUM(*) AS views FROM animation WHERE user=$user AND duration>0";
+  /* $query = "SELECT viewed SUM(*) AS views FROM animation WHERE user=$user AND duration>0";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $totalViews = $row['views'];
-  }
+  } */
 
   $query = "SELECT COUNT(*) AS counter FROM animation WHERE user=$user AND duration=0";
   $result = $mysqli->query($query) or error($mysqli->error);
