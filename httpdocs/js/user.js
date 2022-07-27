@@ -194,7 +194,7 @@ export default class User extends Router {
         duration = '-';
       const type = (data.duration === 0) ? 'scene' : 'animation';
       const typeLetter = (data.duration === 0) ? 'S' : 'A';
-      const url = data.url.slice(0, data.url.lastIndexOf('/')) + typeLetter + data.url.slice(data.url.lastIndexOf('/'));
+      const url = data.url.slice(0, data.url.lastIndexOf('/') + 1) + typeLetter + data.url.slice(data.url.lastIndexOf('/') + 1);
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
