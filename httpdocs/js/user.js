@@ -234,8 +234,10 @@ export default class User extends Router {
           if (data.error)
             ModalDialog.run(`User project listing error`, data.error);
           else {
-            if (data.total === 0 && that.search) {
-              const message = 'Your search - <strong>' + that.search + '</strong> - did not match any projects.';
+            if (data.total === 0) {
+              const message = that.search || that.search !== '' ?
+                'Your search - <strong>' + that.search + '</strong> - did not match any projects.' :
+                'You have not uploaded any projects yet.';
               document.getElementById('my-projects-empty-search-text').innerHTML = message;
               document.getElementById('my-projects-empty-search').style.display = 'flex';
             } else
