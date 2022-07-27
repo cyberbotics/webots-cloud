@@ -19,7 +19,7 @@
   $titles = "";
   $i = 1;
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $titles .= strval($i) . $row['title'] . "   ";
+    $titles .= strval($i) . ": " . $row['title'] . "\n";
     $i += 1;
   }
   error($titles);
