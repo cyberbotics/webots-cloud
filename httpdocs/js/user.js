@@ -108,7 +108,7 @@ export default class User extends Router {
       showInformation();
     }
     function showInformation() {
-      fetch('/ajax/animation/info.php', {method: 'post', body: JSON.stringify({user: that.id})})
+      fetch('/ajax/animation/information.php', {method: 'post', body: JSON.stringify({user: that.id})})
       .then(function(response) {
         return response.json();
       })
