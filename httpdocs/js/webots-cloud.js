@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (webotsView) {
       console.log('Closing webots view...');
       webotsView.close();
+      webotsView.remove();
     }
   });
 
