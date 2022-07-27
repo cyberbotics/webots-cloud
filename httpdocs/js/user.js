@@ -118,28 +118,28 @@ export default class User extends Router {
       that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
         false, false, `${reference}/thumbnail.jpg`); */
     }
-    function updatePagination(current, max) {
+    function updateMyProjectsPagination(max) {
       const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
       const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
       let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
       let content = {};
-      const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/my-projects') : ('/my-projects?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
-      const nextDisabled = (current === max) ? ' disabled' : ` href="my-projects?p=${current + 1}${hrefSort}${hrefSearch}"`;
-      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
+      const previousDisabled = (that.page === 1) ? ' disabled' : ` href="${(that.page === 2)
+        ? ('/my-projects') : ('/my-projects?p=' + (that.page - 1))}${hrefSort}${hrefSearch}"`;
+      const nextDisabled = (that.page === max) ? ' disabled' : ` href="my-projects?p=${that.page + 1}${hrefSort}${hrefSearch}"`;
+      const oneIsCurrent = (that.page === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
         : `" aria-label="Goto page 1" href="my-projects${hrefSort}${hrefSearch}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
         <a class="pagination-link${oneIsCurrent}>1</a></li>`;
       for (let i = 2; i <= max; i++) {
-        if (i === current - 2 || (i === current + 2 && i !== max)) {
+        if (i === that.page - 2 || (i === that.page + 2 && i !== max)) {
           content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
           continue;
         }
-        if (i < current - 2 || (i > current + 2 && i !== max))
+        if (i < that.page - 2 || (i > that.page + 2 && i !== max))
           continue;
-        if (i === current)
+        if (i === that.page)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
         else
@@ -224,9 +224,9 @@ export default class User extends Router {
     function listMyProjects(page, sortBy, searchString) {
       const pageLimit = 10;
       const user = parseInt(that.id);
-      const offset = (page - 1) * pageLimit;
+      const offset = (that.page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: user, sortBy: sortBy, search: searchString})})
+        body: JSON.stringify({offset: offset, limit: pageLimit, type: user, sortBy: that.sort, search: that.search})})
         .then(function(response) {
           return response.json();
         })
@@ -234,8 +234,8 @@ export default class User extends Router {
           if (data.error)
             ModalDialog.run(`User project listing error`, data.error);
           else {
-            if (data.total === 0 && searchString) {
-              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any projects.';
+            if (data.total === 0 && that.search) {
+              const message = 'Your search - <strong>' + that.search + '</strong> - did not match any projects.';
               document.getElementById('my-projects-empty-search-text').innerHTML = message;
               document.getElementById('my-projects-empty-search').style.display = 'flex';
             } else
@@ -248,14 +248,14 @@ export default class User extends Router {
             for (let i = 0; i < data.animations.length; i++) {
               let node = parent.querySelector(`#my-projects-${data.animations[i].id}`);
               if (node) {
-                let p = (data.animations.length === 1) ? page - 1 : page;
+                let p = (data.animations.length === 1) ? that.page - 1 : that.page;
                 if (p === 0)
                   p = 1;
                 node.addEventListener('click', function(event) { deleteAnimation(event, user, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination(page, total);
+            updateMyProjectsPagination(total);
           }
         });
     }
