@@ -104,7 +104,7 @@ export default class User extends Router {
         </div>
       </section>`;
       that.setup('settings', [], template.content);
-      listMyProjects(that.page, that.sort, that.search);
+      listMyProjects();
       initMyProjectsSearch();
       initMyProjectsSort();
       showTopProject();
@@ -221,7 +221,10 @@ export default class User extends Router {
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
       return row;
     }
-    function listMyProjects(page, sortBy, searchString) {
+    function listMyProjects() {
+      console.log('page: ' + that.page);
+      console.log('search: ' + that.search);
+      console.log('sort: ' + that.sort);
       const pageLimit = 10;
       const user = parseInt(that.id);
       const offset = (that.page - 1) * pageLimit;
@@ -260,7 +263,6 @@ export default class User extends Router {
         });
     }
     function initMyProjectsSort() {
-      console.log(that.sort);
       if (that.sort && that.sort !== 'default') {
         const columnTitle = document.getElementById('my-projects-sort-' + that.sort.split('-')[0]);
         const sortIcon = columnTitle.querySelector('.sort-icon');
@@ -332,7 +334,7 @@ export default class User extends Router {
         url.searchParams.append('search', that.search);
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
 
-      listMyProjects(that.page, that.sort, that.search);
+      listMyProjects();
     }
     function updateMyProjectsSearchIcon() {
       const searchIcon = document.getElementById('my-projects-search-icon');
