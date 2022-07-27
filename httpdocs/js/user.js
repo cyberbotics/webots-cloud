@@ -104,35 +104,37 @@ export default class User extends Router {
       listMyProjects();
       initMyProjectsSearch();
       initMyProjectsSort();
-      showTopProject();
-      showInformation();
+      getUserStats();
     }
-    function showInformation() {
+    function getUserStats() {
       fetch('/ajax/animation/information.php', {method: 'post', body: JSON.stringify({user: that.id})})
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
         if (data.error)
-          ModalDialog.run(`Information error`, data.error);
+          ModalDialog.run(`User information request error`, data.error);
         else {
-          document.getElementById('my-projects-information').innerHTML =
-            `<p style="padding-bottom: 10px;"><strong>First Upload: &nbsp; </strong>${data.firstUpload}</p>
-            <p style="padding-bottom: 10px;"><strong>Total Scenes: &nbsp; </strong>${data.totalScenes}</p>
-            <p style="padding-bottom: 10px;"><strong>Total Animations: &nbsp; </strong>${data.totalAnimations}</p>
-            <p><strong>Total Views: &nbsp; </strong>${data.totalViews}</p>`
+          showTopProject(data);
+          showInformation(data);
         }
       });
     }
-    function showTopProject() {
+    function showInformation(data) {
+      document.getElementById('my-projects-information').innerHTML =
+        `<p style="padding-bottom: 10px;"><strong>First Upload: &nbsp; </strong>${data.firstUpload}</p>
+        <p style="padding-bottom: 10px;"><strong>Total Scenes: &nbsp; </strong>${data.totalScenes}</p>
+        <p style="padding-bottom: 10px;"><strong>Total Animations: &nbsp; </strong>${data.totalAnimations}</p>
+        <p><strong>Total Views: &nbsp; </strong>${data.totalViews}</p>`
+    }
+    function showTopProject(data) {
       that.topProjectWebotsView = document.createElement('webots-view');
       that.topProjectWebotsView.id = 'my-projects-top-webots-view';
       document.getElementById('my-projects-top-container').append(that.topProjectWebotsView);
 
-      const title = 'Bioloid Dog';
-      document.getElementById('my-projects-title').innerHTML = title;
+      document.getElementById('my-projects-title').innerHTML = data.topTitle;
 
-      const reference = 'https://testing.webots.cloud/storage/Acdx3l6';
+      const reference = 'https://testing.webots.cloud/storage/' + data.topId;
       that.topProjectWebotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`,
         false, false, `${reference}/thumbnail.jpg`);
     }

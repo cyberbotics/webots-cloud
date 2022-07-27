@@ -39,7 +39,19 @@
     $totalViews = $row['totalViews'];
   }
 
+  $query = "SELECT title, id, duration MAX(viewed) AS topViews FROM animation WHERE user=$user";
+  $result = $mysqli->query($query) or error($mysqli->error);
+  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    $topTitle = $row['title'];
+    $topType = $row['duration'] == 0 ? 'S' : 'A';
+    $topId = $topType . $row['id'];
+    $topViews = $row['topViews'];
+  }
+
   $answer = array();
+  $answer['topTitle'] = $topTitle;
+  $answer['topId'] = $topId;
+  $answer['topViews'] = $topViews;
   $answer['firstUpload'] = $firstUpload;
   $answer['totalScenes'] = $totalScenes;
   $answer['totalAnimations'] = $totalAnimations;
