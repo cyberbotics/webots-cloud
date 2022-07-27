@@ -105,8 +105,8 @@ export default class User extends Router {
       </section>`;
       that.setup('settings', [], template.content);
       listMyProjects(that.page, that.sort, that.search);
-      initMyProjectsSort();
       initMyProjectsSearch();
+      initMyProjectsSort();
       showTopProject();
     }
     function showTopProject() {
