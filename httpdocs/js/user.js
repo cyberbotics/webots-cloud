@@ -123,7 +123,6 @@ export default class User extends Router {
           ModalDialog.run(`User information request error`, data.error);
         else if (data.status !== 'no uploads') {
           showTopProject(data);
-          showTopProject(data);
           showInformation(data);
         }
       });
@@ -136,14 +135,15 @@ export default class User extends Router {
         <p><strong>Total Views: &nbsp; </strong>${data.totalViews}</p>`
     }
     function showTopProject(data) {
-      that.topProjectWebotsView = document.createElement('webots-view');
-      that.topProjectWebotsView.id = 'my-projects-top-webots-view';
-      document.getElementById('my-projects-top-container').append(that.topProjectWebotsView);
+      if (!that.topProjectWebotsView) {
+        that.topProjectWebotsView = document.createElement('webots-view');
+        that.topProjectWebotsView.id = 'my-projects-top-webots-view';
+        document.getElementById('my-projects-top-container').append(that.topProjectWebotsView);
+      }
 
       document.getElementById('my-projects-title').innerHTML = data.topTitle;
 
       const reference = window.location.origin + '/storage/' + data.topId;
-
       if (data.topId[0] === 'S')
         that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), `${reference}/thumbnail.jpg`);
       else
