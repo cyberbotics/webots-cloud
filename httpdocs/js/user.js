@@ -344,7 +344,7 @@ export default class User extends Router {
       if (searchIcon.classList.contains('fa-search') && that.search !== '') {
         searchIcon.classList.remove('fa-search');
         searchIcon.classList.add('fa-xmark');
-      } else if (searchIcon.classList.contains('fa-xmark') && that.search.length === '') {
+      } else if (searchIcon.classList.contains('fa-xmark') && that.search === '') {
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
       }
