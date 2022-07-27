@@ -200,7 +200,7 @@ export default class User extends Router {
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const style = ' style="color:#007acc"';
       const tooltip = `Delete your ${type}`;
-      const deleteIcon = `<i${style} class="is-clickable far fa-trash-alt" id="${type}-${data.id}" title="${tooltip}"></i>`;
+      const deleteIcon = `<i${style} class="is-clickable far fa-trash-alt" id="my-projects-${data.id}" title="${tooltip}"></i>`;
       const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       let row = `<td class="has-text-centered">${data.viewed}</td>`;
