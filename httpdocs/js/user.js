@@ -105,6 +105,7 @@ export default class User extends Router {
       </section>`;
       that.setup('settings', [], template.content);
       listMyProjects(that.page, that.sort, that.search);
+      initMyProjectsSort();
       initMyProjectsSearch();
       showTopProject();
     }
@@ -257,6 +258,42 @@ export default class User extends Router {
             updatePagination(page, total);
           }
         });
+    }
+    function initMyProjectsSort() {
+      if (that.sort && that.sort !== 'default') {
+        const columnTitle = document.getElementById('my-projects-sort-' + that.sort.split('-')[0]);
+        const sortIcon = columnTitle.querySelector('.sort-icon');
+        columnTitle.querySelector('.sort-icon').style.display = 'inline';
+        if (that.sort.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+          sortIcon.classList.toggle('fa-sort-down');
+          sortIcon.classList.toggle('fa-sort-up');
+        }
+      }
+      document.querySelectorAll('.column-title').forEach((title) => {
+        title.addEventListener('click', function(e) {
+          const sortIcon = title.querySelector('.sort-icon');
+          const previousSort = that.sort.split('-')[0];
+          let sort = title.id.split('-')[2];
+
+          if (previousSort === sort) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+            sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
+          } else if (previousSort !== 'default') {
+            document.getElementById('my-projects-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
+            if (sortIcon.classList.contains('fa-sort-up')) {
+              sortIcon.classList.toggle('fa-sort-down');
+              sortIcon.classList.toggle('fa-sort-up');
+            }
+            sort += '-desc';
+          } else
+            sort += '-desc';
+
+          title.querySelector('.sort-icon').style.display = 'inline';
+          that.sort = sort;
+          searchAndSortMyProjectsTable();
+        });
+      });
     }
     function initMyProjectsSearch() {
       document.getElementById('my-projects-search-input').value = that.search;
