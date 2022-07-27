@@ -325,8 +325,8 @@ export default class User extends Router {
         url.searchParams.append('p', that.page);
       else
         that.page = 1;
-      if (that.search && that.search !== 'default')
-        url.searchParams.append('sort', that.search);
+      if (that.sort && that.sort !== 'default')
+        url.searchParams.append('sort', that.sort);
       if (that.search && that.search !== '')
         url.searchParams.append('search', that.search);
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
