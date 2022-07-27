@@ -4,7 +4,7 @@ import ModalDialog from './modal_dialog.js';
 document.addEventListener('DOMContentLoaded', function() {
   let closeWebotsViewButton = document.createElement('a');
   closeWebotsViewButton.className = 'button is-small is-light is-danger'
-  closeWebotsViewButton.innerHTML = 'History';
+  closeWebotsViewButton.innerHTML = 'Close';
   closeWebotsViewButton.style.position = 'fixed';
   closeWebotsViewButton.style.top = '11px';
   closeWebotsViewButton.style.right = '200px';
