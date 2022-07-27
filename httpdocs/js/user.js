@@ -384,7 +384,7 @@ export default class User extends Router {
                   uploads = null;
               }
               window.localStorage.setItem('uploads', JSON.stringify(uploads));
-              that.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
+              that.load(`/my-projects${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
