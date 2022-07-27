@@ -17,8 +17,9 @@
   $query = "SELECT title FROM animation WHERE user=$user";
   $result = $mysqli->query($query) or error($mysqli->error);
   $titles = "";
+  $i = 1;
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-    $titles .= $row['title'];
+    $titles .= strval($i) + $row['title'] + "   ";
   }
   error($titles);
 
