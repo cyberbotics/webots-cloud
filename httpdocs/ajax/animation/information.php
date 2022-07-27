@@ -39,7 +39,7 @@
     $totalViews = $row['totalViews'];
   }
 
-  $query = "SELECT MAX(viewed) AS topViews FROM animation WHERE user=$user";
+  $query = "SELECT MAX(viewed) AS topViews, title FROM animation WHERE user=$user";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
