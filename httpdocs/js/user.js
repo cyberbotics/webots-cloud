@@ -340,11 +340,12 @@ export default class User extends Router {
       listMyProjects();
     }
     function updateMyProjectsSearchIcon() {
+      console.log(that.search.length);
       const searchIcon = document.getElementById('my-projects-search-icon');
-      if (searchIcon.classList.contains('fa-search') && that.search !== '') {
+      if (searchIcon.classList.contains('fa-search') && that.search.length > 0) {
         searchIcon.classList.remove('fa-search');
         searchIcon.classList.add('fa-xmark');
-      } else if (searchIcon.classList.contains('fa-xmark') && that.search === '') {
+      } else if (searchIcon.classList.contains('fa-xmark') && that.search.length === 0) {
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
       }
