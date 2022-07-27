@@ -326,6 +326,10 @@ nav.pagination > a[disabled] {
   min-height: 500px;
 }
 
+#my-projects-top {
+  height: 100%;
+}
+
 #my-projects-top-webots-view {
   position: relative;
   height: calc(100% - 60px);
