@@ -222,10 +222,6 @@ export default class User extends Router {
       return row;
     }
     function listMyProjects() {
-      console.log('page: ' + that.page);
-      console.log('search: ' + that.search);
-      console.log('sort: ' + that.sort);
-      console.log('type: ' + that.id);
       const pageLimit = 10;
       const user = parseInt(that.id);
       const offset = (that.page - 1) * pageLimit;

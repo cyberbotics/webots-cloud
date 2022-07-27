@@ -322,6 +322,10 @@ nav.pagination > a[disabled] {
 
 /* My Projects Tiles*/
 
+#my-projects-top {
+  min-height: 500px;
+}
+
 #my-projects-top-webots-view {
   position: relative;
   height: calc(100% - 60px);
@@ -350,6 +354,7 @@ nav.pagination > a[disabled] {
   }
 
   #my-projects-top {
+    min-height: none;
     aspect-ratio: 4 / 3;
   }
 }
