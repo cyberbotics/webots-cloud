@@ -69,8 +69,8 @@ export default class User extends Router {
               </tbody>
             </table>
             <div class="empty-search" id="my-projects-empty-search" style="display: none;">
-              <i class="fas fa-xl fa-search" id="no-project-icon" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
-              </i>
+              <i class="fas fa-xl fa-search" id="no-project-icon"
+                style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;"></i>
               <p id="my-projects-empty-search-text"></p>
             </div>
           </div>
@@ -88,8 +88,9 @@ export default class User extends Router {
             </div>
           </div>
           <div class="tile is-vertical is-parent">
-            <div class="tile is-child box" id="my-projects-top">
-              <p class="title">Top Project: <span class="is-size-4 has-text-weight-normal">hello sogfhs sofihsdog aoihs shjd sdgj</span></p>
+            <div class="tile is-child box">
+              <p class="title">Top Project: <span id="top-project-title" class="is-size-4 has-text-weight-normal"></span></p>
+              <div id="my-projects-top"></div>
             </div>
             <div class="tile is-child box">
               <p class="title">Information</p>
