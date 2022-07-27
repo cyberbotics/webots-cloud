@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   closeWebotsViewButton.addEventListener('click', function(e) {
     let webotsView = document.getElementById('webots-view');
-    if (webotsView)
+    if (webotsView) {
+      console.log('Closing webots view...');
       webotsView.close();
+    }
   });
 
   let scenePage = 1;
