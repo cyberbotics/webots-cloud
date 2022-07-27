@@ -251,12 +251,13 @@ export default class User extends Router {
             let parent = that.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
+              let type = data.animations[i].duration === 0 ? 'S' : 'A';
               let node = parent.querySelector(`#my-projects-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? that.page - 1 : that.page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function(event) { deleteAnimation(event, user, project, p); });
+                node.addEventListener('click', function(event) { deleteMyProject(event, type, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -348,6 +349,45 @@ export default class User extends Router {
         searchIcon.classList.add('fa-search');
         searchIcon.classList.remove('fa-xmark');
       }
+    }
+    function deleteMyProject(event, type, page) {
+      const animation = parseInt(event.target.id.substring(12));
+      const typeName = (type === 'A') ? 'animation' : 'scene';
+      const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
+      let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete ${capitalizedTypeName}`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            type: type,
+            animation: animation,
+            user: that.id,
+            password: that.password
+          })
+        };
+        fetch('ajax/animation/delete.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`${capitalizedTypeName} deletion error`, data.error);
+            else if (data.status === 1) {
+              let uploads = JSON.parse(window.localStorage.getItem('uploads'));
+              if (uploads !== null && uploads.includes(animation)) {
+                uploads.splice(uploads.indexOf(animation), 1);
+                if (uploads.length === 0)
+                  uploads = null;
+              }
+              window.localStorage.setItem('uploads', JSON.stringify(uploads));
+              that.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
+            }
+          });
+      });
     }
 
     function settingsPage() {
