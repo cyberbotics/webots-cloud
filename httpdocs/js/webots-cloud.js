@@ -2,6 +2,21 @@ import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+  let closeWebotsViewButton = document.createElement('a');
+  closeWebotsViewButton.className = 'button is-small is-light is-danger'
+  closeWebotsViewButton.innerHTML = 'History';
+  closeWebotsViewButton.style.position = 'fixed';
+  closeWebotsViewButton.style.top = '11px';
+  closeWebotsViewButton.style.right = '200px';
+  closeWebotsViewButton.style.zIndex = '300000';
+  document.body.appendChild(closeWebotsViewButton);
+
+  closeWebotsViewButton.addEventListener('click', function(e) {
+    let webotsView = document.getElementById('webots-view');
+    if (webotsView)
+      webotsView.close();
+  });
+
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
