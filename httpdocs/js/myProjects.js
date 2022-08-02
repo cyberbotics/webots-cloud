@@ -134,11 +134,8 @@ export default class MyProjects {
   }
 
   showTopProject(data) {
-    document.getElementById('my-projects-title').innerHTML = data.title;
-    const reference = window.location.origin + '/storage/' + data.id;
-    const type = data.id[0];
-    /*this.project.setupMyProjectsWebotsView(reference);
-    this.project.runWebotsView(data)
+    this.project.setupMyProjectsWebotsView();
+    this.project.runWebotsView(data);
     /* if (data.topId[0] === 'S')
       that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), `${reference}/thumbnail.jpg`);
     else

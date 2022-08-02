@@ -42,6 +42,7 @@
     $totalViews = $row['totalViews'];
   }
 
+  require '../../../php/mysql_id_string.php';
   $query = "SELECT title, id, viewed, version, duration FROM animation WHERE user = $user ORDER BY viewed DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -51,11 +52,10 @@
     $topDuration = $row['duration'];
     $topType = $row['duration'] == 0 ? "S" : "A";
     $topId = $row['id'];
+    $topUri = '/' . $type . mysql_id_to_string($row['id']);
+    $topUrl = 'https://' . $_SERVER['SERVER_NAME'] . $topUri;
     break;
   }
-
-  require '../../../php/mysql_id_string.php';
-  $topId = $topType . mysql_id_to_string($topId);
 
   $answer = array();
   $answer['firstUpload'] = $firstUpload;
@@ -64,7 +64,7 @@
   $answer['totalViews'] = $totalViews;
   $answer['title'] = $topTitle;
   $answer['duration'] = $topDuration;
-  $answer['id'] = $topId;
+  $answer['url'] = $topUrl;
   $answer['views'] = $topViews;
   $answer['version'] = $topVersion;
   die(json_encode($answer));

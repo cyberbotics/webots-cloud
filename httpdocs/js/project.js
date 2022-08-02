@@ -106,7 +106,9 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  setupMyProjectsWebotsView() {
+  setupMyProjectsWebotsView(data) {
+    document.getElementById('my-projects-title').innerHTML = data.title;
+
     if (Project.webotsView)
       Project.webotsView.close();
 
