@@ -6,19 +6,7 @@ export default class MyProjects {
     this.sort = 'default';
     this.delay = false;
     let that = this;
-    //routes.push({ url: '/my-projects', setup: myProjectsPage });
-
     routes.push({ url: '/my-projects', setup: myProjectsPage });
-    function testPage() {
-      const template = document.createElement('template');
-      template.innerHTML =
-        `<section class="section">
-          <div class="title">
-            TEST PAGE
-          </div>
-        </section>`
-      project.setup('terms-of-service', [], template.content);
-    }
 
     function myProjectsPage() {
       that.page = new URL(document.location.href).searchParams.get('p') ?
@@ -29,8 +17,8 @@ export default class MyProjects {
         (new URL(document.location.href).searchParams.get('sort')).toString() : that.sort;
 
       // we need to be logged in to view this page
-      /* if (!that.password || !that.email)
-       return false; */
+      if (!that.project.password || !that.project.email)
+       return false;
       const template = document.createElement('template');
       const projectsTable =
         `<section class="section" data-content="my-projects" style="padding: 0">
