@@ -1,3 +1,4 @@
+import ModalDialog from './modal_dialog.js';
 export default class MyProjects {
   constructor(routes, project) {
     this.project = project;
