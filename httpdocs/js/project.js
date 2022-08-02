@@ -173,14 +173,12 @@ export default class Project extends User {
       } else if (data) {
         console.log(data.url);
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
           Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
             this.isMobileDevice(), `${reference}/thumbnail.jpg`);
         else
           Project.webotsView.loadScene(`${reference}/scene.x3d`, this.isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else {
-        that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
         let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
