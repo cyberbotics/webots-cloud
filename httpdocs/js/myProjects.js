@@ -297,7 +297,7 @@ export default class MyProjects {
             }
           }
           const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-          this.updateMyProjectsPagination(total);
+          that.updateMyProjectsPagination(total);
         }
       });
   }
