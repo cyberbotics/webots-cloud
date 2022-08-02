@@ -77,7 +77,6 @@ export default class Router {
         page = window.location.pathname + window.location.search + window.location.hash;
       that.resetNavbar();
       const url = new URL(window.location.origin + page);
-      console.log(url.href);
       if (url.pathname === '/404.php') {
         that.notFound();
         resolve();

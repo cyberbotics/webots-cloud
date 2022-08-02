@@ -11,15 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
   closeWebotsViewButton.style.zIndex = '300000';
   document.body.appendChild(closeWebotsViewButton);
 
-  closeWebotsViewButton.addEventListener('click', function(e) {
-    let webotsView = document.querySelector('webots-view');
-    if (webotsView) {
-      console.log('Closing webots view...');
-      webotsView.close();
-      webotsView.remove();
-    }
-  });
-
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;

@@ -380,7 +380,6 @@ export default class MyProjects {
   }
 
   updateMyProjectsSearchIcon() {
-    console.log(that.search.length);
     const searchIcon = document.getElementById('my-projects-search-icon');
     if (searchIcon.classList.contains('fa-search') && that.search.length > 0) {
       searchIcon.classList.remove('fa-search');
