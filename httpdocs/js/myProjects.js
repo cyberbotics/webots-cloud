@@ -138,7 +138,7 @@ export default class MyProjects {
     const reference = window.location.origin + '/storage/' + data.topId;
     const type = data.topId[0];
     this.project.setupMyProjectsWebotsView(reference);
-    console.log(data.version);
+    console.log(data.topVersion);
     /* if (data.topId[0] === 'S')
       that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), `${reference}/thumbnail.jpg`);
     else
