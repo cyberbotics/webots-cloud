@@ -6,7 +6,19 @@ export default class MyProjects {
     this.sort = 'default';
     this.delay = false;
     let that = this;
-    routes.push({ url: '/my-projects', setup: myProjectsPage });
+    //routes.push({ url: '/my-projects', setup: myProjectsPage });
+
+    routes.push({ url: '/my-projects', setup: testPage });
+    function testPage() {
+      const template = document.createElement('template');
+      template.innerHTML =
+        `<section class="section">
+          <div class="title">
+            TEST PAGE
+          </div>
+        </section>`
+      project.setup('terms-of-service', [], template.content);
+    }
 
     function myProjectsPage() {
       that.page = new URL(document.location.href).searchParams.get('p') ?
