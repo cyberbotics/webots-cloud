@@ -52,7 +52,7 @@
     $topDuration = $row['duration'];
     $topType = $row['duration'] == 0 ? "S" : "A";
     $topId = $row['id'];
-    $topUri = '/' . $type . mysql_id_to_string($row['id']);
+    $topUri = '/' . $topType . mysql_id_to_string($row['id']);
     $topUrl = 'https://' . $_SERVER['SERVER_NAME'] . $topUri;
     break;
   }
