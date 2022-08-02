@@ -150,7 +150,7 @@ export default class MyProjects {
       : `" aria-label="Goto page 1" href="my-projects${hrefSort}${hrefSearch}"`;
     content.innerHTML =
       `<a class="pagination-previous"${previousDisabled}>Previous</a>
-      <ul class="pagination-list"><li>
+      <ul class="pagination-list" style="position:relative; margin: auto;"><li>
       <a class="pagination-link${oneIsCurrent}>1</a></li>`;
     for (let i = 2; i <= max; i++) {
       if (i === this.page - 2 || (i === this.page + 2 && i !== max)) {
