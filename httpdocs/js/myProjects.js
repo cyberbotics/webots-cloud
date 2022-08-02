@@ -256,7 +256,8 @@ export default class MyProjects {
 
   listMyProjects() {
     const pageLimit = 10;
-    const offset = (that.page - 1) * pageLimit;
+    const offset = (this.page - 1) * pageLimit;
+    let that = this;
     fetch('/ajax/animation/list.php', {method: 'post',
       body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: that.sort, search: that.search, user: that.id})})
       .then(function(response) {
