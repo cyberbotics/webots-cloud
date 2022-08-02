@@ -48,6 +48,7 @@
     $topTitle = $row['title'];
     $topViews = $row['viewed'];
     $topVersion = $row['version'];
+    $topDuration = $row['duration'];
     $topType = $row['duration'] == 0 ? "S" : "A";
     $topId = $row['id'];
     break;
@@ -61,9 +62,10 @@
   $answer['totalScenes'] = $totalScenes;
   $answer['totalAnimations'] = $totalAnimations;
   $answer['totalViews'] = $totalViews;
-  $answer['topTitle'] = $topTitle;
-  $answer['topId'] = $topId;
-  $answer['topViews'] = $topViews;
-  $answer['topVersion'] = $topVersion;
+  $answer['title'] = $topTitle;
+  $answer['duration'] = $topDuration;
+  $answer['id'] = $topId;
+  $answer['views'] = $topViews;
+  $answer['version'] = $topVersion;
   die(json_encode($answer));
  ?>
