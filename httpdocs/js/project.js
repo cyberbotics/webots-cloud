@@ -1,11 +1,13 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
 import TermsAndPrivacy from './termsAndPrivacy.js';
+import MyProjects from './myProjects.js';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
+    this.myProjects = new MyProjects(routes, this);
     this.load(null, false);
   }
   static run(title, footer, routes) {
@@ -102,6 +104,19 @@ export default class Project extends User {
     else
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
+  }
+  setupMyProjectsWebotsView() {
+    if (Project.webotsView)
+      Project.webotsView.close();
+
+    let topProjectContainer = document.getElementById('my-projects-top-container');
+    if (topProjectContainer)
+      topProjectContainer.innerHTML = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
+
+    if (Project.webotsView)
+      topProjectContainer.appendChild(Project.webotsView);
+    else
+      Project.webotsView = document.querySelector('webots-view');
   }
   runWebotsView(data, fallbackVersion) {
     let that = this;
