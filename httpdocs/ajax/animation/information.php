@@ -42,7 +42,7 @@
     $totalViews = $row['totalViews'];
   }
 
-  $query = "SELECT title, id, viewed, duration FROM animation WHERE user = $user ORDER BY viewed DESC";
+  $query = "SELECT title, id, viewed, version, duration FROM animation WHERE user = $user ORDER BY viewed DESC";
   $result = $mysqli->query($query) or error($mysqli->error);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
