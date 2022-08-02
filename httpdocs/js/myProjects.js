@@ -283,7 +283,7 @@ export default class MyProjects {
             document.getElementById('my-projects-empty-search').style.display = 'none';
           let line = ``;
           for (let i = 0; i < data.animations.length; i++)
-            line += '<tr>' + myProjectsRow(data.animations[i]) + '</tr>';
+            line += '<tr>' + that.myProjectsRow(data.animations[i]) + '</tr>';
           let parent = that.content.querySelector(`section[data-content="my-projects"] > div > table > tbody`);
           parent.innerHTML = line;
           for (let i = 0; i < data.animations.length; i++) {
