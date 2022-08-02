@@ -351,8 +351,8 @@ export default class MyProjects {
         setTimeout(() => {
           that.search = document.getElementById('my-projects-search-input').value;
           that.page = 1;
-          this.updateMyProjectsSearchIcon();
-          this.searchAndSortMyProjectsTable();
+          that.updateMyProjectsSearchIcon();
+          that.searchAndSortMyProjectsTable();
           that.delay = false;
         }, '300');
       }
@@ -362,8 +362,8 @@ export default class MyProjects {
         document.getElementById('my-projects-search-input').value = '';
         that.search = document.getElementById('my-projects-search-input').value;
         that.page = 1;
-        this.updateMyProjectsSearchIcon();
-        this.searchAndSortMyProjectsTable();
+        that.updateMyProjectsSearchIcon();
+        that.searchAndSortMyProjectsTable();
       }
     });
   }
