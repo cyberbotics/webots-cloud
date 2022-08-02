@@ -327,10 +327,6 @@ nav.pagination > a[disabled] {
 }
 
 #my-projects-top-container {
-  height: 100%;
-}
-
-#my-projects-top-webots-view {
   position: relative;
   height: calc(100% - 60px);
   width: 100%;
