@@ -7,89 +7,16 @@ export default class User extends Router {
     super(title, footer, routes);
     this.routes.push({url: '/settings', setup: settingsPage});
     let that = this;
-
-    function settingsPage() {
-      // we need to be logged in to view this page
-      if (!that.password || !that.email)
-        return false;
-      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
-      const template = document.createElement('template');
-      const md5sum = md5(that.email.toLowerCase());
-      const hostname = document.location.hostname;
-      const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
-      template.innerHTML =
-        `<section class="section">
-          <div class="container">
-            <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
-            <h2 class="subtitle pt-3">${that.email}</h2>
-          </div>
-        </section>
-        <section class="section" style="margin-top:0;padding-top:0">
-          <div class="container panel">
-            <p class="panel-heading">Gravatar Profile</p>
-            <div class="panel-block">
-              <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
-              <span name="displayName">${name}</span>
-            </div>
-            <div class="panel-block">
-              <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
-            </div>
-            <div class="panel-block">
-              <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
-            </div>
-          </div>
-          <div class="container panel">
-            <p class="panel-heading">Change Password</p>
-            <div class="panel-block">
-              We will send you a e-mail with a link to reset your password.
-            </div>
-            <div class="panel-block">
-              <button class="button is-link" id="change-password">Change Password</button>
-            </div>
-          </div>
-          <div class="container panel">
-            <p class="panel-heading">Delete Account</p>
-            <div class="panel-block">
-              All your data will be erased, including the scenes and animations you uploaded.
-              There is no undo.
-            </div>
-            <div class="panel-block">
-              <button class="button is-danger" id="delete-account">Delete my Account</button>
-            </div>
-          </div>
-        </section>`;
-      that.setup('settings', [], template.content);
-      document.querySelector('#change-password').addEventListener('click', function(event) {
-        event.target.classList.add('is-loading');
-        that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
-      });
-      document.querySelector('#delete-account').addEventListener('click', function(event) {
-        let dialog = ModalDialog.run('Really delete account?',
-          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
-          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
-        dialog.querySelector('form').addEventListener('submit', function(event) {
-          event.preventDefault();
-          dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post',
-            body: JSON.stringify({email: that.email, password: that.password})})
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              dialog.close();
-              if (data.error)
-                ModalDialog.run('Error', data.error);
-              else {
-                ModalDialog.run('Account deleted',
-                  '<p>Your account was successfully deleted.</p><p>All you data was erased.</p>');
-                that.password = null;
-                that.email = null;
-                that.id = null;
-                that.load('/');
-              }
-            });
-        });
-      });
+    function findGetParameter(parameterName) {
+      let result = null;
+      let tmp = [];
+      let items = location.search.substr(1).split('&');
+      for (let index = 0; index < items.length; index++) {
+        tmp = items[index].split('=');
+        if (tmp[0] === parameterName)
+          result = decodeURIComponent(tmp[1]);
+      }
+      return result;
     }
     function resetPassword(id, token, email) {
       let content = {};
@@ -257,16 +184,88 @@ export default class User extends Router {
         });
       });
     }
-    function findGetParameter(parameterName) {
-      let result = null;
-      let tmp = [];
-      let items = location.search.substr(1).split('&');
-      for (let index = 0; index < items.length; index++) {
-        tmp = items[index].split('=');
-        if (tmp[0] === parameterName)
-          result = decodeURIComponent(tmp[1]);
-      }
-      return result;
+    function settingsPage() {
+      // we need to be logged in to view this page
+      if (!that.password || !that.email)
+        return false;
+      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
+      const template = document.createElement('template');
+      const md5sum = md5(that.email.toLowerCase());
+      const hostname = document.location.hostname;
+      const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
+      template.innerHTML =
+        `<section class="section">
+          <div class="container">
+            <h1 class="title pb-3"><i class="fas fa-cog"></i> Settings</h1>
+            <h2 class="subtitle pt-3">${that.email}</h2>
+          </div>
+        </section>
+        <section class="section" style="margin-top:0;padding-top:0">
+          <div class="container panel">
+            <p class="panel-heading">Gravatar Profile</p>
+            <div class="panel-block">
+              <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"> &nbsp;
+              <span name="displayName">${name}</span>
+            </div>
+            <div class="panel-block">
+              <p>Create or update your picture and information on <a href="https://www.gravatar.com" target="_blank">gravatar</a>.</p>
+            </div>
+            <div class="panel-block">
+              <a class="button is-link" href="https://www.gravatar.com/${md5sum}" target="_blank">Gravatar Profile</a>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Change Password</p>
+            <div class="panel-block">
+              We will send you a e-mail with a link to reset your password.
+            </div>
+            <div class="panel-block">
+              <button class="button is-link" id="change-password">Change Password</button>
+            </div>
+          </div>
+          <div class="container panel">
+            <p class="panel-heading">Delete Account</p>
+            <div class="panel-block">
+              All your data will be erased, including the scenes and animations you uploaded.
+              There is no undo.
+            </div>
+            <div class="panel-block">
+              <button class="button is-danger" id="delete-account">Delete my Account</button>
+            </div>
+          </div>
+        </section>`;
+      that.setup('settings', [], template.content);
+      document.querySelector('#change-password').addEventListener('click', function(event) {
+        event.target.classList.add('is-loading');
+        that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
+      });
+      document.querySelector('#delete-account').addEventListener('click', function(event) {
+        let dialog = ModalDialog.run('Really delete account?',
+          '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
+          '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
+        dialog.querySelector('form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+          fetch('/ajax/user/delete.php', { method: 'post',
+            body: JSON.stringify({email: that.email, password: that.password})})
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              dialog.close();
+              if (data.error)
+                ModalDialog.run('Error', data.error);
+              else {
+                ModalDialog.run('Account deleted',
+                  '<p>Your account was successfully deleted.</p><p>All you data was erased.</p>');
+                that.password = null;
+                that.email = null;
+                that.id = null;
+                that.load('/');
+              }
+            });
+        });
+      });
     }
     // account creation: entering the password
     const token = findGetParameter('token');
@@ -364,8 +363,6 @@ export default class User extends Router {
       <div id="user-menu" class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" id="email"><span name="displayName">${name}</span> &nbsp; <img src="https://www.gravatar.com/avatar/${md5sum}?s=80&d=https%3A%2F%2F${hostname}%2Fimages%2Fprofile.png"></a>
         <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="/my-projects"><i class="fas fa-user"> &nbsp; </i>My projects</a>
-          <div class="navbar-divider"></div>
           <a class="navbar-item" href="/settings"><i class="fas fa-cog"> &nbsp; </i>Settings</a>
           <div class="navbar-divider"></div>
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
@@ -377,7 +374,7 @@ export default class User extends Router {
       that.password = null;
       that.email = null;
       that.id = null;
-      if (window.location.pathname === '/settings' || window.location.pathname === '/my-projects')
+      if (window.location.pathname === '/settings')
         that.load('/');
       else
         that.load();
