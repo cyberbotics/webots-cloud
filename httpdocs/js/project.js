@@ -114,7 +114,7 @@ export default class Project extends User {
 
     let topProjectContainer = document.getElementById('my-projects-top-container');
     if (topProjectContainer)
-      topProjectContainer.innerHTML = (!Project.webotsView) ? '<webots-view id="my-projects-top-webots-view"></webots-view>' : '';
+      topProjectContainer.innerHTML = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
 
     if (Project.webotsView)
       topProjectContainer.appendChild(Project.webotsView);
