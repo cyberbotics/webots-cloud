@@ -152,27 +152,27 @@ export default class MyProjects {
   }
 
   updateMyProjectsPagination(max) {
-    const hrefSort = that.sort && that.sort !== 'default' ? '?sort=' + that.sort : '';
-    const hrefSearch = that.search && that.search !== '' ? '?search=' + that.search : '';
+    const hrefSort = this.sort && this.sort !== 'default' ? '?sort=' + this.sort : '';
+    const hrefSearch = this.search && this.search !== '' ? '?search=' + this.search : '';
     let nav = document.querySelector(`section[data-content="my-projects"] > nav`);
     let content = {};
-    const previousDisabled = (that.page === 1) ? ' disabled' : ` href="${(that.page === 2)
-      ? ('/my-projects') : ('/my-projects?p=' + (that.page - 1))}${hrefSort}${hrefSearch}"`;
-    const nextDisabled = (that.page === max) ? ' disabled' : ` href="my-projects?p=${that.page + 1}${hrefSort}${hrefSearch}"`;
-    const oneIsCurrent = (that.page === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
+    const previousDisabled = (this.page === 1) ? ' disabled' : ` href="${(this.page === 2)
+      ? ('/my-projects') : ('/my-projects?p=' + (this.page - 1))}${hrefSort}${hrefSearch}"`;
+    const nextDisabled = (this.page === max) ? ' disabled' : ` href="my-projects?p=${this.page + 1}${hrefSort}${hrefSearch}"`;
+    const oneIsCurrent = (this.page === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
       : `" aria-label="Goto page 1" href="my-projects${hrefSort}${hrefSearch}"`;
     content.innerHTML =
       `<a class="pagination-previous"${previousDisabled}>Previous</a>
       <ul class="pagination-list"><li>
       <a class="pagination-link${oneIsCurrent}>1</a></li>`;
     for (let i = 2; i <= max; i++) {
-      if (i === that.page - 2 || (i === that.page + 2 && i !== max)) {
+      if (i === this.page - 2 || (i === this.page + 2 && i !== max)) {
         content.innerHTML += `<li><span class="pagination-ellipsis">&hellip;</span></li>`;
         continue;
       }
-      if (i < that.page - 2 || (i > that.page + 2 && i !== max))
+      if (i < this.page - 2 || (i > this.page + 2 && i !== max))
         continue;
-      if (i === that.page)
+      if (i === this.page)
         content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
           ` aria-current="page">${i}</a></li>`;
       else
