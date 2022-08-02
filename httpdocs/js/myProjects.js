@@ -134,7 +134,7 @@ export default class MyProjects {
   }
 
   showTopProject(data) {
-    this.project.setupMyProjectsWebotsView();
+    this.project.setupMyProjectsWebotsView(data);
     this.project.runWebotsView(data);
     /* if (data.topId[0] === 'S')
       that.topProjectWebotsView.loadScene(`${reference}/scene.x3d`, that.isMobileDevice(), `${reference}/thumbnail.jpg`);
