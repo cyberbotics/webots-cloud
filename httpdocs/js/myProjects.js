@@ -2,6 +2,8 @@ import ModalDialog from './modal_dialog.js';
 export default class MyProjects {
   constructor(routes, project) {
     this.project = project;
+    this.id = this.project.id;
+    this.email = this.project.email;
     this.page = 1;
     this.search = '';
     this.sort = 'default';
