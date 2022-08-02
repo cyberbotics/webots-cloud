@@ -280,7 +280,7 @@ export default class MyProjects {
               let p = (data.animations.length === 1) ? that.page - 1 : that.page;
               if (p === 0)
                 p = 1;
-              node.addEventListener('click', function(event) { deleteMyProject(event, type, p); });
+              node.addEventListener('click', function(event) { that.deleteMyProject(event, type, p); });
             }
           }
           const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
