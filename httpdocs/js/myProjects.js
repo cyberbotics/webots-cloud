@@ -385,10 +385,10 @@ export default class MyProjects {
 
   updateMyProjectsSearchIcon() {
     const searchIcon = document.getElementById('my-projects-search-icon');
-    if (searchIcon.classList.contains('fa-search') && that.search.length > 0) {
+    if (searchIcon.classList.contains('fa-search') && this.search.length > 0) {
       searchIcon.classList.remove('fa-search');
       searchIcon.classList.add('fa-xmark');
-    } else if (searchIcon.classList.contains('fa-xmark') && that.search.length === 0) {
+    } else if (searchIcon.classList.contains('fa-xmark') && this.search.length === 0) {
       searchIcon.classList.add('fa-search');
       searchIcon.classList.remove('fa-xmark');
     }
