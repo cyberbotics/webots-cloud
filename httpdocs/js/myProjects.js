@@ -12,13 +12,12 @@ export default class MyProjects {
     routes.push({ url: '/my-projects', setup: myProjectsPage });
 
     function myProjectsPage() {
-      console.log("Loaded here");
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
       that.search = new URL(document.location.href).searchParams.get('search') ?
-        (new URL(document.location.href).searchParams.get('search')).toString() : that.search;
+        (new URL(document.location.href).searchParams.get('search')).toString() : '';
       that.sort = new URL(document.location.href).searchParams.get('sort') ?
-        (new URL(document.location.href).searchParams.get('sort')).toString() : that.sort;
+        (new URL(document.location.href).searchParams.get('sort')).toString() : 'default';
 
       // we need to be logged in to view this page
       if (!that.project.password || !that.project.email)
