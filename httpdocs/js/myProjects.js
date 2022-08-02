@@ -12,6 +12,7 @@ export default class MyProjects {
     routes.push({ url: '/my-projects', setup: myProjectsPage });
 
     function myProjectsPage() {
+      console.log("Loaded here");
       that.page = new URL(document.location.href).searchParams.get('p') ?
         parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
       that.search = new URL(document.location.href).searchParams.get('search') ?
