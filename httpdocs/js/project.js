@@ -145,7 +145,6 @@ export default class Project extends User {
         script.src = src;
         script.onload = () => {
           if (data) {
-            console.log(data.url);
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
             if (data.duration > 0)
               Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
@@ -170,6 +169,7 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else if (data) {
+        console.log(data.url);
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
         that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
