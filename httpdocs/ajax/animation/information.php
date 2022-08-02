@@ -47,6 +47,7 @@
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $topTitle = $row['title'];
     $topViews = $row['viewed'];
+    $topVersion = $row['version'];
     $topType = $row['duration'] == 0 ? "S" : "A";
     $topId = $row['id'];
     break;
@@ -63,5 +64,6 @@
   $answer['topTitle'] = $topTitle;
   $answer['topId'] = $topId;
   $answer['topViews'] = $topViews;
+  $answer['topVersion'] = $topVersion;
   die(json_encode($answer));
  ?>
