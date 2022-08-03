@@ -384,6 +384,7 @@ export default class MyProjects {
   deleteMyProject(event, type, page) {
     let that = this;
     const animation = parseInt(event.target.id.substring(12));
+    console.log(animation);
     const typeName = (type === 'A') ? 'animation' : 'scene';
     const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
     let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
