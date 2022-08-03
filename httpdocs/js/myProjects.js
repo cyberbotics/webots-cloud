@@ -2,8 +2,6 @@ import ModalDialog from './modal_dialog.js';
 export default class MyProjects {
   constructor(routes, project) {
     this.project = project;
-    this.id = this.project.id;
-    this.email = this.project.email;
     this.page = 1;
     this.search = '';
     this.sort = 'default';
@@ -111,7 +109,7 @@ export default class MyProjects {
 
   getUserStats() {
     let that = this;
-    fetch('/ajax/animation/information.php', {method: 'post', body: JSON.stringify({user: that.id})})
+    fetch('/ajax/animation/information.php', {method: 'post', body: JSON.stringify({user: that.project.id})})
     .then(function(response) {
       return response.json();
     })
@@ -249,7 +247,7 @@ export default class MyProjects {
     const offset = (this.page - 1) * pageLimit;
     let that = this;
     fetch('/ajax/animation/list.php', {method: 'post',
-      body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: that.sort, search: that.search, user: that.id})})
+      body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: that.sort, search: that.search, user: that.project.id})})
       .then(function(response) {
         return response.json();
       })
@@ -384,7 +382,6 @@ export default class MyProjects {
   deleteMyProject(event, type, page) {
     let that = this;
     const animation = parseInt(event.target.id.substring(12));
-    console.log(animation);
     const typeName = (type === 'A') ? 'animation' : 'scene';
     const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
     let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
@@ -397,8 +394,8 @@ export default class MyProjects {
         body: JSON.stringify({
           type: type,
           animation: animation,
-          user: that.id,
-          password: that.password
+          user: that.project.id,
+          password: that.project.password
         })
       };
       fetch('ajax/animation/delete.php', content)
