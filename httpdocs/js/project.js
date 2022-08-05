@@ -128,7 +128,7 @@ export default class Project extends User {
     const mode = this.findGetParameter('mode');
     const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
       (data ? data.version : this.findGetParameter('version'));
-    const src = 'https://cyberbotics.com/wwi/testingRelative/WebotsView.js';
+    const src = 'https://cyberbotics.com/wwi/testing' + version + '/WebotsView.js';
 
     if (!data)
       that._updateSimulationViewCount(url);
