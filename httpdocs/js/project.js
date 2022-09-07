@@ -1,13 +1,11 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
-import TermsAndPrivacy from './termsAndPrivacy.js';
-import MyProjects from './myProjects.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.termsOfService = new TermsAndPrivacy(routes, this);
-    this.myProjects = new MyProjects(routes, this);
     this.load(null, false);
   }
   static run(title, footer, routes) {
@@ -62,7 +60,6 @@ export default class Project extends User {
             that.notFound();
             resolve();
           } else {
-            that.setupWebotsView(data.animation.duration > 0 ? 'animation' : 'scene', data.animation);
             that.runWebotsView(data.animation);
             resolve();
           }
@@ -106,21 +103,6 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  setupMyProjectsWebotsView(data) {
-    document.getElementById('my-projects-title').innerHTML = data.title;
-
-    if (Project.webotsView)
-      Project.webotsView.close();
-
-    let topProjectContainer = document.getElementById('my-projects-top-container');
-    if (topProjectContainer)
-      topProjectContainer.innerHTML = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
-
-    if (Project.webotsView)
-      topProjectContainer.appendChild(Project.webotsView);
-    else
-      Project.webotsView = document.querySelector('webots-view');
-  }
   runWebotsView(data, fallbackVersion) {
     let that = this;
     let reference;
@@ -148,13 +130,15 @@ export default class Project extends User {
         script.onload = () => {
           if (data) {
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
               Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-                this.isMobileDevice(), `${reference}/thumbnail.jpg`);
+                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`, this.isMobileDevice(), `${reference}/thumbnail.jpg`);
+              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else {
+            that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
             let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
             Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
@@ -172,12 +156,14 @@ export default class Project extends User {
         document.body.appendChild(script);
       } else if (data) {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
         if (data.duration > 0)
           Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-            this.isMobileDevice(), `${reference}/thumbnail.jpg`);
+            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`, this.isMobileDevice(), `${reference}/thumbnail.jpg`);
+          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else {
+        that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
         let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
@@ -212,6 +198,10 @@ export default class Project extends User {
         if (data.error)
           console.warn(data.error);
       });
+  }
+  _isMobileDevice() {
+    // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 }
 Project.current = null;

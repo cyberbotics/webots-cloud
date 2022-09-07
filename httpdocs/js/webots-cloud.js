@@ -1098,7 +1098,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    project.setupWebotsView('run');
     project.runWebotsView();
   }
 });

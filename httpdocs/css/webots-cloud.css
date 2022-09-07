@@ -35,11 +35,6 @@ body {
 
 div.table-container {
   min-height: 550px;
-  max-width: 800px;
-}
-
-.pagination {
-  max-width: 800px;
 }
 
 .column-title {
@@ -241,8 +236,9 @@ nav.pagination > a[disabled] {
 .thumbnail {
   display: auto;
   opacity: 0;
-  position: fixed;
+  position: relative;
   pointer-events: none;
+  transform: scale(1);
 }
 
 .thumbnail-container {
@@ -317,52 +313,5 @@ nav.pagination > a[disabled] {
   .table-container {
     overflow: auto;
     overflow-x: auto;
-  }
-}
-
-/* My Projects Tiles*/
-
-#my-projects-top {
-  min-height: 500px;
-}
-
-#my-projects-top-container {
-  position: relative;
-  height: calc(100% - 60px);
-  width: 100%;
-  overflow: hidden;
-}
-
-@media screen and (min-width: 1110px) {
-  .tile:not(.is-child) {
-      display: flex;
-  }
-
-  .tile.is-60 {
-    flex: none;
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 1109px) {
-  .tile:not(.is-child) {
-      display: block;
-  }
-
-  .tile.is-60 {
-    flex: none;
-    width: 100%;
-  }
-
-  #my-projects-top {
-    min-height: none;
-    aspect-ratio: 4 / 3;
-  }
-}
-
-@media screen and (max-width: 740px) {
-  #my-projects-top {
-    min-height: 500px;
-    width: 100%;
   }
 }

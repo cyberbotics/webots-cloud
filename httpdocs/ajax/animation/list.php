@@ -12,15 +12,12 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $type = isset($data->type) ? strtoupper($data->type[0]) : '';
-  $user = isset($data->user) ? intval($data->user) : 0;
+  $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
   if ($type == 'S') // scene
     $extra_condition = "duration = 0";
-  else if ($type == 'A') // animation
+  else // animation
     $extra_condition = "duration > 0";
-  else if ($user != 0) // my-projects
-    $extra_condition = "user = ${user}";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
@@ -33,16 +30,13 @@
     $query = "SELECT * FROM animation WHERE id=$id AND $extra_condition";
   } else { // listing request
     // delete old and not popular animations
-    $query = "SELECT id, duration FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
+    $query = "SELECT id FROM animation WHERE $extra_condition AND ((viewed = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)) OR (viewed <= 2 AND user = 0 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 WEEK)) OR (uploading = 1 AND uploaded < DATE_SUB(NOW(), INTERVAL 1 DAY)))";
     $result = $mysqli->query($query) or error($mysqli->error);
     require '../../../php/animation.php';
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       $id = intval($row['id']);
       $mysqli->query("DELETE FROM animation WHERE id=$id");
-      if (intval($row['duration']) == 0)
-        delete_animation('S', $id);
-      else
-        delete_animation('A', $id);
+      delete_animation($type, $id);
     }
     $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
       $mysqli->escape_string($data->sortBy) : "viewed-desc";
