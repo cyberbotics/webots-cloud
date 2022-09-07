@@ -69,9 +69,13 @@
   $thumbnailAvailable = (array_key_exists('thumbnail-file', $_FILES) && $_FILES['thumbnail-file']['tmp_name'] !== '') ? true : false;
   $size += $thumbnailAvailable ? $_FILES['thumbnail-file']['size'] : 0;
 
-  $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
-  for($i = 0; $i < $total; $i++)
+  $total_textures = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
+  for($i = 0; $i < $total_textures; $i++)
     $size += $_FILES['textures']['size'][$i];
+
+  $total_meshes = $_FILES['meshes']['name'][0] ? count($_FILES['meshes']['name']) : 0;
+  for($i = 0; $i < $total_meshes; $i++)
+    $size += $_FILES['meshes']['size'][$i];
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
 
   // determine title, info and version
@@ -140,14 +144,24 @@
     error('Cannot move scene file.');
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
-  if ($total > 0) {
+  if ($total_textures > 0) {
     mkdir("$folder/textures");
-    for($i = 0; $i < $total; $i++) {
+    for($i = 0; $i < $total_textures; $i++) {
       $target = basename($_FILES['textures']['name'][$i]);
       if ($target == '')
         continue;
       if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
-        error("Cannot move $total $target");
+        error("Cannot move $total_textures $target");
+    }
+  }
+  if ($total_meshes > 0) {
+    mkdir("$folder/meshes");
+    for($i = 0; $i < $total_meshes; $i++) {
+      $target = basename($_FILES['meshes']['name'][$i]);
+      if ($target == '')
+        continue;
+      if (!move_uploaded_file($_FILES['meshes']['tmp_name'][$i], "$folder/meshes/$target"))
+        error("Cannot move $total_meshes $target");
     }
   }
 
