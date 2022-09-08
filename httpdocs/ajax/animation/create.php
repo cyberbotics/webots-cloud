@@ -44,7 +44,7 @@
     return $value;
   }
 
-  function  move_assets($total_assets, $assets_type) {
+  function  move_assets($total_assets, $assets_type, $folder) {
     mkdir("$folder/$assets_type");
     for($i = 0; $i < $total_assets; $i++) {
       $target = basename($_FILES[$assets_type]['name'][$i]);
@@ -157,9 +157,9 @@
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
   if ($total_textures > 0)
-    move_assets($total_textures, "textures");
+    move_assets($total_textures, "textures", $folder);
   if ($total_meshes > 0)
-    move_assets($total_meshes, "meshes");
+    move_assets($total_meshes, "meshes", $folder);
 
   if ($type === 'S') // scene
     $extra_condition = 'duration=0';
