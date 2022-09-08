@@ -819,7 +819,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <i class="fas fa-upload"></i>
             </span>
           </div>
-          <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+          <div class="help">Upload all the texture files: <em>*.png</em>, <em>*.jpg</em> and/or <em>*.hdr</em></div>
         </div>
         <div class="field">
           <label class="label">Mesh files</label>
