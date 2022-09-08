@@ -829,8 +829,8 @@ document.addEventListener('DOMContentLoaded', function() {
               <i class="fas fa-upload"></i>
             </span>
           </div>
-          <div class="help">Upload all the meshes files: <em>mesh.obj</em>, <em>mesh.mtl</em>,
-            <em>mesh.dae</em> and <em>mesh.stl</em></div>
+          <div class="help">Upload all the meshes files: <em>*.obj</em>, <em>*.mtl</em>,
+            <em>*.dae</em> and/or <em>*.stl</em></div>
         </div>`;
       let cancelled = false;
       const title = (type === 'A') ? 'Add an animation' : 'Add a scene';
