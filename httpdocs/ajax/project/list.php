@@ -26,11 +26,12 @@
     else
       $order = "asc";
   }
+  $extra_condition = "branch=\"$branch\" AND ";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $extra_condition = "WHERE LOWER(title) LIKE LOWER('%$searchString%')";
+    $extra_condition .= "WHERE LOWER(title) LIKE LOWER('%$searchString%')";
   } else
-    $extra_condition = "";
+    $extra_condition .= "";
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM project $extra_condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
