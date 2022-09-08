@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', {method: 'post', body: body})
           .then(function(response) {
-            console.log(response.json())
+            console.log(response.text())
             return response.json();
           })
           .then(function(data) {
