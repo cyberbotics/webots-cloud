@@ -139,7 +139,7 @@
     if ($password['password'] !== $_POST['password'])
       error("Wrong password for user $user.");
   }
-  $branch = dirname(__FILE__);
+  $branch = "testing";
   $query = "INSERT INTO animation(title, description, version, duration, size, user, branch) ".
            "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user, $branch)";
   $mysqli->query($query) or error($mysqli->error);
