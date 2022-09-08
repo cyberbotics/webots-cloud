@@ -851,6 +851,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
           })
           .then(function(data) {
+            console.log(data)
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
