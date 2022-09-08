@@ -27,10 +27,10 @@
       $order = "asc";
   }
   $branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
-  $extra_condition = "branch=\"$branch\" AND ";
+  $extra_condition = "branch=\"$branch\"";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $extra_condition .= "LOWER(title) LIKE LOWER('%$searchString%')";
+    $extra_condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
   } else
     $extra_condition .= "";
   $offset = isset($data->offset) ? intval($data->offset) : 0;
