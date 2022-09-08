@@ -820,6 +820,17 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+        </div>
+        <div class="field">
+          <label class="label">Mesh files</label>
+          <div class="control has-icons-left">
+            <input id="texture-files" name="meshes[]" class="input" type="file" multiple accept=".stl, .obj, .mtl, .dae">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload all the meshes files: <em>mesh.obj</em>, <em>mesh.mtl</em>,
+            <em>mesh.dae</em> and <em>mesh.stk</em></div>
         </div>`;
       let cancelled = false;
       const title = (type === 'A') ? 'Add an animation' : 'Add a scene';
