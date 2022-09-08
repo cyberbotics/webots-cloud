@@ -43,6 +43,18 @@
     }
     return $value;
   }
+
+  function  move_assets($total_assets, $assets_type) {
+    mkdir("$folder/$assets_type");
+    for($i = 0; $i < $total_assets; $i++) {
+      $target = basename($_FILES[$assets_type]['name'][$i]);
+      if ($target == '')
+        continue;
+      if (!move_uploaded_file($_FILES[$assets_type]['tmp_name'][$i], "$folder/$assets_type/$target"))
+        error("Cannot move $total_assets $target");
+    }
+  }
+
   // connect to database
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
@@ -145,25 +157,9 @@
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
   if ($total_textures > 0) {
-    mkdir("$folder/textures");
-    for($i = 0; $i < $total_textures; $i++) {
-      $target = basename($_FILES['textures']['name'][$i]);
-      if ($target == '')
-        continue;
-      if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
-        error("Cannot move $total_textures $target");
-    }
-  }
-  if ($total_meshes > 0) {
-    mkdir("$folder/meshes");
-    for($i = 0; $i < $total_meshes; $i++) {
-      $target = basename($_FILES['meshes']['name'][$i]);
-      if ($target == '')
-        continue;
-      if (!move_uploaded_file($_FILES['meshes']['tmp_name'][$i], "$folder/meshes/$target"))
-        error("Cannot move $total_meshes $target");
-    }
-  }
+    move_assets($total_textures, "textures");
+  if ($total_meshes > 0)
+    move_assets($total_meshes, "meshes");
 
   if ($type === 'S') // scene
     $extra_condition = 'duration=0';
