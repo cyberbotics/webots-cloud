@@ -156,7 +156,7 @@
     error('Cannot move scene file.');
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
-  if ($total_textures > 0) {
+  if ($total_textures > 0)
     move_assets($total_textures, "textures");
   if ($total_meshes > 0)
     move_assets($total_meshes, "meshes");
