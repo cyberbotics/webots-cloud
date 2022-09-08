@@ -17,9 +17,9 @@
   $branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
   $extra_condition = "branch=\"$branch\" AND ";
   if ($type == 'S') // scene
-    $extra_condition = "duration = 0";
+    $extra_condition .= "duration = 0";
   else // animation
-    $extra_condition = "duration > 0";
+    $extra_condition .= "duration > 0";
   if (isset($data->url)) { // view request
     $url = $mysqli->escape_string($data->url);
     $uri = substr($url, strrpos($url, '/'));
