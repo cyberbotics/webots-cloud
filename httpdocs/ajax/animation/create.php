@@ -164,9 +164,9 @@
 
   $extra_condition = "branch=$branch AND ";
   if ($type === 'S') // scene
-    $extra_condition += 'duration=0';
+    $extra_condition .= 'duration=0';
   else // animation
-    $extra_condition += 'duration>0';
+    $extra_condition .= 'duration>0';
   $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $total = intval($count['total']);
