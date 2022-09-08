@@ -848,10 +848,10 @@ document.addEventListener('DOMContentLoaded', function() {
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', {method: 'post', body: body})
           .then(function(response) {
+            console.log(response)
             return response.json();
           })
           .then(function(data) {
-            console.log(data)
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
