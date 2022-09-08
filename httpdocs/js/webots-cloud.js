@@ -819,7 +819,18 @@ document.addEventListener('DOMContentLoaded', function() {
               <i class="fas fa-upload"></i>
             </span>
           </div>
-          <div class="help">Upload all the texture files: <em>image.png</em>, <em>image.jpg</em> and <em>image.hdr</em></div>
+          <div class="help">Upload all the texture files: <em>*.png</em>, <em>*.jpg</em> and/or <em>*.hdr</em></div>
+        </div>
+        <div class="field">
+          <label class="label">Mesh files</label>
+          <div class="control has-icons-left">
+            <input id="texture-files" name="meshes[]" class="input" type="file" multiple accept=".stl, .obj, .mtl, .dae">
+            <span class="icon is-small is-left">
+              <i class="fas fa-upload"></i>
+            </span>
+          </div>
+          <div class="help">Upload all the meshes files: <em>*.obj</em>, <em>*.mtl</em>,
+            <em>*.dae</em> and/or <em>*.stl</em></div>
         </div>`;
       let cancelled = false;
       const title = (type === 'A') ? 'Add an animation' : 'Add a scene';
@@ -867,6 +878,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                   }
                 });
+
               const p = (total === 0) ? 1 : Math.ceil(total / pageLimit);
               project.load(`/${typeName}${(p > 1) ? ('?p=' + p) : ''}`);
             }
