@@ -878,6 +878,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                   }
                 });
+              console.log(total)
               const p = (total === 0) ? 1 : Math.ceil(total / pageLimit);
               project.load(`/${typeName}${(p > 1) ? ('?p=' + p) : ''}`);
             }
