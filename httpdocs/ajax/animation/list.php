@@ -52,7 +52,7 @@
     }
     if (isset($data->search)) {
       $searchString = $mysqli->escape_string($data->search);
-      $condition = "$condition AND LOWER(title) LIKE LOWER('%$searchString%')";
+      $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
     }
     $query = "SELECT * FROM animation WHERE $condition AND uploading = 0 ORDER BY $parameter $order, id ASC LIMIT $limit OFFSET $offset";
   }
