@@ -31,8 +31,7 @@
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
     $extra_condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
-  } else
-    $extra_condition .= "";
+  }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query = "SELECT * FROM project WHERE $extra_condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
