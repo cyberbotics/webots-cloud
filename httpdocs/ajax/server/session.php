@@ -19,7 +19,7 @@ $url = $mysqli->escape_string($_GET['url']);
 $branch = basename(dirname(__FILE__, 4));
 
 $select = "SELECT url FROM server JOIN server_branch ON server.id=server_branch.id";
-$extra_condition = "branch=\"$branch\")";
+$extra_condition = "branch=\"$branch\"";
 # search for a dedicated server first
 $query = "$select WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) AND $extra_condition ORDER BY `load` LIMIT 1";
 $result = $mysqli->query($query) or error($mysqli->error);
