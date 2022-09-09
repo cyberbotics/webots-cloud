@@ -1028,6 +1028,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
         .then(function(response) {
+          console.log(response.text())
           return response.json();
         })
         .then(function(data) {
