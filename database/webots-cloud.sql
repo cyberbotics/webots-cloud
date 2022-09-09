@@ -71,4 +71,12 @@ CREATE TABLE `repository` (
 ALTER TABLE `repository`
   ADD PRIMARY KEY (`server`,`url`);
 
+CREATE TABLE `server_branch` (
+  `id` int(11) NOT NULL,
+  `branch` varchar(256) NOT NULL DEFAULT 'main'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `server_branch`
+  ADD PRIMARY KEY (`id`,`branch`);
+
 COMMIT;
