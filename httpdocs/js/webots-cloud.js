@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
             <div class="container is-fullhd">
               <div class="buttons">
-                <button class="button" onclick="window.open('https://github.com/cyberbotics/webots-cloud/wiki')">
+                <button class="button" onclick="window.open('https://www.cyberbotics.com/doc/guide/web-server')">
                   Add your own server</button>
               </div>
             </div>
