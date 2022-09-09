@@ -16,7 +16,8 @@ if ($mysqli->connect_errno)
   error("can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($_GET['url']);
-$branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
+$branch = basename(dirname(__FILE__), 4);
+
 $extra_condition = "id IN (SELECT server.id FROM server JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\")";
 # search for a dedicated server first
 $query = "SELECT url FROM server WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) AND $extra_condition ORDER BY `load` LIMIT 1";
