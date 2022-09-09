@@ -13,8 +13,8 @@
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $branch = basename(dirname(__FILE__), 4);
-  $extra_condition = "JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\"";
-  $query = "SELECT * FROM server $extra_condition ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
+  $join= "JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\"";
+  $query = "SELECT * FROM server $join ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $servers = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
