@@ -13,7 +13,7 @@
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
-  $extra_condition = "branch=\"$branch\" AND ";
+  $extra_condition = "branch=\"$branch\"";
   $query = "SELECT * FROM server WHERE $extra_condition ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $servers = array();
