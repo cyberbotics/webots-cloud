@@ -23,7 +23,7 @@
     settype($row['share'], 'float');
     array_push($servers, $row);
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM server $extra_condition") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM server $join") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new StdClass;
   $answer->servers = $servers;
