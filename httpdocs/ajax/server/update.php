@@ -6,8 +6,8 @@
   function remove($message) {
     global $mysqli, $url;
     $mysqli->query("DELETE FROM repository WHERE server IN (SELECT id FROM server WHERE url=\"$url\")") or error($mysqli->error);
-    $mysqli->query("DELETE FROM server WHERE url=\"$url\"") or error($mysqli->error);
     $mysqli->query("DELETE FROM server_branch WHERE id IN (SELECT id FROM server WHERE url=\"$url\") AND branch=\"main\"") or error($mysqli->error);
+    $mysqli->query("DELETE FROM server WHERE url=\"$url\"") or error($mysqli->error);
     error($message);
   }
   header('Content-Type: application/json');
