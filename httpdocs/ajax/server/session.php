@@ -17,13 +17,14 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($_GET['url']);
 $branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
+$extra_condition = "id IN (SELECT server.id FROM server JOIN server_branch ON server.id=server_branch.id WHERE branch="main")"
 # search for a dedicated server first
-$query = "SELECT url FROM server WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) AND branch=\"$branch\" ORDER BY `load` LIMIT 1";
+$query = "SELECT url FROM server  WHERE `load` < 100 AND id IN (SELECT server FROM repository WHERE \"$url%\" LIKE CONCAT(url, '%')) AND $extra_condition ORDER BY `load` LIMIT 1";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($row = $result->fetch_array(MYSQLI_ASSOC))
   return_url($row['url']);
 # no available dedicated server found, reverting to a public server
-$query = "SELECT url FROM server WHERE `share` > 0 AND `share` - `load` > 0 AND branch=\"$branch\" ORDER BY `share` - `load` DESC LIMIT 1";
+$query = "SELECT url FROM server WHERE `share` > 0 AND `share` - `load` > 0 AND $extra_condition ORDER BY `share` - `load` DESC LIMIT 1";
 $result = $mysqli->query($query) or error($mysqli->error);
 if ($row = $result->fetch_array(MYSQLI_ASSOC))
   return_url($row['url']);
