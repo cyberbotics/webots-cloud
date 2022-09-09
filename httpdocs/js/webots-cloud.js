@@ -757,7 +757,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = event.target.getAttribute('data-url');
       fetch('ajax/server/update.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
         .then(function(response) {
-          console.log(response.text())
           return response.json();
         })
         .then(function(data) {
