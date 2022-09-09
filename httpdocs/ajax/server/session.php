@@ -16,7 +16,7 @@ if ($mysqli->connect_errno)
   error("can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
 $url = $mysqli->escape_string($_GET['url']);
-$branch = basename(dirname(__FILE__), 4);
+$branch = basename(dirname(__FILE__, 4));
 
 $extra_condition = "branch=\"$branch\")";
 # search for a dedicated server first

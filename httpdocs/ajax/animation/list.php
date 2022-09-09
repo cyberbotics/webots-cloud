@@ -14,7 +14,7 @@
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $type = isset($data->type) ? strtoupper($data->type[0]) : 'A';
   require '../../../php/mysql_id_string.php';
-  $branch = basename(dirname(__FILE__), 4);
+  $branch = basename(dirname(__FILE__, 4));
   $condition = "branch=\"$branch\" AND ";
   if ($type == 'S') // scene
     $condition .= "duration = 0";

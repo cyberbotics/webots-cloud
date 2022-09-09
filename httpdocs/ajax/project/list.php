@@ -26,7 +26,7 @@
     else
       $order = "asc";
   }
-  $branch = basename(dirname(__FILE__), 4);
+  $branch = basename(dirname(__FILE__, 4));
   $condition = "branch=\"$branch\"";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
