@@ -60,7 +60,7 @@
   $server_id = $mysqli->insert_id;
   $branch = basename(dirname(__FILE__), 3);
 
-  $query = "INSERT INTO server_branch(id, branch) VALUES($server_id, \"$branch\")";
+  $query = "INSERT INTO server_branch(id, branch) VALUES($server_id, \"force\")";
   $mysqli->query($query) or error($mysqli->error);
   $query = "DELETE FROM repository WHERE server=$server_id";
   $mysqli->query($query) or error($mysqli->error);
