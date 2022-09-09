@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $branch = basename(dirname(dirname(dirname(dirname(__FILE__)))));
+  $branch = basename(dirname(__FILE__), 4);
   $extra_condition = "JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\"";
   $query = "SELECT * FROM server $extra_condition ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
