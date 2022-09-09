@@ -58,6 +58,10 @@
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, started=NOW(), id=LAST_INSERT_ID(id)";
   $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
+  $branch = basename(dirname(__FILE__, 4));
+
+  $query = "INSERT INTO server_branch(id, branch) VALUES($server_id, \"$branch\")";
+  $mysqli->query($query) or error($mysqli->error);
   $query = "DELETE FROM repository WHERE server=$server_id";
   $mysqli->query($query) or error($mysqli->error);
   foreach($allowedRepositories as $repository) {

@@ -86,9 +86,10 @@ $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
+$branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
+  $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type, branch) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\", \"$branch\")";
 else
   $query = "UPDATE project SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
@@ -103,8 +104,11 @@ if ($mysqli->affected_rows != 1) {
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
-$extra_condition = $search != "" ? "WHERE LOWER(title) LIKE LOWER('%$search%')" : "";
-$result = $mysqli->query("SELECT COUNT(*) AS count FROM project $extra_condition") or error($mysqli->error);
+$condition = "branch=\"$branch\"";
+if ($search != "")
+  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
+
+$result = $mysqli->query("SELECT COUNT(*) AS count FROM project WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
 

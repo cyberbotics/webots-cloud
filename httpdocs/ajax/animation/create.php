@@ -139,8 +139,9 @@
     if ($password['password'] !== $_POST['password'])
       error("Wrong password for user $user.");
   }
-  $query = "INSERT INTO animation(title, description, version, duration, size, user) ".
-           "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user)";
+  $branch = basename(dirname(__FILE__, 4));
+  $query = "INSERT INTO animation(title, description, version, duration, size, user, branch) ".
+           "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user, \"$branch\")";
   $mysqli->query($query) or error($mysqli->error);
   $id = $mysqli->insert_id;
 
@@ -161,11 +162,12 @@
   if ($total_meshes > 0)
     move_assets($total_meshes, "meshes", $folder);
 
+  $condition = "branch=\"$branch\" AND ";
   if ($type === 'S') // scene
-    $extra_condition = 'duration=0';
+    $condition .= 'duration=0';
   else // animation
-    $extra_condition = 'duration>0';
-  $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
+    $condition .= 'duration>0';
+  $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $total = intval($count['total']);
 
