@@ -75,6 +75,7 @@
   }
 
   // get files and variables from post
+  error($_POST);
   $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
