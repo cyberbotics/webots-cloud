@@ -98,7 +98,7 @@
     $line = fgets($file);
     if (substr($line, 0, 15) === "<WorldInfo id='") {
       $world_info = true;
-      $title = $total_meshes;#parse_sf_string($line, 'title');
+      $title = $_POST;#parse_sf_string($line, 'title');
       $info = parse_mf_string($line, 'info');
       $description = implode("\n", $info);
     } else if (substr($line, 0, 30) == '<meta name="version" content="')
