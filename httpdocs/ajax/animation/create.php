@@ -75,7 +75,6 @@
   }
 
   // get files and variables from post
-  error($_POST);
   $animation = array_key_exists('animation-file', $_FILES);
   $size = $animation ? $_FILES['animation-file']['size'] : 0;
   $size += $_FILES['scene-file']['size'];
@@ -99,7 +98,7 @@
     $line = fgets($file);
     if (substr($line, 0, 15) === "<WorldInfo id='") {
       $world_info = true;
-      $title = parse_sf_string($line, 'title');
+      $title = $total_meshes;#parse_sf_string($line, 'title');
       $info = parse_mf_string($line, 'info');
       $description = implode("\n", $info);
     } else if (substr($line, 0, 30) == '<meta name="version" content="')
