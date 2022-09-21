@@ -13,8 +13,8 @@
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $branch = basename(dirname(__FILE__, 4));
-  $join= "JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\"";
-  $query = "SELECT * FROM server $join ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
+  $join_and_condition = "JOIN server_branch ON server.id=server_branch.id WHERE branch=\"$branch\"";
+  $query = "SELECT * FROM server $join_and_condition ORDER BY `share` - `load` DESC LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $servers = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -23,7 +23,7 @@
     settype($row['share'], 'float');
     array_push($servers, $row);
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM server $join") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM server $join_and_condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new StdClass;
   $answer->servers = $servers;

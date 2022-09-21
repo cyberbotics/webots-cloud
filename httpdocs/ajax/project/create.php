@@ -105,7 +105,8 @@ if ($mysqli->affected_rows != 1) {
 # return answer
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
-$condition .= $search != "" ? " AND LOWER(title) LIKE LOWER('%$search%')" : "";
+if ($search != "")
+  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
 
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM project WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
