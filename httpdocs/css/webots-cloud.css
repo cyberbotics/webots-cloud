@@ -22,27 +22,6 @@ body {
   left: 0;
 }
 
-body:after{
-  content: "beta version";
-  position: fixed;
-  width: 260px;
-  height: 25px;
-  background: #e00f00;
-  opacity: 0.95;
-  top: 38px;
-  right: -78px;
-  text-align: center;
-  font-size: 13px;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #fff;
-  line-height: 27px;
-  transform:rotate(45deg);
-  z-index: 100;
-  box-shadow: 2px 2px 5px #740f00;
-}
-
 /*  Main Container  */
 
 #main-container {
@@ -58,6 +37,24 @@ div.table-container {
   min-height: 550px;
 }
 
+.column-title {
+  user-select: none;
+}
+
+.fa-sort-down {
+  color: grey;
+  position: absolute;
+  padding-left: 6px;
+  top: 60px;
+}
+
+.fa-sort-up {
+  color: grey;
+  position: absolute;
+  padding-left: 6px;
+  top: 67px;
+}
+
 /*  Footer  */
 
 .footer {
@@ -69,49 +66,63 @@ div.table-container {
   padding-bottom: 0;
   background: linear-gradient(0deg, #003d66 0%, #007acc 70%);
   position: relative;
-  display: flex;
 }
 
 #footer-github {
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#footer-cyberbotics {
-  margin: 1px 0 0 0;
-  position: absolute;
-  top: 50%;
-  right: 15px;
+  left: 15px;
   transform: translateY(-50%);
 }
 
-@media only screen and (max-width: 500px) {
-  #footer-github {
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-  }
-  
-  #footer-cyberbotics {
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-  }
+.footer-right {
+  position: absolute;
+  right: 15px;
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
 }
 
-@media only screen and (max-width: 350px) {
+#footer-cyberbotics {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 1;
+}
+
+#footer-terms-of-service {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 2;
+}
+
+#footer-privacy-policy {
+  margin: 6px 0 0 0;
+  position: relative;
+  order: 3;
+}
+
+@media only screen and (max-width: 490px) {
   #footer-github {
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  #footer-cyberbotics {
     display: none;
+  }
+
+  .footer-right {
+    right: 0;
+    margin: 0 50px;
+    width: calc(100% - 100px);
+  }
+
+  #footer-cyberbotics {
+    order: 2;
+  }
+
+  #footer-terms-of-service {
+    order: 1;
+  }
+
+  #footer-privacy-policy {
+    order: 3;
   }
 }
 
@@ -272,7 +283,7 @@ nav.pagination > a[disabled] {
 .table-title:hover ~ .thumbnail {
   opacity: 1;
   transition: all 0.2s ease-in-out;
-  transition-delay: 0.75s;
+  transition-delay: 0.5s;
 }
 
 @media screen and (max-width: 850px) {

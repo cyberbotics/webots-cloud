@@ -1,10 +1,12 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
-    this.load();
+    this.termsOfService = new TermsAndPrivacy(routes, this);
+    this.load(null, false);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
@@ -53,7 +55,7 @@ export default class Project extends User {
             pushUrl = url.pathname + url.hash;
           }
           if (pushHistory)
-            window.history.pushState(null, name, pushUrl);
+            window.history.pushState(null, '', pushUrl);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
@@ -109,6 +111,9 @@ export default class Project extends User {
     const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
       (data ? data.version : this.findGetParameter('version'));
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
+
+    if (!data)
+      that._updateSimulationViewCount(url);
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -183,6 +188,16 @@ export default class Project extends User {
           that.login();
       }
     });
+  }
+  _updateSimulationViewCount(url) {
+    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.error)
+          console.warn(data.error);
+      });
   }
   _isMobileDevice() {
     // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser

@@ -82,11 +82,16 @@ $info_json = @file_get_contents("https://api.github.com/repos/$username/$reposit
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
 $competitors = 0;
+$query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
+$result = $mysqli->query($query) or error($mysqli->error);
+$row = $result->fetch_array(MYSQLI_ASSOC);
+$viewed = ($result && $row) ? $row['viewed'] : 0;
+$branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO project(url, stars, title, description, version, competitors, type) "
-          ."VALUES(\"$url\", $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
+  $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, competitors, type, branch) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\", \"$branch\")";
 else
-  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", "
+  $query = "UPDATE project SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
@@ -98,13 +103,19 @@ if ($mysqli->affected_rows != 1) {
 }
 
 # return answer
-$result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
+$search = isset($data->search) ? $data->search : "";
+$condition = "branch=\"$branch\"";
+if ($search != "")
+  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
+
+$result = $mysqli->query("SELECT COUNT(*) AS count FROM project WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
 
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
+$answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
@@ -112,6 +123,6 @@ $answer['description'] = $description;
 $answer['version'] = $version;
 $answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
-$answer['total'] =  $total;
+$answer['total'] = $total;
 die(json_encode($answer));
 ?>

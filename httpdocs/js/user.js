@@ -188,10 +188,11 @@ export default class User extends Router {
       // we need to be logged in to view this page
       if (!that.password || !that.email)
         return false;
+      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
       const template = document.createElement('template');
       const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
-      const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
+      const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
       template.innerHTML =
         `<section class="section">
           <div class="container">
@@ -283,9 +284,10 @@ export default class User extends Router {
     const md5sum = md5(that.email.toLowerCase());
     let head = document.getElementsByTagName('head')[0];
     if (typeof displayName === 'undefined') {
+      const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf("@")) : 'Anonymous';
       let script = document.createElement('script');
       script.type = 'text/javascript';
-      script.innerHTML = `let displayName = 'Anonymous';
+      script.innerHTML = `let displayName = '${emailBeginning}';
         function User_profile(data) {
         if (data && data.entry && data.entry[0]) {
         displayName = data.entry[0].displayName;
@@ -296,9 +298,9 @@ export default class User extends Router {
         if (!displayName)
         displayName = data.entry[0].name.familyName;
         if (!displayName)
-        displayName = 'Anonymous';
+        displayName = '${emailBeginning}';
         } else
-        displayName = 'Anonymous';
+        displayName = '${emailBeginning}';
         let x = document.getElementsByName("displayName");
         let i;
         for (i = 0; i < x.length; i++)
@@ -343,9 +345,10 @@ export default class User extends Router {
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
+    const emailBeginning = this.email ? this.email.substring(0, this.email.indexOf("@")) : 'Anonymous';
     const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
     const hostname = document.location.hostname;
-    const name = (typeof displayName === 'undefined') ? 'Anonymous' : displayName;
+    const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
     div.innerHTML =
       `<div class="navbar-item">
         <div class="buttons">
