@@ -64,7 +64,7 @@
   $mysqli->set_charset('utf8');
 
   // check if uploading is done
-  if (isset($_POST['uploadId']) {
+  if (isset($_POST['uploadId'])) {
     $uploadId = intval($_POST['uploadId']);
     $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
     $mysqli->query($query) or error($mysqli->error);
