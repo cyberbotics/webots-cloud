@@ -57,18 +57,15 @@
 
   // connect to database
   require '../../../php/database.php';
+  header('Content-Type: application/json');
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
 
   // check if uploading is done
-  header('Content-Type: application/json');
-  $json = file_get_contents('php://input');
-  $data = json_decode($json);
-  $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
-  $uploadId = (isset($data->uploadId)) ? intval($data->uploadId) : null;
-  if (!$uploading && $uploadId) {
+  if (isset($_POST['uploadId'])) {
+    $uploadId = intval($_POST['uploadId']);
     $query = "UPDATE animation SET uploading=0 WHERE id=$uploadId";
     $mysqli->query($query) or error($mysqli->error);
     die('{"status": "uploaded"}');

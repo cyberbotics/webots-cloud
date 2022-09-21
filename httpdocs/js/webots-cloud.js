@@ -843,7 +843,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
-        body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', {method: 'post', body: body})
@@ -856,7 +855,9 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (!cancelled) {
               const id = data.id;
               const total = data.total;
-              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: id})})
+              let uploading = new FormData();
+              uploading.append('uploadId', id);
+              fetch('/ajax/animation/create.php', {method: 'post', body: uploading})
                 .then(function(response) {
                   return response.json();
                 })
