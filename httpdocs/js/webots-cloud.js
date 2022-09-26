@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
+    listSimulations('B', benchmarkPage, getSort('benchmark'), getSearch('benchmark'));
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com'))
@@ -691,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation']) {
+      for (let type of ['scene', 'animation', 'simulation', 'benchmark']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
@@ -771,6 +772,8 @@ document.addEventListener('DOMContentLoaded', function() {
         listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
         listSimulations('D', simulationPage, getSort(type), getSearch(type));
+      else if (type === 'benchmark')
+        listSimulations('B', benchmarkPage, getSort(type), getSearch(type));
     }
 
     function updateSearchIcon(type) {
@@ -787,6 +790,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
+        updateSearchIcon('benchmark');
       }
     }
 
