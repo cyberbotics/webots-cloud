@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
+  let benchmarkSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
