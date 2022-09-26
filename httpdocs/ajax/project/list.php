@@ -14,11 +14,11 @@
   $branch = basename(dirname(__FILE__, 4));
   $condition = "branch=\"$branch\" AND ";
   if ($type == 'D') // demo
-    $condition .= "type = \"demo\"";
+    $condition .= "type = 1";
   elseif ($type == 'B') // benchmark
-    $condition .= "type = \"benchmark\"";
+    $condition .= "type = 2";
   elseif ($type == 'C') // competition
-    $condition .= "type = \"competition\"";
+    $condition .= "type = 3";
   if (isset($data->url)) {
     $url = $data->url;
     $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE \"$url\"";
