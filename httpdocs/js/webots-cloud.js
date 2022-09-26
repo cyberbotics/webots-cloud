@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
+    else if (activeTab === 'benchmark')
+      benchmarkSort = sort;
+    
   }
 
   function getSort(activeTab) {
@@ -114,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
+    if (activeTab === 'benchmark')
+      return benchmarkSort;
   }
 
   function setSearches(activeTab, search) {
@@ -123,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'benchmark')
+      benchmarkSearch = search;
     else if (activeTab === 'delay')
       delaySearch = search;
   }
@@ -134,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'benchmark')
+      return benchmarkSearch;
     if (activeTab === 'delay')
       return delaySearch;
   }
