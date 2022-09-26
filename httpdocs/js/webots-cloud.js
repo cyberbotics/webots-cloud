@@ -1079,7 +1079,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function listSimulations(type, page, sortBy, searchString) {
       const typeName = (() => {
         if (type === 'D')
-          return 'demo'
+          return 'simulation'
         else if (type === 'B')
           return 'benchmark'
         else if (type === 'C')
@@ -1105,7 +1105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
+            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
