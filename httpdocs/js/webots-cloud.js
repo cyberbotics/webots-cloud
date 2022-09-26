@@ -543,6 +543,67 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </section>
+          <section class="section${(activeTab === 'benchmark') ? ' is-active' : ''}" data-content="benchmark">
+            <div class="table-container">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="benchmark-search-input" type="text"
+                    placeholder="Search for benchmarks...">
+                  <span class="icon is-small is-right is-clickable" id="benchmark-search-click">
+                    <i class="fas fa-search" id="benchmark-search-icon"></i>
+                  </span>
+                </div>
+              </div>
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th class="is-clickable column-title" id="benchmark-sort-viewed" title="Popularity"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="benchmark-sort-title" title="Title of the benchmark"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="benchmark-sort-title" title="Branch or Tag of the benchmark">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="benchmark-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="benchmark-sort-version" title="Webots release of the benchmark"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" title="Type of benchmark" style="text-align: center;">
+                      Type
+                    </th>
+                    <th class="is-clickable column-title" id="benchmark-sort-updated" title="Last update time"
+                      style="text-align: right;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="empty-search" id="benchmark-empty-search" style="display: none;">
+                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                </i>
+                <p id="benchmark-empty-search-text"></p>
+              </div>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-project">Add a new benchmark</button>
+              </div>
+            </div>
+          </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
