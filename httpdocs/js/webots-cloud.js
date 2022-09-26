@@ -1078,12 +1078,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listSimulations(type, page, sortBy, searchString) {
       const typeName = (() => {
-        if (type === 'B')
+        if (type === 'D')
+          return 'demo'
+        else if (type === 'B')
           return 'benchmark'
         else if (type === 'C')
           return 'competition'
-        else
-          return 'demo'
       })();
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let offset = (page - 1) * pageLimit;
