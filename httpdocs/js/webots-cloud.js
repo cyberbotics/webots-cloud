@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationPage = 1;
   let simulationPage = 1;
   let serverPage = 1;
+  let benchmarkPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
@@ -31,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       url: '/simulation',
+      setup: homePage
+    },
+    {
+      url: '/benchmark',
       setup: homePage
     },
     {
@@ -675,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation']) {
+      for (let type of ['scene', 'animation', 'simulation', 'benchmark']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
@@ -771,6 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
+        updateSearchIcon('benchnmark');
       }
     }
 
