@@ -1094,18 +1094,19 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(function(data) {
           if (data.error)
-            ModalDialog.run('Project listing error', data.error);
+            ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
-              document.getElementById('simulation-empty-search-text').innerHTML = message;
-              document.getElementById('simulation-empty-search').style.display = 'flex';
+              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
+              document.getElementById(typeName + '-empty-search').style.display = 'flex';
             } else
-              document.getElementById('simulation-empty-search').style.display = 'none';
+              document.getElementById(typeName + '-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
+            project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
+            parent.innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
@@ -1114,8 +1115,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
-            document.getElementById('simulation-search-input').value = searchString;
+            updatePagination(typeName, page, total);
+            document.getElementById(typeName + '-search-input').value = searchString;
           }
         });
     }
