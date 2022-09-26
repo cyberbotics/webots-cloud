@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationPage = page;
     else if (activeTab === 'server')
       serverPage = page;
+    else if (activeTab === 'benchmark')
+      benchmarkPage = page;
   }
 
   function getPage(activeTab) {
@@ -87,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return simulationPage;
     if (activeTab === 'server')
       return serverPage;
+    if (activeTab === 'benchmark')
+      return benchmarkPage;
   }
 
   function setSorts(activeTab, sort) {
@@ -358,6 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
+            </li>
+            <li data-tab="benchmark" ${(activeTab === 'benchmark') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Benchmark</a>
             </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
