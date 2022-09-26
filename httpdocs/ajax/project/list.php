@@ -10,6 +10,15 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
+  $type = isset($data->type) ? strtoupper($data->type[0]) : 'D';
+  $branch = basename(dirname(__FILE__, 4));
+  $condition = "branch=\"$branch\" AND ";
+  if ($type == 'D') // demo
+    $condition .= "type = 'demo'";
+  elseif ($type == 'B') // benchmark
+    $condition .= "type = 'benchmark'";
+  elseif ($type == 'C') // competition
+    $condition .= "type = 'competition'";
   if (isset($data->url)) {
     $url = $data->url;
     $query = "UPDATE project SET viewed = viewed + 1 WHERE url LIKE \"$url\"";
@@ -26,8 +35,6 @@
     else
       $order = "asc";
   }
-  $branch = basename(dirname(__FILE__, 4));
-  $condition = "branch=\"$branch\"";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
     $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
