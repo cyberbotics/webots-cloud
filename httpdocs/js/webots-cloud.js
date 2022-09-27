@@ -1257,50 +1257,48 @@ document.addEventListener('DOMContentLoaded', function() {
   
       const contentHtml =
       `<div class="container is-widescreen">
-          <section class="section is-active">
-            <div class="tile is-ancestor">
-            <div class="container title-container">
-              <div class="title-text">
-                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
-                <p class="subtitle is-size-4">
-                  <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
-                </p>
-              </div>
+        <section class="section is-active">
+          <div class="container title-container">
+            <div class="title-text">
+              <p class="title is-size-1 is-regular" id="benchmark-title"></p>
             </div>
-              <div class="tile is-parent is-4">
-                <article class="tile is-child box">
-                  <p class="title">Information</p>
-                  <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
-                  <div class="content">
-                    ${information}
-                  </div>
-                  <a class="button is-primary" id="run-benchmark" style="background-color: #007acc;">
-                    Run Benchmark
-                  </a>
-                </article>
-              </div>
-              <div class="tile is-parent">
-                <article class="tile is-child box">
-                  <p class="title">Preview</p>
-                  <div class="content">
-                    <div id="benchmark-preview-container"></div>
-                  </div>
-                </article>
-              </div>
+          </div>
+        </section>
+        <section class="section is-active">
+            <div class="tile is-parent is-4">
+              <article class="tile is-child box">
+                <p class="title">Information</p>
+                <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
+                <div class="content">
+                  ${information}
+                </div>
+                <a class="button is-primary" id="run-benchmark" style="background-color: #007acc;">
+                  Run Benchmark
+                </a>
+              </article>
             </div>
-  
-            <div class="tile is-ancestor">
-              <div class="tile is-parent">
-                <div class="tile is-child box">
-                  <p class="title">Rankings</p>
-                  <div class="content">
-                    ${rankingsTable}
-                  </div>
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title">Preview</p>
+                <div class="content">
+                  <div id="benchmark-preview-container"></div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <p class="title">Rankings</p>
+                <div class="content">
+                  ${rankingsTable}
                 </div>
               </div>
             </div>
-          </section>
-        </div>`;
+          </div>
+        </section>
+      </div>`;
       document.getElementsByClassName('section is-active').item(0).innerHTML = contentHtml;
       getBenchmark(url);
     }
