@@ -1346,11 +1346,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-robot').innerHTML = robot;
         document.getElementById('benchmark-language').innerHTML = language;
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
-
+        /*
         const reference = rawUrl + '/preview/';
         if (project && !project.benchmarkUrl)
           project.benchmarkUrl = url;
         project.runWebotsPreview(reference, false);
+        */
       });
   
       fetch(rawUrl + '/competitors.txt')
@@ -1410,7 +1411,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsPreview(data);
+        project.runWebotsView(data);
     }  
   }
 
