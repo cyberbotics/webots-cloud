@@ -1204,7 +1204,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function benchmark(url) {
       const information =
-        `<div class="columns" style="display: flex;">
+        `<section class="hero is-active" style="position: relative; padding-top: 45px; padding-bottom: 18px">
+          <div class="hero-body">
+            <div class="container title-container">
+              <div class="title-text">
+                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+                <p class="subtitle is-size-4">
+                  <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="columns" style="display: flex;">
           <div class="column is-three-fifths" style="width: 170px; align-items: center;">
             <p style="font-size: small;">Difficulty level:</p>
             <p style="font-size: small;">Robot:</p>
