@@ -1346,12 +1346,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-robot').innerHTML = robot;
         document.getElementById('benchmark-language').innerHTML = language;
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
-        /*
+
         const reference = rawUrl + '/preview/';
         if (project && !project.benchmarkUrl)
           project.benchmarkUrl = url;
-        project.runWebotsPreview(reference);
-        */
+        project.runWebotsPreview(reference, false);
       });
   
       fetch(rawUrl + '/competitors.txt')
@@ -1401,7 +1400,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   
     function viewBenchmarkRun(event) {
-        document.getElementById('navbar').style.backgroundColor = '#363636';
         //document.getElementById('back-button').addEventListener('click', resetPage);
         //document.getElementById('back-button').style.display = 'inherit';
   
@@ -1412,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsView();
+        project.runWebotsPreview(data);
     }  
   }
 
