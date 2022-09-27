@@ -189,39 +189,6 @@ export default class Project extends User {
       }
     });
   }
-  setupPreviewWebotsView() {
-    if (Project.webotsView)
-      Project.webotsView.close();
-
-    const view = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
-    document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView) ?
-      '<webots-view id="webots-view"></webots-view>' : '';
-
-    if (Project.webotsView)
-      document.querySelector('#benchmark-preview-container').appendChild(Project.webotsView);
-    else
-      Project.webotsView = document.querySelector('webots-view');
-  }
-
-  runWebotsPreview(data) {
-    let server, mode;
-    const url = this.benchmarkUrl;
-    let dotIndex = url.lastIndexOf('/') + 1;
-    const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
-    'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
-    this.setupPreviewWebotsView();
-
-    return new Promise((resolve, reject) => {
-      if (data) {
-        Project.webotsView.loadAnimation(data + 'scene.x3d', data + 'animation.json', true, this._isMobileDevice(),
-          thumbnailUrl);
-      } else {
-        Project.webotsView.connect(server, mode, false, this._isMobileDevice, 300, thumbnailUrl);
-        Project.webotsView.showQuit = false;
-        resolve();
-      }
-    });
-  }
   _updateSimulationViewCount(url) {
     fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
       .then(function(response) {
