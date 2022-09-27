@@ -1192,15 +1192,233 @@ document.addEventListener('DOMContentLoaded', function() {
   function runPage(project) {
     //discriminate between demos and benchmark
     //TODO: get url, then check in database if demo, benchmark or competition
-    if (project.findGetParameter('url') != "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt") {
+    let simUrl = project.findGetParameter('url');
+    if (simUrl != "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt") {
       //demo
       project.runWebotsView();
     } else {
       //benchmark
       //change data-content to benchmark page
-      document.getElementsByClassName('section is-active').item(0).innerHTML = "<h1>Hello world</h1>"
+      benchmark(simUrl);
     }
-    
-    
+
+    function benchmark(url) {
+      const information =
+        `<div class="columns" style="display: flex;">
+          <div class="column is-three-fifths" style="width: 170px; align-items: center;">
+            <p style="font-size: small;">Difficulty level:</p>
+            <p style="font-size: small;">Robot:</p>
+            <p style="font-size: small;">Programming language:</p>
+            <p style="font-size: small;">Minimum commitment:</p>
+            <p style="font-size: small;">Number of participants:</p>
+          </div>
+          <div id="benchmark-information" class="column" style="min-width: 120px; align-items: center;">
+            <p style="font-size: small; font-weight: bold;" id="benchmark-difficulty"></p>
+            <p style="font-size: small; font-weight: bold;" id="benchmark-robot"></p>
+            <p style="font-size: small; font-weight: bold;" id="benchmark-language"></p>
+            <p style="font-size: small; font-weight: bold;" id="benchmark-commitment"></p>
+            <p style="font-size: small; font-weight: bold;" id="benchmark-participants"></p>
+          </div>
+        </div>`;
+  
+      const rankingsTable =
+        `<section class="section" data-content="rankings" style="padding: 0">
+          <div class="table-container rankings-table mx-auto">
+            <div class="search-bar" style="max-width: 280px; padding-bottom: 20px; display: none;">
+              <div class="control has-icons-right">
+                <input class="input is-small" id="rankings-search-input" type="text" placeholder="Search for users...">
+                <span class="icon is-small is-right is-clickable" id="rankings-search-click">
+                  <i class="fas fa-search" id="rankings-search-icon"></i>
+                </span>
+              </div>
+            </div>
+            <table class="table is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th class="has-text-centered">Ranking</th>
+                  <th>Username</th>
+                  <th>Controller</th>
+                  <th class="has-text-centered">Date</th>
+                  <th class="has-text-centered">Performance</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="rankings-table">
+              </tbody>
+            </table>
+            <div class="empty-search" id="rankings-empty-search" style="display: none;">
+              <i class="fas fa-xl fa-search" id="no-project-icon"
+                style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;"></i>
+              <p id="rankings-empty-search-text"></p>
+            </div>
+          </div>
+          <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
+        </section>`;
+  
+      const contentHtml =
+      `<section class="hero is-small is-dark is-background-gradient" style="position: relative; padding-top: 45px; padding-bottom: 18px">
+          <div class="hero-body">
+            <div class="container title-container">
+              <div class="title-text">
+                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+                <p class="subtitle is-size-4">
+                  <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+  
+        <div class="container is-widescreen">
+          <section class="section">
+            <div class="tile is-ancestor">
+              <div class="tile is-parent is-4">
+                <article class="tile is-child box">
+                  <p class="title">Information</p>
+                  <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
+                  <div class="content">
+                    ${information}
+                  </div>
+                  <a class="button is-primary" id="run-benchmark" style="background-color: #007acc;">
+                    Run Benchmark
+                  </a>
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">Preview</p>
+                  <div class="content">
+                    <div id="benchmark-preview-container"></div>
+                  </div>
+                </article>
+              </div>
+            </div>
+  
+            <div class="tile is-ancestor">
+              <div class="tile is-parent">
+                <div class="tile is-child box">
+                  <p class="title">Rankings</p>
+                  <div class="content">
+                    ${rankingsTable}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>`;
+      document.getElementsByClassName('section is-active').item(0).innerHTML = contentHtml;
+      getBenchmark(url);
+    }
+  
+    function getBenchmark(url) {
+      let metric;
+      const rawGitHubUrl = 'https://raw.githubusercontent.com';
+      const repository = url.split('/')[3];
+      const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
+      const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
+      const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
+  
+      const difficultyDict = {
+        1: 'Middle School',
+        2: 'High School',
+        3: 'Bachelor',
+        4: 'Master',
+        5: 'PhD'
+      }
+  
+      const commitmentDict = {
+        1: 'A few minutes',
+        2: 'A couple of hours',
+        3: 'A few hours',
+        4: 'A couple of days',
+        5: 'A few days'
+      }
+  
+      fetch(rawUrl + '/information.txt')
+      .then(function(response) { return response.text(); })
+      .then(function(data) {
+        const information = data.split('\n');
+        const title = information[0].split(':')[1].substring(1);
+        const description = information[1].split(':')[1].substring(1);
+        const difficulty = information[2].split(':')[1].substring(1);
+        const robot = information[3].split(':')[1].substring(1);
+        const language = information[4].split(':')[1].substring(1);
+        const commitment = information[5].split(':')[1].substring(1);
+        metric = information[6].split(':')[1].substring(1);
+  
+        document.getElementById('benchmark-title').innerHTML = title;
+        document.getElementById('benchmark-information-description').innerHTML = description;
+        document.getElementById('benchmark-difficulty').innerHTML = difficultyDict[difficulty];
+        document.getElementById('benchmark-robot').innerHTML = robot;
+        document.getElementById('benchmark-language').innerHTML = language;
+        document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
+  
+        const reference = rawUrl + '/preview/';
+        if (project && !project.benchmarkUrl)
+          project.benchmarkUrl = url;
+        project.runWebotsView(reference);
+      });
+  
+      fetch(rawUrl + '/competitors.txt')
+      .then(function(response) { return response.text(); })
+      .then(function(data) {
+        let performanceArray = [];
+        const participants = data.split('\n');
+        for (const participant of participants) {
+          if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
+            continue;
+          const id = participant.split(':')[0];
+          const name = participant.split(':')[1].split('/')[0];
+          const controller = participant.split(':')[1].split('/')[1];
+          const performance = parseFloat(participant.split(':')[2]);
+          const performanceString = participant.split(':')[3];
+          const date = participant.split(':')[4];
+          performanceArray.push([performance, id, name, controller, date, performanceString]);
+        }
+        if (metric && metric === 'time-speed')
+          performanceArray.sort(function(a, b) { return a[0] - b[0]; });
+        else
+          performanceArray.sort(function(a, b) { return b[0] - a[0]; });
+  
+        let ranking = 1;
+        for (const performance of performanceArray) {
+          let tableContent = document.createElement('template');
+          tableContent.innerHTML =
+            `<tr>
+              <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
+              <td style="vertical-align: middle;">${performance[2]}</td>
+              <td style="vertical-align: middle;">${performance[3]}</td>
+              <td style="vertical-align: middle;" class="has-text-centered">${performance[4]}</td>
+              <td style="vertical-align: middle;" class="has-text-centered">${performance[5]}</td>
+              <td style="vertical-align: middle;">
+                <button class="button is-small is-primary" style="background-color: #007acc;" id="${performance[1]}-view">
+                  View
+                </button>
+              </td>
+            </tr>`;
+          ranking++;
+          document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
+          document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun)
+        }
+  
+        document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
+      });
+    }
+  
+    function viewBenchmarkRun(event) {
+        document.getElementById('navbar').style.backgroundColor = '#363636';
+        //document.getElementById('back-button').addEventListener('click', resetPage);
+        //document.getElementById('back-button').style.display = 'inherit';
+  
+        const url = project.benchmarkUrl;
+        const rawGitHubUrl = 'https://raw.githubusercontent.com';
+        const repository = url.split('/')[3];
+        const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
+        const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
+        const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
+        const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
+        project.runWebotsView(data, true);
+    }  
   }
+
 });
