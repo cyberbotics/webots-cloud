@@ -1204,15 +1204,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function benchmark(url) {
       const information =
-        `<div class="container title-container">
-          <div class="title-text">
-            <p class="title is-size-1 is-regular" id="benchmark-title"></p>
-            <p class="subtitle is-size-4">
-              <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
-            </p>
-          </div>
-        </div>
-        <div class="columns" style="display: flex;">
+        `<div class="columns" style="display: flex;">
           <div class="column is-three-fifths" style="width: 170px; align-items: center;">
             <p style="font-size: small;">Difficulty level:</p>
             <p style="font-size: small;">Robot:</p>
@@ -1267,6 +1259,14 @@ document.addEventListener('DOMContentLoaded', function() {
       `<div class="container is-widescreen">
           <section class="section is-active">
             <div class="tile is-ancestor">
+            <div class="container title-container">
+              <div class="title-text">
+                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+                <p class="subtitle is-size-4">
+                  <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
+                </p>
+              </div>
+            </div>
               <div class="tile is-parent is-4">
                 <article class="tile is-child box">
                   <p class="title">Information</p>
@@ -1349,8 +1349,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
 
         const reference = rawUrl + '/preview/';
-        //if (project && !project.benchmarkUrl)
-        //  project.benchmarkUrl = url;
+        if (project && !project.benchmarkUrl)
+          project.benchmarkUrl = url;
         project.runWebotsPreview(reference);
       });
   
