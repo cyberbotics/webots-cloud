@@ -1199,6 +1199,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       //benchmark
       //change data-content to benchmark page
+      project.benchmarkUrl = simUrl;
       benchmark(simUrl);
     }
 
@@ -1411,7 +1412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsView(data, true);
+        project.runWebotsView();
     }  
   }
 
