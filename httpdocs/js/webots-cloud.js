@@ -1350,7 +1350,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-language').innerHTML = language;
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
 
-        project.runWebotsView();
+        const reference = rawUrl + '/preview/';
+        //if (project && !project.benchmarkUrl)
+        //  project.benchmarkUrl = url;
+        project.runWebotsView(reference);
       });
   
       fetch(rawUrl + '/competitors.txt')
