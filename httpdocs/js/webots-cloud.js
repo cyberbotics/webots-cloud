@@ -534,9 +534,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="column-title" title="Type of simulation" style="text-align: center;">
-                      Type
-                    </th>
                     <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
                       style="text-align: right;">
                       Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -594,9 +591,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th class="is-clickable column-title" id="benchmark-sort-version" title="Webots release of the benchmark"
                       style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="column-title" title="Type of benchmark" style="text-align: center;">
-                      Type
                     </th>
                     <th class="is-clickable column-title" id="benchmark-sort-updated" title="Last update time"
                       style="text-align: right;">
@@ -1207,6 +1201,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    project.runWebotsView();
+    //discriminate between demos and benchmark
+    //TODO: get url, then check in database if demo, benchmark or competition
+    if (project.findGetParameter('url') != "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt") {
+      //demo
+      project.runWebotsView();
+    } else {
+      //benchmark
+      //change data-content to benchmark page
+      document.getElementsByClassName('section is-active').item(0).innerHTML = "<h1>Hello world</h1>"
+    }
+    
+    
   }
 });
