@@ -1204,14 +1204,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function benchmark(url) {
       const information =
-        `<div class="hero-body">
-          <div class="container title-container">
-            <div class="title-text">
-              <p class="title is-size-1 is-regular" id="benchmark-title"></p>
-              <p class="subtitle is-size-4">
-                <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
-              </p>
-            </div>
+        `<div class="container title-container">
+          <div class="title-text">
+            <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+            <p class="subtitle is-size-4">
+              <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
+            </p>
           </div>
         </div>
         <div class="columns" style="display: flex;">
@@ -1353,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const reference = rawUrl + '/preview/';
         //if (project && !project.benchmarkUrl)
         //  project.benchmarkUrl = url;
-        project.runWebotsView(reference);
+        project.runWebotsPreview(reference);
       });
   
       fetch(rawUrl + '/competitors.txt')
