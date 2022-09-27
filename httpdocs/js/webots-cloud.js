@@ -1222,7 +1222,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
   
       const rankingsTable =
-        `<section class="section" data-content="rankings" style="padding: 0">
+        `<section class="section is-active" data-content="rankings" style="padding: 0">
           <div class="table-container rankings-table mx-auto">
             <div class="search-bar" style="max-width: 280px; padding-bottom: 20px; display: none;">
               <div class="control has-icons-right">
@@ -1256,21 +1256,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </section>`;
   
       const contentHtml =
-      `<section class="hero is-small is-dark is-background-gradient" style="position: relative; padding-top: 45px; padding-bottom: 18px">
-          <div class="hero-body">
-            <div class="container title-container">
-              <div class="title-text">
-                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
-                <p class="subtitle is-size-4">
-                  <a class="is-unselectable is-regular" style="color: #007acc;">Benchmark</a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-  
-        <div class="container is-widescreen">
-          <section class="section">
+      `<div class="container is-widescreen">
+          <section class="section is-active">
             <div class="tile is-ancestor">
               <div class="tile is-parent is-4">
                 <article class="tile is-child box">
@@ -1352,12 +1339,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-robot').innerHTML = robot;
         document.getElementById('benchmark-language').innerHTML = language;
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
-        /*
-        const reference = rawUrl + '/preview/';
-        if (project && !project.benchmarkUrl)
-          project.benchmarkUrl = url;
-        project.runWebotsView(reference);
-        */
+
+        project.runWebotsView(url);
       });
   
       fetch(rawUrl + '/competitors.txt')
