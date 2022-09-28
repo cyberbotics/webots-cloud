@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
-                      style="text-align:center; width: 65px;">
+                      style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -388,15 +388,15 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
-                      style="width: 85px;">
+                      style="min-width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
-                      style="text-align: right; width: 75px;">
+                      style="text-align: right; min-width: 75px;">
                       Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
-                      style="text-align: right; width: 115px;">
+                      style="text-align: right; min-width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
@@ -576,7 +576,6 @@ document.addEventListener('DOMContentLoaded', function() {
           sortIcon.classList.toggle('fa-sort-up');
         }
       }
-  
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
@@ -954,7 +953,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
-      const columns = (type === 'A') ? 6 : 5;
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
@@ -975,8 +973,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            for (let i = data.animations.length; i < pageLimit; i++)  // empty lines
-              line += '<tr><td colspan="' + columns + '"></td></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
@@ -1014,8 +1010,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            for (let i = data.projects.length; i < pageLimit; i++)
-              line += '<tr><td colspan="8"></td></tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
@@ -1044,8 +1038,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            for (let i = data.servers.length; i < pageLimit; i++)
-              line += '<tr><td colspan="5"></td></tr>';
             project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
