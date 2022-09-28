@@ -952,6 +952,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
+      const columns = (type === 'A') ? 6 : 5;
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
@@ -973,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             for (let i = data.animations.length; i < pageLimit; i++)  // empty lines
-              line += '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>';
+              line += '<tr><td colspan="' + columns + '">&nbsp;</td></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
