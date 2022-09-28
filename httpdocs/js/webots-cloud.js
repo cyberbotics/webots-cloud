@@ -1044,7 +1044,67 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addProto() {
-      // TODO
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          <label class="label">Webots proto file</label>
+          <div class="control has-icons-left">
+            <input id="proto-file" class="input" type="url" required placeholder="https://github.com/my_name/my_repository/blob/tag/protos/my_proto.proto" value="https://github.com/">
+            <span class="icon is-small is-left">
+              <i class="fab fa-github"></i>
+            </span>
+          </div>
+          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto">
+              https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto
+            </a>
+            WARNING: your proto must be from version R2022b or newer.
+          </div>
+        </div>`;
+      let modal = ModalDialog.run('Add a proto', content.innerHTML, 'Cancel', 'Add');
+      let input = modal.querySelector('#proto-file');
+      input.focus();
+      input.selectionStart = input.selectionEnd = input.value.length;
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        const protoFile = modal.querySelector('#proto-file').value.trim();
+        if (!protoFile.startsWith('https://github.com/')) {
+          modal.error('The world file should start with "https://github.com/".');
+          return;
+        }
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            url: protoFile
+          })
+        };
+        fetch('/ajax/proto/create.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.error) {
+              let errorMsg = data.error;
+              if (errorMsg.startsWith('YAML file error:')) {
+                errorMsg = errorMsg +
+                  `<div class="help">
+                    More information at: <a target="_blank" href="https://cyberbotics.com/doc/guide/webots-cloud#yaml-file">
+                    cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
+                  </div>`;
+              }
+              modal.error(errorMsg);
+            } else {
+              modal.close();
+              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              updatePagination('proto', page, total);
+              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
+            }
+          });
+      });
     }
 
     function listAnimations(type, page, sortBy, searchString) {
