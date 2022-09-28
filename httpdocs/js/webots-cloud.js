@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
       row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -1193,12 +1193,13 @@ document.addEventListener('DOMContentLoaded', function() {
     //discriminate between demos and benchmark
     //TODO: get url, then check in database if demo, benchmark or competition
     let simUrl = project.findGetParameter('url');
-    if (simUrl != "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt") {
+    let type = project.findGetParameter('type');
+    if (type == "demo") {
       //demo
       project.runWebotsView();
-    } else {
+    } else if (type == "benchmark") {
       //benchmark
-      //change data-content to benchmark page
+      //change main-container to benchmark page
       project.benchmarkUrl = simUrl;
       benchmark(simUrl);
     }
