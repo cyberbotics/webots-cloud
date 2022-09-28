@@ -568,8 +568,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initSort(sortBy) {
       if (sortBy && sortBy !== 'default') {
-        console.log(sortBy)
-
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
         const sortIcon = columnTitle.querySelector('.sort-icon');
         columnTitle.querySelector('.sort-icon').style.display = 'inline';
@@ -578,6 +576,9 @@ document.addEventListener('DOMContentLoaded', function() {
           sortIcon.classList.toggle('fa-sort-up');
         }
       }
+
+      console.log(sortBy)
+
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
