@@ -234,7 +234,7 @@ export default class User extends Router {
             </div>
           </div>
         </section>`;
-      that.setup('settings', [], template.content);
+      that.setup('settings', template.content);
       document.querySelector('#change-password').addEventListener('click', function(event) {
         event.target.classList.add('is-loading');
         that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
@@ -337,8 +337,8 @@ export default class User extends Router {
       }
     });
   }
-  setup(title, anchors, content, fullpage = false) {
-    super.setup(title, anchors, content, fullpage);
+  setup(title, content, fullpage = false) {
+    super.setup(title, content, fullpage);
     let navbarEnd = document.body.querySelector('.navbar-end');
     navbarEnd.parentNode.replaceChild(this.menu(), navbarEnd);
   }

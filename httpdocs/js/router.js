@@ -128,14 +128,10 @@ export default class Router {
       </div>
       </div>
       </section>`;
-    this.setup('page not found', [], template.content);
+    this.setup('page not found', template.content);
   }
-  setup(title, anchors, content, fullpage = false) {
+  setup(title, content, fullpage = false) {
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
-    let menu = '';
-    for (let i = 0; i < anchors.length; i++)
-      menu += `<a class="navbar-item" href="#${anchors[i].toLowerCase()}">${anchors[i]}</a>`;
-    document.body.querySelector('.navbar-start').innerHTML = menu;
     this.content.innerHTML = '';
     NodeList.prototype.forEach = Array.prototype.forEach;
     let that = this;
