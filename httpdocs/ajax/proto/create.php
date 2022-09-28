@@ -56,7 +56,7 @@ while ($line !== false) {
           strtolower(substr($line, 0, 10)) !== '# template' && strtolower(substr($line, 0, 9)) !== '#template' && substr($line, 0, 5) !== '#VRML') {
         if ($description !== '')
           $description .= "\n";
-        $description .= $mysqli->escape_string(substr($line, 2);
+        $description .= $mysqli->escape_string(substr($line, 2));
       }
     }
   elseif (substr($line, 0, 5) === 'PROTO')
