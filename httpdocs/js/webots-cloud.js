@@ -1190,9 +1190,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    //discriminate between demos and benchmark
-    //TODO: get url, then check in database if demo, benchmark or competition
-    let simUrl = project.findGetParameter('url');
+    //discriminate between demos and benchmark using search parameters
     let type = project.findGetParameter('type');
     if (type == "demo") {
       //demo
@@ -1200,11 +1198,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (type == "benchmark") {
       //benchmark
       //change main-container to benchmark page
-      project.benchmarkUrl = simUrl;
-      benchmark(simUrl);
+      let url = project.findGetParameter('url');
+      project.benchmarkUrl = url;
+      mainContainer(project, url);
     }
 
-    function benchmark(url) {
+    function mainContainer(project, url) {
       const information =
         `<div class="columns" style="display: flex;">
           <div class="column is-three-fifths" style="width: 170px; align-items: center;">
@@ -1298,7 +1297,10 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </section>
       </div>`;
-      document.getElementById('main-container').innerHTML = contentHtml;
+      const template = document.createElement('template');
+      template.innerHTML = contentHtml;
+      const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
+      project.setup(title, [], template.content);
       getBenchmark(url);
     }
   
