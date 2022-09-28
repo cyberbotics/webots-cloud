@@ -142,6 +142,7 @@ export default class Project extends User {
                 Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
               resolve();
             } else { // benchmark link
+              let dotIndex = url.lastIndexOf('/') + 1;
               const thumbnailUrl = (data.slice(0, dotIndex) + "." + data.slice(dotIndex)).replace('github.com',
               'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
@@ -174,6 +175,7 @@ export default class Project extends User {
           else
             Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         } else {
+          let dotIndex = url.lastIndexOf('/') + 1;
           const thumbnailUrl = (data.slice(0, dotIndex) + "." + data.slice(dotIndex)).replace('github.com',
           'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
