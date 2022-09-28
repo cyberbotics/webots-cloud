@@ -142,7 +142,7 @@ export default class Project extends User {
                 Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
               resolve();
             } else { // benchmark link
-              const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
+              const thumbnailUrl = (data.slice(0, dotIndex) + "." + data.slice(dotIndex)).replace('github.com',
               'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
               this._isMobileDevice(), `${reference}/thumbnail.jpg`); //<- need to find a way to extract the link to the thumbnail
