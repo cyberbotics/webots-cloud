@@ -35,7 +35,11 @@ body {
 
 div.table-container {
   min-height: 550px;
+}
+
+table.table-container {
   display: grid;
+  justify-content: center;
 }
 
 .column-title {
