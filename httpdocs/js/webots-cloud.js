@@ -5,15 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
+  let protoPage = 1;
   let serverPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
+  let protoSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
+  let protoSearch = '';
   let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
@@ -31,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       url: '/simulation',
+      setup: homePage
+    },
+    {
+      url: '/proto',
       setup: homePage
     },
     {
@@ -74,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationPage = page;
     else if (activeTab === 'simulation')
       simulationPage = page;
+    else if (activeTab === 'proto')
+      protoPage = page;
     else if (activeTab === 'server')
       serverPage = page;
   }
@@ -85,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationPage;
     if (activeTab === 'simulation')
       return simulationPage;
+    if (activeTab === 'proto')
+      return protoPage;
     if (activeTab === 'server')
       return serverPage;
   }
@@ -96,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
+    else if (activeTab === 'proto')
+      protoSort = sort;
   }
 
   function getSort(activeTab) {
@@ -105,6 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
+    if (activeTab === 'proto')
+      return protoSort;
   }
 
   function setSearches(activeTab, search) {
@@ -114,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'proto')
+      protoSearch = search;
     else if (activeTab === 'delay')
       delaySearch = search;
   }
@@ -125,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'proto')
+      return protoSearch;
     if (activeTab === 'delay')
       return delaySearch;
   }
@@ -154,15 +173,21 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
+    project.content.querySelector('#add-a-new-proto').addEventListener('click', function(event) { addProto(); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
+    listProtos(protoPage, getSort('proto'), getSearch('proto'));
     listServers(serverPage);
 
-    if (project.email && project.email.endsWith('@cyberbotics.com'))
+    if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
+
+      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
+        .appendChild(document.createElement('th'));
+    }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
@@ -313,6 +338,10 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
+    function protoRow(data) {
+      // TODO:
+    }
+
     function percent(value) {
       const level = 150 + value;
       let red, green;
@@ -358,6 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
+            </li>
+            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Proto</a>
             </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
@@ -536,6 +568,64 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
           </section>
+          <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+            <div class="table-container">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="proto-search-input" type="text"
+                    placeholder="Search for protos...">
+                  <span class="icon is-small is-right is-clickable" id="proto-search-click">
+                    <i class="fas fa-search" id="proto-search-icon"></i>
+                  </span>
+                </div>
+              </div>
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-name" title="Name of the proto"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="proto-sort-name" title="Branch or Tag of the proto">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-updated" title="Last update time"
+                      style="text-align: right;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="empty-search" id="proto-empty-search" style="display: none;">
+                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                </i>
+                <p id="proto-empty-search-text"></p>
+              </div>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-proto">Add a new proto</button>
+              </div>
+            </div>
+          </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
             <div class="table-container">
               <table class="table is-striped is-hoverable">
@@ -607,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation']) {
+      for (let type of ['scene', 'animation', 'simulation', 'proto']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
@@ -687,6 +777,8 @@ document.addEventListener('DOMContentLoaded', function() {
         listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
         listSimulations(simulationPage, getSort(type), getSearch(type));
+      else if (type === 'proto')
+        listProtos(protoPage, getSort(type), getSearch(type));
     }
 
     function updateSearchIcon(type) {
@@ -703,9 +795,11 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
+        updateSearchIcon('proto');
       }
     }
 
+    //TODO do it for proto as well
     function synchronizeSimulation(event) {
       const searchString = getSearch('simulation');
       const id = event.target.id.substring(5);
@@ -949,6 +1043,10 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    function addProto() {
+      // TODO
+    }
+
     function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
@@ -1021,6 +1119,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('simulation-search-input').value = searchString;
           }
         });
+    }
+
+    function listProtos(page, sortBy, searchString) {
+      // TODO
     }
 
     function listServers(page) {
@@ -1105,6 +1207,10 @@ document.addEventListener('DOMContentLoaded', function() {
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           });
       });
+    }
+
+    function deleteProto(event, project) {
+      // TODO
     }
   }
 
