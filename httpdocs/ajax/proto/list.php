@@ -1,4 +1,4 @@
-<?php # This script list available projects
+<?php # This script list available protos
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
@@ -20,7 +20,7 @@
     $mysqli->escape_string($data->sortBy) : "viewed-desc";
   $parameter = explode("-", $sortBy)[0];
   $order = explode("-", $sortBy)[1];
-  if ($parameter == "title" || $parameter == "Version") {
+  if ($parameter == "name" || $parameter == "version") {
     if ($order == "asc")
       $order = "desc";
     else
@@ -34,23 +34,22 @@
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query = "SELECT * FROM project WHERE $condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
+  $query = "SELECT * FROM proto WHERE $condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
-  $projects = array();
+  $protos = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
-    settype($row['competitors'], 'integer');
-    $row['title'] = htmlentities($row['title']);
+    $row['name'] = htmlentities($row['name']);
     $row['description'] = htmlentities($row['description']);
     $row['version'] = htmlentities($row['version']);
-    array_push($projects, $row);
+    array_push($protos, $row);
   }
-  $result = $mysqli->query("SELECT COUNT(*) AS count FROM project WHERE $condition") or error($mysqli->error);
+  $result = $mysqli->query("SELECT COUNT(*) AS count FROM proto WHERE $condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $answer = new StdClass;
-  $answer->projects = $projects;
+  $answer->protos = $protos;
   $answer->total = intval($count['count']);
   die(json_encode($answer));
  ?>
