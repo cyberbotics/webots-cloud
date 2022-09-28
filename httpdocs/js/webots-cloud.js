@@ -1309,7 +1309,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <span>Back</span>
         </a>
       </div>`;
-      document.getElementsByClassName('navbar-end').appendChild(backButtonTemplate.content.firstChild);
+      document.getElementsByClassName('navbar-end')[0].appendChild(backButtonTemplate.content.firstChild);
       getBenchmark(url);
     }
   
