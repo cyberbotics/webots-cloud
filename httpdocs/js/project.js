@@ -148,7 +148,7 @@ export default class Project extends User {
               const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
               'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-              this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+              this._isMobileDevice(), `${thumbnailUrl}/thumbnail.jpg`);
             }
           } else { // demo simulation
             that.setupWebotsView('run');
@@ -183,7 +183,7 @@ export default class Project extends User {
           const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
           'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-          this._isMobileDevice(), `${reference}/thumbnail.jpg`); 
+          this._isMobileDevice(), `${thumbnailUrl}/thumbnail.jpg`); 
         }
       } else {
         that.setupWebotsView('run');
