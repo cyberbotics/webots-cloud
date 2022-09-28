@@ -972,8 +972,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            for (let i = data.animations.length; i < pageLimit; i++)
-              line += '<tr><td></td><td></td><td></td><td></td><td></td></tr>';
+            for (let i = data.animations.length; i < pageLimit; i++)  // empty lines
+              line += '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
