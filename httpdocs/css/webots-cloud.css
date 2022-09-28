@@ -35,7 +35,6 @@ body {
 
 div.table-container {
   display: grid;
-  justify-content: center;
 }
 
 .table-container tr {
