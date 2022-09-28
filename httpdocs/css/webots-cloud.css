@@ -35,6 +35,7 @@ body {
 
 div.table-container {
   min-height: 550px;
+  display: grid;
 }
 
 .column-title {
