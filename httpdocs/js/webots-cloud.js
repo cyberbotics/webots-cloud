@@ -1304,12 +1304,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML = 
       `<div class="navbar-item">
-        <a class="button is-small is-light is-outlined" id="back-button" style="display: none;">
+        <a class="button is-small is-light is-outlined" id="back-button">
           <span class="icon"><i class="fas fa-lg fa-rotate-left"></i></span>
           <span>Back</span>
         </a>
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
+      document.getElementById('back-button').onclick = (() => {history.go(-1)});
       getBenchmark(url);
     }
   
@@ -1408,9 +1409,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
       });
     }
-  
     function viewBenchmarkRun(event) {
-        document.getElementById('back-button').addEventListener('click', function refreshPage() {history.go(0)});
+
+        document.getElementById('back-button').onclick = (() => {history.go(0)});
         document.getElementById('back-button').style.display = 'inherit';
   
         const url = project.benchmarkUrl;
