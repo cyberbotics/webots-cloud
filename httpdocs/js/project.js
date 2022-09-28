@@ -145,7 +145,7 @@ export default class Project extends User {
               const thumbnailUrl = (data.slice(0, dotIndex) + "." + data.slice(dotIndex)).replace('github.com',
               'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-              this._isMobileDevice(), `${reference}/thumbnail.jpg`); //<- need to find a way to extract the link to the thumbnail
+              this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             }
           } else { // demo simulation
             that.setupWebotsView('run');
@@ -165,13 +165,20 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else if (data) {
-        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-        if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-        else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+        if (data.url) {
+          reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+          that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+          if (data.duration > 0)
+            Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+              this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+          else
+            Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+        } else {
+          const thumbnailUrl = (data.slice(0, dotIndex) + "." + data.slice(dotIndex)).replace('github.com',
+          'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+          Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
+          this._isMobileDevice(), `${reference}/thumbnail.jpg`); 
+        }
       } else {
         that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
