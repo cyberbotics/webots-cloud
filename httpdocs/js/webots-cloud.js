@@ -1351,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const reference = rawUrl + '/preview/';
         if (project && !project.benchmarkUrl)
           project.benchmarkUrl = url;
-        project.runWebotsView(reference);
+        project.runWebotsView(reference, null, true);
       });
   
       fetch(rawUrl + '/competitors.txt')
