@@ -34,7 +34,7 @@ body {
 }
 
 div.table-container {
-  min-height: 550px;
+  /* min-height: 550px; */
   display: grid;
   justify-content: center;
 }
