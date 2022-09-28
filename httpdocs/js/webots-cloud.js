@@ -568,6 +568,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function initSort(sortBy) {
       if (sortBy && sortBy !== 'default') {
+        console.log(sortBy)
+
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
         const sortIcon = columnTitle.querySelector('.sort-icon');
         columnTitle.querySelector('.sort-icon').style.display = 'inline';
