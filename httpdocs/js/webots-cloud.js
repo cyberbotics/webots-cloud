@@ -1259,15 +1259,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const contentHtml =
       `<div class="container is-widescreen">
         <section class="section is-active">
-          <div class="container title-container">
-            <div class="title-text">
-              <p class="title is-size-1 is-regular" id="benchmark-title"></p>
-            </div>
-          </div>
-        </section>
-        <section class="section is-active">
+          <div class="tile is-ancestor">
             <div class="tile is-parent is-4">
               <article class="tile is-child box">
+                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
                 <p class="title">Information</p>
                 <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
                 <div class="content">
