@@ -184,7 +184,7 @@ export default class Project extends User {
           that.runWebotsView(data, 'R2022b') // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else if (data) {
+      } else if (data) { //copy of lines from above? (without the resolve())
         if (data.url) {
           reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
           that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);

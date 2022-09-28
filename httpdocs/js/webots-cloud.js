@@ -1279,8 +1279,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="tile is-parent">
               <article class="tile is-child box">
                 <p class="title">Preview</p>
-                <div class="content">
-                  <div id="benchmark-preview-container"></div>
+                <div class="content" style="height: 560px">
+                  <div id="benchmark-preview-container" style="height: 560px"></div>
                 </div>
               </article>
             </div>
