@@ -1042,6 +1042,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
+            for (let i = data.servers.length; i < pageLimit; i++)
+              line += '<tr><td colspan="5"></td></tr>';
             project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
