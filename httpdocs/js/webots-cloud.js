@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -388,15 +388,15 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
-                      style="text-align: right; min-width: 115px;">
+                      style="text-align: right; width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
