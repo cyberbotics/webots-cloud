@@ -1410,7 +1410,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   
     function viewBenchmarkRun(event) {
-        document.getElementById('back-button').addEventListener('click', history.back); //TODO: better callback not to reload everything
+        document.getElementById('back-button').addEventListener('click', (() => {history.back.call(history)})); //TODO: better callback not to reload everything
         document.getElementById('back-button').style.display = 'inherit';
   
         const url = project.benchmarkUrl;
