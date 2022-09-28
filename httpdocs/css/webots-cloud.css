@@ -35,9 +35,6 @@ body {
 
 div.table-container {
   min-height: 550px;
-}
-
-table {
   display: grid;
   justify-content: center;
 }
