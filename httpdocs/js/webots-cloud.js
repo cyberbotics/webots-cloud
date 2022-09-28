@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -441,19 +441,19 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
-                      style="text-align: right; min-width: 115px;">
+                      style="text-align: right; width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="column-title" title="Type of simulation" style="text-align: center;">
