@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
           } else
             sort += '-desc';
 
-          title.querySelector('.sort-icon')?.style.display = 'inline';
+          title.querySelector('.sort-icon').style.display = 'inline';
           setSorts(type, sort);
           searchAndSortTable(type);
         });
