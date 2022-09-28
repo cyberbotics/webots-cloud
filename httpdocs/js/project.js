@@ -104,12 +104,15 @@ export default class Project extends User {
     document.querySelector('#main-container').classList.add('webotsView');
   }
   runWebotsView(data, fallbackVersion) {
+    //if data empty -> demo simulation
+    //if data is object -> scene or animation with files from server
+    //if data is string of benchmark github -> benchmark animation with files from github
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
-      (data ? data.version : this.findGetParameter('version'));
+      (data.version ? data.version : this.findGetParameter('version'));
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)
@@ -129,15 +132,22 @@ export default class Project extends User {
         script.src = src;
         script.onload = () => {
           if (data) {
-            reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-            if (data.duration > 0)
-              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            resolve();
-          } else {
+            if (data.url) { //scene or animation
+              reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+              that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+              if (data.duration > 0)
+                Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+                  this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+              else
+                Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+              resolve();
+            } else { // benchmark link
+              const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
+              'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+              Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
+              this._isMobileDevice(), `${reference}/thumbnail.jpg`); //<- need to find a way to extract the link to the thumbnail
+            }
+          } else { // demo simulation
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
             let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');

@@ -1346,12 +1346,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('benchmark-robot').innerHTML = robot;
         document.getElementById('benchmark-language').innerHTML = language;
         document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
-        /*
+
         const reference = rawUrl + '/preview/';
         if (project && !project.benchmarkUrl)
           project.benchmarkUrl = url;
-        project.runWebotsPreview(reference, false);
-        */
+        project.runWebotsView(reference);
       });
   
       fetch(rawUrl + '/competitors.txt')
