@@ -85,39 +85,38 @@ export default class Project extends User {
     }
     return result;
   }
-  setupWebotsView(page, data, preview = false) {
-    if (!preview) {
-      const view = (!Project.webotsView)
-        ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
-      let template = document.createElement('template');
-      template.innerHTML = `<section class="section" style="padding:0;height:100%">
-        <div class="container" id="webots-view-container">${view}</div>`;
-      if (data) {
-        const description = data.description.replace('\n', '<br>\n');
-        template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
-      }
-      template.innerHTML += '</section>';
-      this.setup(page, [], template.content);
-      if (!Project.webotsView)
-        Project.webotsView = document.querySelector('webots-view');
-      else
-        document.querySelector('#webots-view-container').appendChild(Project.webotsView);
-      document.querySelector('#main-container').classList.add('webotsView');
-    } else {
-      if (Project.webotsView)
-        Project.webotsView.close();
-
-      const view = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
-      document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView) ?
-        '<webots-view id="webots-view"></webots-view>' : '';
-
-      if (Project.webotsView)
-        document.querySelector('#benchmark-preview-container').appendChild(Project.webotsView);
-      else
-        Project.webotsView = document.querySelector('webots-view');
+  setupWebotsView(page, data) {
+    const view = (!Project.webotsView)
+      ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
+    let template = document.createElement('template');
+    template.innerHTML = `<section class="section" style="padding:0;height:100%">
+      <div class="container" id="webots-view-container">${view}</div>`;
+    if (data) {
+      const description = data.description.replace('\n', '<br>\n');
+      template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
     }
+    template.innerHTML += '</section>';
+    this.setup(page, [], template.content);
+    if (!Project.webotsView)
+      Project.webotsView = document.querySelector('webots-view');
+    else
+      document.querySelector('#webots-view-container').appendChild(Project.webotsView);
+    document.querySelector('#main-container').classList.add('webotsView');
   }
-  runWebotsView(data, fallbackVersion) {
+  setupPreviewWebotsView() {
+    if (Project.webotsView)
+      Project.webotsView.close();
+
+    const view = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
+    document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView) ?
+      '<webots-view id="webots-view"></webots-view>' : '';
+
+    if (Project.webotsView)
+      document.querySelector('#benchmark-preview-container').appendChild(Project.webotsView);
+    else
+      Project.webotsView = document.querySelector('webots-view');
+  }
+  runWebotsView(data, fallbackVersion, isPreview) {
     //if data empty -> demo simulation
     //if data is object -> scene or animation with files from server
     //if data is string of benchmark github -> benchmark animation with files from github
@@ -156,7 +155,11 @@ export default class Project extends User {
                 Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
               resolve();
             } else { // benchmark link
-              that.setupWebotsView('run');
+              if (isPreview) {
+                that.setupPreviewWebotsView('run');
+              } else {
+                that.setupWebotsView('run');
+              }
               const url = this.benchmarkUrl;
               let dotIndex = url.lastIndexOf('/') + 1;
               const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
@@ -191,7 +194,11 @@ export default class Project extends User {
           else
             Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         } else {
-          that.setupWebotsView('run');
+          if (isPreview) {
+            that.setupPreviewWebotsView('run');
+          } else {
+            that.setupWebotsView('run');
+          }
           const url = this.benchmarkUrl;
           let dotIndex = url.lastIndexOf('/') + 1;
           const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
