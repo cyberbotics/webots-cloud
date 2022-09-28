@@ -39,6 +39,10 @@ div.table-container {
   justify-content: center;
 }
 
+.table-container tr {
+  height: 50px;
+}
+
 .column-title {
   user-select: none;
 }
