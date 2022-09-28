@@ -103,13 +103,17 @@ export default class Project extends User {
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  runWebotsView(data, fallbackVersion) {
+  runWebotsView(data, version) {
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
-      (data ? data.version : this.findGetParameter('version'));
+    if (!version || version === 'undefined') {
+      if (window.location.hostname === 'testing.webots.cloud')
+        version = 'testing';
+      else
+        version = data ? data.version : this.findGetParameter('version');
+    }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)
