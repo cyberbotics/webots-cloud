@@ -576,9 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
           sortIcon.classList.toggle('fa-sort-up');
         }
       }
-
-      console.log(sortBy)
-
+  
       document.querySelectorAll('.column-title').forEach((title) => {
         title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
