@@ -974,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             for (let i = data.animations.length; i < pageLimit; i++)  // empty lines
-              line += '<tr><td colspan="' + columns + '">&nbsp;</td></tr>';
+              line += '<tr><td colspan="' + columns + '"></td></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
@@ -1012,6 +1012,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+            for (let i = data.projects.length; i < pageLimit; i++)
+              line += '<tr><td colspan="7"></td></tr>;
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
