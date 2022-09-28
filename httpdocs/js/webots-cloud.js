@@ -1197,7 +1197,6 @@ document.addEventListener('DOMContentLoaded', function() {
       project.runWebotsView();
     } else if (type == "benchmark") {
       //benchmark
-      //change main-container to benchmark page
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
       mainContainer(project, url);
@@ -1301,6 +1300,16 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML = contentHtml;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, [], template.content);
+      //add the hidden back button needed for the entries view
+      const backButtonTemplate = document.createElement('template');
+      backButtonTemplate.innerHTML = 
+      `<div class="navbar-item">
+        <a class="button is-small is-light is-outlined" id="back-button" style="display: none;">
+          <span class="icon"><i class="fas fa-lg fa-rotate-left"></i></span>
+          <span>Back</span>
+        </a>
+      </div>`;
+      document.getElementsByClassName('navbar-end').appendChild(backButtonTemplate.content.firstChild);
       getBenchmark(url);
     }
   
@@ -1401,8 +1410,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   
     function viewBenchmarkRun(event) {
-        //document.getElementById('back-button').addEventListener('click', resetPage);
-        //document.getElementById('back-button').style.display = 'inherit';
+        document.getElementById('back-button').addEventListener('click', document.location.reload);
+        document.getElementById('back-button').style.display = 'inherit';
   
         const url = project.benchmarkUrl;
         const rawGitHubUrl = 'https://raw.githubusercontent.com';
