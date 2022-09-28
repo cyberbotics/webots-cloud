@@ -844,7 +844,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
-        body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', {method: 'post', body: body})
