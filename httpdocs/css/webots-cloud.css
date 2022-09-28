@@ -195,6 +195,15 @@ div.table-container {
   max-width: none;
 }
 
+/*  Webots benchmark preview window  */
+
+#benchmark-preview-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 10px;
+  overflow: hidden;
+}
+
 /*  Pagination  */
 
 nav.pagination > a[disabled] {
