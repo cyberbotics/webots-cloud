@@ -631,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </section>
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-      project.setup(title, [], template.content);
+      project.setup(title, template.content);
     }
 
     function initSort(sortBy) {
@@ -1299,7 +1299,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-      project.setup(title, [], template.content);
+      project.setup(title, template.content);
       //add the hidden back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML = 
