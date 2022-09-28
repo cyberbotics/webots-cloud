@@ -596,8 +596,9 @@ document.addEventListener('DOMContentLoaded', function() {
             sort += '-desc';
           } else
             sort += '-desc';
-
-          title.querySelector('.sort-icon').style.display = 'inline';
+          let icon = title.querySelector('.sort-icon');
+          if (icon)
+            icon.style.display = 'inline';
           setSorts(type, sort);
           searchAndSortTable(type);
         });
