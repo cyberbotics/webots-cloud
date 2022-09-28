@@ -1260,9 +1260,11 @@ document.addEventListener('DOMContentLoaded', function() {
       `<div class="container is-widescreen">
         <section class="section is-active">
           <div class="tile is-ancestor">
+            <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+          </div>
+          <div class="tile is-ancestor">
             <div class="tile is-parent is-4">
               <article class="tile is-child box">
-                <p class="title is-size-1 is-regular" id="benchmark-title"></p>
                 <p class="title">Information</p>
                 <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
                 <div class="content">
@@ -1295,7 +1297,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
         </section>
       </div>`;
-      document.getElementsByClassName('section is-active').item(0).innerHTML = contentHtml;
+      document.getElementById('main-container').innerHTML = contentHtml;
       getBenchmark(url);
     }
   
