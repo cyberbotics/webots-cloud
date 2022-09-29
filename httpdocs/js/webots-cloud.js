@@ -805,6 +805,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //TODO do it for proto as well
     function synchronizeSimulation(event) {
+      console.log(event)
       const searchString = getSearch('simulation');
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
