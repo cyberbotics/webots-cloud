@@ -30,7 +30,7 @@
   $condition = "branch=\"$branch\"";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
+    $condition .= " AND LOWER(name) LIKE LOWER('%$searchString%')";
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
