@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
         'raw.githubusercontent.com').replace('/blob', '').replace('.proto', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
-      const name = data.name === '' ? '<i>anonymous</i>' : data.name;
+      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
@@ -356,8 +356,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
-      row += `<td class="name-cell">
-                <a class="table-name has-text-dark" href="/run?version=${data.version}&url=${data.url}">${name}</a>
+      row += `<td class="title-cell">
+                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>

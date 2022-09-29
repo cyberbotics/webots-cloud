@@ -20,7 +20,7 @@
     $mysqli->escape_string($data->sortBy) : "viewed-desc";
   $parameter = explode("-", $sortBy)[0];
   $order = explode("-", $sortBy)[1];
-  if ($parameter == "name" || $parameter == "version") {
+  if ($parameter == "title" || $parameter == "version") {
     if ($order == "asc")
       $order = "desc";
     else
@@ -30,7 +30,7 @@
   $condition = "branch=\"$branch\"";
   if (isset($data->search)) {
     $searchString = $mysqli->escape_string($data->search);
-    $condition .= " AND LOWER(name) LIKE LOWER('%$searchString%')";
+    $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
@@ -41,7 +41,7 @@
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
-    $row['name'] = htmlentities($row['name']);
+    $row['title'] = htmlentities($row['title']);
     $row['description'] = htmlentities($row['description']);
     $row['version'] = htmlentities($row['version']);
     array_push($protos, $row);

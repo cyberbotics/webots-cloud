@@ -41,9 +41,9 @@ if (!is_array($check_yaml)) {
   error($check_yaml);
 }
 
-# retrieve the name and info (description) from the header.
+# retrieve the title and info (description) from the header.
 $info = false;
-$name = '';
+$title = '';
 $description = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
@@ -59,9 +59,9 @@ while ($line !== false) {
       }
     }
   elseif (substr($line, 0, 6) === 'PROTO ')
-    $name = trim(substr($line, 6));
-    if (!empty($name) && $name[-1] === '[')
-      $name = trim(substr($name, 0, -1));
+    $title = trim(substr($line, 6));
+    if (!empty($title) && $title[-1] === '[')
+      $title = trim(substr($title, 0, -1));
   $line = strtok("\r\n");
 }
 
@@ -77,10 +77,10 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO proto(url, viewed, stars, name, description, version, branch) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$name\", \"$description\", \"$version\", \"$branch\")";
+  $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\")";
 else
-  $query = "UPDATE proto SET viewed=$viewed, stars=$stars, name=\"$name\", description=\"$description\", "
+  $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
@@ -95,7 +95,7 @@ if ($mysqli->affected_rows != 1) {
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
 if ($search != "")
-  $condition .= " AND LOWER(name) LIKE LOWER('%$search%')";
+  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
 
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM proto WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
@@ -106,7 +106,7 @@ $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
 $answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
-$answer['name'] = $name;
+$answer['title'] = $title;
 $answer['description'] = $description;
 $answer['version'] = $version;
 $answer['updated'] = date("Y-m-d H:i:s");
