@@ -1182,7 +1182,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function listProtos(page, sortBy, searchString) {
-      // TODO
+      let offset = (page - 1) * pageLimit;
+      fetch('/ajax/proto/list.php', {method: 'post',
+        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Proto listing error', data.error);
+          else {
+            if (data.total === 0 && searchString) {
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any protos.';
+              document.getElementById('proto-empty-search-text').innerHTML = message;
+              document.getElementById('proto-empty-search').style.display = 'flex';
+            } else
+              document.getElementById('proto-empty-search').style.display = 'none';
+            let line = ``;
+            for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
+              line += '<tr>' + simulationRow(data.protos[i]) + '</tr>';
+            project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.protos.length; i++) {
+              let id = data.protos[i].id;
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
+              if (project.content.querySelector('#delete-' + id) !== null)
+                project.content.querySelector('#delete-' + id)
+                  .addEventListener('click', function(event) { deleteProto(event, project); });
+            }
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            updatePagination('proto', page, total);
+            document.getElementById('proto-search-input').value = searchString;
+          }
+        });
     }
 
     function listServers(page) {
