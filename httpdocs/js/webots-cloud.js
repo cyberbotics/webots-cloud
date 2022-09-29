@@ -339,10 +339,8 @@ document.addEventListener('DOMContentLoaded', function() {
         `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
           title="GitHub stars"> ${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>`;
-      if (!proto) {
+      if (!proto)
         row += `<td class="has-text-centered">${type}</td>`;
-        console.log("euh")
-      }
       row += `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
       return row;
