@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function protoRow(data) {
+      console.log("protoRooow")
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
