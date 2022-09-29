@@ -1186,6 +1186,7 @@ document.addEventListener('DOMContentLoaded', function() {
       fetch('/ajax/proto/list.php', {method: 'post',
         body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
         .then(function(response) {
+          console.log(response.text())
           return response.json();
         })
         .then(function(data) {
