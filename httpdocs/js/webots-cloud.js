@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
-            <div class="table-container">
+            <div class="table-container" style="margin-top:74px">
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
