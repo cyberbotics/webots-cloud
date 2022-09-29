@@ -1323,7 +1323,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function deleteProto(event, project) {
-      // TODO
+      const id = event.target.id.substring(7);
+      let dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete proto`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/proto/delete.php', {method: 'post',
+          body: JSON.stringify({user: project.id, password: project.password, id: id})})
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Proto deletion error`, data.error);
+            else if (data.status === 1)
+              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
+          });
+      });
     }
   }
 
