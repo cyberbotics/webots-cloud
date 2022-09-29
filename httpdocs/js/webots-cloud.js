@@ -1185,7 +1185,6 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(function(data) {
-          console.log(data)
           if (data.error)
             ModalDialog.run('Proto listing error', data.error);
           else {
