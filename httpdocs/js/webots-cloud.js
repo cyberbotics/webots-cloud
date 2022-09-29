@@ -970,7 +970,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             if (data.animations.length != pageLimit)  // add extra space
-              line += '<tr style="height=' + 50 * (pageLimit - data.animations.length) + 'px"></tr>';
+              line += '<tr style="height:' + 50 * (pageLimit - data.animations.length) + 'px"></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
