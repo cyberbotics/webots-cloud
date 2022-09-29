@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function simulationRow(data) {
+    function githubRow(data, proto = false) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
@@ -336,10 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
       return row;
-    }
-
-    function protoRow(data) {
-      // TODO:
     }
 
     function percent(value) {
@@ -832,7 +828,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
-            tr.innerHTML = simulationRow(data);
+            tr.innerHTML = githubRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
@@ -1032,7 +1028,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1096,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1165,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('simulation-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+              line += '<tr>' + githubRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
@@ -1201,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + simulationRow(data.protos[i]) + '</tr>';
+              line += '<tr>' + githubRow(data.protos[i]) + '</tr>';
             project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
