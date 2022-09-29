@@ -1118,7 +1118,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1222,7 +1222,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + githubRow(data.protos[i]) + '</tr>';
+              line += '<tr>' + githubRow(data.protos[i], true) + '</tr>';
             project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
