@@ -34,7 +34,7 @@ if ($world_content === false) {
 }
 
 # check and retrieve information from webots.yaml file
-$check_yaml = simulation_check_yaml($check_url);
+$check_yaml = github_check_yaml($check_url, $proto = false);
 if (!is_array($check_yaml)) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);

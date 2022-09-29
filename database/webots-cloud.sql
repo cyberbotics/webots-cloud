@@ -36,6 +36,7 @@ ALTER TABLE `server`
 CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `viewed` int(11) NOT NULL,
   `stars` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
@@ -43,8 +44,7 @@ CREATE TABLE `project` (
   `type` enum('demo','competition','benchmark','') NOT NULL,
   `branch` varchar(256) CHARACTER SET utf8 NOT NULL DEFAULT 'main',
   `competitors` int(11) NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `viewed` int(11) NOT NULL
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `project`

@@ -34,13 +34,12 @@ if ($proto_content === false) {
 }
 
 # check and retrieve information from webots.yaml file
-$check_yaml = proto_check_yaml($check_url);
+$check_yaml = github_check_yaml($check_url, true);
 if (!is_array($check_yaml)) {
   $query = "DELETE FROM proto WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
   error($check_yaml);
 }
-list($type, $benchmark, $competition) = $check_yaml;
 
 # retrieve the name and info (description) from the header.
 $info = false;
@@ -78,11 +77,11 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO proto(url, viewed, stars, name, description, version, competitors, type, branch) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$name\", \"$description\", \"$version\", $competitors, \"$type\", \"$branch\")";
+  $query = "INSERT IGNORE INTO proto(url, viewed, stars, name, description, version, branch) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$name\", \"$description\", \"$version\", \"$branch\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, name=\"$name\", description=\"$description\", "
-          ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
+          ."version=\"$version\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
@@ -108,10 +107,8 @@ $answer['url'] = $url;
 $answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
-$answer['type'] = $type;
 $answer['description'] = $description;
 $answer['version'] = $version;
-$answer['competitors'] = $competitors;
 $answer['updated'] = date("Y-m-d H:i:s");
 $answer['total'] = $total;
 die(json_encode($answer));

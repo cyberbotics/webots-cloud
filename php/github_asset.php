@@ -56,14 +56,14 @@ function check_url($url, $proto = false) {
   return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
-function simulation_check_yaml($check_url) {
+function project_check_yaml($check_url) {
   # yaml error return
   function yaml_error($msg) {
     return "YAML file error: $msg";
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world) = $check_url;
+  list($username, $repository, $version, $folder, $world_or_proto) = $check_url;
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
