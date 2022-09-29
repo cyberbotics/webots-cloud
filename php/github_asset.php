@@ -4,6 +4,18 @@ function simulation_check_url($url) {
     return "The URL should start with 'https://github.com/'";
   if (substr($url, -4) != '.wbt')
     return "The URL should end with '.wbt': " . substr($url, -4);
+  return check_url($url);
+}
+
+function proto_check_url($url) {
+  if (substr($url, 0, 19) !== 'https://github.com/')
+    return "The URL should start with 'https://github.com/'";
+  if (substr($url, -6) != '.proto')
+    return "The URL should end with '.proto': " . substr($url, -6);
+  return check_url($url);
+}
+
+function check_url($url) {
   $exploded = explode('/', substr($url, 19));
   $count = count($exploded);
   if ($count < 6)

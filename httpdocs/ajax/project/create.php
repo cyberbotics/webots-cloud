@@ -10,7 +10,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 require '../../../php/github_oauth.php';
 require '../../../php/database.php';
-require '../../../php/simulation.php';
+require '../../../php/github_asset.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
