@@ -803,8 +803,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    //TODO do it for proto as well
-    function synchronizeSimulation(event, proto) {
+    function synchronizeGithub(event, proto) {
       let searchString;
       let script;
       let type;
@@ -849,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let tr = document.createElement('tr');
             tr.innerHTML = githubRow(data);
             parent.replaceChild(tr, old);
-            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
+            parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
             if (parent.querySelector('#delete-' + id) !== null) {
               if (proto)
                 parent.querySelector('#delete-' + id).addEventListener('click',
@@ -1190,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeGithub);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
@@ -1225,7 +1224,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
+              project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteProto(event, project); });
