@@ -1203,6 +1203,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mainContainer(project) {
+      let simulationUrl = new URL(window.location);
+      simulationUrl.searchParams.set('type', 'demo');
+
       const information =
         `<div class="columns" style="display: flex;">
           <div class="column is-three-fifths" style="width: 170px; align-items: center;">
@@ -1269,8 +1272,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="run-benchmark" style="background-color: #007acc;">
-                  Run Benchmark
+                <a class="button is-primary" id="try-benchmark" style="background-color: #007acc;" href="${simulationUrl.href}">
+                  Try Benchmark
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                  Submit Entry
                 </a>
               </article>
             </div>
