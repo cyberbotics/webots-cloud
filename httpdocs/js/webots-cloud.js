@@ -839,7 +839,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
-        body.append('type', type);
         body.append('user', project.id);
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', {method: 'post', body: body})
@@ -1008,8 +1007,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            for (let i = data.projects.length; i < pageLimit; i++)
-              line += '<tr><td colspan="8"></td></tr>';
+            if (data.projects.length != pageLimit)  // add extra space
+              line += '<tr style="height:' + 50 * (pageLimit - data.projects.length) + 'px"></tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
@@ -1038,8 +1037,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            for (let i = data.servers.length; i < pageLimit; i++)
-              line += '<tr><td colspan="5"></td></tr>';
+            if (data.servers.length != pageLimit)  // add extra space
+              line += '<tr style="height:' + 50 * (pageLimit - data.servers.length) + 'px"></tr>';
             project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);

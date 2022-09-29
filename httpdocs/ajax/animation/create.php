@@ -55,6 +55,7 @@
     }
   }
 
+  header('Content-Type: application/json');
   // connect to database
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
@@ -63,7 +64,6 @@
   $mysqli->set_charset('utf8');
 
   // check if uploading is done
-  header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
   $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
