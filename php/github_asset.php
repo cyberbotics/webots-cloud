@@ -56,7 +56,7 @@ function check_url($url, $proto = false) {
   return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
-function project_check_yaml($check_url) {
+function github_check_yaml($check_url) {
   # yaml error return
   function yaml_error($msg) {
     return "YAML file error: $msg";
