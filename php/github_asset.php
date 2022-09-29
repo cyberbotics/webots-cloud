@@ -12,10 +12,10 @@ function proto_check_url($url) {
     return "The URL should start with 'https://github.com/'";
   if (substr($url, -6) != '.proto')
     return "The URL should end with '.proto': " . substr($url, -6);
-  return check_url($url);
+  return check_url($url, true);
 }
 
-function check_url($url) {
+function check_url($url, $proto = false) {
   $exploded = explode('/', substr($url, 19));
   $count = count($exploded);
   if ($count < 6)
@@ -40,11 +40,20 @@ function check_url($url) {
     return 'Wrong folder name';
   if ($folder !== '')
     $folder = "/$folder";
-  $worlds_folder = $exploded[$count - 2];
-  if ($worlds_folder != 'worlds')
-    return 'Missing \'/worlds/\' folder in URL';
-  $world = $exploded[$count - 1];
-  return array($username, $repository, $tag_or_branch, $folder, $world);
+
+  $world_or_proto;
+  $worlds_or_protos_folder = $exploded[$count - 2];
+  if ($proto) {
+    if ($worlds_or_protos_folder != 'protos')
+      return 'Missing \'/protos/\' folder in URL';
+    $world_or_proto = $exploded[$count - 1];
+  } else {
+    if ($worlds_or_protos_folder != 'worlds')
+      return 'Missing \'/worlds/\' folder in URL';
+    $world_or_proto = $exploded[$count - 1];
+  }
+
+  return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
 function simulation_check_yaml($check_url) {
