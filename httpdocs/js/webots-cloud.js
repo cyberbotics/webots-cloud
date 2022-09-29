@@ -1273,26 +1273,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="content">
                   ${information}
                 </div>
-                <table style="text-align: center;">
-                  <tr>
-                    <td>
-                      <a class="button is-primary" id="try-benchmark" style="background-color: #007acc;" href="${simulationUrl.href}">
-                      Try Benchmark
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <br>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
-                      Submit Entry
-                      </a>
-                    </td>
-                </tr>
-                </table>
-                <br>
+                <a class="button is-primary" id="try-benchmark" style="background-color: #007acc;" href="${simulationUrl.href}">
+                  Try Benchmark
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                  Submit Entry
+                </a>
               </article>
             </div>
             <div class="tile is-parent">
