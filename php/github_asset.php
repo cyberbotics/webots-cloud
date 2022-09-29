@@ -56,7 +56,7 @@ function check_url($url, $proto = false) {
   return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
-function github_check_yaml($check_url) {
+function github_check_yaml($check_url, $proto) {
   # yaml error return
   function yaml_error($msg) {
     return "YAML file error: $msg";
@@ -103,7 +103,7 @@ function github_check_yaml($check_url) {
       return yaml_error("competitor type only requires one scenario (benchmark or competition)");
     elseif ($benchmark === '' && $competition === '')
       return yaml_error("competitor type requires a scenario (benchmark or competition)");
-  } elseif ($type === '')
+  } elseif ($type === '' && $proto === false)
     return yaml_error("type not defined.");
 
   # return array with YAML file info

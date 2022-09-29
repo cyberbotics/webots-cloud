@@ -49,7 +49,7 @@ $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
 while ($line !== false) {
-  $line == trim(line);
+  $line == trim($line);
   if ($line[0] === '#') {
       if (strtolower(substr($line, 0, 9)) !== '# license' && strtolower(substr($line, 0, 8)) !== '#license' &&
           strtolower(substr($line, 0, 10)) !== '# template' && strtolower(substr($line, 0, 9)) !== '#template' && substr($line, 0, 5) !== '#VRML') {
