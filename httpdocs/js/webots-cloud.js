@@ -804,13 +804,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     //TODO do it for proto as well
-    function synchronizeSimulation(event) {
-      console.log(event)
-      const searchString = getSearch('simulation');
+    function synchronizeSimulation(event, proto) {
+      let searchString;
+      let script;
+      let type;
+      if (proto) {
+        searchString = getSearch('proto');
+        script = 'ajax/proto/create.php'
+        type = 'proto';
+      } else {
+        searchString = getSearch('simulation');
+        script = 'ajax/project/create.php'
+        type = 'simulation';
+      }
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
+      fetch(script, {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
         .then(function(response) {
           return response.json();
         })
@@ -834,18 +844,24 @@ document.addEventListener('DOMContentLoaded', function() {
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
-            project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+            project.load(`/` + type + `{(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = githubRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
-            if (parent.querySelector('#delete-' + id) !== null)
-              parent.querySelector('#delete-' + id).addEventListener('click',
-                function(event) { deleteSimulation(event, project); });
+            if (parent.querySelector('#delete-' + id) !== null) {
+              if (proto)
+                parent.querySelector('#delete-' + id).addEventListener('click',
+                  function(event) { deleteProto(event, project); });
+              else
+                parent.querySelector('#delete-' + id).addEventListener('click',
+                  function(event) { deleteSimulation(event, project); });
+            }
+
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
+            updatePagination(type, page, total);
           }
         });
     }
