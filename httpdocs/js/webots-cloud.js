@@ -292,12 +292,16 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function simulationRow(data) {
+    function githubRow(data, proto) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
-      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
-        'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      let thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
+        'raw.githubusercontent.com').replace('/blob', '');
+      if (proto)
+        thumbnailUrl.replace('.proto', '.jpg');
+      else
+        thumbnailUrl.replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
@@ -305,17 +309,20 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       let icon;
-      if (data.type === 'demo')
-        icon = 'chalkboard-teacher';
-      else if (data.type === 'benchmark')
-        icon = 'award';
-      else if (data.type === 'competition')
-        icon = 'trophy';
-      else
-        icon = 'question';
-      const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
+      let type;
+      if (proto) {
+        if (data.type === 'demo')
+          icon = 'chalkboard-teacher';
+        else if (data.type === 'benchmark')
+          icon = 'award';
+        else if (data.type === 'competition')
+          icon = 'trophy';
+        else
+          icon = 'question';
+        type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
+      }
       const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
-        title="Delete simulation as administrator"></i>`;
+        title="Delete row as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
@@ -331,45 +338,10 @@ document.addEventListener('DOMContentLoaded', function() {
       row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
         `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
           title="GitHub stars"> ${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
-        `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `${deleteProject}`;
-      return row;
-    }
-
-    function protoRow(data) {
-      console.log("protoRooow")
-      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
-      const words = data.url.substring(19).split('/');
-      const dotIndex = data.url.lastIndexOf('/') + 1;
-      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
-        'raw.githubusercontent.com').replace('/blob', '').replace('.proto', '.jpg');
-      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
-      const repository = `https://github.com/${words[0]}/${words[1]}`;
-      const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      const updated = data.updated.replace(' ',
-        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
-      );
-      const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
-        title="Delete proto as administrator"></i>`;
-      const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
-      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
-      row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
-                <div class="thumbnail">
-                  <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
-                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
-                  </div>
-                </div>
-              </td>`;
-      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
-          title="GitHub stars"> ${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>`;
+      if (!proto)
+        row += `<td class="has-text-centered">${type}</td>`;
+      row += `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
       return row;
     }
