@@ -82,4 +82,21 @@ CREATE TABLE `server_branch` (
 ALTER TABLE `server_branch`
   ADD PRIMARY KEY (`id`,`branch`);
 
+CREATE TABLE `proto` (
+  `id` int(11) NOT NULL,
+  `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `stars` int(11) NOT NULL,
+  `name` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `description` varchar(2048) CHARACTER SET utf8mb4 NOT NULL,
+  `version` varchar(16) NOT NULL,
+  `branch` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `viewed` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `proto`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `url_branch` (`url`,`branch`) USING BTREE;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
