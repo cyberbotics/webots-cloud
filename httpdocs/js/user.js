@@ -319,28 +319,26 @@ export default class User extends Router {
     head.appendChild(script);
   }
   load(page = null, pushHistory = true) {
-    let that = this;
-    super.load(page, pushHistory).then(() => {
-      if (document.querySelector('#user-menu')) {
-        if (that.email && that.password) {
-          document.querySelector('#user-menu').style.display = 'auto';
-          document.querySelector('#log-in').style.display = 'none';
-          document.querySelector('#sign-up').style.display = 'none';
-          that.updateDisplayName();
-        } else {
-          document.querySelector('#user-menu').style.display = 'none';
-          document.querySelector('#log-in').style.display = 'flex';
-          document.querySelector('#sign-up').style.display = 'flex';
-        }
-        if (that.email === '!')
-          that.login();
-      }
-    });
+    super.load(page, pushHistory);
   }
   setup(title, content, fullpage = false) {
     super.setup(title, content, fullpage);
     let navbarEnd = document.body.querySelector('.navbar-end');
     navbarEnd.parentNode.replaceChild(this.menu(), navbarEnd);
+    if (document.querySelector('#user-menu')) {
+      if (this.email && this.password) {
+        document.querySelector('#user-menu').style.display = 'auto';
+        document.querySelector('#log-in').style.display = 'none';
+        document.querySelector('#sign-up').style.display = 'none';
+        this.updateDisplayName();
+      } else {
+        document.querySelector('#user-menu').style.display = 'none';
+        document.querySelector('#log-in').style.display = 'flex';
+        document.querySelector('#sign-up').style.display = 'flex';
+      }
+      if (this.email === '!')
+        this.login();
+    }
   }
   menu() {
     let div = document.createElement('div');

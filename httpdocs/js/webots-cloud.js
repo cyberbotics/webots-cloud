@@ -1317,6 +1317,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!project || !project.benchmarkUrl)
         history.go(0)
       else {
+        //document.getElementById('back-button').parentElement.remove();
         mainContainer(project, project.benchmarkUrl);
       }
     }
