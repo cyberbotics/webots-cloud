@@ -299,9 +299,9 @@ document.addEventListener('DOMContentLoaded', function() {
       let thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
         'raw.githubusercontent.com').replace('/blob', '');
       if (proto)
-        thumbnailUrl.replace('.proto', '.jpg');
+        thumbnailUrl = thumbnailUrl.replace('.proto', '.jpg');
       else
-        thumbnailUrl.replace('.wbt', '.jpg');
+        thumbnailUrl = thumbnailUrl.replace('.wbt', '.jpg');
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
