@@ -95,7 +95,7 @@ if ($mysqli->affected_rows != 1) {
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
 if ($search != "")
-  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
+  $condition .= " AND LOWER(name) LIKE LOWER('%$search%')";
 
 $result = $mysqli->query("SELECT COUNT(*) AS count FROM proto WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
@@ -106,7 +106,7 @@ $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
 $answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
-$answer['title'] = $title;
+$answer['name'] = $name;
 $answer['description'] = $description;
 $answer['version'] = $version;
 $answer['updated'] = date("Y-m-d H:i:s");
