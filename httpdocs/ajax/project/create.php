@@ -97,9 +97,9 @@ else
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
   if ($id === 0)
-    error("This simulation already exists branch=$branch");
+    error("This simulation already exists branch.");
   else
-    error("Failed to update the simulation");
+    error("Failed to update the simulation.");
 }
 
 # return answer
