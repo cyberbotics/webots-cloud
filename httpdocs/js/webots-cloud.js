@@ -965,8 +965,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            for (let i = data.animations.length; i < pageLimit; i++)  // empty lines
-              line += '<tr><td colspan="' + columns + '"></td></tr>';
+            if (data.animations.length != pageLimit)  // add extra space
+              line += '<tr style="height:' + 50 * (pageLimit - data.animations.length) + 'px"></tr>';
             let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
             parent.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
@@ -1004,8 +1004,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            for (let i = data.projects.length; i < pageLimit; i++)
-              line += '<tr><td colspan="8"></td></tr>';
+            if (data.projects.length != pageLimit)  // add extra space
+              line += '<tr style="height:' + 50 * (pageLimit - data.projects.length) + 'px"></tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
@@ -1034,8 +1034,8 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            for (let i = data.servers.length; i < pageLimit; i++)
-              line += '<tr><td colspan="5"></td></tr>';
+            if (data.servers.length != pageLimit)  // add extra space
+              line += '<tr style="height:' + 50 * (pageLimit - data.servers.length) + 'px"></tr>';
             project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
