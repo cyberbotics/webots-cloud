@@ -412,10 +412,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-scene">Add a new scene</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-scene">Add a new scene</button>
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
@@ -469,10 +467,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-animation">Add a new animation</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-animation">Add a new animation</button>
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
@@ -530,10 +526,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-project">Add a new simulation</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-project">Add a new simulation</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -554,11 +548,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" onclick="window.open('https://cyberbotics.com/doc/guide/web-server')">
-                  Add your own server</button>
-              </div>
+            <div class="buttons">
+              <button class="button" onclick="window.open('https://cyberbotics.com/doc/guide/web-server')">
+                Add your own server</button>
             </div>
           </section>
         </div>`;
