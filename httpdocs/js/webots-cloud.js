@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
       );
       let icon;
       let type;
-      if (proto) {
+      if (!proto) {
         if (data.type === 'demo')
           icon = 'chalkboard-teacher';
         else if (data.type === 'benchmark')
