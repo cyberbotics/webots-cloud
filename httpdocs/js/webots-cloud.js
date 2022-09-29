@@ -1203,6 +1203,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mainContainer(project) {
+      //for now, giving a 'demo' type allows the user to change the controller and to test it in simulation
       let simulationUrl = new URL(window.location);
       simulationUrl.searchParams.set('type', 'demo');
 
@@ -1275,6 +1276,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a class="button is-primary" id="try-benchmark" style="background-color: #007acc;" href="${simulationUrl.href}">
                   Try Benchmark
                 </a>
+                <br>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
                   Submit Entry
                 </a>
