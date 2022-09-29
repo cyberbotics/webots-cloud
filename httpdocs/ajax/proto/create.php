@@ -58,10 +58,10 @@ while ($line !== false) {
         $description .= $mysqli->escape_string(substr($line, 2));
       }
     }
-  elseif (substr($line, 0, 5) === 'PROTO')
-    $name = trim(substr($line, 5));
+  elseif (substr($line, 0, 6) === 'PROTO ')
+    $name = trim(substr($line, 6));
     if ($name[-1] === '[')
-      $name = trim(substr($line, 0, -1));
+      $name = trim(substr($name, 0, -1));
   $line = strtok("\r\n");
 }
 
