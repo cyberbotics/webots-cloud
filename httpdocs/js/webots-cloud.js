@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function githubRow(data, proto = false) {
+    function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       const dotIndex = data.url.lastIndexOf('/') + 1;
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
         icon = 'question';
       const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
-        title="Delete ${data.type} as administrator"></i>`;
+        title="Delete simulation as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
@@ -333,6 +333,41 @@ document.addEventListener('DOMContentLoaded', function() {
           title="GitHub stars"> ${data.stars}</a></td>` +
         `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-centered">${type}</td>` +
+        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
+        `${deleteProject}`;
+      return row;
+    }
+
+    function protoRow(data) {
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      const words = data.url.substring(19).split('/');
+      const dotIndex = data.url.lastIndexOf('/') + 1;
+      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
+        'raw.githubusercontent.com').replace('/blob', '').replace('.proto', '.jpg');
+      const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
+      const repository = `https://github.com/${words[0]}/${words[1]}`;
+      const name = data.name === '' ? '<i>anonymous</i>' : data.name;
+      const updated = data.updated.replace(' ',
+        `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
+      );
+      const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
+        title="Delete proto as administrator"></i>`;
+      const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
+      const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
+      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
+      row += `<td class="name-cell">
+                <a class="table-name has-text-dark" href="/run?version=${data.version}&url=${data.url}">${name}</a>
+                <div class="thumbnail">
+                  <div class="thumbnail-container">
+                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+                  </div>
+                </div>
+              </td>`;
+      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
+        `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
+          title="GitHub stars"> ${data.stars}</a></td>` +
+        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
         `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
         `${deleteProject}`;
       return row;
@@ -828,7 +863,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
-            tr.innerHTML = githubRow(data);
+            tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
@@ -1028,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1092,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1161,7 +1196,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('simulation-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + githubRow(data.projects[i]) + '</tr>';
+              line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
             project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
@@ -1196,7 +1231,7 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + githubRow(data.protos[i]) + '</tr>';
+              line += '<tr>' + simulationRow(data.protos[i]) + '</tr>';
             project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
