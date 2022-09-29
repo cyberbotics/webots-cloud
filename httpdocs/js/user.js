@@ -318,9 +318,6 @@ export default class User extends Router {
     script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
     head.appendChild(script);
   }
-  load(page = null, pushHistory = true) {
-    super.load(page, pushHistory);
-  }
   setup(title, content, fullpage = false) {
     super.setup(title, content, fullpage);
     let navbarEnd = document.body.querySelector('.navbar-end');
