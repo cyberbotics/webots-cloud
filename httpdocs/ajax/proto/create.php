@@ -22,15 +22,15 @@ $id = isset($data->id) ? intval($data->id) : 0;
 $check_url = proto_check_url($url);
 if (!is_array($check_url))
   error($check_url);
-list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
-$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/worlds/$world";
-$world_content = @file_get_contents($world_url);
-if ($world_content === false) {
+list($username, $repository, $tag_or_branch, $folder, $proto) = $check_url;
+$proto_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/protos/$proto";
+$proto_content = @file_get_contents($proto_url);
+if ($proto_content === false) {
   $query = "DELETE FROM proto WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows === 0)
-    error("Failed to delete proto with world file '$world'");
-  error("Failed to fetch world file $world");
+    error("Failed to delete proto with proto file '$proto'");
+  error("Failed to fetch proto file $proto");
 }
 
 # check and retrieve information from webots.yaml file
@@ -46,7 +46,7 @@ list($type, $benchmark, $competition) = $check_yaml;
 $info = false;
 $name = '';
 $description = '';
-$line = strtok($world_content, "\r\n");
+$line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
 while ($line !== false) {
