@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
             project.load(`/` + type + `{(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
-            tr.innerHTML = githubRow(data);
+            tr.innerHTML = githubRow(data, proto);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
             if (parent.querySelector('#delete-' + id) !== null) {
