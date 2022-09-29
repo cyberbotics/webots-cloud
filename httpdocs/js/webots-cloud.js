@@ -1199,10 +1199,10 @@ document.addEventListener('DOMContentLoaded', function() {
       //benchmark
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
-      mainContainer(project, url);
+      mainContainer(project);
     }
 
-    function mainContainer(project, url) {
+    function mainContainer(project) {
       const information =
         `<div class="columns" style="display: flex;">
           <div class="column is-three-fifths" style="width: 170px; align-items: center;">
@@ -1300,7 +1300,7 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML = contentHtml;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      //add the hidden back button needed for the entries view
+      //add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML = 
       `<div class="navbar-item">
@@ -1311,9 +1311,15 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
       document.getElementById('back-button').onclick = (() => {history.go(-1)});
-      getBenchmark(url);
+      getBenchmark(project.benchmarkUrl);
     }
-  
+    function resetPage() {
+      if (!project || !project.benchmarkUrl)
+        history.go(0)
+      else {
+        mainContainer(project, project.benchmarkUrl);
+      }
+    }
     function getBenchmark(url) {
       let metric;
       const rawGitHubUrl = 'https://raw.githubusercontent.com';
@@ -1410,9 +1416,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     function viewBenchmarkRun(event) {
-
-        document.getElementById('back-button').onclick = (() => {history.go(0)});
-        document.getElementById('back-button').style.display = 'inherit';
+        document.getElementById('back-button').onclick = resetPage;
   
         const url = project.benchmarkUrl;
         const rawGitHubUrl = 'https://raw.githubusercontent.com';
