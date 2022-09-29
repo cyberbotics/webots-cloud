@@ -1128,7 +1128,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + protoRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
