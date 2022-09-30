@@ -1443,11 +1443,12 @@ document.addEventListener('DOMContentLoaded', function() {
           To participate in the benchmark, you need to submit your controller by following those steps:
           <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a>.</li>
-            <li>Create a repo containing your controller file that you can download from the "Try Benchmark" IDE or from the benchmark repository.<br>
-              If you set your repo to private, you will need to add webots.cloud as a collaborator.
+            <li>Create a fork of the organisator's benchmark repository.
+            <li>Add a new line to the competitors.txt with the link to your fork in the format "id:username/repoName".</li>
+            <li>Create a pull request from your fork to register your entry inside the organisator's repository.</li>
+            <li>You can now modify the controller file, test it locally and push it to your fork repository.<br>
+                When a round of benchmark ranking will happen of the organisator's repository, the last version of your fork's controller will be used.
             </li>
-            <li>Create a fork of the organisator's repo to edit the competitors.txt file to add your controller's repo at the end in the format "id:username/repoName".</li>
-            <li>Create a pull request from your fork to finally register your controller in the benchmark.</li>
           </ol> 
         </div>`;
       let modal = ModalDialog.run(`Participate to the benchmark`, content.innerHTML);
