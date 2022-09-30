@@ -116,7 +116,7 @@ export default class Project extends User {
     else
       Project.webotsView = document.querySelector('webots-view');
   }
-  runWebotsView(data, fallbackVersion, isPreview) {
+  runWebotsView(data, version, isPreview) {
     //if data empty -> demo simulation
     //if data is object -> scene or animation with files from server
     //if data is string of benchmark github -> benchmark animation with files from github
@@ -124,8 +124,12 @@ export default class Project extends User {
     let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
-    const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
-      (typeof data === "object" ? data.version : this.findGetParameter('version'));
+    if (!version || version === 'undefined') {
+      if (window.location.hostname === 'testing.webots.cloud')
+        version = 'testing';
+      else
+        version = data?.version ? data.version : this.findGetParameter('version');
+    }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)

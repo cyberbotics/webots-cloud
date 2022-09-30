@@ -34,7 +34,11 @@ body {
 }
 
 div.table-container {
-  min-height: 550px;
+  display: grid;
+}
+
+.table-container tr {
+  height: 50px;
 }
 
 .column-title {
@@ -116,11 +120,11 @@ div.table-container {
   #footer-cyberbotics {
     order: 2;
   }
-  
+
   #footer-terms-of-service {
     order: 1;
   }
-  
+
   #footer-privacy-policy {
     order: 3;
   }

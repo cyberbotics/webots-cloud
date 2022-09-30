@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -402,15 +402,15 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-version" title="Webots release of the scene"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-size" title="Total size of the scene files"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="scene-sort-uploaded" title="Upload date and time"
-                      style="text-align: right; min-width: 115px;">
+                      style="text-align: right; width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
@@ -426,10 +426,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-scene">Add a new scene</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-scene">Add a new scene</button>
             </div>
           </section>
           <section class="section${(activeTab === 'animation') ? ' is-active' : ''}" data-content="animation">
@@ -446,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -455,19 +453,19 @@ document.addEventListener('DOMContentLoaded', function() {
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-version" title="Webots release of the animation"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-duration" title="Duration of the animation"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Duration<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-size" title="Total size of the animation files"
-                      style="text-align: right; min-width: 75px;">
+                      style="text-align: right; width: 75px;">
                       Size<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="animation-sort-uploaded" title="Upload date and time"
-                      style="text-align: right; min-width: 115px;">
+                      style="text-align: right; width: 115px;">
                       Uploaded<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                   </tr>
@@ -483,10 +481,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-animation">Add a new animation</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-animation">Add a new animation</button>
             </div>
           </section>
           <section class="section${(activeTab === 'simulation') ? ' is-active' : ''}" data-content="simulation">
@@ -504,7 +500,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -521,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
@@ -541,10 +537,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-simulation">Add a new simulation</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-simulation">Add a new simulation</button>
             </div>
           </section>
           <section class="section${(activeTab === 'benchmark') ? ' is-active' : ''}" data-content="benchmark">
@@ -599,20 +593,18 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-benchmark">Add a new benchmark</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-benchmark">Add a new benchmark</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
-            <div class="table-container">
+            <div class="table-container" style="margin-top:50px">
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
                     <th title="Fully qualified domain name of server">Server</th>
-                    <th title="Start time">Started</th>
-                    <th title="Last update time">Updated</th>
+                    <th style="text-align:right" title="Start time">Started</th>
+                    <th style="text-align:right" title="Last update time">Updated</th>
                     <th style="text-align:center" title="Maximum load for public usage">Share</th>
                     <th style="text-align:center" title="Server load">Load</th>
                   </tr>
@@ -623,11 +615,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" onclick="window.open('https://cyberbotics.com/doc/guide/web-server')">
-                  Add your own server</button>
-              </div>
+            <div class="buttons">
+              <button class="button" onclick="window.open('https://cyberbotics.com/doc/guide/web-server')">
+                Add your own server</button>
             </div>
           </section>
         </div>`;
@@ -653,20 +643,21 @@ document.addEventListener('DOMContentLoaded', function() {
           let sort = title.id.split('-')[2];
 
           if (previousSort === sort) {
-            sortIcon.classList.toggle('fa-sort-down');
-            sortIcon.classList.toggle('fa-sort-up');
-            sort += sortIcon.classList.contains('fa-sort-down') ? '-desc' : '-asc';
+            sortIcon?.classList.toggle('fa-sort-down');
+            sortIcon?.classList.toggle('fa-sort-up');
+            sort += sortIcon?.classList.contains('fa-sort-down') ? '-desc' : '-asc';
           } else if (previousSort !== 'default') {
             document.getElementById(type + '-sort-' + previousSort).querySelector('.sort-icon').style.display = 'none';
-            if (sortIcon.classList.contains('fa-sort-up')) {
+            if (sortIcon?.classList.contains('fa-sort-up')) {
               sortIcon.classList.toggle('fa-sort-down');
               sortIcon.classList.toggle('fa-sort-up');
             }
             sort += '-desc';
           } else
             sort += '-desc';
-
-          title.querySelector('.sort-icon').style.display = 'inline';
+          let icon = title.querySelector('.sort-icon');
+          if (icon)
+            icon.style.display = 'inline';
           setSorts(type, sort);
           searchAndSortTable(type);
         });
@@ -1046,10 +1037,12 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
-            parent.innerHTML = line;
+            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
+            let tbody = table.querySelector(`tbody`);
+            tbody.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
-              let node = parent.querySelector(`#${typeName}-${data.animations[i].id}`);
+              let node = tbody.querySelector(`#${typeName}-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
@@ -1092,8 +1085,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
-            parent.innerHTML = line;
+            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
+            table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
@@ -1121,7 +1115,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
+            let table = project.content.querySelector('section[data-content="server"] > div > table');
+            table.style.marginBottom = (50 * (pageLimit - data.servers.length)) + 'px';
+            table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
