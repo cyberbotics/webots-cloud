@@ -34,7 +34,11 @@ body {
 }
 
 div.table-container {
-  min-height: 550px;
+  display: grid;
+}
+
+.table-container tr {
+  height: 50px;
 }
 
 .column-title {
