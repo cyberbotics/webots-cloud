@@ -1444,16 +1444,14 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-          <div class="help">
           To participate in the benchmark, you need to submit your controller by following those steps:
-          <ol type="1">
-            <li>Create an account on GitHub</li>
-            <li>Fork the benchmark repo INSERT_LINK</li>
-            <li>Create a pull request to add your repo to the competitors' list</li>
+          <ol style="padding-left: 20px;">
+            <li>Create an account on <a href="https://github.com/signup>GitHub</a></li>
+            <li>Create a repo containing your controller file that you can download from the "Try Benchmark" IDE or from the benchmark repository</li>
+            <li><a href="${project.benchmarkUrl}edit/main/competitors.txt">Create a pull request</a> to add your repo at the end of the competitors' list. The format is "username/repoName"</li>
           </ol> 
-          </div>
         </div>`;
-      let modal = ModalDialog.run(`Participate in benchmark`, content.innerHTML, 'Cancel', 'Add');
+      let modal = ModalDialog.run(`Participate to the benchmark`, content.innerHTML);
     }
   }
 
