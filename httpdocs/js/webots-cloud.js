@@ -977,7 +977,7 @@ document.addEventListener('DOMContentLoaded', function() {
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let typeName = (type == 'D') ? 'simulation' : 'benchmark;'
+      let typeName = (type == 'D') ? 'simulation' : 'benchmark';
       let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
@@ -1438,7 +1438,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
         project.runWebotsView(data);
-    }  
+    }
+    function submitEntry() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          <div class="help">
+          To participate in the benchmark, you need to submit your controller by following those steps:
+          <ol type="1">
+            <li>Create an account on GitHub</li>
+            <li>Fork the benchmark repo INSERT_LINK</li>
+            <li>Create a pull request to add your repo to the competitors' list</li>
+          </ol> 
+          </div>
+        </div>`;
+      let modal = ModalDialog.run(`Participate in benchmark`, content.innerHTML, 'Cancel', 'Add');
+    }
   }
 
 });
