@@ -49,7 +49,7 @@ CREATE TABLE `project` (
 
 ALTER TABLE `project`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url` (`url`),
+  ADD UNIQUE KEY `url_branch` (`url`,`branch`);
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `user` (
