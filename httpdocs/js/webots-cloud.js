@@ -1443,13 +1443,12 @@ document.addEventListener('DOMContentLoaded', function() {
           To participate in the benchmark, you need to submit your controller by following those steps:
           <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a>.</li>
-            <li>Create a fork of the organisator's benchmark repository.
-            <li>Add a new line to the competitors.txt with the link to your fork in the format "id:username/repoName".</li>
+            <li>Create a fork of the <a href="${project.benchmarkUrl.split('/blob')[0]}">organisator's benchmark repository</a>.
+            <li>Inside your fork, edit the competitors.txt to add a new line with the link to your fork in the format "uniqueId:username/repoName".</li>
             <li>Create a pull request from your fork to register your entry inside the organisator's repository.</li>
-            <li>You can now modify the controller file, test it locally and push it to your fork repository.<br>
-                When a round of benchmark ranking will happen of the organisator's repository, the last version of your fork's controller will be used.
-            </li>
+            <li>You can now modify the controller file, test it locally and push it to your fork repository.</li>
           </ol> 
+          If you are successfully registered, when a round of benchmark ranking will happen on the organisator's repository, the last version of your fork's controller will be put to the test.
         </div>`;
       let modal = ModalDialog.run(`Participate to the benchmark`, content.innerHTML);
     }
