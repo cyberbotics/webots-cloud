@@ -1446,7 +1446,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<div class="field">
           To participate in the benchmark, you need to submit your controller by following those steps:
           <ol style="padding-left: 20px;">
-            <li>Create an account on <a href="https://github.com/signup>GitHub</a></li>
+            <li>Create an account on <a href="https://github.com/signup">GitHub</a></li>
             <li>Create a repo containing your controller file that you can download from the "Try Benchmark" IDE or from the benchmark repository</li>
             <li><a href="${project.benchmarkUrl}edit/main/competitors.txt">Create a pull request</a> to add your repo at the end of the competitors' list. The format is "username/repoName"</li>
           </ol> 
