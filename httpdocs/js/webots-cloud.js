@@ -945,7 +945,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listAnimations(type, page, sortBy, searchString) {
       const typeName = (type === 'A') ? 'animation' : 'scene';
-      const columns = (type === 'A') ? 6 : 5;
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/animation/list.php', {method: 'post',
@@ -967,11 +966,13 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             if (data.animations.length != pageLimit)  // add extra space
-              line += '<tr style="height:' + 50 * (pageLimit - data.animations.length) + 'px"></tr>';
-            let parent = project.content.querySelector(`section[data-content="${typeName}"] > div > table > tbody`);
-            parent.innerHTML = line;
+              line += '<tr style="height:' +  + 'px"></tr>';
+            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
+            let tbody = table.querySelector(`tbody`);
+            tbody.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
-              let node = parent.querySelector(`#${typeName}-${data.animations[i].id}`);
+              let node = tbody.querySelector(`#${typeName}-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
