@@ -1322,6 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
       document.getElementById('back-button').onclick = (() => {history.go(-1)});
+      document.getElementById('submit-entry').onclick = submitEntry;
       getBenchmark(project.benchmarkUrl);
     }
     function resetPage() {
