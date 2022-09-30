@@ -1444,7 +1444,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a></li>
             <li>Create a repo containing your controller file that you can download from the "Try Benchmark" IDE or from the benchmark repository</li>
-            <li><a href="${project.benchmarkUrl.split('/blob')[0]}/edit/main/competitors.txt">Create a pull request</a> to add your repo at the end of the competitors' list. The format is "username/repoName"</li>
+            <li>Create a fork of the organisator's repo to edit the competitors.txt file to add your controller's repo at the end in the format "id:username/repoName"</li>
+            <li><a href="${project.benchmarkUrl.split('/blob')[0]}/edit/main/competitors.txt">Create a pull request from your fork</a> to finally register your controller in the benchmark</li>
           </ol> 
         </div>`;
       let modal = ModalDialog.run(`Participate to the benchmark`, content.innerHTML);
