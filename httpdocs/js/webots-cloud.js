@@ -1003,9 +1003,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            if (data.projects.length != pageLimit)  // add extra space
-              line += '<tr style="height:' + 50 * (pageLimit - data.projects.length) + 'px"></tr>';
-            project.content.querySelector('section[data-content="simulation"] > div > table > tbody').innerHTML = line;
+            let table = project.content.querySelector('section[data-content="simulation"] > div > table');
+            table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
+            table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
@@ -1033,9 +1033,9 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            if (data.servers.length != pageLimit)  // add extra space
-              line += '<tr style="height:' + 50 * (pageLimit - data.servers.length) + 'px"></tr>';
-            project.content.querySelector('section[data-content="server"] > div > table > tbody').innerHTML = line;
+            let table = project.content.querySelector('section[data-content="server"] > div > table');
+            table.style.marginBottom = (50 * (pageLimit - data.servers.length)) + 'px';
+            table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
               project.content.querySelector('#sync-server-' + data.servers[i].id).addEventListener('click', synchronizeServer);
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
