@@ -965,8 +965,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            if (data.animations.length != pageLimit)  // add extra space
-              line += '<tr style="height:' +  + 'px"></tr>';
             let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
             table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
             let tbody = table.querySelector(`tbody`);
