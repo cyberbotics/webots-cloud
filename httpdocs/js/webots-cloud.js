@@ -173,7 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
+    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function(event) { addSimulation('D'); });
+    project.content.querySelector('#add-a-new-benchmark').addEventListener('click', function(event) { addSimulation('B'); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
@@ -542,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
             <div class="container is-fullhd">
               <div class="buttons">
-                <button class="button" id="add-a-new-project">Add a new simulation</button>
+                <button class="button" id="add-a-new-simulation">Add a new simulation</button>
               </div>
             </div>
           </section>
@@ -600,7 +601,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </nav>
             <div class="container is-fullhd">
               <div class="buttons">
-                <button class="button" id="add-a-new-project">Add a new benchmark</button>
+                <button class="button" id="add-a-new-benchmark">Add a new benchmark</button>
               </div>
             </div>
           </section>
@@ -956,7 +957,9 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function addSimulation() {
+    function addSimulation(type) {
+      let demoExample = "https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt";
+      let benchmarkExample = "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt";
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -968,13 +971,14 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt">
-              https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt
+            <a target="_blank" href="${(type == 'D') ? demoExample : benchmarkExample}">
+              ${(type == 'D') ? demoExample : benchmarkExample}
             </a>
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
+      let typeName = (type == 'D') ? 'simulation' : 'benchmark;'
+      let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
