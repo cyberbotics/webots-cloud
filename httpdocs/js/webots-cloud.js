@@ -536,8 +536,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th title="Fully qualified domain name of server">Server</th>
-                    <th title="Start time">Started</th>
-                    <th title="Last update time">Updated</th>
+                    <th style="text-align:right" title="Start time">Started</th>
+                    <th style="text-align:right" title="Last update time">Updated</th>
                     <th style="text-align:center" title="Maximum load for public usage">Share</th>
                     <th style="text-align:center" title="Server load">Load</th>
                   </tr>
