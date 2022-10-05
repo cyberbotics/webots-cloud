@@ -144,7 +144,8 @@ export default class Project extends User {
           } else {
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
-            let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+            let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
+              .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
             Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
               false, undefined, 300, thumbnailUrl);
             Project.webotsView.showQuit = false;
@@ -155,7 +156,7 @@ export default class Project extends User {
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
-          that.runWebotsView(data, 'R2022b') // if release not found, default to R2022b
+          that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
       } else if (data) {
@@ -169,7 +170,8 @@ export default class Project extends User {
       } else {
         that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
-        let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+        let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
+          .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
           false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
