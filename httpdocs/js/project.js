@@ -133,6 +133,7 @@ export default class Project extends User {
         script.src = src;
         script.onload = () => {
           if (data) {
+            console.log(data)
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
             that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
@@ -144,7 +145,6 @@ export default class Project extends User {
           } else if (url.endsWith('.proto')) {
             console.log("proto")
           } else {
-            console.log(url)
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
             let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
