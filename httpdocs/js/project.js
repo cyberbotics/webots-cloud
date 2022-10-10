@@ -145,7 +145,6 @@ export default class Project extends User {
             that.setupWebotsView('proto');
             const thumbnailUrl = url.replace('.proto', '.jpg');
             Project.webotsView.loadProto(url, undefined, thumbnailUrl);
-            resolve();
           } else {
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
@@ -158,7 +157,6 @@ export default class Project extends User {
           }
         };
         script.onerror = _ => {
-          console.log(_)
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
