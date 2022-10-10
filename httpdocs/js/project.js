@@ -144,6 +144,7 @@ export default class Project extends User {
           } else if (url.endsWith('.proto')) {
             console.log("proto")
           } else {
+            console.log(url)
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
             let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
