@@ -109,8 +109,8 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     if (!version || version === 'undefined') {
-      if (window.location.hostname === 'testing.webots.cloud')
-        version = 'testing';
+      if (window.location.hostname === 'proto.webots.cloud')
+        version = 'proto';
       else
         version = data ? data.version : this.findGetParameter('version');
     }
@@ -133,7 +133,6 @@ export default class Project extends User {
         script.src = src;
         script.onload = () => {
           if (data) {
-            console.log(data)
             reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
             that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
             if (data.duration > 0)
@@ -143,7 +142,10 @@ export default class Project extends User {
               Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else if (url.endsWith('.proto')) {
-            console.log("proto")
+            that.setupWebotsView('proto');
+            const thumbnailUrl = url.replace('.proto', '.jpg');
+            Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+            resolve();
           } else {
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
@@ -170,6 +172,11 @@ export default class Project extends User {
             this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         else
           Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      } else if (url.endsWith('.proto')) {
+        that.setupWebotsView('proto');
+        const thumbnailUrl = url.replace('.proto', '.jpg');
+        Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+        resolve();
       } else {
         that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
