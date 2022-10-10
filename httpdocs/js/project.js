@@ -143,8 +143,11 @@ export default class Project extends User {
             resolve();
           } else if (url.endsWith('.proto')) {
             that.setupWebotsView('proto');
-            const thumbnailUrl = url.replace('.proto', '.jpg');
-            Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+            let urlArray = url.substring(19).split('/');
+            urlArray.splice(2, 1);
+            let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
+            const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
+            Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
             resolve();
           } else {
             that.setupWebotsView('run');
@@ -174,8 +177,11 @@ export default class Project extends User {
           Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else if (url.endsWith('.proto')) {
         that.setupWebotsView('proto');
-        const thumbnailUrl = url.replace('.proto', '.jpg');
-        Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+        let urlArray = url.substring(19).split('/');
+        urlArray.splice(2, 1);
+        let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
+        const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
+        Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
         resolve();
       } else {
         that.setupWebotsView('run');
