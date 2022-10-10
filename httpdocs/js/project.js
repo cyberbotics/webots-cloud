@@ -142,7 +142,6 @@ export default class Project extends User {
               Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else if (url.endsWith('.proto')) {
-            console.log("proto")
             that.setupWebotsView('proto');
             const thumbnailUrl = url.replace('.proto', '.jpg');
             Project.webotsView.loadProto(url, undefined, thumbnailUrl);
@@ -158,12 +157,12 @@ export default class Project extends User {
             resolve();
           }
         };
-        // script.onerror = _ => {
-        //   console.warn(
-        //     'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
-        //   script.remove();
-        //   that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
-        // };
+        script.onerror = _ => {
+          console.warn(
+            'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+          script.remove();
+          that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
+        };
         document.body.appendChild(script);
       } else if (data) {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
@@ -174,7 +173,6 @@ export default class Project extends User {
         else
           Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else if (url.endsWith('.proto')) {
-        console.log("proto")
         that.setupWebotsView('proto');
         const thumbnailUrl = url.replace('.proto', '.jpg');
         Project.webotsView.loadProto(url, undefined, thumbnailUrl);
