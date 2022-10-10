@@ -157,7 +157,8 @@ export default class Project extends User {
             resolve();
           }
         };
-        script.onerror = () => {
+        script.onerror = _ => {
+          console.log(_)
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
