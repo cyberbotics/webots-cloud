@@ -158,12 +158,12 @@ export default class Project extends User {
             resolve();
           }
         };
-        script.onerror = _ => {
-          console.warn(
-            'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
-          script.remove();
-          that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
-        };
+        // script.onerror = _ => {
+        //   console.warn(
+        //     'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+        //   script.remove();
+        //   that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
+        // };
         document.body.appendChild(script);
       } else if (data) {
         reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
