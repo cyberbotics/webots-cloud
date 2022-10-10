@@ -144,8 +144,9 @@ export default class Project extends User {
           } else if (url.endsWith('.proto')) {
             console.log("proto")
             // that.setupWebotsView('proto');
-            const thumbnailUrl = url.replace('.proto', '.jpg');
+            // const thumbnailUrl = url.replace('.proto', '.jpg');
             // Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+            resolve();
           } else {
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
