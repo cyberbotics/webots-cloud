@@ -142,9 +142,10 @@ export default class Project extends User {
               Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
             resolve();
           } else if (url.endsWith('.proto')) {
-            that.setupWebotsView('proto');
+            console.log("proto")
+            // that.setupWebotsView('proto');
             const thumbnailUrl = url.replace('.proto', '.jpg');
-            Project.webotsView.loadProto(url, undefined, thumbnailUrl);
+            // Project.webotsView.loadProto(url, undefined, thumbnailUrl);
           } else {
             that.setupWebotsView('run');
             let dotIndex = url.lastIndexOf('/') + 1;
