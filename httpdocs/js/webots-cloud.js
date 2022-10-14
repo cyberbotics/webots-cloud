@@ -1445,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <li>Create an account on <a href="https://github.com/signup">GitHub</a>.</li>
             <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}">organisator's benchmark repository</a></li>
             <li>Read the README file to get a detailed step-by-step to create an entry repository. In summary:</li>
-                <ul style="padding-left: 20px; list-style: '\2012 \2002'">
+                <ul style="padding-left: 20px; list-style: 'square'">
                     <li>Create your own entry repository from the template</li>
                     <li>Add the organizer as collaborator if you set your repository as private</li>
                     <li>Submit your entry by using posting an issue using the provided template</li>
