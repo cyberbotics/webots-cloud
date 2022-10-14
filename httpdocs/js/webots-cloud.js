@@ -1442,15 +1442,15 @@ document.addEventListener('DOMContentLoaded', function() {
         `<div class="field">
         To participate in the benchmark, you need to submit your controller by following those steps:
         <ol style="padding-left: 20px;">
-            <li>Create an account on <a href="https://github.com/signup">GitHub</a>.</li>
-            <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}">organisator's benchmark repository</a></li>
+            <li>Create an account on <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer">GitHub</a>.</li>
+            <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}" target="_blank" rel="noopener noreferrer">organisator's benchmark repository</a></li>
             <li>Read the README file to get a detailed step-by-step to create an entry repository. In summary:</li>
                 <ul style="padding-left: 20px; list-style: square">
                     <li>Create your own entry repository from the template</li>
                     <li>Add the organizer as collaborator if you set your repository as private</li>
                     <li>Submit your entry by using posting an issue using the provided template</li>
                 </ul>
-            <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using the <a href="https://cyberbotics.com/doc/guide/foreword">Webots software</a>.</li>
+            <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using the <a href="https://cyberbotics.com/doc/guide/foreword" target="_blank" rel="noopener noreferrer">Webots software</a>.</li>
         </ol> 
         The leaderboard will be updated multiple times a day, but you can always ask for an individual re-evaluation by following the instructions in your issue registration.
         </div>`;
