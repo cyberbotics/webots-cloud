@@ -1440,15 +1440,19 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-          To participate in the benchmark, you need to submit your controller by following those steps:
-          <ol style="padding-left: 20px;">
+        To participate in the benchmark, you need to submit your controller by following those steps:
+        <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a>.</li>
-            <li>Create a fork of the <a href="${project.benchmarkUrl.split('/blob')[0]}">organisator's benchmark repository</a>.
-            <li>Inside your fork, edit the competitors.txt to add a new line with the link to your fork in the format "uniqueId:username/repoName".</li>
-            <li>Create a pull request from your fork to register your entry inside the organisator's repository.</li>
-            <li>You can now modify the controller file, test it locally and push it to your fork repository.</li>
-          </ol> 
-          If you are successfully registered, when a round of benchmark ranking will happen on the organisator's repository, the last version of your fork's controller will be put to the test.
+            <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}">organisator's benchmark repository</a></li>
+            <li>Read the README file to get a detailed step-by-step to create an entry repository. In summary:</li>
+                <ul>
+                    <li>Create your own entry repository from the template</li>
+                    <li>Add the organizer as collaborator if you set your repository as private</li>
+                    <li>Submit your entry by using posting an issue using the provided template</li>
+                </ul>
+            <li>You can now modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using the <a href="https://cyberbotics.com/doc/guide/foreword">Webots software</a>.</li>
+        </ol> 
+        The leaderboard will be updated multiple times a day, but you can always ask for an individual re-evaluation by following the instructions in your issue registration.
         </div>`;
       let modal = ModalDialog.run(`Participate to the benchmark`, content.innerHTML);
     }
