@@ -1337,9 +1337,23 @@ document.addEventListener('DOMContentLoaded', function() {
       const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
   
-      fetch(rawUrl + '/information.txt')
+      fetch(rawUrl + '/README.md')
       .then(function(response) { return response.text(); })
       .then(function(data) {
+
+        var readme = new DOMParser().parseFromString(data, "text/html");
+
+        const title = readme.getElementById('title').innerText.trim();
+        const description = readme.getElementById('description').innerText.trim();
+
+        const information = readme.getElementById('information').innerText.trim().split('\n');
+        const difficulty = information[0].split(':')[1].substring(1);
+        const robot = information[1].split(':')[1].substring(1);
+        const language = information[2].split(':')[1].substring(1);
+        const commitment = information[3].split(':')[1].substring(1);
+        metric = information[4].split(':')[1].substring(1);
+
+        /*
         const information = data.split('\n');
         const title = information[0].split(':')[1].substring(1);
         const description = information[1].split(':')[1].substring(1);
@@ -1348,7 +1362,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const language = information[4].split(':')[1].substring(1);
         const commitment = information[5].split(':')[1].substring(1);
         metric = information[6].split(':')[1].substring(1);
-  
+        */
         document.getElementById('benchmark-title').innerHTML = title;
         document.getElementById('benchmark-information-description').innerHTML = description;
         document.getElementById('benchmark-difficulty').innerHTML = difficulty;
