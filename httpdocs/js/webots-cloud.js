@@ -1212,23 +1212,23 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
           <tr>
             <td>Difficulty level:</td>
-            <td id="benchmark-difficulty"></td>
+            <td style="font-weight: bold;" id="benchmark-difficulty"></td>
           </tr>
           <tr>
             <td>Robot:</td>
-            <td id="benchmark-robot"></td>
+            <td style="font-weight: bold;" id="benchmark-robot"></td>
           </tr>
           <tr>
             <td>Programming language:</td>
-            <td id="benchmark-language"></td>
+            <td style="font-weight: bold;" id="benchmark-language"></td>
           </tr>
           <tr>
             <td>Minimum commitment:</td>
-            <td id="benchmark-commitment"></td>
+            <td style="font-weight: bold;" id="benchmark-commitment"></td>
           </tr>
           <tr>
             <td>Number of participants:</td>
-            <td id="benchmark-participants"></td>
+            <td style="font-weight: bold;" id="benchmark-participants"></td>
           </tr>
         </tbody>
         </table>`;
@@ -1277,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="tile is-parent is-4">
               <article class="tile is-child box">
                 <p class="title">Information</p>
-                <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
+                <p id="benchmark-information-description" style="margin-bottom: 25px;font-size: large;"></p>
                 <div class="content">
                   ${information}
                 </div>
