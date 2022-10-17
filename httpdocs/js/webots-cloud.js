@@ -1208,22 +1208,30 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationUrl.searchParams.set('type', 'demo');
 
       const information =
-        `<div class="columns" style="display: flex;">
-          <div class="column is-three-fifths" style="width: 170px; align-items: center;">
-            <p style="font-size: small;">Difficulty level:</p>
-            <p style="font-size: small;">Robot:</p>
-            <p style="font-size: small;">Programming language:</p>
-            <p style="font-size: small;">Minimum commitment:</p>
-            <p style="font-size: small;">Number of participants:</p>
-          </div>
-          <div id="benchmark-information" class="column" style="min-width: 120px; align-items: center;">
-            <p style="font-size: small; font-weight: bold;" id="benchmark-difficulty"></p>
-            <p style="font-size: small; font-weight: bold;" id="benchmark-robot"></p>
-            <p style="font-size: small; font-weight: bold;" id="benchmark-language"></p>
-            <p style="font-size: small; font-weight: bold;" id="benchmark-commitment"></p>
-            <p style="font-size: small; font-weight: bold;" id="benchmark-participants"></p>
-          </div>
-        </div>`;
+        `<table>
+        <tbody>
+          <tr>
+            <td>Difficulty level:</td>
+            <td id="benchmark-difficulty"></td>
+          </tr>
+          <tr>
+            <td>Robot:</td>
+            <td id="benchmark-robot"></td>
+          </tr>
+          <tr>
+            <td>Programming language:</td>
+            <td id="benchmark-language></td>
+          </tr>
+          <tr>
+            <td>Minimum commitment:</td>
+            <td id="benchmark-commitment></td>
+          </tr>
+          <tr>
+            <td>Number of participants:</td>
+            <td id="benchmark-participants></td>
+          </tr>
+        </tbody>
+        </table>`;
   
       const rankingsTable =
         `<section class="section is-active" data-content="rankings" style="padding: 0">
