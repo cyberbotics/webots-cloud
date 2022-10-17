@@ -1337,22 +1337,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
   
-      const difficultyDict = {
-        1: 'Middle School',
-        2: 'High School',
-        3: 'Bachelor',
-        4: 'Master',
-        5: 'PhD'
-      }
-  
-      const commitmentDict = {
-        1: 'A few minutes',
-        2: 'A couple of hours',
-        3: 'A few hours',
-        4: 'A couple of days',
-        5: 'A few days'
-      }
-  
       fetch(rawUrl + '/information.txt')
       .then(function(response) { return response.text(); })
       .then(function(data) {
@@ -1367,10 +1351,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
         document.getElementById('benchmark-title').innerHTML = title;
         document.getElementById('benchmark-information-description').innerHTML = description;
-        document.getElementById('benchmark-difficulty').innerHTML = difficultyDict[difficulty];
+        document.getElementById('benchmark-difficulty').innerHTML = difficulty;
         document.getElementById('benchmark-robot').innerHTML = robot;
         document.getElementById('benchmark-language').innerHTML = language;
-        document.getElementById('benchmark-commitment').innerHTML = commitmentDict[commitment];
+        document.getElementById('benchmark-commitment').innerHTML = commitment;
 
         //preview window
         const reference = rawUrl + '/preview/';
