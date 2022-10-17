@@ -1343,7 +1343,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var readme = new DOMParser().parseFromString(data, "text/html");
 
-        const title = readme.getElementById('title').innerText.trim();
+        const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, "").replace(/[\s]*$/, "");
         const description = readme.getElementById('description').innerText.trim();
 
         const information = readme.getElementById('information').innerText.trim().split('\n');
@@ -1353,16 +1353,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const commitment = information[3].split(':')[1].substring(1);
         metric = information[4].split(':')[1].substring(1);
 
-        /*
-        const information = data.split('\n');
-        const title = information[0].split(':')[1].substring(1);
-        const description = information[1].split(':')[1].substring(1);
-        const difficulty = information[2].split(':')[1].substring(1);
-        const robot = information[3].split(':')[1].substring(1);
-        const language = information[4].split(':')[1].substring(1);
-        const commitment = information[5].split(':')[1].substring(1);
-        metric = information[6].split(':')[1].substring(1);
-        */
         document.getElementById('benchmark-title').innerHTML = title;
         document.getElementById('benchmark-information-description').innerHTML = description;
         document.getElementById('benchmark-difficulty').innerHTML = difficulty;
