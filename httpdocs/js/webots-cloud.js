@@ -1220,15 +1220,15 @@ document.addEventListener('DOMContentLoaded', function() {
           </tr>
           <tr>
             <td>Programming language:</td>
-            <td id="benchmark-language></td>
+            <td id="benchmark-language"></td>
           </tr>
           <tr>
             <td>Minimum commitment:</td>
-            <td id="benchmark-commitment></td>
+            <td id="benchmark-commitment"></td>
           </tr>
           <tr>
             <td>Number of participants:</td>
-            <td id="benchmark-participants></td>
+            <td id="benchmark-participants"></td>
           </tr>
         </tbody>
         </table>`;
