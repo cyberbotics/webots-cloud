@@ -1208,7 +1208,7 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationUrl.searchParams.set('type', 'demo');
 
       const information =
-        `<table>
+        `<table style="font-size: small">
         <tbody>
           <tr>
             <td>Difficulty level:</td>
@@ -1277,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="tile is-parent is-4">
               <article class="tile is-child box">
                 <p class="title">Information</p>
-                <p id="benchmark-information-description" style="margin-bottom: 25px;font-size: large;"></p>
+                <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
                 <div class="content">
                   ${information}
                 </div>
