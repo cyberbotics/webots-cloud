@@ -954,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-          <div class="help" style="padding-bottom: 10px;">Please enter the full URL link to the world file of your project repository:
+          <div style="padding-bottom: 10px;">Please enter the full URL link to the world file of your project's repository:
           </div>
           <label class="label">Webots world file</label>
           <div class="control has-icons-left">
