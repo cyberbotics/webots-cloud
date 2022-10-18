@@ -1344,11 +1344,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
       const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
-  
+
       fetch(rawUrl + '/README.md')
       .then(function(response) { return response.text(); })
       .then(function(data) {
-
         var readme = new DOMParser().parseFromString(data, "text/html");
 
         const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, "").replace(/[\s]*$/, "");
@@ -1359,7 +1358,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const robot = information[1].split(':')[1].substring(1);
         const language = information[2].split(':')[1].substring(1);
         const commitment = information[3].split(':')[1].substring(1);
-        metric = information[4].split(':')[1].substring(1);
 
         document.getElementById('benchmark-title').innerHTML = title;
         document.getElementById('benchmark-information-description').innerHTML = description;
@@ -1374,7 +1372,13 @@ document.addEventListener('DOMContentLoaded', function() {
           project.benchmarkUrl = url;
         project.runWebotsView(reference, null, true);
       });
-  
+
+      fetch(rawUrl + '/webots.yml')
+      .then(function(response) { return response.text(); })
+      .then(function(data) {
+        metric = data.match(/metric: ([a-z-]+)/);
+      });
+
       fetch(rawUrl + '/competitors.txt')
       .then(function(response) { return response.text(); })
       .then(function(data) {
