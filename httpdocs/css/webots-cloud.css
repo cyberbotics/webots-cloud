@@ -328,3 +328,7 @@ nav.pagination > a[disabled] {
     overflow-x: auto;
   }
 }
+
+::placeholder {
+  opacity: 1
+}
