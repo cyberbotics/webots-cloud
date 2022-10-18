@@ -1443,7 +1443,7 @@ document.addEventListener('DOMContentLoaded', function() {
       content.innerHTML =
         `<div class="field">
         <p style="padding-bottom:15px;">
-          To register, you will need to create your own controller on GitHub and to sumbit it to the owner of the benchmark. Here is how to do it:
+          To register, you will need to create your own controller on GitHub and to sumbit it to the creator of the benchmark. Here is how to do it:
         </p>
         <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
@@ -1452,9 +1452,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <ul style="padding-left: 20px; list-style: square">
                     <li>Create your own entry repository from the template</li>
                     <li>Add the organizer as collaborator if you set your repository as private</li>
-                    <li>Submit your entry by posting an issue using the provided template</li>
+                    <li>Submit your entry to the organizer by posting an issue on their repository</li>
                 </ul>
-            <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using the <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a> software.</li>
+            <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a>.</li>
         </ol> 
         The leaderboard will be updated once a day, but you can always ask for an immediate re-evaluation by following the instructions that will be given at the end of the registration procedure.
         </div>`;
