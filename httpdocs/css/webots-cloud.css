@@ -330,5 +330,6 @@ nav.pagination > a[disabled] {
 }
 
 ::placeholder {
-  opacity: 1
+  opacity: 1;
+  color: #aaa;
 }
