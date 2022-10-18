@@ -1442,7 +1442,9 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-        To register, you will need to create your own controller on GitHub and to sumbit it to the owner of the benchmark. Here is how to do it:
+        <p style="padding-bottom:15px;">
+          To register, you will need to create your own controller on GitHub and to sumbit it to the owner of the benchmark. Here is how to do it:
+        </p>
         <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
             <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}">repository of the benchmark creator</a></li>
