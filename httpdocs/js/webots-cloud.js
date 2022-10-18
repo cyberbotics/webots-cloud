@@ -1376,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', function() {
       fetch(rawUrl + '/webots.yml')
       .then(function(response) { return response.text(); })
       .then(function(data) {
-        metric = data.match(/metric: ([a-z-]+)/);
+        metric = data.match(/metric: ([a-z-]+)/)[1];
       });
 
       fetch(rawUrl + '/competitors.txt')
