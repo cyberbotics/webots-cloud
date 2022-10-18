@@ -954,9 +954,11 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
+          <div class="help">Please enter the full URL link to the world file of your project:
+          </div>
           <label class="label">Webots world file</label>
           <div class="control has-icons-left">
-            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
+            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt">
             <span class="icon is-small is-left">
               <i class="fab fa-github"></i>
             </span>
