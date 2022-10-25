@@ -802,11 +802,11 @@ document.addEventListener('DOMContentLoaded', function() {
       let type;
       if (proto) {
         searchString = getSearch('proto');
-        script = 'ajax/proto/create.php'
+        script = 'ajax/proto/create.php';
         type = 'proto';
       } else {
         searchString = getSearch('simulation');
-        script = 'ajax/project/create.php'
+        script = 'ajax/project/create.php';
         type = 'simulation';
       }
       const id = event.target.id.substring(5);
