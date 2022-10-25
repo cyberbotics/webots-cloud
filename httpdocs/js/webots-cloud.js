@@ -585,11 +585,11 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="proto-sort-name" title="Name of the proto"
+                    <th class="is-clickable column-title" id="proto-sort-title" title="Title of the proto"
                       style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="column-title" id="proto-sort-name" title="Branch or Tag of the proto">
+                    <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
                       Branch/Tag
                     </th>
                     <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
