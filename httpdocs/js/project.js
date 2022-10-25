@@ -104,7 +104,6 @@ export default class Project extends User {
     document.querySelector('#main-container').classList.add('webotsView');
   }
   runWebotsView(data, version) {
-    console.log(data)
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
@@ -118,7 +117,7 @@ export default class Project extends User {
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)
-      that._updateSimulationViewCount(url);
+      that._updateProtoAndSimulationViewCount(url);
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -212,9 +211,9 @@ export default class Project extends User {
       }
     });
   }
-  _updateSimulationViewCount(url) {
-    console.log("update view count " + url)
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
+  _updateProtoAndSimulationViewCount(url) {
+    let phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
+    fetch(phpFile, {method: 'post', body: JSON.stringify({url: url})})
       .then(function(response) {
         return response.json();
       })
