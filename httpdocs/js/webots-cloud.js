@@ -1197,6 +1197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (type == "demo") {
       //demo
       project.runWebotsView();
+      // TODO: show robot window only if benchmark demo
+      //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
     } else if (type == "benchmark") {
       //benchmark
       let url = project.findGetParameter('url');
@@ -1287,7 +1289,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   Try Benchmark
                 </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
-                  Register to leaderboard
+                  Register
                 </a>
               </article>
             </div>
@@ -1443,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', function() {
       content.innerHTML =
         `<div class="field">
         <p style="padding-bottom:15px;">
-          To register, you will need to create your own controller on GitHub and to sumbit it to the creator of the benchmark. Here is how to do it:
+          To register, you will need to create your own controller on GitHub and to submit it to the creator of the benchmark. Here is how to do it:
         </p>
         <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
@@ -1456,7 +1458,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
             <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a>.</li>
         </ol> 
-        The leaderboard will be updated once a day, but you can always ask for an immediate re-evaluation by following the instructions that will be given at the end of the registration procedure.
+        The user's score can be updated by posting a "run" command on the registration issue on the creator's benchmark as described in the subscription confirmation message.
         </div>`;
       let modal = ModalDialog.run(`Registration to the benchmark`, content.innerHTML);
     }
