@@ -1349,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
 
-      fetch(rawUrl + '/README.md')
+      fetch(rawUrl + '/README.md?nocache=' + (new Date()).getTime())
       .then(function(response) { return response.text(); })
       .then(function(data) {
         var readme = new DOMParser().parseFromString(data, "text/html");
@@ -1377,13 +1377,13 @@ document.addEventListener('DOMContentLoaded', function() {
         project.runWebotsView(reference, null, true);
       });
 
-      fetch(rawUrl + '/webots.yml')
+      fetch(rawUrl + '/webots.yml?nocache=' + (new Date()).getTime())
       .then(function(response) { return response.text(); })
       .then(function(data) {
         metric = data.match(/metric: ([a-z-]+)/)[1];
       });
 
-      fetch(rawUrl + '/competitors.txt')
+      fetch(rawUrl + '/competitors.txt?nocache=' + (new Date()).getTime())
       .then(function(response) { return response.text(); })
       .then(function(data) {
         let performanceArray = [];

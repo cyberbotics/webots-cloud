@@ -19,11 +19,11 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
-        .then(function(response) {
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           let pushUrl;
           if (url.search !== data.uploadMessage)
             pushUrl = url.pathname + url.search + url.hash;
@@ -36,12 +36,14 @@ export default class Project extends User {
                 uploads.push(data.animation.id);
               window.localStorage.setItem('uploads', JSON.stringify(uploads));
             } else {
-              fetch('/ajax/user/authenticate.php', { method: 'post',
-                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
-                .then(function(response) {
+              fetch('/ajax/user/authenticate.php', {
+                method: 'post',
+                body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
+              })
+                .then(function (response) {
                   return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
@@ -158,7 +160,7 @@ export default class Project extends User {
               else
                 Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
               resolve();
-            } else { // benchmark link
+            } else { // benchmark link TODO: stop piggybacking on demo simulation
               if (isPreview) {
                 that.setupPreviewWebotsView('run');
               } else {
@@ -167,9 +169,9 @@ export default class Project extends User {
               const url = this.benchmarkUrl;
               let dotIndex = url.lastIndexOf('/') + 1;
               const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
-              'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+                'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-              this._isMobileDevice(), `${thumbnailUrl}`);
+                this._isMobileDevice(), `${thumbnailUrl}`);
             }
           } else { // demo simulation
             that.setupWebotsView('run');
@@ -189,7 +191,7 @@ export default class Project extends User {
           that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else if (data) { //copy of lines from above? (without the resolve())
+      } else if (data) { // TODO: not do a copy/paste of lines from above? (without the resolve())
         if (data.url) {
           reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
           that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
@@ -207,9 +209,9 @@ export default class Project extends User {
           const url = this.benchmarkUrl;
           let dotIndex = url.lastIndexOf('/') + 1;
           const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
-          'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+            'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-          this._isMobileDevice(), `${thumbnailUrl}`); 
+            this._isMobileDevice(), `${thumbnailUrl}`);
         }
       } else {
         that.setupWebotsView('run');
@@ -240,11 +242,11 @@ export default class Project extends User {
     });
   }
   _updateSimulationViewCount(url) {
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
-      .then(function(response) {
+    fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         if (data.error)
           console.warn(data.error);
       });
