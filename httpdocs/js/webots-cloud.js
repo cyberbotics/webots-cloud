@@ -1200,17 +1200,19 @@ document.addEventListener('DOMContentLoaded', function() {
       // TODO: show robot window only if benchmark demo
       //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
     } else if (type == "benchmark") {
-      //benchmark
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
-      mainContainer(project);
+      let run = project.findGetParameter('run');
+      if (run == "true") {
+        project.runWebotsView(null, null, true);
+      } else {
+        mainContainer(project);
+      }
     }
 
     function mainContainer(project) {
-      //for now, giving a 'demo' type allows the user to change the controller and to test it in simulation
       let simulationUrl = new URL(window.location);
-      simulationUrl.searchParams.set('type', 'demo');
-
+      simulationUrl.searchParams.append('run', 'true');
       const information =
         `<table style="font-size: small">
         <tbody>
@@ -1438,7 +1440,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsView(data, isBenchmark = true);
+        project.runWebotsView(data);
     }
     function submitEntry() {
       let content = {};
