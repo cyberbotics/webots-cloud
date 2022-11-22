@@ -161,15 +161,13 @@ export default class Project extends User {
                 Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
               resolve();
             } else { // benchmark link TODO: stop piggybacking on demo simulation
-              if (isPreview) {
-                that.setupPreviewWebotsView('run');
-              } else {
-                that.setupWebotsView('run');
-              }
+              // when preview window, data has preview folder url
+              that.setupPreviewWebotsView('run');
               const url = this.benchmarkUrl;
-              let dotIndex = url.lastIndexOf('/') + 1;
-              const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
-                'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+              const splitUrl = url.split('/');
+              const username = splitUrl[3];
+              const repo = splitUrl[4];
+              const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
                 this._isMobileDevice(), `${thumbnailUrl}`);
             }
@@ -201,15 +199,13 @@ export default class Project extends User {
           else
             Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
         } else {
-          if (isPreview) {
-            that.setupPreviewWebotsView('run');
-          } else {
-            that.setupWebotsView('run');
-          }
+          // when preview window, data has preview folder url
+          that.setupPreviewWebotsView('run');
           const url = this.benchmarkUrl;
-          let dotIndex = url.lastIndexOf('/') + 1;
-          const thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com',
-            'raw.githubusercontent.com').replace('/blob/', '/').replace('.wbt', '.jpg');
+          const splitUrl = url.split('/');
+          const username = splitUrl[3];
+          const repo = splitUrl[4];
+          const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
             this._isMobileDevice(), `${thumbnailUrl}`);
         }
