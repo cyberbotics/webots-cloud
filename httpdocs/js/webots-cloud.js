@@ -1195,15 +1195,14 @@ document.addEventListener('DOMContentLoaded', function() {
     //discriminate between demos and benchmark using search parameters
     let type = project.findGetParameter('type');
     if (type == "demo") {
-      //demo
       project.runWebotsView();
-      // TODO: show robot window only if benchmark demo
-      //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
     } else if (type == "benchmark") {
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
       let run = project.findGetParameter('run');
       if (run == "true") {
+      // TODO: show robot window when it is a benchmark simulation
+      //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
         project.runWebotsView(null, null, true);
       } else {
         mainContainer(project);
@@ -1440,7 +1439,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
         const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
         const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsView(data);
+        project.runWebotsView(data, null, true);
     }
     function submitEntry() {
       let content = {};
