@@ -158,7 +158,7 @@ export default class Project extends User {
             const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
             if (data) {
               // if there is data, it is a preview window
-              that.setupWebotsView('run');
+              that.setupPreviewWebotsView();
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
                 this._isMobileDevice(), `${thumbnailUrl}`);
             } else {
@@ -205,7 +205,7 @@ export default class Project extends User {
         const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
         if (data) {
           // if there is data, it is a preview window
-          that.setupWebotsView('run');
+          that.setupPreviewWebotsView();
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
             this._isMobileDevice(), `${thumbnailUrl}`);
         } else {
