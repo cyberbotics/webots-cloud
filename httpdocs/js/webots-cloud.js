@@ -1375,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const reference = rawUrl + '/preview/';
         if (project && !project.benchmarkUrl)
           project.benchmarkUrl = url;
-        project.runWebotsView(reference, null, true);
+        project.runWebotsView(reference, null, true, true);
       });
 
       fetch(rawUrl + '/webots.yml?nocache=' + (new Date()).getTime())
