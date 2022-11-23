@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationSort = sort;
     else if (activeTab === 'benchmark')
       benchmarkSort = sort;
-    
   }
 
   function getSort(activeTab) {
@@ -154,12 +153,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
-    let page = new URL(document.location.href).searchParams.get('p') ?
-      parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
-    let search = new URL(document.location.href).searchParams.get('search') ?
-      (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
-    let sort = new URL(document.location.href).searchParams.get('sort') ?
-      (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
+    let page = new URL(document.location.href).searchParams.get('p')
+      ? parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
+    let search = new URL(document.location.href).searchParams.get('search')
+      ? (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
+    let sort = new URL(document.location.href).searchParams.get('sort')
+      ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
     setPages(activeTab, page);
     setSorts(activeTab, sort);
@@ -182,9 +181,10 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations('B', benchmarkPage, getSort('benchmark'), getSearch('benchmark'));
     listServers(serverPage);
 
-    if (project.email && project.email.endsWith('@cyberbotics.com'))
+    if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
+    }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
@@ -207,12 +207,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (i < current - 2 || (i > current + 2 && i !== max))
           continue;
-        if (i === current)
+        if (i === current) {
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
-        else
+        } else {
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
+        }
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
@@ -307,7 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
       row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+                <a class="table-title has-text-dark"` +
+                ` href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -315,12 +317,26 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </td>`;
-      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
-          title="GitHub stars"> ${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `${deleteProject}`;
+      row += `<td>
+                <a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">
+                  ${words[3]}
+                </a>
+              </td>
+              </td>
+              <td class="has-text-centered">
+                <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">
+                  ${data.stars}
+                </a>
+              </td>
+              <td>
+                <a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">
+                  ${data.version}
+                </a>
+              </td>
+              <td class="has-text-right is-size-7" title="Last synchronization with GitHub">
+                ${updated}
+              </td>
+              ${deleteProject}`;
       return row;
     }
 
@@ -804,9 +820,10 @@ document.addEventListener('DOMContentLoaded', function() {
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
-            if (parent.querySelector('#delete-' + id) !== null)
+            if (parent.querySelector('#delete-' + id) !== null) {
               parent.querySelector('#delete-' + id).addEventListener('click',
                 function(event) { deleteSimulation(event, project); });
+            }
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
@@ -841,7 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addAnimation(type) {
       let content = {};
-      if (type === 'A')
+      if (type === 'A') {
         content.innerHTML = `<div class="field">
           <label class="label">Webots animation</label>
           <div class="control has-icons-left">
@@ -852,7 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
         </div>`;
-      else
+      } else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
           <label class="label">Webots scene</label>
@@ -949,8 +966,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function addSimulation(type) {
-      let demoExample = "https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt";
-      let benchmarkExample = "https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt";
+      let demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
+      let benchmarkExample = 'https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt';
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -964,13 +981,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-            <a target="_blank" href="${(type == 'D') ? demoExample : benchmarkExample}">
-              ${(type == 'D') ? demoExample : benchmarkExample}
+            <a target="_blank" href="${(type === 'D') ? demoExample : benchmarkExample}">
+              ${(type === 'D') ? demoExample : benchmarkExample}
             </a>
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let typeName = (type == 'D') ? 'simulation' : 'benchmark';
+      let typeName = (type === 'D') ? 'simulation' : 'benchmark';
       let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
@@ -1061,11 +1078,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function listSimulations(type, page, sortBy, searchString) {
       const typeName = (() => {
         if (type === 'D')
-          return 'simulation'
+          return 'simulation';
         else if (type === 'B')
-          return 'benchmark'
+          return 'benchmark';
         else if (type === 'C')
-          return 'competition'
+          return 'competition';
       })();
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let offset = (page - 1) * pageLimit;
@@ -1093,9 +1110,10 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
-              if (project.content.querySelector('#delete-' + id) !== null)
+              if (project.content.querySelector('#delete-' + id) !== null) {
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
+              }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
@@ -1192,21 +1210,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function runPage(project) {
-    //discriminate between demos and benchmark using search parameters
+    // discriminate between demos and benchmark using search parameters
     let type = project.findGetParameter('type');
-    if (type == "demo") {
+    if (type === 'demo')
       project.runWebotsView();
-    } else if (type == "benchmark") {
+    else if (type === 'benchmark') {
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
       let context = project.findGetParameter('context');
-      if (context == "run") {
+      if (context === 'run') {
       // TODO: show robot window when it is a benchmark simulation
-      //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
+      // document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
         project.runWebotsView();
-      } else {
+      } else
         mainContainer(project);
-      }
     }
 
     function mainContainer(project) {
@@ -1237,7 +1254,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </tr>
         </tbody>
         </table>`;
-  
+
       const rankingsTable =
         `<section class="section is-active" data-content="rankings" style="padding: 0">
           <div class="table-container rankings-table mx-auto">
@@ -1271,7 +1288,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
         </section>`;
-  
+
       const contentHtml =
       `<div class="container is-widescreen">
         <section class="section is-active">
@@ -1320,9 +1337,9 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML = contentHtml;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      //add the back button needed for the entries view
+      // add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
-      backButtonTemplate.innerHTML = 
+      backButtonTemplate.innerHTML =
       `<div class="navbar-item">
         <a class="button is-small is-light is-outlined" id="back-button">
           <span class="icon"><i class="fas fa-lg fa-rotate-left"></i></span>
@@ -1330,13 +1347,13 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
-      document.getElementById('back-button').onclick = (() => {history.go(-1)});
+      document.getElementById('back-button').onclick = () => { history.go(-1); };
       document.getElementById('submit-entry').onclick = submitEntry;
       getBenchmark(project.benchmarkUrl);
     }
     function resetPage() {
       if (!project || !project.benchmarkUrl)
-        history.go(0)
+        history.go(0);
       else {
         document.getElementById('back-button').parentElement.remove();
         mainContainer(project, project.benchmarkUrl);
@@ -1351,64 +1368,64 @@ document.addEventListener('DOMContentLoaded', function() {
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
 
       fetch(rawUrl + '/README.md?nocache=' + (new Date()).getTime())
-      .then(function(response) { return response.text(); })
-      .then(function(data) {
-        var readme = new DOMParser().parseFromString(data, "text/html");
+        .then(function(response) { return response.text(); })
+        .then(function(data) {
+          var readme = new DOMParser().parseFromString(data, 'text/html');
 
-        const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, "").replace(/[\s]*$/, "");
-        const description = readme.getElementById('description').innerText.trim();
+          const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
+          const description = readme.getElementById('description').innerText.trim();
 
-        const information = readme.getElementById('information').innerText.trim().split('\n');
-        const difficulty = information[0].split(':')[1].substring(1);
-        const robot = information[1].split(':')[1].substring(1);
-        const language = information[2].split(':')[1].substring(1);
-        const commitment = information[3].split(':')[1].substring(1);
+          const information = readme.getElementById('information').innerText.trim().split('\n');
+          const difficulty = information[0].split(':')[1].substring(1);
+          const robot = information[1].split(':')[1].substring(1);
+          const language = information[2].split(':')[1].substring(1);
+          const commitment = information[3].split(':')[1].substring(1);
 
-        document.getElementById('benchmark-title').innerHTML = title;
-        document.getElementById('benchmark-information-description').innerHTML = description;
-        document.getElementById('benchmark-difficulty').innerHTML = difficulty;
-        document.getElementById('benchmark-robot').innerHTML = robot;
-        document.getElementById('benchmark-language').innerHTML = language;
-        document.getElementById('benchmark-commitment').innerHTML = commitment;
+          document.getElementById('benchmark-title').innerHTML = title;
+          document.getElementById('benchmark-information-description').innerHTML = description;
+          document.getElementById('benchmark-difficulty').innerHTML = difficulty;
+          document.getElementById('benchmark-robot').innerHTML = robot;
+          document.getElementById('benchmark-language').innerHTML = language;
+          document.getElementById('benchmark-commitment').innerHTML = commitment;
 
-        //preview window
-        const reference = rawUrl + '/preview/';
-        if (project && !project.benchmarkUrl)
-          project.benchmarkUrl = url;
-        project.runWebotsView(reference);
-      });
+          // preview window
+          const reference = rawUrl + '/preview/';
+          if (project && !project.benchmarkUrl)
+            project.benchmarkUrl = url;
+          project.runWebotsView(reference);
+        });
 
       fetch(rawUrl + '/webots.yml?nocache=' + (new Date()).getTime())
-      .then(function(response) { return response.text(); })
-      .then(function(data) {
-        metric = data.match(/metric: ([a-z-]+)/)[1];
-      });
+        .then(function(response) { return response.text(); })
+        .then(function(data) {
+          metric = data.match(/metric: ([a-z-]+)/)[1];
+        });
 
       fetch(rawUrl + '/competitors.txt?nocache=' + (new Date()).getTime())
-      .then(function(response) { return response.text(); })
-      .then(function(data) {
-        let performanceArray = [];
-        const participants = data.split('\n');
-        for (const participant of participants) {
-          if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
-            continue;
-          const id = participant.split(':')[0];
-          const name = participant.split(':')[1].split('/')[0];
-          const controller = participant.split(':')[1].split('/')[1];
-          const performance = parseFloat(participant.split(':')[2]);
-          const performanceString = participant.split(':')[3];
-          const date = participant.split(':')[4];
-          performanceArray.push([performance, id, name, controller, date, performanceString]);
-        }
-        if (metric && metric === 'time-speed')
-          performanceArray.sort(function(a, b) { return a[0] - b[0]; });
-        else
-          performanceArray.sort(function(a, b) { return b[0] - a[0]; });
-  
-        let ranking = 1;
-        for (const performance of performanceArray) {
-          let tableContent = document.createElement('template');
-          tableContent.innerHTML =
+        .then(function(response) { return response.text(); })
+        .then(function(data) {
+          let performanceArray = [];
+          const participants = data.split('\n');
+          for (const participant of participants) {
+            if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
+              continue;
+            const id = participant.split(':')[0];
+            const name = participant.split(':')[1].split('/')[0];
+            const controller = participant.split(':')[1].split('/')[1];
+            const performance = parseFloat(participant.split(':')[2]);
+            const performanceString = participant.split(':')[3];
+            const date = participant.split(':')[4];
+            performanceArray.push([performance, id, name, controller, date, performanceString]);
+          }
+          if (metric && metric === 'time-speed')
+            performanceArray.sort(function(a, b) { return a[0] - b[0]; });
+          else
+            performanceArray.sort(function(a, b) { return b[0] - a[0]; });
+
+          let ranking = 1;
+          for (const performance of performanceArray) {
+            let tableContent = document.createElement('template');
+            tableContent.innerHTML =
             `<tr>
               <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
               <td style="vertical-align: middle;">${performance[2]}</td>
@@ -1421,32 +1438,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
               </td>
             </tr>`;
-          ranking++;
-          document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-          document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun)
-        }
-  
-        document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
-      });
+            ranking++;
+            document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
+            document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun);
+          }
+
+          document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
+        });
     }
     function viewBenchmarkRun(event) {
-        document.getElementById('back-button').onclick = resetPage;
-  
-        const url = project.benchmarkUrl;
-        const rawGitHubUrl = 'https://raw.githubusercontent.com';
-        const repository = url.split('/')[3];
-        const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
-        const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
-        const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
-        const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/'
-        project.runWebotsView(data);
+      document.getElementById('back-button').onclick = resetPage;
+
+      const url = project.benchmarkUrl;
+      const rawGitHubUrl = 'https://raw.githubusercontent.com';
+      const repository = url.split('/')[3];
+      const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
+      const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
+      const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
+      const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/';
+      project.runWebotsView(data);
     }
     function submitEntry() {
       let content = {};
       content.innerHTML =
         `<div class="field">
         <p style="padding-bottom:15px;">
-          To register, you will need to create your own controller on GitHub and to submit it to the creator of the benchmark. Here is how to do it:
+          To register, you will need to create your own controller on GitHub and to submit it to the creator of the benchmark.
+          Here is how to do it:
         </p>
         <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
@@ -1459,10 +1477,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
             <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a>.</li>
         </ol> 
-        The user's score can be updated by posting a "run" command on the registration issue on the creator's benchmark as described in the subscription confirmation message.
+        The user's score can be updated by posting a "run" command on the registration issue on the creator's benchmark 
+        as described in the subscription confirmation message.
         </div>`;
-      let modal = ModalDialog.run(`Registration to the benchmark`, content.innerHTML);
+      ModalDialog.run(`Registration to the benchmark`, content.innerHTML);
     }
   }
-
 });

@@ -20,10 +20,10 @@ export default class Project extends User {
         resolve();
       }
       fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
-        .then(function (response) {
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           let pushUrl;
           if (url.search !== data.uploadMessage)
             pushUrl = url.pathname + url.search + url.hash;
@@ -40,18 +40,19 @@ export default class Project extends User {
                 method: 'post',
                 body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
               })
-                .then(function (response) {
+                .then(function(response) {
                   return response.json();
                 })
-                .then(function (data) {
+                .then(function(data) {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
                     that.load('/');
                     ModalDialog.run('Error', data.error);
-                  } else
+                  } else {
                     ModalDialog.run(`Upload associated`,
                       `Your upload has successfully been associated with your webots.cloud account`);
+                  }
                 });
             }
             pushUrl = url.pathname + url.hash;
@@ -109,9 +110,8 @@ export default class Project extends User {
     if (Project.webotsView)
       Project.webotsView.close();
 
-    const view = (!Project.webotsView) ? '<webots-view id="webots-view"></webots-view>' : '';
-    document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView) ?
-      '<webots-view id="webots-view"></webots-view>' : '';
+    document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView)
+      ? '<webots-view id="webots-view"></webots-view>' : '';
 
     if (Project.webotsView)
       document.querySelector('#benchmark-preview-container').appendChild(Project.webotsView);
@@ -119,9 +119,6 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
   }
   runWebotsView(data, version) {
-    //if data empty -> demo simulation
-    //if data is object -> scene or animation with files from server
-    //if type benchmark -> benchmark
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -152,9 +149,8 @@ export default class Project extends User {
           this.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else {
+      } else
         this._loadContent(data, resolve);
-      }
     });
 
     promise.then(() => {
@@ -175,23 +171,25 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
+    // if data empty -> demo or benchmark simulation
+    // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
-    if (!data) this._updateSimulationViewCount(simUrl);
-    if (type == 'benchmark') { // benchmark link
+    if (!data) this._updateSimulationViewCount(url);
+    if (type === 'benchmark') {
       const splitUrl = this.benchmarkUrl.split('/');
       const username = splitUrl[3];
       const repo = splitUrl[4];
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
       if (data) {
-        // if there is animation data, it is a preview window or a user performance view
+        // if there is animation data, it is the preview window or a user performance
         if (data.includes('wb_animation_')) {
           // user performance view
           this.setupWebotsView('run');
-        } else {
+        } else
           this.setupPreviewWebotsView();
-        }
+
         Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
           this._isMobileDevice(), `${thumbnailUrl}`);
         resolve();
@@ -204,13 +202,13 @@ export default class Project extends User {
         resolve();
       }
     } else if (data) {
-      //scene or animation
+      // scene or animation
       const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
       this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-      if (data.duration > 0)
+      if (data.duration > 0) {
         Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
           this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-      else
+      } else
         Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
     } else { // demo simulation
@@ -226,10 +224,10 @@ export default class Project extends User {
   }
   _updateSimulationViewCount(url) {
     fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
       })
-      .then(function (data) {
+      .then(function(data) {
         if (data.error)
           console.warn(data.error);
       });
