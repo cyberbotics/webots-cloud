@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <thead>
                   <tr>
                     <th class="is-clickable column-title" id="benchmark-sort-viewed" title="Popularity"
-                      style="text-align:center; min-width: 65px;">
+                      style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -589,7 +589,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="benchmark-sort-version" title="Webots release of the benchmark"
-                      style="min-width: 85px;">
+                      style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="benchmark-sort-updated" title="Last update time"
