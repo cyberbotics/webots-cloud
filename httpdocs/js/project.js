@@ -148,7 +148,7 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          this._loadContent(resolve);
+          this._loadContent(data, resolve);
         };
         script.onerror = () => {
           console.warn(
@@ -158,7 +158,7 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else {
-        this._loadContent(resolve);
+        this._loadContent(data, resolve);
       }
     });
 
@@ -179,7 +179,7 @@ export default class Project extends User {
       }
     });
   }
-  _loadContent(resolve) {
+  _loadContent(data, resolve) {
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (type == 'benchmark') { // benchmark link
