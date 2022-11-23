@@ -191,16 +191,16 @@ export default class Project extends User {
         // if there is animation data, it is a preview window or a user performance view
         if (data.includes('wb_animation_')) {
           // user performance view
-          that.setupWebotsView('run');
+          this.setupWebotsView('run');
         } else {
-          that.setupPreviewWebotsView();
+          this.setupPreviewWebotsView();
         }
         Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
           this._isMobileDevice(), `${thumbnailUrl}`);
         resolve();
       } else {
         // if there is no data, it is a testing simulation
-        that.setupWebotsView('run');
+        this.setupWebotsView('run');
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
           false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
@@ -209,7 +209,7 @@ export default class Project extends User {
     } else if (data) {
       //scene or animation
       const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-      that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+      this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
       if (data.duration > 0)
         Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
           this._isMobileDevice(), `${reference}/thumbnail.jpg`);
@@ -217,7 +217,7 @@ export default class Project extends User {
         Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
     } else { // demo simulation
-      that.setupWebotsView('run');
+      this.setupWebotsView('run');
       let dotIndex = url.lastIndexOf('/') + 1;
       let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
         .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
