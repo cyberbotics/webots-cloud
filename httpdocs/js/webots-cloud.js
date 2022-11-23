@@ -1035,8 +1035,8 @@ document.addEventListener('DOMContentLoaded', function() {
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-              updatePagination('simulation', page, total);
-              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+              updatePagination(typeName, page, total);
+              project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
