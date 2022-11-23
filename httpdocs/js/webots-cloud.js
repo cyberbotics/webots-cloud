@@ -1199,19 +1199,19 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (type == "benchmark") {
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
-      let run = project.findGetParameter('run');
-      if (run == "true") {
+      let context = project.findGetParameter('context');
+      if (context == "run") {
       // TODO: show robot window when it is a benchmark simulation
       //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
         project.runWebotsView();
-      } else {
+      } else if (context == "preview") {
         mainContainer(project);
       }
     }
 
     function mainContainer(project) {
       let simulationUrl = new URL(window.location);
-      simulationUrl.searchParams.append('run', 'true');
+      simulationUrl.searchParams.append('context', 'run');
       const information =
         `<table style="font-size: small">
         <tbody>

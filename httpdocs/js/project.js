@@ -127,7 +127,7 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
-    const run = this.findGetParameter('run');
+    const context = this.findGetParameter('context');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -159,17 +159,18 @@ export default class Project extends User {
             const repo = splitUrl[4];
             const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
             if (data) {
-              // if there is animation data, it is a preview window or a performance view
-              if (run == 'true') {
-                that.setupWebotsView('run');
-              } else {
+              // if there is animation data, it is a preview window or a user performance view
+              if (context == 'preview') {
                 that.setupPreviewWebotsView();
+              } else {
+                // user performance view
+                that.setupWebotsView('run');
               }
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
                 this._isMobileDevice(), `${thumbnailUrl}`);
               resolve();
             } else {
-              // if there is no data, it is a simulation
+              // if there is no data, it is a testing simulation
               that.setupWebotsView('run');
               Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
                 false, undefined, 300, thumbnailUrl);
@@ -211,11 +212,12 @@ export default class Project extends User {
         const repo = splitUrl[4];
         const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
         if (data) {
-          // if there is animation data, it is a preview window or a performance view
-          if (run == 'true') {
-            that.setupWebotsView('run');
-          } else {
+          // if there is animation data, it is a preview window or a user performance view
+          if (context == 'preview') {
             that.setupPreviewWebotsView();
+          } else {
+            // user performance view
+            that.setupWebotsView('run');
           }
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
             this._isMobileDevice(), `${thumbnailUrl}`);
@@ -226,27 +228,16 @@ export default class Project extends User {
             false, undefined, 300, thumbnailUrl);
           Project.webotsView.showQuit = false;
         }
-      } else if (data) { // TODO: not do a copy/paste of lines from above? (without the resolve())
-        if (data.url) {
-          reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-          that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-          if (data.duration > 0)
-            Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-              this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-          else
-            Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-        } else {
-          // when preview window, data has preview folder url
-          that.setupPreviewWebotsView('run');
-          const url = this.benchmarkUrl;
-          const splitUrl = url.split('/');
-          const username = splitUrl[3];
-          const repo = splitUrl[4];
-          const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
-          Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-            this._isMobileDevice(), `${thumbnailUrl}`);
-        }
-      } else {
+      } else if (data) {
+        //scene or animation
+        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+        if (data.duration > 0)
+          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+        else
+          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      } else { // demo simulation
         that.setupWebotsView('run');
         let dotIndex = url.lastIndexOf('/') + 1;
         let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
