@@ -123,10 +123,7 @@ export default class Project extends User {
     //if data is object -> scene or animation with files from server
     //if type benchmark -> benchmark
     let that = this;
-    let reference;
     const url = this.findGetParameter('url');
-    const mode = this.findGetParameter('mode');
-    const type = this.findGetParameter('type');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -151,51 +148,7 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          if (type == 'benchmark') { // benchmark link
-            const url = this.benchmarkUrl;
-            const splitUrl = url.split('/');
-            const username = splitUrl[3];
-            const repo = splitUrl[4];
-            const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
-            if (data) {
-              // if there is animation data, it is a preview window or a user performance view
-              if (data.includes('wb_animation_')) {
-                // user performance view
-                that.setupWebotsView('run');
-              } else {
-                that.setupPreviewWebotsView();
-              }
-              Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-                this._isMobileDevice(), `${thumbnailUrl}`);
-              resolve();
-            } else {
-              // if there is no data, it is a testing simulation
-              that.setupWebotsView('run');
-              Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-                false, undefined, 300, thumbnailUrl);
-              Project.webotsView.showQuit = false;
-              resolve();
-            }
-          } else if (data) {
-            //scene or animation
-            reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-            if (data.duration > 0)
-              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            resolve();
-          } else { // demo simulation
-            that.setupWebotsView('run');
-            let dotIndex = url.lastIndexOf('/') + 1;
-            let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
-              .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-            Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-              false, undefined, 300, thumbnailUrl);
-            Project.webotsView.showQuit = false;
-            resolve();
-          }
+          this._loadContent(resolve);
         };
         script.onerror = () => {
           console.warn(
@@ -204,46 +157,8 @@ export default class Project extends User {
           that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else if (type == 'benchmark') {
-        const url = this.benchmarkUrl;
-        const splitUrl = url.split('/');
-        const username = splitUrl[3];
-        const repo = splitUrl[4];
-        const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
-        if (data) {
-          // if there is animation data, it is a preview window or a user performance view
-          if (data.includes('wb_animation_')) {
-            // user performance view
-            that.setupWebotsView('run');
-          } else {
-            that.setupPreviewWebotsView();
-          }
-          Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-            this._isMobileDevice(), `${thumbnailUrl}`);
-        } else {
-          // if there is no data, it is a simulation
-          that.setupWebotsView('run');
-          Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-            false, undefined, 300, thumbnailUrl);
-          Project.webotsView.showQuit = false;
-        }
-      } else if (data) {
-        //scene or animation
-        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-        if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-        else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-      } else { // demo simulation
-        that.setupWebotsView('run');
-        let dotIndex = url.lastIndexOf('/') + 1;
-        let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
-          .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-          false, undefined, 300, thumbnailUrl);
-        Project.webotsView.showQuit = false;
+      } else {
+        this._loadContent(resolve);
       }
     });
 
@@ -263,6 +178,55 @@ export default class Project extends User {
           that.login();
       }
     });
+  }
+  _loadContent(resolve) {
+    const mode = this.findGetParameter('mode');
+    const type = this.findGetParameter('type');
+    if (type == 'benchmark') { // benchmark link
+      const url = this.benchmarkUrl;
+      const splitUrl = url.split('/');
+      const username = splitUrl[3];
+      const repo = splitUrl[4];
+      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
+      if (data) {
+        // if there is animation data, it is a preview window or a user performance view
+        if (data.includes('wb_animation_')) {
+          // user performance view
+          that.setupWebotsView('run');
+        } else {
+          that.setupPreviewWebotsView();
+        }
+        Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
+          this._isMobileDevice(), `${thumbnailUrl}`);
+        resolve();
+      } else {
+        // if there is no data, it is a testing simulation
+        that.setupWebotsView('run');
+        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
+          false, undefined, 300, thumbnailUrl);
+        Project.webotsView.showQuit = false;
+        resolve();
+      }
+    } else if (data) {
+      //scene or animation
+      const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+      that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+      if (data.duration > 0)
+        Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+          this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      else
+        Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      resolve();
+    } else { // demo simulation
+      that.setupWebotsView('run');
+      let dotIndex = url.lastIndexOf('/') + 1;
+      let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
+        .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
+        false, undefined, 300, thumbnailUrl);
+      Project.webotsView.showQuit = false;
+      resolve();
+    }
   }
   _updateSimulationViewCount(url) {
     fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
