@@ -1204,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // TODO: show robot window when it is a benchmark simulation
       //document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
         project.runWebotsView();
-      } else if (context == "preview") {
+      } else {
         mainContainer(project);
       }
     }

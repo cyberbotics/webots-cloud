@@ -127,7 +127,6 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
-    const context = this.findGetParameter('context');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -160,11 +159,11 @@ export default class Project extends User {
             const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
             if (data) {
               // if there is animation data, it is a preview window or a user performance view
-              if (context == 'preview') {
-                that.setupPreviewWebotsView();
-              } else {
+              if (data.includes('wb_animation_')) {
                 // user performance view
                 that.setupWebotsView('run');
+              } else {
+                that.setupPreviewWebotsView();
               }
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
                 this._isMobileDevice(), `${thumbnailUrl}`);
@@ -213,11 +212,11 @@ export default class Project extends User {
         const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
         if (data) {
           // if there is animation data, it is a preview window or a user performance view
-          if (context == 'preview') {
-            that.setupPreviewWebotsView();
-          } else {
+          if (data.includes('wb_animation_')) {
             // user performance view
             that.setupWebotsView('run');
+          } else {
+            that.setupPreviewWebotsView();
           }
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
             this._isMobileDevice(), `${thumbnailUrl}`);
