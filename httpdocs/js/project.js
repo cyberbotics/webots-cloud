@@ -199,6 +199,8 @@ export default class Project extends User {
         Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
           false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
+        Project.webotsView.showWorldSelection = false;
+        Project.webotsView.showRobotWindow = true;
         resolve();
       }
     } else if (data) {
