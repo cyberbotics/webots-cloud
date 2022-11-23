@@ -1374,8 +1374,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
       const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
       const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
+      fetch('https://api.github.com/repos/Jean-Eudes-le-retour/maze_runner/commits?sha', {cache: 'no-store'})
+        .then(function(response) { return response.json(); })
+        .then(function(data) { return data[0].sha; });
+      // get the final value from previous promise (continue chaining?)
 
-      fetch(rawUrl + '/README.md?nocache=' + (new Date()).getTime(), {cache: 'no-store'})
+      fetch(rawUrl + '/README.md', {cache: 'no-store'})
         .then(function(response) { return response.text(); })
         .then(function(data) {
           var readme = new DOMParser().parseFromString(data, 'text/html');
@@ -1403,13 +1407,13 @@ document.addEventListener('DOMContentLoaded', function() {
           project.runWebotsView(reference);
         });
 
-      fetch(rawUrl + '/webots.yml?nocache=' + (new Date()).getTime(), {cache: 'no-store'})
+      fetch(rawUrl + '/webots.yml', {cache: 'no-store'})
         .then(function(response) { return response.text(); })
         .then(function(data) {
           metric = data.match(/metric: ([a-z-]+)/)[1];
         });
 
-      fetch(rawUrl + '/competitors.txt?nocache=' + (new Date()).getTime(), {cache: 'no-store'})
+      fetch(rawUrl + '/competitors.txt', {cache: 'no-store'})
         .then(function(response) { return response.text(); })
         .then(function(data) {
           let performanceArray = [];
