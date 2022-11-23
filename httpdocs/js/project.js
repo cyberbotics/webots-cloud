@@ -118,14 +118,16 @@ export default class Project extends User {
     else
       Project.webotsView = document.querySelector('webots-view');
   }
-  runWebotsView(data, version, isBenchmark = false, isPreview = false) {
+  runWebotsView(data, version) {
     //if data empty -> demo simulation
     //if data is object -> scene or animation with files from server
-    //if data is string of benchmark github -> benchmark animation with files from github
+    //if type benchmark -> benchmark
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
+    const type = this.findGetParameter('type');
+    const run = this.findGetParameter('run');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -150,21 +152,22 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          if (isBenchmark) { // benchmark link
+          if (type == 'benchmark') { // benchmark link
             const url = this.benchmarkUrl;
             const splitUrl = url.split('/');
             const username = splitUrl[3];
             const repo = splitUrl[4];
             const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
             if (data) {
-              // if there is data, it is a preview window or a performance view
-              if (isPreview) {
-                that.setupPreviewWebotsView();
-              } else {
+              // if there is animation data, it is a preview window or a performance view
+              if (run == 'true') {
                 that.setupWebotsView('run');
+              } else {
+                that.setupPreviewWebotsView();
               }
               Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
                 this._isMobileDevice(), `${thumbnailUrl}`);
+              resolve();
             } else {
               // if there is no data, it is a simulation
               that.setupWebotsView('run');
@@ -201,18 +204,18 @@ export default class Project extends User {
           that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else if (isBenchmark) {
+      } else if (type == 'benchmark') {
         const url = this.benchmarkUrl;
         const splitUrl = url.split('/');
         const username = splitUrl[3];
         const repo = splitUrl[4];
         const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
         if (data) {
-          // if there is data, it is a preview window
-          if (isPreview) {
-            that.setupPreviewWebotsView();
-          } else {
+          // if there is animation data, it is a preview window or a performance view
+          if (run == 'true') {
             that.setupWebotsView('run');
+          } else {
+            that.setupPreviewWebotsView();
           }
           Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
             this._isMobileDevice(), `${thumbnailUrl}`);
