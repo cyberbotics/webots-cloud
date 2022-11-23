@@ -122,7 +122,6 @@ export default class Project extends User {
     //if data empty -> demo simulation
     //if data is object -> scene or animation with files from server
     //if type benchmark -> benchmark
-    let that = this;
     const url = this.findGetParameter('url');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
@@ -133,7 +132,7 @@ export default class Project extends User {
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)
-      that._updateSimulationViewCount(url);
+      this._updateSimulationViewCount(url);
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -154,7 +153,7 @@ export default class Project extends User {
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
-          that.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
+          this.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
       } else {
@@ -164,18 +163,18 @@ export default class Project extends User {
 
     promise.then(() => {
       if (document.querySelector('#user-menu')) {
-        if (that.email && that.password) {
+        if (this.email && this.password) {
           document.querySelector('#user-menu').style.display = 'auto';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          that.updateDisplayName();
+          this.updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
         }
-        if (that.email === '!')
-          that.login();
+        if (this.email === '!')
+          this.login();
       }
     });
   }
