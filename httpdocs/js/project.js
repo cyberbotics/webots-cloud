@@ -122,7 +122,6 @@ export default class Project extends User {
     //if data empty -> demo simulation
     //if data is object -> scene or animation with files from server
     //if type benchmark -> benchmark
-    const url = this.findGetParameter('url');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -130,9 +129,6 @@ export default class Project extends User {
         version = data?.version ? data.version : this.findGetParameter('version');
     }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
-
-    if (!data)
-      this._updateSimulationViewCount(url);
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -179,11 +175,12 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
+    const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
+    if (!data) this._updateSimulationViewCount(simUrl);
     if (type == 'benchmark') { // benchmark link
-      const url = this.benchmarkUrl;
-      const splitUrl = url.split('/');
+      const splitUrl = this.benchmarkUrl.split('/');
       const username = splitUrl[3];
       const repo = splitUrl[4];
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
