@@ -107,16 +107,14 @@ export default class Project extends User {
     document.querySelector('#main-container').classList.add('webotsView');
   }
   setupPreviewWebotsView() {
-    if (Project.webotsView)
+    if (Project.webotsView) {
       Project.webotsView.close();
-
-    document.getElementById('benchmark-preview-container').innerHTML = (!Project.webotsView)
-      ? '<webots-view id="webots-view"></webots-view>' : '';
-
-    if (Project.webotsView)
-      document.querySelector('#benchmark-preview-container').appendChild(Project.webotsView);
-    else
+      document.getElementById('benchmark-preview-container').innerHTML = '';
+      document.getElementById('benchmark-preview-container').appendChild(Project.webotsView);
+    } else {
+      document.getElementById('benchmark-preview-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
       Project.webotsView = document.querySelector('webots-view');
+    }
   }
   runWebotsView(data, version) {
     if (!version || version === 'undefined') {
@@ -200,7 +198,22 @@ export default class Project extends User {
           false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
         Project.webotsView.showWorldSelection = false;
-        Project.webotsView.showRobotWindow = true;
+        // Select the entire DOM for observing:
+        const target = document.querySelector('body');
+
+        // Create a new observer instance:
+        const observer = new MutationObserver(function() {
+          if (document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility) {
+            document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot');
+            observer.disconnect();
+          }
+        });
+
+        // Set configuration object:
+        const config = { childList: true };
+
+        // Start the observer
+        observer.observe(target, config);
         resolve();
       }
     } else if (data) {
