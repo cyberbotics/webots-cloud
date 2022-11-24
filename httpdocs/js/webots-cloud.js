@@ -1343,29 +1343,11 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
-      const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-      project.setup(title, template.content);
-      // add the back button needed for the entries view
-      const backButtonTemplate = document.createElement('template');
-      backButtonTemplate.innerHTML =
-      `<div class="navbar-item">
-        <a class="button is-small is-light is-outlined" id="back-button">
-          <span class="icon"><i class="fas fa-lg fa-rotate-left"></i></span>
-          <span>Back</span>
-        </a>
-      </div>`;
-      document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
-      document.getElementById('back-button').onclick = () => { history.go(-1); };
+      // const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
+      document.querySelector('section.is-active').innerHTML = contentHtml;
+      // project.setup(title, template.content);
       document.getElementById('submit-entry').onclick = submitEntry;
       getBenchmark(project.benchmarkUrl);
-    }
-    function resetPage() {
-      if (!project || !project.benchmarkUrl)
-        history.go(0);
-      else {
-        document.getElementById('back-button').parentElement.remove();
-        mainContainer(project, project.benchmarkUrl);
-      }
     }
     function getBenchmark(url) {
       let metric;
@@ -1455,7 +1437,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     function viewBenchmarkRun(event) {
-      document.getElementById('back-button').onclick = resetPage;
+      // add the back button needed for the entries view
+      const backButtonTemplate = document.createElement('template');
+      backButtonTemplate.innerHTML =
+      `<div class="navbar-item">
+        <a class="button is-small is-light is-outlined" id="benchmark-page-button">
+          <span>Benchmark Page</span>
+        </a>
+      </div>`;
+      document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
+      document.getElementById('benchmark-page-button').onclick = () => { history.go(-1); };
+      // document.getElementById('benchmark-page-button').parentElement.remove();
 
       const url = project.benchmarkUrl;
       const rawGitHubUrl = 'https://raw.githubusercontent.com';
