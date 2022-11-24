@@ -1369,93 +1369,89 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function getBenchmark(url) {
       let metric;
-      const rawGitHubUrl = 'https://raw.githubusercontent.com';
-      const repository = url.split('/')[3];
-      const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
-      const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
-      const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
-      fetch('https://api.github.com/repos/Jean-Eudes-le-retour/maze_runner/commits?sha', {cache: 'no-store'})
+      const splitUrl = url.split('/');
+      const username = splitUrl[3];
+      const repository = splitUrl[4];
+      fetch(`https://api.github.com/repos/${username}/${repository}/commits?sha`, {cache: 'no-store'})
         .then(function(response) { return response.json(); })
-        .then(function(data) { return data[0].sha; });
-      // get the final value from previous promise (continue chaining?)
-
-      fetch(rawUrl + '/README.md', {cache: 'no-store'})
-        .then(function(response) { return response.text(); })
         .then(function(data) {
-          var readme = new DOMParser().parseFromString(data, 'text/html');
+          const lastSha = data[0].sha;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repository}/${lastSha}`;
+          fetch(rawUrl + '/README.md', {cache: 'no-store'})
+            .then(function(response) { return response.text(); })
+            .then(function(data) {
+              var readme = new DOMParser().parseFromString(data, 'text/html');
 
-          const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
-          const description = readme.getElementById('description').innerText.trim();
+              const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
+              const description = readme.getElementById('description').innerText.trim();
 
-          const information = readme.getElementById('information').innerText.trim().split('\n');
-          const difficulty = information[0].split(':')[1].substring(1);
-          const robot = information[1].split(':')[1].substring(1);
-          const language = information[2].split(':')[1].substring(1);
-          const commitment = information[3].split(':')[1].substring(1);
+              const information = readme.getElementById('information').innerText.trim().split('\n');
+              const difficulty = information[0].split(':')[1].substring(1);
+              const robot = information[1].split(':')[1].substring(1);
+              const language = information[2].split(':')[1].substring(1);
+              const commitment = information[3].split(':')[1].substring(1);
 
-          document.getElementById('benchmark-title').innerHTML = title;
-          document.getElementById('benchmark-information-description').innerHTML = description;
-          document.getElementById('benchmark-difficulty').innerHTML = difficulty;
-          document.getElementById('benchmark-robot').innerHTML = robot;
-          document.getElementById('benchmark-language').innerHTML = language;
-          document.getElementById('benchmark-commitment').innerHTML = commitment;
+              document.getElementById('benchmark-title').innerHTML = title;
+              document.getElementById('benchmark-information-description').innerHTML = description;
+              document.getElementById('benchmark-difficulty').innerHTML = difficulty;
+              document.getElementById('benchmark-robot').innerHTML = robot;
+              document.getElementById('benchmark-language').innerHTML = language;
+              document.getElementById('benchmark-commitment').innerHTML = commitment;
 
-          // preview window
-          const reference = rawUrl + '/preview/';
-          if (project && !project.benchmarkUrl)
-            project.benchmarkUrl = url;
-          project.runWebotsView(reference);
-        });
+              // preview window
+              const reference = rawUrl + '/preview/';
+              if (project && !project.benchmarkUrl)
+                project.benchmarkUrl = url;
+              project.runWebotsView(reference);
+            });
+          fetch(rawUrl + '/webots.yml', {cache: 'no-store'})
+            .then(function(response) { return response.text(); })
+            .then(function(data) {
+              metric = data.match(/metric: ([a-z-]+)/)[1];
+            });
+          fetch(rawUrl + '/competitors.txt', {cache: 'no-store'})
+            .then(function(response) { return response.text(); })
+            .then(function(data) {
+              let performanceArray = [];
+              const participants = data.split('\n');
+              for (const participant of participants) {
+                if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
+                  continue;
+                const id = participant.split(':')[0];
+                const name = participant.split(':')[1].split('/')[0];
+                const controller = participant.split(':')[1].split('/')[1];
+                const performance = parseFloat(participant.split(':')[2]);
+                const performanceString = participant.split(':')[3];
+                const date = participant.split(':')[4];
+                performanceArray.push([performance, id, name, controller, date, performanceString]);
+              }
+              if (metric && metric === 'time-speed')
+                performanceArray.sort(function(a, b) { return a[0] - b[0]; });
+              else
+                performanceArray.sort(function(a, b) { return b[0] - a[0]; });
 
-      fetch(rawUrl + '/webots.yml', {cache: 'no-store'})
-        .then(function(response) { return response.text(); })
-        .then(function(data) {
-          metric = data.match(/metric: ([a-z-]+)/)[1];
-        });
-
-      fetch(rawUrl + '/competitors.txt', {cache: 'no-store'})
-        .then(function(response) { return response.text(); })
-        .then(function(data) {
-          let performanceArray = [];
-          const participants = data.split('\n');
-          for (const participant of participants) {
-            if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
-              continue;
-            const id = participant.split(':')[0];
-            const name = participant.split(':')[1].split('/')[0];
-            const controller = participant.split(':')[1].split('/')[1];
-            const performance = parseFloat(participant.split(':')[2]);
-            const performanceString = participant.split(':')[3];
-            const date = participant.split(':')[4];
-            performanceArray.push([performance, id, name, controller, date, performanceString]);
-          }
-          if (metric && metric === 'time-speed')
-            performanceArray.sort(function(a, b) { return a[0] - b[0]; });
-          else
-            performanceArray.sort(function(a, b) { return b[0] - a[0]; });
-
-          let ranking = 1;
-          for (const performance of performanceArray) {
-            let tableContent = document.createElement('template');
-            tableContent.innerHTML =
-            `<tr>
-              <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
-              <td style="vertical-align: middle;">${performance[2]}</td>
-              <td style="vertical-align: middle;">${performance[3]}</td>
-              <td style="vertical-align: middle;" class="has-text-centered">${performance[4]}</td>
-              <td style="vertical-align: middle;" class="has-text-centered">${performance[5]}</td>
-              <td style="vertical-align: middle;">
-                <button class="button is-small is-primary" style="background-color: #007acc;" id="${performance[1]}-view">
-                  View
-                </button>
-              </td>
-            </tr>`;
-            ranking++;
-            document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-            document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun);
-          }
-
-          document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
+              let ranking = 1;
+              for (const performance of performanceArray) {
+                let tableContent = document.createElement('template');
+                tableContent.innerHTML =
+                  `<tr>
+                    <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
+                    <td style="vertical-align: middle;">${performance[2]}</td>
+                    <td style="vertical-align: middle;">${performance[3]}</td>
+                    <td style="vertical-align: middle;" class="has-text-centered">${performance[4]}</td>
+                    <td style="vertical-align: middle;" class="has-text-centered">${performance[5]}</td>
+                    <td style="vertical-align: middle;">
+                      <button class="button is-small is-primary" style="background-color: #007acc;" id="${performance[1]}-view">
+                        View
+                      </button>
+                    </td>
+                  </tr>`;
+                ranking++;
+                document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
+                document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun);
+              }
+              document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
+            });
         });
     }
     function viewBenchmarkRun(event) {
