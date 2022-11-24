@@ -1461,9 +1461,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const [ , , , username, repo, , branch ] = url.split('/');
       const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}`;
       const data = `${rawUrl}/storage/wb_animation_${event.target.id.split('-')[0]}/`;
-      var searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('url', data);
-      searchParams.append('context', 'view');
+      var newURL = new URL(window.location);
+      newURL.searchParams.set('url', data);
+      newURL.searchParams.append('context', 'view');
       // add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
@@ -1476,6 +1476,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('benchmark-page-button').onclick = () => { history.go(-1); };
       // document.getElementById('benchmark-page-button').parentElement.remove();
       project.runWebotsView(data);
+      window.history.pushState({ path: newURL.href }, '', newURL.href);
     }
     function submitEntry() {
       let content = {};
