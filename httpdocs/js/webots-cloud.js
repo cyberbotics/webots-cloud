@@ -1302,19 +1302,19 @@ document.addEventListener('DOMContentLoaded', function() {
       `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
         <li data-tab="scene" class="data-tab">
-          <a>Scene</a>
+          <a href="/scene">Scene</a>
         </li>
         <li data-tab="animation" class="data-tab">
-          <a>Animation</a>
+          <a href="/animation">Animation</a>
         </li>
         <li data-tab="simulation" class="data-tab">
-          <a>Simulation</a>
+          <a href="/simulation">Simulation</a>
         </li>
         <li data-tab="benchmark" class="data-tab is-active">
-          <a>Benchmark</a>
+          <a href="/benchmark">Benchmark</a>
         </li>
         <li data-tab="server" class="data-tab">
-          <a>Server</a>
+          <a href="/server">Server</a>
         </li>
       </ul>
       </div>
