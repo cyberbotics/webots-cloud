@@ -1218,19 +1218,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function runPage(project) {
     // discriminate between demos and benchmark using search parameters
-    let type = project.findGetParameter('type');
+    let searchParams = new URLSearchParams(window.location);
+    let type = searchParams.get('type');
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'benchmark') {
-      let url = project.findGetParameter('url');
+      let url = searchParams.get('url');
       project.benchmarkUrl = url;
-      let context = project.findGetParameter('context');
+      let context = searchParams.get('context');
       switch (context) {
         case 'try':
           project.runWebotsView();
           break;
         case 'view':
-          project.runWebotsView(url);
+          viewEntryRun(searchParams.get('id'));
           break;
         default:
           mainContainer(project);
@@ -1374,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function getBenchmark(url) {
       let metric;
       const [ , , , username, repo, , branch ] = url.split('/');
-      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}`, {cache: 'no-store'})
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, {cache: 'no-store'})
         .then(function(response) { return response.json(); })
         .then(function(data) {
           const lastSha = data[0].sha;
@@ -1450,20 +1451,27 @@ document.addEventListener('DOMContentLoaded', function() {
                   </tr>`;
                 ranking++;
                 document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                document.getElementById(performance[1] + '-view').addEventListener('click', viewBenchmarkRun);
+                document.getElementById(performance[1] + '-view').addEventListener('click', viewEntryRun);
               }
               document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
             });
         });
     }
-    function viewBenchmarkRun(event) {
+    function viewEntryRun(eventOrId) {
       const url = project.benchmarkUrl;
       const [ , , , username, repo, , branch ] = url.split('/');
+      let id;
+      if (typeof eventOrId === 'string')
+        id = eventOrId;
+      else if (typeof eventOrId === 'object') {
+        id = eventOrId.target.id.split('-')[0];
+        var newURL = new URL(window.location);
+        newURL.searchParams.append('context', 'view');
+        newURL.searchParams.append('id', id);
+        window.history.pushState({ path: newURL.href }, '', newURL.href);
+      }
       const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}`;
-      const data = `${rawUrl}/storage/wb_animation_${event.target.id.split('-')[0]}/`;
-      var newURL = new URL(window.location);
-      newURL.searchParams.set('url', data);
-      newURL.searchParams.append('context', 'view');
+      const data = `${rawUrl}/storage/wb_animation_${id}/`;
       // add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
@@ -1474,9 +1482,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
       document.getElementById('benchmark-page-button').onclick = () => { history.go(-1); };
-      // document.getElementById('benchmark-page-button').parentElement.remove();
       project.runWebotsView(data);
-      window.history.pushState({ path: newURL.href }, '', newURL.href);
     }
     function submitEntry() {
       let content = {};

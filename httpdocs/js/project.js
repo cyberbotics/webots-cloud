@@ -176,10 +176,8 @@ export default class Project extends User {
     const type = this.findGetParameter('type');
     if (!data) this._updateSimulationViewCount(url);
     if (type === 'benchmark') {
-      const splitUrl = this.benchmarkUrl.split('/');
-      const username = splitUrl[3];
-      const repo = splitUrl[4];
-      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
+      const [ , , , username, repo, , branch ] = this.benchmarkUrl.split('/');
+      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
         if (data.includes('wb_animation_')) {
