@@ -1377,7 +1377,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(data) {
           const lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repository}/${lastSha}`;
-          fetch(rawUrl + '/README.md', {cache: 'no-store'})
+          fetch(rawUrl + '/README.md', {cache: 'no-cache'})
             .then(function(response) { return response.text(); })
             .then(function(data) {
               var readme = new DOMParser().parseFromString(data, 'text/html');
@@ -1404,12 +1404,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 project.benchmarkUrl = url;
               project.runWebotsView(reference);
             });
-          fetch(rawUrl + '/webots.yml', {cache: 'no-store'})
+          fetch(rawUrl + '/webots.yml', {cache: 'no-cache'})
             .then(function(response) { return response.text(); })
             .then(function(data) {
               metric = data.match(/metric: ([a-z-]+)/)[1];
             });
-          fetch(rawUrl + '/competitors.txt', {cache: 'no-store'})
+          fetch(rawUrl + '/competitors.txt', {cache: 'no-cache'})
             .then(function(response) { return response.text(); })
             .then(function(data) {
               let performanceArray = [];
