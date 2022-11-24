@@ -1227,17 +1227,22 @@ document.addEventListener('DOMContentLoaded', function() {
       let url = project.findGetParameter('url');
       project.benchmarkUrl = url;
       let context = project.findGetParameter('context');
-      if (context === 'run') {
-      // TODO: show robot window when it is a benchmark simulation
-      // document.getElementById('webots-view').toolbar._changeFloatingWindowVisibility('robot')
-        project.runWebotsView();
-      } else
-        mainContainer(project);
+      switch (context) {
+        case 'try':
+          project.runWebotsView();
+          break;
+        case 'view':
+          project.runWebotsView(url);
+          break;
+        default:
+          mainContainer(project);
+          break;
+      }
     }
 
     function mainContainer(project) {
-      let simulationUrl = new URL(window.location);
-      simulationUrl.searchParams.append('context', 'run');
+      var searchParams = new URLSearchParams(window.location.search);
+      searchParams.append('context', 'try');
       const information =
         `<table style="font-size: small">
         <tbody>
@@ -1456,6 +1461,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     function viewBenchmarkRun(event) {
+      const url = project.benchmarkUrl;
+      const [ , , , username, repo, , branch ] = url.split('/');
+      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}`;
+      const data = `${rawUrl}/storage/wb_animation_${event.target.id.split('-')[0]}/`;
+      var searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('url', data);
+      searchParams.append('context', 'view');
       // add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
@@ -1467,14 +1479,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
       document.getElementById('benchmark-page-button').onclick = () => { history.go(-1); };
       // document.getElementById('benchmark-page-button').parentElement.remove();
-
-      const url = project.benchmarkUrl;
-      const rawGitHubUrl = 'https://raw.githubusercontent.com';
-      const repository = url.split('/')[3];
-      const path = url.substring(url.indexOf(repository) + repository.length + 1, url.indexOf('/blob/'));
-      const tagOrBranch = url.substring(url.indexOf('/blob/') + 6).split('/')[0];
-      const rawUrl = rawGitHubUrl + '/' + repository + '/' + path + '/' + tagOrBranch;
-      const data = rawUrl + '/storage/wb_animation_' + event.target.id.split('-')[0] + '/';
       project.runWebotsView(data);
     }
     function submitEntry() {
