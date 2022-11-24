@@ -1481,7 +1481,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
-      document.getElementById('benchmark-page-button').onclick = () => { history.go(-1); };
+      var pageURL = new URL(window.location);
+      pageURL.searchParams.delete('context');
+      pageURL.searchParams.delete('id');
+      document.getElementById('benchmark-page-button').onclick = `location.href = ${pageURL.href}`;
       project.runWebotsView(data);
     }
     function submitEntry() {
