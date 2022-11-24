@@ -723,6 +723,7 @@ document.addEventListener('DOMContentLoaded', function() {
       TABS.forEach((tab) => {
         tab.addEventListener('click', (e) => {
           let selected = tab.getAttribute('data-tab');
+          document.querySelector('a.navbar-item').href = `/${selected}`;
           TABS.forEach((t) => {
             if (t && t.classList.contains(ACTIVE_CLASS))
               t.classList.remove(ACTIVE_CLASS);
@@ -1298,7 +1299,26 @@ document.addEventListener('DOMContentLoaded', function() {
         </section>`;
 
       const contentHtml =
-      `<div class="container is-widescreen">
+      `<div id="tabs" class="tabs is-centered is-small-medium">
+      <ul>
+        <li data-tab="scene" class="data-tab">
+          <a>Scene</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a>Animation</a>
+        </li>
+        <li data-tab="simulation" class="data-tab">
+          <a>Simulation</a>
+        </li>
+        <li data-tab="benchmark" class="data-tab is-active">
+          <a>Benchmark</a>
+        </li>
+        <li data-tab="server" class="data-tab">
+          <a>Server</a>
+        </li>
+      </ul>
+      </div>
+      <div class="container is-widescreen">
         <section class="section is-active">
           <div class="tile is-ancestor">
             <p class="title is-size-1 is-regular" id="benchmark-title"></p>
@@ -1343,9 +1363,8 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
-      // const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-      document.querySelector('section.is-active').innerHTML = contentHtml;
-      // project.setup(title, template.content);
+      // document.querySelector('section.is-active').innerHTML = contentHtml;
+      project.setup('benchmark', template.content);
       document.getElementById('submit-entry').onclick = submitEntry;
       getBenchmark(project.benchmarkUrl);
     }
