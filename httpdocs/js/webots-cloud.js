@@ -1218,7 +1218,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function runPage(project) {
     // discriminate between demos and benchmark using search parameters
-    let searchParams = new URLSearchParams(window.location);
+    let searchParams = new URLSearchParams(window.location.search);
     let type = searchParams.get('type');
     if (type === 'demo')
       project.runWebotsView();
