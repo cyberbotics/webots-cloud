@@ -1484,7 +1484,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var pageURL = new URL(window.location);
       pageURL.searchParams.delete('context');
       pageURL.searchParams.delete('id');
-      document.getElementById('benchmark-page-button').onclick = `location.href = ${pageURL.href}`;
+      document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
       project.runWebotsView(data);
     }
     function submitEntry() {
