@@ -1458,21 +1458,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     function viewEntryRun(eventOrId) {
-      const url = project.benchmarkUrl;
-      const [ , , , username, repo, , branch ] = url.split('/');
-      let id;
-      if (typeof eventOrId === 'string')
-        id = eventOrId;
-      else if (typeof eventOrId === 'object') {
-        id = eventOrId.target.id.split('-')[0];
-        var newURL = new URL(window.location);
-        newURL.searchParams.append('context', 'view');
-        newURL.searchParams.append('id', id);
-        window.history.pushState({ path: newURL.href }, '', newURL.href);
-      }
-      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}`;
-      const data = `${rawUrl}/storage/wb_animation_${id}/`;
-      // add the back button needed for the entries view
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
       `<div class="navbar-item">
@@ -1485,7 +1470,27 @@ document.addEventListener('DOMContentLoaded', function() {
       pageURL.searchParams.delete('context');
       pageURL.searchParams.delete('id');
       document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
-      project.runWebotsView(data);
+
+      const url = project.benchmarkUrl;
+      const [ , , , username, repo, , branch ] = url.split('/');
+      let id;
+      if (typeof eventOrId === 'string')
+        id = eventOrId;
+      else if (typeof eventOrId === 'object') {
+        id = eventOrId.target.id.split('-')[0];
+        var newURL = new URL(window.location);
+        newURL.searchParams.append('context', 'view');
+        newURL.searchParams.append('id', id);
+        window.history.pushState({ path: newURL.href }, '', newURL.href);
+      }
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, {cache: 'no-store'})
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          const lastSha = data[0].sha;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
+          const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
+          project.runWebotsView(entryAnimation);
+        });
     }
     function submitEntry() {
       let content = {};
