@@ -37,11 +37,29 @@ export default class Router {
     let navbar = document.querySelector('.navbar');
     if (navbar)
       document.body.removeChild(navbar);
+    let type = document.location.pathname.substring(1, 2);
+    let homeLink = '/';
+    switch (type) {
+      case 'S':
+        homeLink = '/scene';
+        break;
+      case 'A':
+        homeLink = '/animation';
+        break;
+      case 'r':
+        let url = new URL(window.location);
+        type = url.searchParams.get('type');
+        if (type === 'demo')
+          homeLink = '/simulation';
+        else if (type === 'benchmark')
+          homeLink = '/benchmark';
+        break;
+    }
     let template = document.createElement('template');
     template.innerHTML =
       `<nav id="navbar" class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/">
+          <a class="navbar-item" href="${homeLink}">
             <img src="https://cyberbotics.com/assets/images/webots.png" /> &nbsp; ${this.title}
           </a>
           <a class="navbar-burger burger" data-target="router-navbar">
