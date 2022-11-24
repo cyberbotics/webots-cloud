@@ -299,10 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
         thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
           'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       } else if (data.type === 'benchmark') {
-        const splitUrl = data.url.split('/');
-        const username = splitUrl[3];
-        const repo = splitUrl[4];
-        thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/main/preview/thumbnail.jpg`;
+        const [ , , , username, repo, , branch ] = data.url.split('/');
+        thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
@@ -1241,8 +1239,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mainContainer(project) {
-      var searchParams = new URLSearchParams(window.location.search);
-      searchParams.append('context', 'try');
+      let simulationUrl = new URL(window.location);
+      simulationUrl.searchParams.append('context', 'try');
       const information =
         `<table style="font-size: small">
         <tbody>
@@ -1375,14 +1373,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function getBenchmark(url) {
       let metric;
-      const splitUrl = url.split('/');
-      const username = splitUrl[3];
-      const repository = splitUrl[4];
-      fetch(`https://api.github.com/repos/${username}/${repository}/commits?sha`, {cache: 'no-store'})
+      const [ , , , username, repo, , branch ] = url.split('/');
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}`, {cache: 'no-store'})
         .then(function(response) { return response.json(); })
         .then(function(data) {
           const lastSha = data[0].sha;
-          const rawUrl = `https://raw.githubusercontent.com/${username}/${repository}/${lastSha}`;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
           fetch(rawUrl + '/README.md', {cache: 'no-cache'})
             .then(function(response) { return response.text(); })
             .then(function(data) {
