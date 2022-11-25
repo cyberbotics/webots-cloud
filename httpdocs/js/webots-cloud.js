@@ -1228,6 +1228,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let context = searchParams.get('context');
       switch (context) {
         case 'try':
+          createBenchmarkPageButton();
           project.runWebotsView();
           break;
         case 'view':
@@ -1387,7 +1388,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
               const description = readme.getElementById('description').innerText.trim();
-
               const information = readme.getElementById('information').innerText.trim().split('\n');
               const difficulty = information[0].split(':')[1].substring(1);
               const robot = information[1].split(':')[1].substring(1);
@@ -1458,19 +1458,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     function viewEntryRun(eventOrId) {
-      const backButtonTemplate = document.createElement('template');
-      backButtonTemplate.innerHTML =
-      `<div class="navbar-item">
-        <a class="button is-small is-light is-outlined" id="benchmark-page-button">
-          <span>Benchmark Page</span>
-        </a>
-      </div>`;
-      document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
-      var pageURL = new URL(window.location);
-      pageURL.searchParams.delete('context');
-      pageURL.searchParams.delete('id');
-      document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
-
+      createBenchmarkPageButton();
       const url = project.benchmarkUrl;
       const [ , , , username, repo, , branch ] = url.split('/');
       let id;
@@ -1491,6 +1479,20 @@ document.addEventListener('DOMContentLoaded', function() {
           const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
           project.runWebotsView(entryAnimation);
         });
+    }
+    function createBenchmarkPageButton() {
+      const backButtonTemplate = document.createElement('template');
+      backButtonTemplate.innerHTML =
+      `<div class="navbar-item">
+        <a class="button is-small is-light is-outlined" id="benchmark-page-button">
+          <span>Benchmark Page</span>
+        </a>
+      </div>`;
+      document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
+      var pageURL = new URL(window.location);
+      pageURL.searchParams.delete('context');
+      pageURL.searchParams.delete('id');
+      document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
     }
     function submitEntry() {
       let content = {};
