@@ -813,7 +813,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
                 </div>`;
             }
-            let dialog = ModalDialog.run('Project sync error', errorMsg);
+            let dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
             dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
