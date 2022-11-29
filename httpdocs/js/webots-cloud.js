@@ -1226,7 +1226,6 @@ document.addEventListener('DOMContentLoaded', function() {
           <br>
           This performance metric is a scalar value which allows to compare the performance
             of different participant against the same challenge.
-          Several examples of benchmarks are provided on the robotbenchmark website.
           <br>
           To create your own benchmark, follow the instructions on <a href="https://github.com/cyberbotics/benchmark-template"> this repository</a>.
         </div>`;
