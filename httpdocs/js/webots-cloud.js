@@ -644,9 +644,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </section>
         </div>`;
-      document.getElementById('what-is-a-benchmark').onclick = whatIsBenchmarkPopUp;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
+      document.getElementById('what-is-a-benchmark').onclick = whatIsBenchmarkPopUp;
     }
 
     function initSort(sortBy) {
