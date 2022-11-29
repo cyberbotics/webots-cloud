@@ -618,6 +618,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="buttons">
               <button class="button" id="add-a-new-benchmark">Add a new benchmark</button>
             </div>
+            <div class="buttons">
+              <button class="button" id="what-is-a-benchmark">What is a benchmark?</button>
+            </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
             <div class="table-container" style="margin-top:50px">
@@ -1370,7 +1373,8 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML = contentHtml;
       // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('benchmark', template.content);
-      document.getElementById('submit-entry').onclick = submitEntry;
+      document.getElementById('submit-entry').onclick = registerPopUp;
+      document.getElementById('what-is-a-benchmark').onclick = whatIsBenchmarkPopUp;
       getBenchmark(project.benchmarkUrl);
     }
     function getBenchmark(url) {
@@ -1494,7 +1498,7 @@ document.addEventListener('DOMContentLoaded', function() {
       pageURL.searchParams.delete('id');
       document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
     }
-    function submitEntry() {
+    function registerPopUp() {
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -1517,6 +1521,20 @@ document.addEventListener('DOMContentLoaded', function() {
         as described in the subscription confirmation message.
         </div>`;
       ModalDialog.run(`Registration to the benchmark`, content.innerHTML);
+    }
+    function whatIsBenchmarkPopUp() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+        <p style="padding-bottom:15px;">
+          A benchmark is a simulation scenario which proposes a challenge involving a single participant.
+          A robot has to address a problem and its behavior is evaluated against a performance metric.
+          This performance metric is a scalar value which allows to compare the performance
+            of different participant against the same challenge.
+          Several examples of benchmarks are provided on the robotbenchmark website.
+        </p>
+        </div>`;
+      ModalDialog.run(`What is a benchmark?`, content.innerHTML);
     }
   }
 });
