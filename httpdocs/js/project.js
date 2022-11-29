@@ -124,7 +124,7 @@ export default class Project extends User {
         version = data?.version ? data.version : this.findGetParameter('version');
     }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js'; */
-    const src = 'https://raw.githubusercontent.com/cyberbotics/webots/feature-web-benchmark/resources/web/wwi/WebotsView.js';
+    const src = 'https://cyberbotics.com/wwi/benchmark/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
