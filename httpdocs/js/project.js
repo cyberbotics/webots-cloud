@@ -117,13 +117,14 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    if (!version || version === 'undefined') {
+    /* if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
         version = data?.version ? data.version : this.findGetParameter('version');
     }
-    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
+    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js'; */
+    const src = 'https://cyberbotics.com/wwi/feature-web-benchmark/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
