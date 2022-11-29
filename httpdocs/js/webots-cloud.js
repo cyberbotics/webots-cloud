@@ -1221,13 +1221,14 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-        <p style="padding-bottom:15px;">
           A benchmark is a simulation scenario which proposes a challenge involving a single participant.
           A robot has to address a problem and its behavior is evaluated against a performance metric.
+          <br>
           This performance metric is a scalar value which allows to compare the performance
             of different participant against the same challenge.
           Several examples of benchmarks are provided on the robotbenchmark website.
-        </p>
+          <br>
+          To create your own benchmark, follow the instructions on <a href="https://github.com/cyberbotics/benchmark-template"> this repository</a>.
         </div>`;
       ModalDialog.run(`What is a benchmark?`, content.innerHTML);
     }
