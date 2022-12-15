@@ -199,9 +199,9 @@ div.table-container {
   max-width: none;
 }
 
-/*  Webots benchmark preview window  */
+/*  Webots competition preview window  */
 
-#benchmark-preview-container {
+#competition-preview-container {
   width: 100%;
   aspect-ratio: 16 / 9;
   padding: 10px;
