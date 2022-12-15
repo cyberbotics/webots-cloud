@@ -56,7 +56,7 @@
     error('Missing allowedRepositories parameter.');
   $allowedRepositories = explode(',', $_POST['allowedRepositories']);
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, started=NOW(), id=LAST_INSERT_ID(id)";
-  #Disable automatic addition of server to avoid adding servers that don't work.
+  # Disable automatic addition of server to avoid adding servers that don't work.
   #$mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
   $branch = basename(dirname(__FILE__, 4));
@@ -68,7 +68,7 @@
   foreach($allowedRepositories as $repository) {
     $repo = $mysqli->escape_string($repository);
     $query = "INSERT IGNORE INTO repository(server, url) VALUES($server_id, \"$repo\")";
-    #Disable automatic addition of server to avoid adding servers that don't work.
+    # Disable automatic addition of server to avoid adding servers that don't work.
     #$mysqli->query($query) or error($mysqli->error);
   }
   $http_host = $_SERVER['HTTP_HOST'];
