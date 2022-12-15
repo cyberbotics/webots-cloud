@@ -51,8 +51,8 @@ export default class Router {
         type = url.searchParams.get('type');
         if (type === 'demo')
           homeLink = '/simulation';
-        else if (type === 'benchmark')
-          homeLink = '/benchmark';
+        else if (type === 'competition')
+          homeLink = '/competition';
         break;
     }
     let template = document.createElement('template');
