@@ -40,9 +40,9 @@ CREATE TABLE `project` (
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
   `version` varchar(16) NOT NULL,
-  `type` enum('demo','competition','benchmark','') NOT NULL,
+  `type` enum('demo','competition') NOT NULL,
   `branch` varchar(256) CHARACTER SET utf8 NOT NULL DEFAULT 'main',
-  `competitors` int(11) NOT NULL,
+  `participants` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `viewed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
