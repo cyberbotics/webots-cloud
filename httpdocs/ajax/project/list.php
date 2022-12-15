@@ -48,7 +48,7 @@
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
-    settype($row['competitors'], 'integer');
+    settype($row['participants'], 'integer');
     $row['title'] = htmlentities($row['title']);
     $row['description'] = htmlentities($row['description']);
     $row['version'] = htmlentities($row['version']);
