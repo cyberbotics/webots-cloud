@@ -6,17 +6,17 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationPage = 1;
   let simulationPage = 1;
   let serverPage = 1;
-  let benchmarkPage = 1;
+  let competitionPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
-  let benchmarkSort = 'default';
+  let competitionSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
-  let benchmarkSearch = '';
+  let competitionSearch = '';
   let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/benchmark',
+      url: '/competition',
       setup: homePage
     },
     {
@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationPage = page;
     else if (activeTab === 'server')
       serverPage = page;
-    else if (activeTab === 'benchmark')
-      benchmarkPage = page;
+    else if (activeTab === 'competition')
+      competitionPage = page;
   }
 
   function getPage(activeTab) {
@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return simulationPage;
     if (activeTab === 'server')
       return serverPage;
-    if (activeTab === 'benchmark')
-      return benchmarkPage;
+    if (activeTab === 'competition')
+      return competitionPage;
   }
 
   function setSorts(activeTab, sort) {
@@ -107,8 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
-    else if (activeTab === 'benchmark')
-      benchmarkSort = sort;
+    else if (activeTab === 'competition')
+      competitionSort = sort;
   }
 
   function getSort(activeTab) {
@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
-    if (activeTab === 'benchmark')
-      return benchmarkSort;
+    if (activeTab === 'competition')
+      return competitionSort;
   }
 
   function setSearches(activeTab, search) {
@@ -129,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
-    else if (activeTab === 'benchmark')
-      benchmarkSearch = search;
+    else if (activeTab === 'competition')
+      competitionSearch = search;
     else if (activeTab === 'delay')
       delaySearch = search;
   }
@@ -142,8 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
-    if (activeTab === 'benchmark')
-      return benchmarkSearch;
+    if (activeTab === 'competition')
+      return competitionSearch;
     if (activeTab === 'delay')
       return delaySearch;
   }
@@ -173,12 +173,12 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-simulation').addEventListener('click', function(event) { addSimulation('D'); });
-    project.content.querySelector('#add-a-new-benchmark').addEventListener('click', function(event) { addSimulation('B'); });
+    project.content.querySelector('#add-a-new-competition').addEventListener('click', function(event) { addSimulation('C'); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
-    listSimulations('B', benchmarkPage, getSort('benchmark'), getSearch('benchmark'));
+    listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dotIndex = data.url.lastIndexOf('/') + 1;
         thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
           'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-      } else if (data.type === 'benchmark') {
+      } else if (data.type === 'competition') {
         const [ , , , username, repo, , branch ] = data.url.split('/');
         thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       }
@@ -392,8 +392,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
             </li>
-            <li data-tab="benchmark" ${(activeTab === 'benchmark') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Benchmark</a>
+            <li data-tab="competition" ${(activeTab === 'competition') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Competition</a>
             </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
@@ -563,42 +563,42 @@ document.addEventListener('DOMContentLoaded', function() {
               <button class="button" id="add-a-new-simulation">Add a new simulation</button>
             </div>
           </section>
-          <section class="section${(activeTab === 'benchmark') ? ' is-active' : ''}" data-content="benchmark">
+          <section class="section${(activeTab === 'competition') ? ' is-active' : ''}" data-content="competition">
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
-                  <input class="input is-small" id="benchmark-search-input" type="text"
-                    placeholder="Search for benchmarks...">
-                  <span class="icon is-small is-right is-clickable" id="benchmark-search-click">
-                    <i class="fas fa-search" id="benchmark-search-icon"></i>
+                  <input class="input is-small" id="competition-search-input" type="text"
+                    placeholder="Search for competitions...">
+                  <span class="icon is-small is-right is-clickable" id="competition-search-click">
+                    <i class="fas fa-search" id="competition-search-icon"></i>
                   </span>
                 </div>
               </div>
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="benchmark-sort-viewed" title="Popularity"
+                    <th class="is-clickable column-title" id="competition-sort-viewed" title="Popularity"
                       style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="benchmark-sort-title" title="Title of the benchmark"
+                    <th class="is-clickable column-title" id="competition-sort-title" title="Title of the competition"
                       style="min-width: 120px;">
                       Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="column-title" id="benchmark-sort-title" title="Branch or Tag of the benchmark">
+                    <th class="column-title" id="competition-sort-title" title="Branch or Tag of the competition">
                       Branch/Tag
                     </th>
-                    <th class="is-clickable column-title" id="benchmark-sort-stars" title="Number of GitHub stars"
+                    <th class="is-clickable column-title" id="competition-sort-stars" title="Number of GitHub stars"
                       style="text-align: center;">
                       <i class="far fa-star"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="benchmark-sort-version" title="Webots release of the benchmark"
+                    <th class="is-clickable column-title" id="competition-sort-version" title="Webots release of the competition"
                       style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="is-clickable column-title" id="benchmark-sort-updated" title="Last update time"
+                    <th class="is-clickable column-title" id="competition-sort-updated" title="Last update time"
                       style="text-align: right;">
                       Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
@@ -607,17 +607,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <tbody>
                 </tbody>
               </table>
-              <div class="empty-search" id="benchmark-empty-search" style="display: none;">
+              <div class="empty-search" id="competition-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
-                <p id="benchmark-empty-search-text"></p>
+                <p id="competition-empty-search-text"></p>
               </div>
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
             <div class="buttons">
-              <button class="button" id="add-a-new-benchmark">Add a new benchmark</button>
-              <button class="button" id="what-is-a-benchmark">What is a benchmark?</button>
+              <button class="button" id="add-a-new-competition">Add a new competition</button>
+              <button class="button" id="what-is-a-competition">What is a competition?</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      document.getElementById('what-is-a-benchmark').onclick = whatIsBenchmarkPopUp;
+      document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
     }
 
     function initSort(sortBy) {
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation', 'benchmark']) {
+      for (let type of ['scene', 'animation', 'simulation', 'competition']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
@@ -772,8 +772,8 @@ document.addEventListener('DOMContentLoaded', function() {
         listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
         listSimulations('D', simulationPage, getSort(type), getSearch(type));
-      else if (type === 'benchmark')
-        listSimulations('B', benchmarkPage, getSort(type), getSearch(type));
+      else if (type === 'competition')
+        listSimulations('C', competitionPage, getSort(type), getSearch(type));
     }
 
     function updateSearchIcon(type) {
@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
-        updateSearchIcon('benchmark');
+        updateSearchIcon('competition');
       }
     }
 
@@ -976,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addSimulation(type) {
       let demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
-      let benchmarkExample = 'https://github.com/cyberbotics/robot-programming-benchmark/blob/main/worlds/robot_programming.wbt';
+      let competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
       let content = {};
       content.innerHTML =
         `<div class="field">
@@ -990,13 +990,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
           </div>
           <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-            <a target="_blank" href="${(type === 'D') ? demoExample : benchmarkExample}">
-              ${(type === 'D') ? demoExample : benchmarkExample}
+            <a target="_blank" href="${(type === 'D') ? demoExample : competitionExample}">
+              ${(type === 'D') ? demoExample : competitionExample}
             </a>
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let typeName = (type === 'D') ? 'simulation' : 'benchmark';
+      let typeName = (type === 'D') ? 'simulation' : 'competition';
       let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
@@ -1088,8 +1088,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (() => {
         if (type === 'D')
           return 'simulation';
-        else if (type === 'B')
-          return 'benchmark';
         else if (type === 'C')
           return 'competition';
       })();
@@ -1217,35 +1215,36 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function whatIsBenchmarkPopUp() {
+    function whatIsCompetitionPopUp() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-          A benchmark is a simulation scenario which proposes a challenge involving a single participant.
+          A competition is a simulation scenario which proposes a challenge.
           A robot has to address a problem and its behavior is evaluated against a performance metric.
           <br>
-          This performance metric is a scalar value which allows to compare the performance
-            of different participant against the same challenge.
+          This performance metric is a scalar value allowing to compare the performance of different participants in the challenge.
+          The performance metrics may be either absolute or relative.
+          An absolute performance metrics compare the performance of a robot alone in a world 
           <br>
-          To create your own benchmark, follow the instructions on <a href="https://github.com/cyberbotics/benchmark-template"> this repository</a>.
+          To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
-      ModalDialog.run(`What is a benchmark?`, content.innerHTML);
+      ModalDialog.run(`What is a competition?`, content.innerHTML);
     }
   }
 
   function runPage(project) {
-    // discriminate between demos and benchmark using search parameters
+    // discriminate between demos and competition using search parameters
     let searchParams = new URLSearchParams(window.location.search);
     let type = searchParams.get('type');
     if (type === 'demo')
       project.runWebotsView();
-    else if (type === 'benchmark') {
+    else if (type === 'competition') {
       let url = searchParams.get('url');
-      project.benchmarkUrl = url;
+      project.competitionUrl = url;
       let context = searchParams.get('context');
       switch (context) {
         case 'try':
-          createBenchmarkPageButton();
+          createCompetitionPageButton();
           project.runWebotsView();
           break;
         case 'view':
@@ -1265,23 +1264,23 @@ document.addEventListener('DOMContentLoaded', function() {
         <tbody>
           <tr>
             <td>Difficulty level:</td>
-            <td style="font-weight: bold;" id="benchmark-difficulty"></td>
+            <td style="font-weight: bold;" id="competition-difficulty"></td>
           </tr>
           <tr>
             <td>Robot:</td>
-            <td style="font-weight: bold;" id="benchmark-robot"></td>
+            <td style="font-weight: bold;" id="competition-robot"></td>
           </tr>
           <tr>
             <td>Programming language:</td>
-            <td style="font-weight: bold;" id="benchmark-language"></td>
+            <td style="font-weight: bold;" id="competition-language"></td>
           </tr>
           <tr>
             <td>Minimum commitment:</td>
-            <td style="font-weight: bold;" id="benchmark-commitment"></td>
+            <td style="font-weight: bold;" id="competition-commitment"></td>
           </tr>
           <tr>
             <td>Number of participants:</td>
-            <td style="font-weight: bold;" id="benchmark-participants"></td>
+            <td style="font-weight: bold;" id="competition-participants"></td>
           </tr>
         </tbody>
         </table>`;
@@ -1332,8 +1331,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
         </li>
-        <li data-tab="benchmark" class="data-tab is-active">
-          <a href="/benchmark">Benchmark</a>
+        <li data-tab="competition" class="data-tab is-active">
+          <a href="/competition">Competition</a>
         </li>
         <li data-tab="server" class="data-tab">
           <a href="/server">Server</a>
@@ -1343,18 +1342,18 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="container is-widescreen">
         <section class="section is-active">
           <div class="tile is-ancestor">
-            <p class="title is-size-1 is-regular" id="benchmark-title"></p>
+            <p class="title is-size-1 is-regular" id="competition-title"></p>
           </div>
           <div class="tile is-ancestor">
             <div class="tile is-parent is-4">
               <article class="tile is-child box">
                 <p class="title">Information</p>
-                <p id="benchmark-information-description" style="margin-bottom: 25px;"></p>
+                <p id="competition-information-description" style="margin-bottom: 25px;"></p>
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-benchmark" style="background-color: #007acc;" href="${simulationUrl.href}">
-                  Try Benchmark
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
+                  Try Competition
                 </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
                   Register
@@ -1365,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <article class="tile is-child box">
                 <p class="title">Preview</p>
                 <div class="content">
-                  <div id="benchmark-preview-container"></div>
+                  <div id="competition-preview-container"></div>
                 </div>
               </article>
             </div>
@@ -1386,11 +1385,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       // document.querySelector('section.is-active').innerHTML = contentHtml;
-      project.setup('benchmark', template.content);
+      project.setup('competition', template.content);
       document.getElementById('submit-entry').onclick = registerPopUp;
-      getBenchmark(project.benchmarkUrl);
+      getCompetition(project.competitionUrl);
     }
-    function getBenchmark(url) {
+    function getCompetition(url) {
       let metric;
       const [ , , , username, repo, , branch ] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, {cache: 'no-store'})
@@ -1411,17 +1410,17 @@ document.addEventListener('DOMContentLoaded', function() {
               const language = information[2].split(':')[1].substring(1);
               const commitment = information[3].split(':')[1].substring(1);
 
-              document.getElementById('benchmark-title').innerHTML = title;
-              document.getElementById('benchmark-information-description').innerHTML = description;
-              document.getElementById('benchmark-difficulty').innerHTML = difficulty;
-              document.getElementById('benchmark-robot').innerHTML = robot;
-              document.getElementById('benchmark-language').innerHTML = language;
-              document.getElementById('benchmark-commitment').innerHTML = commitment;
+              document.getElementById('competition-title').innerHTML = title;
+              document.getElementById('competition-information-description').innerHTML = description;
+              document.getElementById('competition-difficulty').innerHTML = difficulty;
+              document.getElementById('competition-robot').innerHTML = robot;
+              document.getElementById('competition-language').innerHTML = language;
+              document.getElementById('competition-commitment').innerHTML = commitment;
 
               // preview window
               const reference = rawUrl + '/preview/';
-              if (project && !project.benchmarkUrl)
-                project.benchmarkUrl = url;
+              if (project && !project.competitionUrl)
+                project.competitionUrl = url;
               project.runWebotsView(reference);
             });
           fetch(rawUrl + '/webots.yml', {cache: 'no-cache'})
@@ -1470,13 +1469,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
                 document.getElementById(performance[1] + '-view').addEventListener('click', viewEntryRun);
               }
-              document.getElementById('benchmark-participants').innerHTML = performanceArray.length;
+              document.getElementById('competition-participants').innerHTML = performanceArray.length;
             });
         });
     }
     function viewEntryRun(eventOrId) {
-      createBenchmarkPageButton();
-      const url = project.benchmarkUrl;
+      createCompetitionPageButton();
+      const url = project.competitionUrl;
       const [ , , , username, repo, , branch ] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
@@ -1497,31 +1496,31 @@ document.addEventListener('DOMContentLoaded', function() {
           project.runWebotsView(entryAnimation);
         });
     }
-    function createBenchmarkPageButton() {
+    function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
       `<div class="navbar-item">
-        <a class="button is-small is-light is-outlined" id="benchmark-page-button">
-          <span>Benchmark Page</span>
+        <a class="button is-small is-light is-outlined" id="competition-page-button">
+          <span>Competition Page</span>
         </a>
       </div>`;
       document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
       var pageURL = new URL(window.location);
       pageURL.searchParams.delete('context');
       pageURL.searchParams.delete('id');
-      document.getElementById('benchmark-page-button').onclick = () => { location.href = pageURL.href; };
+      document.getElementById('competition-page-button').onclick = () => { location.href = pageURL.href; };
     }
     function registerPopUp() {
       let content = {};
       content.innerHTML =
         `<div class="field">
         <p style="padding-bottom:15px;">
-          To register, you will need to create your own controller on GitHub and to submit it to the creator of the benchmark.
+          To register, you will need to create your own controller on GitHub and to submit it to the organizer of the competition.
           Here is how to do it:
         </p>
         <ol style="padding-left: 20px;">
             <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
-            <li>Go to the <a href="${project.benchmarkUrl.split('/blob')[0]}">repository of the benchmark creator</a></li>
+            <li>Go to the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a></li>
             <li>Read the README file to get a detailed step-by-step guide on how to setup your own repository. In summary:</li>
                 <ul style="padding-left: 20px; list-style: square">
                     <li>Create your own entry repository from the template</li>
@@ -1530,10 +1529,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
             <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a>.</li>
         </ol> 
-        The user's score can be updated by posting a "run" command on the registration issue on the creator's benchmark 
+        The score of a participant can be updated by posting a "run" command on the registration issue on the organizer's competition 
         as described in the subscription confirmation message.
         </div>`;
-      ModalDialog.run(`Registration to the benchmark`, content.innerHTML);
+      ModalDialog.run(`Registration to the competition`, content.innerHTML);
     }
   }
 });
