@@ -109,10 +109,10 @@ export default class Project extends User {
   setupPreviewWebotsView() {
     if (Project.webotsView) {
       Project.webotsView.close();
-      document.getElementById('benchmark-preview-container').innerHTML = '';
-      document.getElementById('benchmark-preview-container').appendChild(Project.webotsView);
+      document.getElementById('competition-preview-container').innerHTML = '';
+      document.getElementById('competition-preview-container').appendChild(Project.webotsView);
     } else {
-      document.getElementById('benchmark-preview-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
+      document.getElementById('competition-preview-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
       Project.webotsView = document.querySelector('webots-view');
     }
   }
@@ -170,14 +170,14 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
-    // if data empty -> demo or benchmark simulation
+    // if data empty -> demo or competition simulation
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (!data) this._updateSimulationViewCount(url);
-    if (type === 'benchmark') {
-      const [ , , , username, repo, , branch ] = this.benchmarkUrl.split('/');
+    if (type === 'competition') {
+      const [ , , , username, repo, , branch ] = this.competitionUrl.split('/');
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
