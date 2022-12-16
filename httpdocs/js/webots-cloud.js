@@ -1,7 +1,7 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
@@ -170,10 +170,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearch(search);
     updateSearchIcon();
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function(event) { addSimulation('D'); });
-    project.content.querySelector('#add-a-new-competition').addEventListener('click', function(event) { addSimulation('C'); });
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function (event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function (event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function (event) { addSimulation('D'); });
+    project.content.querySelector('#add-a-new-competition').addEventListener('click', function (event) { addSimulation('C'); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
         thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
           'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       } else if (data.type === 'competition') {
-        const [ , , , username, repo, , branch ] = data.url.split('/');
+        const [, , , username, repo, , branch] = data.url.split('/');
         thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
       row += `<td class="title-cell">
                 <a class="table-title has-text-dark"` +
-                ` href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+        ` href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
-        title.addEventListener('click', function(e) {
+        title.addEventListener('click', function (e) {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation', 'competition']) {
-        document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
+        document.getElementById(type + '-search-input').addEventListener('keyup', function (event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
             setTimeout(() => {
@@ -703,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, '300');
           }
         });
-        document.getElementById(type + '-search-click').addEventListener('click', function(event) {
+        document.getElementById(type + '-search-click').addEventListener('click', function (event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
             document.getElementById(type + '-search-input').value = '';
             setSearches(type, document.getElementById(type + '-search-input').value);
@@ -794,15 +794,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function synchronizeSimulation(event) {
-      const searchString = getSearch('simulation');
+      const typeName = document.location.pathname.substring(1);  // either 'simulation' or 'competition'
+      const searchString = getSearch(typeName);
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
-        .then(function(response) {
+      fetch('ajax/project/create.php', { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -816,13 +817,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             let dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
             dialog.error('Project has been deleted.');
-            dialog.querySelector('form').addEventListener('submit', function(e) {
+            dialog.querySelector('form').addEventListener('submit', function (e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
-            project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+            project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
@@ -830,10 +831,10 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
               parent.querySelector('#delete-' + id).addEventListener('click',
-                function(event) { deleteSimulation(event, project); });
+                function (event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
+            updatePagination($typeName, page, total);
           }
         });
     }
@@ -842,11 +843,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(12);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/server/update.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
-        .then(function(response) {
+      fetch('ajax/server/update.php', { method: 'post', body: JSON.stringify({ url: url, id: id }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -925,28 +926,28 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${typeName}-file`);
       input.focus();
-      modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('button.cancel').addEventListener('click', function () { cancelled = true; });
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
         body.append('user', project.id);
         body.append('password', project.password);
-        fetch('/ajax/animation/create.php', {method: 'post', body: body})
-          .then(function(response) {
+        fetch('/ajax/animation/create.php', { method: 'post', body: body })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
               const id = data.id;
               const total = data.total;
-              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: id})})
-                .then(function(response) {
+              fetch('/ajax/animation/create.php', { method: 'post', body: JSON.stringify({ uploading: 0, uploadId: id }) })
+                .then(function (response) {
                   return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                   if (data.status !== 'uploaded')
                     modal.error(data.error);
                   else {
@@ -999,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         const worldFile = modal.querySelector('#world-file').value.trim();
@@ -1014,10 +1015,10 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         };
         fetch('/ajax/project/create.php', content)
-          .then(function(response) {
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
@@ -1045,12 +1046,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/animation/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
-        .then(function(response) {
+      fetch('/ajax/animation/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
+      })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
@@ -1073,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
+                node.addEventListener('click', function (event) { deleteAnimation(event, type, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1091,12 +1094,14 @@ document.addEventListener('DOMContentLoaded', function() {
       })();
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let offset = (page - 1) * pageLimit;
-      fetch('/ajax/project/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
-        .then(function(response) {
+      fetch('/ajax/project/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
+      })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
@@ -1117,7 +1122,7 @@ document.addEventListener('DOMContentLoaded', function() {
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function(event) { deleteSimulation(event, project); });
+                  .addEventListener('click', function (event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
@@ -1128,11 +1133,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function listServers(page) {
       let offset = (page - 1) * pageLimit;
-      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
-        .then(function(response) {
+      fetch('/ajax/server/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: pageLimit }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
             ModalDialog.run('Server listing error', data.error);
           else {
@@ -1156,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete ${capitalizedTypeName}`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
+      dialog.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
         const content = {
@@ -1169,10 +1174,10 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         };
         fetch('ajax/animation/delete.php', content)
-          .then(function(response) {
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalizedTypeName} deletion error`, data.error);
@@ -1194,15 +1199,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(7);
       let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete simulation`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
+      dialog.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/project/delete.php', {method: 'post',
-          body: JSON.stringify({user: project.id, password: project.password, id: id})})
-          .then(function(response) {
+        fetch('ajax/project/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
@@ -1321,7 +1328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </section>`;
 
       const contentHtml =
-      `<div id="tabs" class="tabs is-centered is-small-medium">
+        `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
@@ -1392,15 +1399,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function getCompetition(url) {
       let metric;
-      const [ , , , username, repo, , branch ] = url.split('/');
-      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, {cache: 'no-store'})
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
+      const [, , , username, repo, , branch] = url.split('/');
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
           const lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
-          fetch(rawUrl + '/README.md', {cache: 'no-cache'})
-            .then(function(response) { return response.text(); })
-            .then(function(data) {
+          fetch(rawUrl + '/README.md', { cache: 'no-cache' })
+            .then(function (response) { return response.text(); })
+            .then(function (data) {
               var readme = new DOMParser().parseFromString(data, 'text/html');
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
@@ -1424,14 +1431,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 project.competitionUrl = url;
               project.runWebotsView(reference);
             });
-          fetch(rawUrl + '/webots.yml', {cache: 'no-cache'})
-            .then(function(response) { return response.text(); })
-            .then(function(data) {
+          fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
+            .then(function (response) { return response.text(); })
+            .then(function (data) {
               metric = data.match(/metric: ([a-z-]+)/)[1];
             });
-          fetch(rawUrl + '/participants.txt', {cache: 'no-cache'})
-            .then(function(response) { return response.text(); })
-            .then(function(data) {
+          fetch(rawUrl + '/participants.txt', { cache: 'no-cache' })
+            .then(function (response) { return response.text(); })
+            .then(function (data) {
               let performanceArray = [];
               const participants = data.split('\n');
               for (const participant of participants) {
@@ -1446,9 +1453,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 performanceArray.push([performance, id, name, controller, date, performanceString]);
               }
               if (metric && metric === 'time-speed')
-                performanceArray.sort(function(a, b) { return a[0] - b[0]; });
+                performanceArray.sort(function (a, b) { return a[0] - b[0]; });
               else
-                performanceArray.sort(function(a, b) { return b[0] - a[0]; });
+                performanceArray.sort(function (a, b) { return b[0] - a[0]; });
 
               let ranking = 1;
               for (const performance of performanceArray) {
@@ -1477,7 +1484,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [ , , , username, repo, , branch ] = url.split('/');
+      const [, , , username, repo, , branch] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
@@ -1488,9 +1495,9 @@ document.addEventListener('DOMContentLoaded', function() {
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, {cache: 'no-store'})
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
           const lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
           const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
@@ -1500,7 +1507,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
       backButtonTemplate.innerHTML =
-      `<div class="navbar-item">
+        `<div class="navbar-item">
         <a class="button is-small is-light is-outlined" id="competition-page-button">
           <span>Competition Page</span>
         </a>
