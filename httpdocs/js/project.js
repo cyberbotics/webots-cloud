@@ -19,11 +19,11 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
-        .then(function (response) {
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           let pushUrl;
           if (url.search !== data.uploadMessage)
             pushUrl = url.pathname + url.search + url.hash;
