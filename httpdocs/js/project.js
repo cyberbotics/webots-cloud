@@ -227,7 +227,7 @@ export default class Project extends User {
     }
   }
   _updateSimulationViewCount(url) {
-    fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
+    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
       .then(function(response) {
         return response.json();
       })
