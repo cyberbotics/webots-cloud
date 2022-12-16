@@ -828,10 +828,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
-            if (parent.querySelector('#delete-' + id) !== null) {
+            if (parent.querySelector('#delete-' + id) !== null)
               parent.querySelector('#delete-' + id).addEventListener('click',
                 function(event) { deleteSimulation(event, project); });
-            }
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('simulation', page, total);
@@ -866,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function addAnimation(type) {
       let content = {};
-      if (type === 'A') {
+      if (type === 'A')
         content.innerHTML = `<div class="field">
           <label class="label">Webots animation</label>
           <div class="control has-icons-left">
@@ -877,7 +876,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="help">Upload the Webots animation file: <em>animation.json</em></div>
         </div>`;
-      } else
+      else
         content.innerHTML = '';
       content.innerHTML += `<div class="field">
           <label class="label">Webots scene</label>
@@ -1110,20 +1109,15 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-<<<<<<< HEAD
             let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
-=======
-            let table = project.content.querySelector('section[data-content="simulation"] > div > table');
->>>>>>> origin/main
             table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               let id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
-              if (project.content.querySelector('#delete-' + id) !== null) {
+              if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
-              }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
