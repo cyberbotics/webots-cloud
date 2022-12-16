@@ -1220,13 +1220,13 @@ document.addEventListener('DOMContentLoaded', function() {
           A robot has to address a problem and its behavior is evaluated against a performance metric.
           <br><br>
           The performance metrics may be either absolute or relative:
-          <ul>
-           <li>An absolute performance metrics is a scalar value measuring the performance of a robot on a given task.
-            For example, the time spent running a 100 meters race is an absolute performance metrics.</li>
-           <li>A relative performance metrics is a ranking of the performance of a robots against others.
-            For example, the tennis ATP ranking is a relative performance metrics.</li>
-          </ul>
-          <br>
+          <br><br>
+          An absolute performance metrics is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metrics.
+          <br><br>
+          A relative performance metrics is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metrics.
+          <br><br>
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
       ModalDialog.run(`What is a competition?`, content.innerHTML);
