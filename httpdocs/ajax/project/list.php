@@ -15,8 +15,6 @@
   $condition = "branch=\"$branch\" AND ";
   if ($type == 'D') // demo
     $condition .= "type = \"demo\"";
-  elseif ($type == 'B') // benchmark
-    $condition .= "type = \"benchmark\"";
   elseif ($type == 'C') // competition
     $condition .= "type = \"competition\"";
   if (isset($data->url)) {
