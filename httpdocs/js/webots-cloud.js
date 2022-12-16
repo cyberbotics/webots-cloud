@@ -1425,7 +1425,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(function(data) {
               metric = data.match(/metric: ([a-z-]+)/)[1];
             });
-          fetch(rawUrl + '/competitors.txt', {cache: 'no-cache'})
+          fetch(rawUrl + '/participants.txt', {cache: 'no-cache'})
             .then(function(response) { return response.text(); })
             .then(function(data) {
               let performanceArray = [];
