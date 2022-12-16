@@ -207,10 +207,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (i < current - 2 || (i > current + 2 && i !== max))
           continue;
-        if (i === current) {
+        if (i === current)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
-        } else {
+        else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
         }
