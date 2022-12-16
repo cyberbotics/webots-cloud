@@ -559,7 +559,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
             <div class="buttons">
-<<<<<<< HEAD
               <button class="button" id="add-a-new-simulation">Add a new simulation</button>
             </div>
           </section>
@@ -618,9 +617,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="buttons">
               <button class="button" id="add-a-new-competition">Add a new competition</button>
               <button class="button" id="what-is-a-competition">What is a competition?</button>
-=======
-              <button class="button" id="add-a-new-project">Add a new simulation</button>
->>>>>>> origin/main
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
