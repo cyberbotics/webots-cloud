@@ -52,9 +52,9 @@ function accept_invitation($invitation) {
   $http_response = 0;
   github_api('user/repository_invitations/' . $invitation, $webots_cloud_token, $http_response, 'PATCH');
   if ($http_response != 204)
-    echo 'Error: could not accept invitation';
+    echo "Error: could not accept invitation\n";
   else
-    echo 'Success: invitation accepted';
+    echo "Success: invitation accepted\n";
 }
 
 function check_invitation($organizer_repository) {
