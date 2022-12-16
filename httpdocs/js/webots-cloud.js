@@ -213,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
-        }
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
