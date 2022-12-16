@@ -40,10 +40,10 @@ export default class Project extends User {
                 method: 'post',
                 body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})
               })
-                .then(function (response) {
+                .then(function(response) {
                   return response.json();
                 })
-                .then(function (data) {
+                .then(function(data) {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
@@ -229,10 +229,10 @@ export default class Project extends User {
   }
   _updateSimulationViewCount(url) {
     fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
-      .then(function (response) {
+      .then(function(response) {
         return response.json();
       })
-      .then(function (data) {
+      .then(function(data) {
         if (data.error)
           console.warn(data.error);
       });
