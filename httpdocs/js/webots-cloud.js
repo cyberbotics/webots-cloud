@@ -1219,9 +1219,11 @@ document.addEventListener('DOMContentLoaded', function() {
           A competition is a simulation scenario which proposes a challenge.
           A robot has to address a problem and its behavior is evaluated against a performance metric.
           <br>
-          This performance metric is a scalar value allowing to compare the performance of different participants in the challenge.
           The performance metrics may be either absolute or relative.
-          An absolute performance metrics compare the performance of a robot alone in a world 
+          An absolute performance metrics is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metrics.
+          A relative performance metrics is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metrics.
           <br>
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
@@ -1511,25 +1513,12 @@ document.addEventListener('DOMContentLoaded', function() {
       let content = {};
       content.innerHTML =
         `<div class="field">
-        <p style="padding-bottom:15px;">
-          To register, you will need to create your own controller on GitHub and to submit it to the organizer of the competition.
-          Here is how to do it:
-        </p>
-        <ol style="padding-left: 20px;">
-            <li>Create an account on <a href="https://github.com/signup">GitHub</a> if you do not have one already.</li>
-            <li>Go to the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a></li>
-            <li>Read the README file to get a detailed step-by-step guide on how to setup your own repository. In summary:</li>
-                <ul style="padding-left: 20px; list-style: square">
-                    <li>Create your own entry repository from the template</li>
-                    <li>Add the organizer as collaborator if you set your repository as private</li>
-                    <li>Submit your entry to the organizer by posting an issue on their repository</li>
-                </ul>
-            <li>You can then modify the controller file from the GitHub website directly or clone your repository to your computer and test it locally using <a href="https://cyberbotics.com/doc/guide/foreword">Webots</a>.</li>
-        </ol> 
-        The score of a participant can be updated by posting a "run" command on the registration issue on the organizer's competition 
-        as described in the subscription confirmation message.
+          <p style="padding-bottom:15px;">
+           To register, you will need to create your own robot controller on GitHub.
+           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a>.
+          </p>
         </div>`;
-      ModalDialog.run(`Registration to the competition`, content.innerHTML);
+      ModalDialog.run(`Register to the competition`, content.innerHTML);
     }
   }
 });
