@@ -25,39 +25,6 @@ function repository_dispatch($organizer_repository, $participant_repository, $pa
   curl_close($curl);
 }
 
-function check_participant($participant_token, $participant_repo) {
-  $participant = explode('/', $participant_repo)[0]; 
-  $url = 'https://api.github.com/user';
-  $curl = curl_init();
-  curl_setopt($curl, CURLOPT_URL, $url);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-  curl_setopt($curl, CURLOPT_USERAGENT, 'webots.cloud');
-  curl_setopt($curl, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/json',
-    'Authorization: Bearer ' . $participant_token,
-    'Accept: application/vnd.github.everest-preview+json'
-  ]);
-  $content = curl_exec($curl);
-  $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-  curl_close($curl);
-  if ($content == '') {
-    print('Error: ' . $url . ' returned ' . $http_code . " HTTP code with an empty response\n");
-    return false;
-  }
-  $json = json_decode($content, true);
-  if (!isset($json['login'])) {
-    print('Error: ' . $url . ' returned ' . $http_code . " HTTP code with the following answer:\n");
-    print_r($json);
-    return false;
-  }
-  if ($json['login'] == $participant)
-    return true;
-  print('Error: participant mismatch (' . $participant . ' != ' . $json['login'] . ")\n");
-  return false;
-}
-
-
 // should be used with a GH_TOKEN, not a Personal Access Token (PAT)
 function check_participant_token($github_token, $participant_repo) {
   $participant = explode('/', $participant_repo)[0]; 
@@ -82,13 +49,13 @@ function check_participant_token($github_token, $participant_repo) {
   }
   $json = json_decode($content, true);
 
+  // when requesting the repo with the GH_TOKEN from outside, we are getting this answer which is fine
   if ($http_code == 403 && $json['message'] == 'Resource not accessible by integration')
     return true;
 
+  // in case the token is wrong we should get a 404 answer for a private repo and a 201 answer for a public repo
   echo "HTTP code for " . $url . ": " . $http_code . "\n";
   print_r($json);
-  if ($http_code != 404)
-    echo "Error: the participant repository is public (should be private)\n";
   return false;
 }
 
