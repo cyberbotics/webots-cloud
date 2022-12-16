@@ -20,10 +20,10 @@ export default class Project extends User {
         resolve();
       }
       fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           let pushUrl;
           if (url.search !== data.uploadMessage)
             pushUrl = url.pathname + url.search + url.hash;
@@ -40,10 +40,10 @@ export default class Project extends User {
                 method: 'post',
                 body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
               })
-                .then(function(response) {
+                .then(function (response) {
                   return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                   if (data.error) {
                     that.password = null;
                     that.email = '!';
@@ -117,14 +117,21 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    /* if (!version || version === 'undefined') {
+    let that = this;
+    let reference;
+    const url = this.findGetParameter('url');
+    const mode = this.findGetParameter('mode');
+    if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
-        version = data?.version ? data.version : this.findGetParameter('version');
+        version = data ? data.version : this.findGetParameter('version');
     }
-    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js'; */
-    const src = 'https://cyberbotics.com/wwi/benchmark/WebotsView.js';
+    version = 'benchmark';
+    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
+
+    if (!data)
+      that._updateSimulationViewCount(url);
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -177,7 +184,7 @@ export default class Project extends User {
     const type = this.findGetParameter('type');
     if (!data) this._updateSimulationViewCount(url);
     if (type === 'competition') {
-      const [ , , , username, repo, , branch ] = this.competitionUrl.split('/');
+      const [, , , username, repo, , branch] = this.competitionUrl.split('/');
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
@@ -222,10 +229,10 @@ export default class Project extends User {
   }
   _updateSimulationViewCount(url) {
     fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         if (data.error)
           console.warn(data.error);
       });

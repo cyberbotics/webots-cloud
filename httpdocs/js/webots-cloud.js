@@ -560,6 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
             <div class="buttons">
+<<<<<<< HEAD
               <button class="button" id="add-a-new-simulation">Add a new simulation</button>
             </div>
           </section>
@@ -618,6 +619,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="buttons">
               <button class="button" id="add-a-new-competition">Add a new competition</button>
               <button class="button" id="what-is-a-competition">What is a competition?</button>
+=======
+              <button class="button" id="add-a-new-project">Add a new simulation</button>
+>>>>>>> origin/main
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -1111,7 +1115,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+<<<<<<< HEAD
             let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+=======
+            let table = project.content.querySelector('section[data-content="simulation"] > div > table');
+>>>>>>> origin/main
             table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
