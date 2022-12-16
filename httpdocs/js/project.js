@@ -38,7 +38,7 @@ export default class Project extends User {
             } else {
               fetch('/ajax/user/authenticate.php', {
                 method: 'post',
-                body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
+                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})
               })
                 .then(function (response) {
                   return response.json();
