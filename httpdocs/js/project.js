@@ -49,10 +49,9 @@ export default class Project extends User {
                     that.email = '!';
                     that.load('/');
                     ModalDialog.run('Error', data.error);
-                  } else {
+                  } else
                     ModalDialog.run(`Upload associated`,
                       `Your upload has successfully been associated with your webots.cloud account`);
-                  }
                 });
             }
             pushUrl = url.pathname + url.hash;
