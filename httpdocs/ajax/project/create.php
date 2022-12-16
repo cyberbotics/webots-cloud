@@ -40,7 +40,7 @@ if (!is_array($check_yaml)) {
   $mysqli->query($query) or error($mysqli->error);
   error($check_yaml);
 }
-list($type, $benchmark, $competition) = $check_yaml;
+list($type, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
