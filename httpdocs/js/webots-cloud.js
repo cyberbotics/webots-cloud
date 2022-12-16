@@ -834,7 +834,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 function (event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination($typeName, page, total);
+            updatePagination(typeName, page, total);
           }
         });
     }
