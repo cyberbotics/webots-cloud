@@ -83,13 +83,9 @@ function check_participant_token($github_token, $participant_repo) {
 
 if (isset($_POST['organizer']))
   $organizer = $_POST['organizer'];
-elseif (isset($_GET['organizer']))
-  $organizer = $_GET['organizer'];
 
 if (isset($_POST['participant']))
   $participant = $_POST['participant'];
-elseif (isset($_GET['participant']))
-  $participant = $_GET['participant'];
 
 accept_invitation(check_invitation($organizer));
 
