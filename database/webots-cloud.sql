@@ -82,10 +82,4 @@ CREATE TABLE `server_branch` (
 ALTER TABLE `server_branch`
   ADD PRIMARY KEY (`id`,`branch`);
 
-CREATE TABLE `queue` (
-  `project` int(11) NOT NULL,
-  `participant` varchar(2048) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 COMMIT;
