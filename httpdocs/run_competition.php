@@ -1,6 +1,7 @@
 <?php
 
-include '../php/token.php';
+require '../php/token.php';
+require '../php/database.php';
 
 function github_api($api, $token, &$http_code = false, $custom_request = false, $payload = '') {
   $url = 'https://api.github.com/' . $api;
@@ -70,7 +71,7 @@ function check_invitation($organizer_repository) {
 }
 
 // should be used with a GH_TOKEN, not a Personal Access Token (PAT)
-function check_participant_token($github_token, $participant_repo) {
+function check_repo_token($github_token, $participant_repo) {
   $participant = explode('/', $participant_repo)[0];
   $http_code = 0;
   $json = github_api('repos/' . $participant_repo, $github_token, $http_code, $custom_request = 'DELETE');
@@ -81,15 +82,67 @@ function check_participant_token($github_token, $participant_repo) {
   return false;
 }
 
-if (isset($_POST['organizer']))
-  $organizer = $_POST['organizer'];
+$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+if ($mysqli->connect_errno)
+  die("Can't connect to MySQL database: $mysqli->connect_error");
+$mysqli->set_charset('utf8');
+$mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
 
-if (isset($_POST['participant']))
-  $participant = $_POST['participant'];
+if (!isset($_POST['organizer']))
+  die("Error: missing organizer parameter.");
+
+if (!isset($_POST['participant']))
+  die("Error: missing participant parameter.");
+
+$organizer = $_POST['organizer'];
+$participant = $_POST['participant'];
+
+$query = "SELECT id FROM project WHERE `url` LIKE 'https://github.com/$organizer/%'";
+$result = $mysqli->query($query) or die($mysqli->error);
+$project = $result->fetch_array(MYSQLI_ASSOC);
+$project_id = $project['id'];
+
+if (isset($_POST['organizer_repo_token'])) {
+  if (!check_repo_token($_POST['organizer_repo_token'], $organizer))
+    die("Error: wrong organizer repository token.");
+  $query = "DELETE FROM queue WHERE queue.project=$project_id AND queue.participant = 'R:$participant'";
+  $mysqli->query($query) or die($mysqli->error);
+  if ($mysqli->affected_rows === 0)
+    die("Error: could not delete repository dispatch queue for $participant");
+  $query = "SELECT participant FROM queue WHERE project=$project_id ORDER BY `date` ASC";  # pick the oldest entry from the queue (FIFO)
+  $result = $mysqli->query($query) or die($mysqli->error);
+  $next = $result->fetch_array(MYSQLI_ASSOC);
+  $participant = $next['participant'];
+  if ($next) {
+    repository_dispatch($organizer, $participant);
+    $query = "UPDATE queue SET participant='R:$participant' WHERE project=$project_id AND participant='$participant'";  # mark it running (R:)
+    $mysqli->query($query) or die($mysqli->error);
+    die("Success: running next job from queue: " . $participant);
+  } else
+    die("Success: no further participant in queue.");
+}
 
 accept_invitation(check_invitation($organizer));
 
-if (check_participant_token($_POST['token'], $participant))
-  repository_dispatch($organizer, $participant);
+if (!check_repo_token($_POST['token'], $participant))
+  die("Error: wrong participant repository token.");
 
+$query = "SELECT COUNT(*) AS count FROM queue WHERE project=$project_id";
+$result = $mysqli->query($query) or die($mysqli->error);
+$count = $result->fetch_array(MYSQLI_ASSOC);
+$total = intval($count['count']);
+$result->free();
+if ($total == 0)
+  $running = 'R:';
+else
+  $running = '';
+$query = "INSERT IGNORE INTO queue(project, participant) VALUES((SELECT id FROM project WHERE url LIKE 'https://github.com/$organizer/%'), '$running$participant')";
+$mysqli->query($query) or die($mysqli->error);
+
+if ($total == 0)
+  repository_dispatch($organizer, $participant);
+elseif $mysqli->affected_rows == 1
+  die("Success: job added to the repository dispatch queue.");
+else
+  die("Success: job already in the repository dispatch queue.");
 ?>

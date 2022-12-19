@@ -88,4 +88,7 @@ CREATE TABLE `queue` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE `queue`
+  ADD UNIQUE KEY `project` (`project`,`participant`);
+
 COMMIT;
