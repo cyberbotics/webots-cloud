@@ -141,7 +141,7 @@ $mysqli->query($query) or die($mysqli->error);
 
 if ($total == 0)
   repository_dispatch($organizer, $participant);
-elseif $mysqli->affected_rows == 1
+elseif ($mysqli->affected_rows == 1)
   die("Success: job added to the repository dispatch queue.");
 else
   die("Success: job already in the repository dispatch queue.");
