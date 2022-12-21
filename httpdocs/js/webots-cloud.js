@@ -1454,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const date = participant.split(':')[4];
                 performanceArray.push([performance, id, name, controller, date, performanceString]);
               }
-              if (higher_is_better === 'true')
+              if (higher_is_better !== 'true')
                 performanceArray.sort(function (a, b) { return a[0] - b[0]; });
               else
                 performanceArray.sort(function (a, b) { return b[0] - a[0]; });
