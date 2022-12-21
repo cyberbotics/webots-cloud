@@ -1226,13 +1226,13 @@ document.addEventListener('DOMContentLoaded', function () {
           A competition is a simulation scenario which proposes a challenge.
           A robot has to address a problem and its behavior is evaluated against a performance metric.
           <br><br>
-          The performance metrics may be either absolute or relative:
+          The performance metric may be either absolute or relative:
           <br><br>
-          An absolute performance metrics is a scalar value measuring the performance of a robot on a given task.
-          For example, the time spent running a 100 meters race is an absolute performance metrics.
+          An absolute performance metric is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metric.
           <br><br>
-          A relative performance metrics is a ranking of the performance of a robots against others.
-          For example, the tennis ATP ranking is a relative performance metrics.
+          A relative performance metric is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metric.
           <br><br>
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
@@ -1399,6 +1399,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function getCompetition(url) {
       let metric;
+      let higher_is_better;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function (response) { return response.json(); })
@@ -1435,6 +1436,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(function (response) { return response.text(); })
             .then(function (data) {
               metric = data.match(/metric: ([a-z-]+)/)[1];
+              higher_is_better = data.match(/higher-is-better: ([a-z-]+)/)[1];
             });
           fetch(rawUrl + '/participants.txt', { cache: 'no-cache' })
             .then(function (response) { return response.text(); })
@@ -1452,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const date = participant.split(':')[4];
                 performanceArray.push([performance, id, name, controller, date, performanceString]);
               }
-              if (metric && metric === 'time-speed')
+              if (higher_is_better === 'true')
                 performanceArray.sort(function (a, b) { return a[0] - b[0]; });
               else
                 performanceArray.sort(function (a, b) { return b[0] - a[0]; });
