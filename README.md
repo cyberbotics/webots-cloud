@@ -48,12 +48,11 @@ To setup a Webots repository that contains a demo, you should create it from the
 Then, you should commit your specific files: worlds, controllers, protos, robot windows, etc.
 Finally, you should add a new demo from the https://webots.cloud/demo page and indicate the GitHub URL of your Webots world file, including the tag (or branch) name, e.g., https://github.com/cyberbotics/webots/blob/R2021b/projects/languages/python/worlds/example.wbt.
 
-### Benchmark
+### Competition
 
-A benchmark is a simulation scenario which proposes a challenge involving a single participant.
-A robot has to address a problem and its behavior is evaluated against a performance metrics.
-This performance metrics is a scalar value which allows to compare the performance of different participant against the same challenge.
-Several examples of benchmarks are provided on the [robotbenchmark website](https://robotbenchmark.net).
+A competition is a simulation scenario which proposes a challenge involving one or two participants.
+A robot has to address a problem and its behavior is evaluated against a performance metric.
+Several examples of competitions are provided on the [robotbenchmark website](https://robotbenchmark.net).
 
 # Technical Details
 
@@ -61,10 +60,10 @@ Several examples of benchmarks are provided on the [robotbenchmark website](http
 
 webots.cloud holds a database of GitHub repositories containing a Webots simulation:
 
-| id | type        | url                                     | title                        | stars |
-|----|-------------|-----------------------------------------|------------------------------|-------|
-|  1 | benchmark   | https://github.com/me/my_benchmark      | Obstacle Avoidance Benchmark |    94 |
-|  3 | demo        | https://github.com/me/my_demo           | My Webots demo               |    12 |
+| id | type        | url                                     | title                          | stars |
+|----|-------------|-----------------------------------------|--------------------------------|-------|
+|  1 | competition | https://github.com/me/my_competition    | Obstacle Avoidance Competition |    94 |
+|  3 | demo        | https://github.com/me/my_demo           | My Webots demo                 |    12 |
 
 ## Dockerfile
 
@@ -99,12 +98,12 @@ publish: true
 
 By default, `publish` is set to `true`. All worlds found in the same directory as the specified world will be be used by webots.cloud and listed as interactive run sessions. When `publish` is set to `false` the simulation will not be uploaded and can be removed from webots.cloud on resynchronization.
 
-#### Benchmark
+#### Competition
 
-This type of repository should contain the scenario of a benchmark, including a supervisor process performing the evalution of the controller(s) and a publish setting.
+This type of repository should contain the scenario of a competition, including a supervisor process performing the evalution of the controller(s) and a publish setting.
 
 ```yaml
-type: benchmark
+type: competition
 publish: true
 ```
 
