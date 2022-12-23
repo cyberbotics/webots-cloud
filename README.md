@@ -52,7 +52,6 @@ Finally, you should add a new demo from the https://webots.cloud/demo page and i
 
 A competition is a simulation scenario which proposes a challenge involving one or two participants.
 A robot has to address a problem and its behavior is evaluated against a performance metric.
-Several examples of competitions are provided on the [robotbenchmark website](https://robotbenchmark.net).
 
 # Technical Details
 
