@@ -8,7 +8,7 @@ webots.cloud is implemented as a Single Page Application (SPA), including the fo
 - https://webots.cloud => home page
 - https://webots.cloud/scene => scenes listing
 - https://webots.cloud/animation => animations listing
-- https://webots.cloud/simulation => demos and benchmarks listing
+- https://webots.cloud/simulation => demos listing
 - https://webots.cloud/settings => user settings (private information)
 - https://webots.cloud/UL6ZtOI => user page (public information, the URI starts with `/U`)
 
