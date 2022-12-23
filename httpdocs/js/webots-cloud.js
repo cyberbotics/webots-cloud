@@ -1381,7 +1381,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="tile is-ancestor">
             <div class="tile is-parent">
               <div class="tile is-child box">
-                <p class="title">Rankings</p>
+                <p class="title">Leaderboard</p>
                 <div class="content">
                   ${rankingsTable}
                 </div>
