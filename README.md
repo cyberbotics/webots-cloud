@@ -21,12 +21,12 @@ Scenes and animantions are hosted directly on webots.cloud:
 | [scene](#Scene)             | webots.cloud | `https://webots.cloud/S0_2Q8O` (the URI starts with `/S`) |
 | [animation](#Animation)     | webots.cloud | `https://webots.cloud/AQnPNle` (the URI starts with `/A`) |
 
-Demos and benchmarks are hosted on GitHub repositories:
+Demos and competitions are hosted on GitHub repositories:
 
-| type                        | data host    | sample URL                                                |
-| --------------------------- | ------------ | --------------------------------------------------------- |
+| type                        | data host    | sample URL                                                                                    |
+| --------------------------- | ------------ | --------------------------------------------------------------------------------------------- |
 | [demo](#Demo)               | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/worlds/example.wbt` |
-| [benchmark](#Benchmark)     | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/worlds/example.wbt` |
+| [competition](#Competition) | github.com   | `https://webots.cloud/run?url=https://github.com/user/my-repo/blob/master/worlds/example.wbt` |
 
 ## Scene
 
