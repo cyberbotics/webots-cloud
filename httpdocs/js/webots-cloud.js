@@ -1399,6 +1399,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function getCompetition(url) {
       let metric;
+      let higher_is_better;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function (response) { return response.json(); })
@@ -1434,11 +1435,13 @@ document.addEventListener('DOMContentLoaded', function () {
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function (response) { return response.text(); })
             .then(function (data) {
-              metric = data.match(/metric: ([a-z-]+)/)[1];
+              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              higher_is_better = data.match(/higher_is_better: ([a-zA-Z-]+)/)[1].toLowerCase() == 'true';
             });
-          fetch(rawUrl + '/participants.txt', { cache: 'no-cache' })
-            .then(function (response) { return response.text(); })
-            .then(function (data) {
+          fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
+            .then(function (response) { return response.json(); })
+            .then(function (participants) {
+              /*
               let performanceArray = [];
               const participants = data.split('\n');
               for (const participant of participants) {
@@ -1452,32 +1455,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 const date = participant.split(':')[4];
                 performanceArray.push([performance, id, name, controller, date, performanceString]);
               }
-              if (metric && metric === 'time-speed')
+              if (higher_is_better)
                 performanceArray.sort(function (a, b) { return a[0] - b[0]; });
               else
                 performanceArray.sort(function (a, b) { return b[0] - a[0]; });
-
+              */
               let ranking = 1;
-              for (const performance of performanceArray) {
+              for (const participant of participants['participants']) {
+                console.log(performance);
                 let tableContent = document.createElement('template');
                 tableContent.innerHTML =
                   `<tr>
                     <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
-                    <td style="vertical-align: middle;">${performance[2]}</td>
-                    <td style="vertical-align: middle;">${performance[3]}</td>
-                    <td style="vertical-align: middle;" class="has-text-centered">${performance[4]}</td>
-                    <td style="vertical-align: middle;" class="has-text-centered">${performance[5]}</td>
+                    <td style="vertical-align: middle;">${participant.name}</td>
+                    <td style="vertical-align: middle;">${participant.repository}</td>
+                    <td style="vertical-align: middle;" class="has-text-centered">${participant.country}</td>
+                    <td style="vertical-align: middle;" class="has-text-centered">${particpant.performance}</td>
                     <td style="vertical-align: middle;">
-                      <button class="button is-small is-primary" style="background-color: #007acc;" id="${performance[1]}-view">
+                      <button class="button is-small is-primary" style="background-color: #007acc;" id="${participant.id}-view">
                         View
                       </button>
                     </td>
                   </tr>`;
                 ranking++;
                 document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                document.getElementById(performance[1] + '-view').addEventListener('click', viewEntryRun);
+                document.getElementById(participant.id + '-view').addEventListener('click', viewEntryRun);
               }
-              document.getElementById('competition-participants').innerHTML = performanceArray.length;
+              document.getElementById('competition-participants').innerHTML = participants['participants'].length;
             });
         });
     }
