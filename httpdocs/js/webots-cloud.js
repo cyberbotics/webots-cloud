@@ -1454,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', function () {
                       `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
                     const link = participant.private ? `${participant.name}` :
                       `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const button = (metric == 'ranking' && ranking == 1) ? `` :
+                    const button = (metric == 'ranking' && ranking == 1) ? `<span style="font-size:x-large">&#127942;</span>` :
                       `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view">View</button>`;
                     tableContent.innerHTML = `<tr>
@@ -1464,7 +1464,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
-                    <td style="vertical-align:middle;">${button}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
                     document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
