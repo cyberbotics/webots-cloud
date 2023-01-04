@@ -1449,8 +1449,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   }
                   let ranking = 1;
                   for (const participant of participants['participants']) {
-                    let dateArray = participant.date.split('T');
-                    let date = `<span style="font-size:smaller;display:inline-block">` +
+                    const dateArray = participant.date.split('T');
+                    const date = `<span style="font-size:smaller;display:inline-block">` +
                       `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
                     let tableContent = document.createElement('template');
                     const performanceLine = (metric == 'ranking') ? `` :
