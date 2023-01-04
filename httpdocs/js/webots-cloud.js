@@ -1447,26 +1447,30 @@ document.addEventListener('DOMContentLoaded', function () {
                   let ranking = 1;
                   for (const participant of participants['participants']) {
                     let dateArray = participant.date.split('T');
-                    let date = `<span style="font-size:smaller;display:inline-block">${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
+                    let date = `<span style="font-size:smaller;display:inline-block">` +
+                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
                     let tableContent = document.createElement('template');
-                    const performanceLine = (metric == 'ranking') ? `` : `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
-                    const link = participant.private ? `${participant.name}` : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    tableContent.innerHTML =
-                      `<tr>
+                    const performanceLine = (metric == 'ranking') ? `` :
+                      `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
+                    const link = participant.private ? `${participant.name}` :
+                      `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const button = (metric == 'ranking' && ranking == 1) ? `` :
+                      `<button class="button is-small is-primary" style="background-color: #007acc;"` +
+                      `id="${participant.id}-view">View</button>`;
+                    tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
-                    <td style="vertical-align:middle;font-size:x-large" class="has-text-centered" title="${participant.country}">${getFlag(participant.country)}</td>
+                    <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
+                     title="${participant.country}">${getFlag(participant.country)}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
-                    <td style="vertical-align:middle;">
-                      <button class="button is-small is-primary" style="background-color: #007acc;" id="${participant.id}-view">
-                        View
-                      </button>
-                    </td>
+                    <td style="vertical-align:middle;">${button}</td>
                   </tr>`;
                     ranking++;
                     document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                    document.getElementById(participant.id + '-view').addEventListener('click', viewEntryRun);
+                    let viewButton = document.getElementById(participant.id + '-view');
+                    if (viewButton)
+                      viewButton.addEventListener('click', viewEntryRun);
                   }
                   document.getElementById('competition-participants').innerHTML = participants['participants'].length;
                 });
