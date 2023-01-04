@@ -1349,7 +1349,6 @@ document.addEventListener('DOMContentLoaded', function () {
               <div class="tile is-child box">
                 <p class="title">Leaderboard</p>
                 <div class="content" id="leaderboard">
-                  ${rankingsTable}
                 </div>
               </div>
             </div>
