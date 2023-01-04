@@ -187,10 +187,9 @@ export default class Project extends User {
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
-        if (data.includes('wb_animation_')) {
-          // user performance view
+        if (data.includes('wb_animation_'))  // user performance view
           this.setupWebotsView('run');
-        } else
+        else
           this.setupPreviewWebotsView();
 
         Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,

@@ -1226,13 +1226,13 @@ document.addEventListener('DOMContentLoaded', function () {
           A competition is a simulation scenario which proposes a challenge.
           A robot has to address a problem and its behavior is evaluated against a performance metric.
           <br><br>
-          The performance metrics may be either absolute or relative:
+          The performance metric may be either absolute or relative:
           <br><br>
-          An absolute performance metrics is a scalar value measuring the performance of a robot on a given task.
-          For example, the time spent running a 100 meters race is an absolute performance metrics.
+          An absolute performance metric is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metric.
           <br><br>
-          A relative performance metrics is a ranking of the performance of a robots against others.
-          For example, the tennis ATP ranking is a relative performance metrics.
+          A relative performance metric is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metric.
           <br><br>
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
@@ -1347,8 +1347,9 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="tile is-ancestor">
             <div class="tile is-parent">
               <div class="tile is-child box">
-                <p class="title">Rankings</p>
+                <p class="title">Leaderboard</p>
                 <div class="content" id="leaderboard">
+                  ${rankingsTable}
                 </div>
               </div>
             </div>
