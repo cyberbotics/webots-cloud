@@ -1440,8 +1440,11 @@ document.addEventListener('DOMContentLoaded', function () {
               fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
                 .then(function (response) { return response.json(); })
                 .then(function (participants) {
-                  function getFlag(country_code) {
-                    const codePoint = country_code.toUpperCase().split('').map(char => 127397 + char.charCodeAt());
+                  function getFlag(countryCode) {
+                    const country = countryCode.toUpperCase()
+                    if (country.length != 2 || country == 'RU')
+                      return '&#9872;'
+                    const codePoint = country.split('').map(char => 127397 + char.charCodeAt());
                     return String.fromCodePoint(...codePoint);
                   }
                   let ranking = 1;
