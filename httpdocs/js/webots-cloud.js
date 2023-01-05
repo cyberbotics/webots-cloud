@@ -1441,11 +1441,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(function (response) { return response.json(); })
                 .then(function (participants) {
                   function getFlag(countryCode) {
-                    const country = countryCode.toUpperCase()
-                    if (country.length != 2 || country == 'RU')
-                      return '&#9872;'
-                    const codePoint = country.split('').map(char => 127397 + char.charCodeAt());
-                    return String.fromCodePoint(...codePoint);
+                    const country = countryCode.toLowerCase();
+                    if (country.length != 2 || country == 'ru')
+                      return `<svg width="32" height="24">
+                              <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
+                              </svg>`;
+                    return `<img src="images/flags/${country}.svg" width="32">`;
                   }
                   let ranking = 1;
                   for (const participant of participants['participants']) {
