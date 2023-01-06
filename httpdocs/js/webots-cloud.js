@@ -1528,7 +1528,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `<div class="field">
           <p style="padding-bottom:15px;">
            To register, you will need to create your own robot controller on GitHub.
-           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a>.
+           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}#readme">repository of the competition organizer</a>.
           </p>
         </div>`;
       ModalDialog.run(`Register to the competition`, content.innerHTML);
