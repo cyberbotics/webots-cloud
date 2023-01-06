@@ -1442,9 +1442,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(function (participants) {
                   function getFlag(countryCode) {
                     const country = countryCode.toLowerCase();
-                    if (country == 'demo') {
-                      return '<span style="font-size:small">demo</span>';
-                    }
                     if (country.length != 2 || country == 'ru')
                       return `<svg width="32" height="24">
                               <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
@@ -1465,7 +1462,7 @@ document.addEventListener('DOMContentLoaded', function () {
                       `<span style="font-size:x-large">&#127942;</span>` :
                       `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view">View</button>`;
-                    const flag = participant.repository.startsWith('cyberbotics/') ?
+                    const flag = participant.repository.startsWith(`${username}/`) ?
                       '<span style="font-size:small">demo</span>' :
                       getFlag(participant.country);
                     tableContent.innerHTML = `<tr>
