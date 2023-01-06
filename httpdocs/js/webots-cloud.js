@@ -1293,40 +1293,6 @@ document.addEventListener('DOMContentLoaded', function () {
         </tbody>
         </table>`;
 
-      const rankingsTable =
-        `<section class="section is-active" data-content="rankings" style="padding: 0">
-          <div class="table-container rankings-table mx-auto">
-            <div class="search-bar" style="max-width: 280px; padding-bottom: 20px; display: none;">
-              <div class="control has-icons-right">
-                <input class="input is-small" id="rankings-search-input" type="text" placeholder="Search for users...">
-                <span class="icon is-small is-right is-clickable" id="rankings-search-click">
-                  <i class="fas fa-search" id="rankings-search-icon"></i>
-                </span>
-              </div>
-            </div>
-            <table class="table is-striped is-hoverable">
-              <thead>
-                <tr>
-                  <th class="has-text-centered">Ranking</th>
-                  <th>Username</th>
-                  <th>Controller</th>
-                  <th class="has-text-centered">Date</th>
-                  <th class="has-text-centered">Performance</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody id="rankings-table">
-              </tbody>
-            </table>
-            <div class="empty-search" id="rankings-empty-search" style="display: none;">
-              <i class="fas fa-xl fa-search" id="no-project-icon"
-                style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;"></i>
-              <p id="rankings-empty-search-text"></p>
-            </div>
-          </div>
-          <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
-        </section>`;
-
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
@@ -1382,8 +1348,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div class="tile is-parent">
               <div class="tile is-child box">
                 <p class="title">Leaderboard</p>
-                <div class="content">
-                  ${rankingsTable}
+                <div class="content" id="leaderboard">
                 </div>
               </div>
             </div>
@@ -1399,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function getCompetition(url) {
       let metric;
-      let higher_is_better;
+      let higherIsBetter;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function (response) { return response.json(); })
@@ -1435,51 +1400,84 @@ document.addEventListener('DOMContentLoaded', function () {
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function (response) { return response.text(); })
             .then(function (data) {
-              metric = data.match(/metric: ([a-z-]+)/)[1];
-              higher_is_better = data.match(/higher-is-better: ([a-z-]+)/)[1];
-            });
-          fetch(rawUrl + '/participants.txt', { cache: 'no-cache' })
-            .then(function (response) { return response.text(); })
-            .then(function (data) {
-              let performanceArray = [];
-              const participants = data.split('\n');
-              for (const participant of participants) {
-                if (participant.replace(/\s+/g, '') === '' || participant.split(':').length < 3)
-                  continue;
-                const id = participant.split(':')[0];
-                const name = participant.split(':')[1].split('/')[0];
-                const controller = participant.split(':')[1].split('/')[1];
-                const performance = parseFloat(participant.split(':')[2]);
-                const performanceString = participant.split(':')[3];
-                const date = participant.split(':')[4];
-                performanceArray.push([performance, id, name, controller, date, performanceString]);
-              }
-              if (higher_is_better !== 'true')
-                performanceArray.sort(function (a, b) { return a[0] - b[0]; });
-              else
-                performanceArray.sort(function (a, b) { return b[0] - a[0]; });
-
-              let ranking = 1;
-              for (const performance of performanceArray) {
-                let tableContent = document.createElement('template');
-                tableContent.innerHTML =
-                  `<tr>
-                    <td style="vertical-align: middle;" class="has-text-centered">${ranking}</td>
-                    <td style="vertical-align: middle;">${performance[2]}</td>
-                    <td style="vertical-align: middle;">${performance[3]}</td>
-                    <td style="vertical-align: middle;" class="has-text-centered">${performance[4]}</td>
-                    <td style="vertical-align: middle;" class="has-text-centered">${performance[5]}</td>
-                    <td style="vertical-align: middle;">
-                      <button class="button is-small is-primary" style="background-color: #007acc;" id="${performance[1]}-view">
-                        View
-                      </button>
-                    </td>
+              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              higherIsBetter = data.match(/higher-is-better: ([a-zA-Z-]+)/)[1].toLowerCase() === 'true';
+              const performanceColumn = (metric == 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
+              const leaderBoard =
+                `<section class="section is-active" data-content="rankings" style="padding: 0">
+                <div class="table-container rankings-table mx-auto">
+                  <div class="search-bar" style="max-width: 280px; padding-bottom: 20px; display: none;">
+                    <div class="control has-icons-right">
+                      <input class="input is-small" id="rankings-search-input" type="text" placeholder="Search for users...">
+                      <span class="icon is-small is-right is-clickable" id="rankings-search-click">
+                        <i class="fas fa-search" id="rankings-search-icon"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <table class="table is-striped is-hoverable">
+                    <thead>
+                      <tr>
+                        <th class="has-text-centered">Ranking</th>
+                        <th class="has-text-centered">Country</th>
+                        <th>Name</th>
+                        ${performanceColumn}
+                        <th class="has-text-centered">Updated</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="rankings-table">
+                    </tbody>
+                  </table>
+                  <div class="empty-search" id="rankings-empty-search" style="display: none;">
+                    <i class="fas fa-xl fa-search" id="no-project-icon"
+                      style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;"></i>
+                    <p id="rankings-empty-search-text"></p>
+                  </div>
+                </div>
+                <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
+              </section>`;
+              document.getElementById('leaderboard').innerHTML = leaderBoard;
+              fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
+                .then(function (response) { return response.json(); })
+                .then(function (participants) {
+                  function getFlag(countryCode) {
+                    const country = countryCode.toLowerCase();
+                    if (country.length != 2 || country == 'ru')
+                      return `<svg width="32" height="24">
+                              <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
+                              </svg>`;
+                    return `<img src="images/flags/${country}.svg" width="32">`;
+                  }
+                  let ranking = 1;
+                  for (const participant of participants['participants']) {
+                    const dateArray = participant.date.split('T');
+                    const date = `<span style="font-size:smaller;display:inline-block">` +
+                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
+                    let tableContent = document.createElement('template');
+                    const performanceLine = (metric == 'ranking') ? `` :
+                      `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
+                    const link = participant.private ? `${participant.name}` :
+                      `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const button = (metric == 'ranking' && ranking == 1) ? `<span style="font-size:x-large">&#127942;</span>` :
+                      `<button class="button is-small is-primary" style="background-color: #007acc;"` +
+                      `id="${participant.id}-view">View</button>`;
+                    tableContent.innerHTML = `<tr>
+                    <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
+                    <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
+                     title="${participant.country}">${getFlag(participant.country)}</td>
+                    <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
+                    ${performanceLine}
+                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
-                ranking++;
-                document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                document.getElementById(performance[1] + '-view').addEventListener('click', viewEntryRun);
-              }
-              document.getElementById('competition-participants').innerHTML = performanceArray.length;
+                    ranking++;
+                    document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
+                    let viewButton = document.getElementById(participant.id + '-view');
+                    if (viewButton)
+                      viewButton.addEventListener('click', viewEntryRun);
+                  }
+                  document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                });
             });
         });
     }
