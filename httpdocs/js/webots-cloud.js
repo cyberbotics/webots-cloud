@@ -1,19 +1,22 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
   let serverPage = 1;
+  let competitionPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
+  let competitionSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
+  let competitionSearch = '';
   let delaySearch = false;
 
   Project.run('webots.cloud', footer(), [
@@ -31,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       url: '/simulation',
+      setup: homePage
+    },
+    {
+      url: '/competition',
       setup: homePage
     },
     {
@@ -76,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
       simulationPage = page;
     else if (activeTab === 'server')
       serverPage = page;
+    else if (activeTab === 'competition')
+      competitionPage = page;
   }
 
   function getPage(activeTab) {
@@ -87,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return simulationPage;
     if (activeTab === 'server')
       return serverPage;
+    if (activeTab === 'competition')
+      return competitionPage;
   }
 
   function setSorts(activeTab, sort) {
@@ -96,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
+    else if (activeTab === 'competition')
+      competitionSort = sort;
   }
 
   function getSort(activeTab) {
@@ -105,6 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
+    if (activeTab === 'competition')
+      return competitionSort;
   }
 
   function setSearches(activeTab, search) {
@@ -114,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'competition')
+      competitionSearch = search;
     else if (activeTab === 'delay')
       delaySearch = search;
   }
@@ -125,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'competition')
+      return competitionSearch;
     if (activeTab === 'delay')
       return delaySearch;
   }
@@ -134,12 +153,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
-    let page = new URL(document.location.href).searchParams.get('p') ?
-      parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
-    let search = new URL(document.location.href).searchParams.get('search') ?
-      (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
-    let sort = new URL(document.location.href).searchParams.get('sort') ?
-      (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
+    let page = new URL(document.location.href).searchParams.get('p')
+      ? parseInt(new URL(document.location.href).searchParams.get('p')) : 1;
+    let search = new URL(document.location.href).searchParams.get('search')
+      ? (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
+    let sort = new URL(document.location.href).searchParams.get('sort')
+      ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
 
     setPages(activeTab, page);
     setSorts(activeTab, sort);
@@ -151,18 +170,21 @@ document.addEventListener('DOMContentLoaded', function() {
     initSearch(search);
     updateSearchIcon();
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-project').addEventListener('click', function(event) { addSimulation(); });
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function (event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function (event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function (event) { addSimulation('D'); });
+    project.content.querySelector('#add-a-new-competition').addEventListener('click', function (event) { addSimulation('C'); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
-    listSimulations(simulationPage, getSort('simulation'), getSearch('simulation'));
+    listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
+    listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
     listServers(serverPage);
 
-    if (project.email && project.email.endsWith('@cyberbotics.com'))
+    if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
+    }
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
@@ -270,32 +292,29 @@ document.addEventListener('DOMContentLoaded', function() {
     function simulationRow(data) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
-      const dotIndex = data.url.lastIndexOf('/') + 1;
-      const thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
-        'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      let thumbnailUrl;
+      if (data.type === 'demo') {
+        const dotIndex = data.url.lastIndexOf('/') + 1;
+        thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
+          'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      } else if (data.type === 'competition') {
+        const [, , , username, repo, , branch] = data.url.split('/');
+        thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
+      }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
-      let icon;
-      if (data.type === 'demo')
-        icon = 'chalkboard-teacher';
-      else if (data.type === 'benchmark')
-        icon = 'award';
-      else if (data.type === 'competition')
-        icon = 'trophy';
-      else
-        icon = 'question';
-      const type = `<i class="fas fa-${icon} fa-lg" title="${data.type}"></i>`;
       const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
       row += `<td class="title-cell">
-                <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>
+                <a class="table-title has-text-dark"` +
+        ` href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
                 <div class="thumbnail">
                   <div class="thumbnail-container">
                     <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -303,13 +322,26 @@ document.addEventListener('DOMContentLoaded', function() {
                   </div>
                 </div>
               </td>`;
-      row += `<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>` +
-        `</td><td class="has-text-centered"><a class="has-text-dark" href="${repository}/stargazers" target="_blank"
-          title="GitHub stars"> ${data.stars}</a></td>` +
-        `<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>` +
-        `<td class="has-text-centered">${type}</td>` +
-        `<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>` +
-        `${deleteProject}`;
+      row += `<td>
+                <a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">
+                  ${words[3]}
+                </a>
+              </td>
+              </td>
+              <td class="has-text-centered">
+                <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">
+                  ${data.stars}
+                </a>
+              </td>
+              <td>
+                <a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">
+                  ${data.version}
+                </a>
+              </td>
+              <td class="has-text-right is-size-7" title="Last synchronization with GitHub">
+                ${updated}
+              </td>
+              ${deleteProject}`;
       return row;
     }
 
@@ -358,6 +390,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
+            </li>
+            <li data-tab="competition" ${(activeTab === 'competition') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Competition</a>
             </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
@@ -506,9 +541,6 @@ document.addEventListener('DOMContentLoaded', function() {
                       style="width: 85px;">
                       Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
-                    <th class="column-title" title="Type of simulation" style="text-align: center;">
-                      Type
-                    </th>
                     <th class="is-clickable column-title" id="simulation-sort-updated" title="Last update time"
                       style="text-align: right;">
                       Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -527,7 +559,64 @@ document.addEventListener('DOMContentLoaded', function() {
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
             <div class="buttons">
-              <button class="button" id="add-a-new-project">Add a new simulation</button>
+              <button class="button" id="add-a-new-simulation">Add a new simulation</button>
+            </div>
+          </section>
+          <section class="section${(activeTab === 'competition') ? ' is-active' : ''}" data-content="competition">
+            <div class="table-container">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="competition-search-input" type="text"
+                    placeholder="Search for competitions...">
+                  <span class="icon is-small is-right is-clickable" id="competition-search-click">
+                    <i class="fas fa-search" id="competition-search-icon"></i>
+                  </span>
+                </div>
+              </div>
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                    <th class="is-clickable column-title" id="competition-sort-viewed" title="Popularity"
+                      style="text-align:center; width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="competition-sort-title" title="Title of the competition"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="competition-sort-title" title="Branch or Tag of the competition">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="competition-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="competition-sort-version" title="Webots release of the competition"
+                      style="width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="competition-sort-updated" title="Last update time"
+                      style="text-align: right;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="empty-search" id="competition-empty-search" style="display: none;">
+                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                </i>
+                <p id="competition-empty-search-text"></p>
+              </div>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="buttons">
+              <button class="button" id="add-a-new-competition">Add a new competition</button>
+              <button class="button" id="what-is-a-competition">What is a competition?</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -555,7 +644,8 @@ document.addEventListener('DOMContentLoaded', function() {
           </section>
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
-      project.setup(title, [], template.content);
+      project.setup(title, template.content);
+      document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
     }
 
     function initSort(sortBy) {
@@ -569,7 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
-        title.addEventListener('click', function(e) {
+        title.addEventListener('click', function (e) {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
@@ -600,8 +690,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation']) {
-        document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
+      for (let type of ['scene', 'animation', 'simulation', 'competition']) {
+        document.getElementById(type + '-search-input').addEventListener('keyup', function (event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
             setTimeout(() => {
@@ -613,7 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, '300');
           }
         });
-        document.getElementById(type + '-search-click').addEventListener('click', function(event) {
+        document.getElementById(type + '-search-click').addEventListener('click', function (event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
             document.getElementById(type + '-search-input').value = '';
             setSearches(type, document.getElementById(type + '-search-input').value);
@@ -632,6 +722,7 @@ document.addEventListener('DOMContentLoaded', function() {
       TABS.forEach((tab) => {
         tab.addEventListener('click', (e) => {
           let selected = tab.getAttribute('data-tab');
+          document.querySelector('a.navbar-item').href = `/${selected}`;
           TABS.forEach((t) => {
             if (t && t.classList.contains(ACTIVE_CLASS))
               t.classList.remove(ACTIVE_CLASS);
@@ -679,7 +770,9 @@ document.addEventListener('DOMContentLoaded', function() {
       else if (type === 'animation')
         listAnimations('A', animationPage, getSort(type), getSearch(type));
       else if (type === 'simulation')
-        listSimulations(simulationPage, getSort(type), getSearch(type));
+        listSimulations('D', simulationPage, getSort(type), getSearch(type));
+      else if (type === 'competition')
+        listSimulations('C', competitionPage, getSort(type), getSearch(type));
     }
 
     function updateSearchIcon(type) {
@@ -696,19 +789,21 @@ document.addEventListener('DOMContentLoaded', function() {
         updateSearchIcon('scene');
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
+        updateSearchIcon('competition');
       }
     }
 
     function synchronizeSimulation(event) {
-      const searchString = getSearch('simulation');
+      const typeName = document.location.pathname.substring(1);  // either 'simulation' or 'competition'
+      const searchString = getSearch(typeName);
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
-        .then(function(response) {
+      fetch('ajax/project/create.php', { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -720,15 +815,15 @@ document.addEventListener('DOMContentLoaded', function() {
                   cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
                 </div>`;
             }
-            let dialog = ModalDialog.run('Project sync error', errorMsg);
+            let dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
             dialog.error('Project has been deleted.');
-            dialog.querySelector('form').addEventListener('submit', function(e) {
+            dialog.querySelector('form').addEventListener('submit', function (e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
-            project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+            project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             let tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
@@ -736,10 +831,10 @@ document.addEventListener('DOMContentLoaded', function() {
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
             if (parent.querySelector('#delete-' + id) !== null)
               parent.querySelector('#delete-' + id).addEventListener('click',
-                function(event) { deleteSimulation(event, project); });
+                function (event) { deleteSimulation(event, project); });
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
+            updatePagination(typeName, page, total);
           }
         });
     }
@@ -748,11 +843,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(12);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/server/update.php', {method: 'post', body: JSON.stringify({url: url, id: id})})
-        .then(function(response) {
+      fetch('ajax/server/update.php', { method: 'post', body: JSON.stringify({ url: url, id: id }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -831,28 +926,28 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${typeName}-file`);
       input.focus();
-      modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('button.cancel').addEventListener('click', function () { cancelled = true; });
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
         body.append('user', project.id);
         body.append('password', project.password);
-        fetch('/ajax/animation/create.php', {method: 'post', body: body})
-          .then(function(response) {
+        fetch('/ajax/animation/create.php', { method: 'post', body: body })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
               const id = data.id;
               const total = data.total;
-              fetch('/ajax/animation/create.php', {method: 'post', body: JSON.stringify({uploading: 0, uploadId: id})})
-                .then(function(response) {
+              fetch('/ajax/animation/create.php', { method: 'post', body: JSON.stringify({ uploading: 0, uploadId: id }) })
+                .then(function (response) {
                   return response.json();
                 })
-                .then(function(data) {
+                .then(function (data) {
                   if (data.status !== 'uploaded')
                     modal.error(data.error);
                   else {
@@ -878,29 +973,34 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    function addSimulation() {
+    function addSimulation(type) {
+      let demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
+      let competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
       let content = {};
       content.innerHTML =
         `<div class="field">
+          <div style="padding-bottom: 10px;">Please enter the full URL link to the world file of your project's repository:
+          </div>
           <label class="label">Webots world file</label>
           <div class="control has-icons-left">
-            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt" value="https://github.com/">
+            <input id="world-file" class="input" type="url" required placeholder="https://github.com/my_name/my_project/blob/tag/worlds/file.wbt">
             <span class="icon is-small is-left">
               <i class="fab fa-github"></i>
             </span>
           </div>
           <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
-            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt">
-              https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt
+            <a target="_blank" href="${(type === 'D') ? demoExample : competitionExample}">
+              ${(type === 'D') ? demoExample : competitionExample}
             </a>
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let modal = ModalDialog.run('Add a project', content.innerHTML, 'Cancel', 'Add');
+      let typeName = (type === 'D') ? 'simulation' : 'competition';
+      let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
       let input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function(event) {
+      modal.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         const worldFile = modal.querySelector('#world-file').value.trim();
@@ -915,10 +1015,10 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         };
         fetch('/ajax/project/create.php', content)
-          .then(function(response) {
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
@@ -935,8 +1035,8 @@ document.addEventListener('DOMContentLoaded', function() {
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-              updatePagination('simulation', page, total);
-              project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
+              updatePagination(typeName, page, total);
+              project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
@@ -946,12 +1046,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/animation/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString})})
-        .then(function(response) {
+      fetch('/ajax/animation/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
+      })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
@@ -974,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
+                node.addEventListener('click', function (event) { deleteAnimation(event, type, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -983,27 +1085,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function listSimulations(page, sortBy, searchString) {
+    function listSimulations(type, page, sortBy, searchString) {
+      const typeName = (() => {
+        if (type === 'D')
+          return 'simulation';
+        else if (type === 'C')
+          return 'competition';
+      })();
+      const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let offset = (page - 1) * pageLimit;
-      fetch('/ajax/project/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
-        .then(function(response) {
+      fetch('/ajax/project/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
+      })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
-            ModalDialog.run('Project listing error', data.error);
+            ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
-              document.getElementById('simulation-empty-search-text').innerHTML = message;
-              document.getElementById('simulation-empty-search').style.display = 'flex';
+              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
+              document.getElementById(typeName + '-empty-search').style.display = 'flex';
             } else
-              document.getElementById('simulation-empty-search').style.display = 'none';
+              document.getElementById(typeName + '-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            let table = project.content.querySelector('section[data-content="simulation"] > div > table');
+            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
             table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
@@ -1011,22 +1122,22 @@ document.addEventListener('DOMContentLoaded', function() {
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function(event) { deleteSimulation(event, project); });
+                  .addEventListener('click', function (event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            updatePagination('simulation', page, total);
-            document.getElementById('simulation-search-input').value = searchString;
+            updatePagination(typeName, page, total);
+            document.getElementById(typeName + '-search-input').value = searchString;
           }
         });
     }
 
     function listServers(page) {
       let offset = (page - 1) * pageLimit;
-      fetch('/ajax/server/list.php', {method: 'post', body: JSON.stringify({offset: offset, limit: pageLimit})})
-        .then(function(response) {
+      fetch('/ajax/server/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: pageLimit }) })
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           if (data.error)
             ModalDialog.run('Server listing error', data.error);
           else {
@@ -1050,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete ${capitalizedTypeName}`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
+      dialog.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
         const content = {
@@ -1063,10 +1174,10 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         };
         fetch('ajax/animation/delete.php', content)
-          .then(function(response) {
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalizedTypeName} deletion error`, data.error);
@@ -1088,15 +1199,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const id = event.target.id.substring(7);
       let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete simulation`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
+      dialog.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/project/delete.php', {method: 'post',
-          body: JSON.stringify({user: project.id, password: project.password, id: id})})
-          .then(function(response) {
+        fetch('ajax/project/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
+          .then(function (response) {
             return response.json();
           })
-          .then(function(data) {
+          .then(function (data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
@@ -1105,9 +1218,316 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       });
     }
+
+    function whatIsCompetitionPopUp() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          A competition is a simulation scenario which proposes a challenge.
+          A robot has to address a problem and its behavior is evaluated against a performance metric.
+          <br><br>
+          The performance metric may be either absolute or relative:
+          <br><br>
+          An absolute performance metric is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metric.
+          <br><br>
+          A relative performance metric is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metric.
+          <br><br>
+          To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
+        </div>`;
+      ModalDialog.run(`What is a competition?`, content.innerHTML);
+    }
   }
 
   function runPage(project) {
-    project.runWebotsView();
+    // discriminate between demos and competition using search parameters
+    let searchParams = new URLSearchParams(window.location.search);
+    let type = searchParams.get('type');
+    if (type === 'demo')
+      project.runWebotsView();
+    else if (type === 'competition') {
+      let url = searchParams.get('url');
+      project.competitionUrl = url;
+      let context = searchParams.get('context');
+      switch (context) {
+        case 'try':
+          createCompetitionPageButton();
+          project.runWebotsView();
+          break;
+        case 'view':
+          viewEntryRun(searchParams.get('id'));
+          break;
+        default:
+          mainContainer(project);
+          break;
+      }
+    }
+
+    function mainContainer(project) {
+      let simulationUrl = new URL(window.location);
+      simulationUrl.searchParams.append('context', 'try');
+      const information =
+        `<table style="font-size: small">
+        <tbody>
+          <tr>
+            <td>Difficulty level:</td>
+            <td style="font-weight: bold;" id="competition-difficulty"></td>
+          </tr>
+          <tr>
+            <td>Robot:</td>
+            <td style="font-weight: bold;" id="competition-robot"></td>
+          </tr>
+          <tr>
+            <td>Programming language:</td>
+            <td style="font-weight: bold;" id="competition-language"></td>
+          </tr>
+          <tr>
+            <td>Minimum commitment:</td>
+            <td style="font-weight: bold;" id="competition-commitment"></td>
+          </tr>
+          <tr>
+            <td>Number of participants:</td>
+            <td style="font-weight: bold;" id="competition-participants"></td>
+          </tr>
+        </tbody>
+        </table>`;
+
+      const contentHtml =
+        `<div id="tabs" class="tabs is-centered is-small-medium">
+      <ul>
+        <li data-tab="scene" class="data-tab">
+          <a href="/scene">Scene</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a href="/animation">Animation</a>
+        </li>
+        <li data-tab="simulation" class="data-tab">
+          <a href="/simulation">Simulation</a>
+        </li>
+        <li data-tab="competition" class="data-tab is-active">
+          <a href="/competition">Competition</a>
+        </li>
+        <li data-tab="server" class="data-tab">
+          <a href="/server">Server</a>
+        </li>
+      </ul>
+      </div>
+      <div class="container is-widescreen">
+        <section class="section is-active">
+          <div class="tile is-ancestor">
+            <p class="title is-size-1 is-regular" id="competition-title"></p>
+          </div>
+          <div class="tile is-ancestor">
+            <div class="tile is-parent is-4">
+              <article class="tile is-child box">
+                <p class="title">Information</p>
+                <p id="competition-information-description" style="margin-bottom: 25px;"></p>
+                <div class="content">
+                  ${information}
+                </div>
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
+                  Try Competition
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                  Register
+                </a>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child box">
+                <p class="title">Preview</p>
+                <div class="content">
+                  <div id="competition-preview-container"></div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="tile is-ancestor">
+            <div class="tile is-parent">
+              <div class="tile is-child box">
+                <p class="title">Leaderboard</p>
+                <div class="content" id="leaderboard">
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>`;
+      const template = document.createElement('template');
+      template.innerHTML = contentHtml;
+      // document.querySelector('section.is-active').innerHTML = contentHtml;
+      project.setup('competition', template.content);
+      document.getElementById('submit-entry').onclick = registerPopUp;
+      getCompetition(project.competitionUrl);
+    }
+    function getCompetition(url) {
+      let metric;
+      let higherIsBetter;
+      const [, , , username, repo, , branch] = url.split('/');
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+          const lastSha = data[0].sha;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
+          fetch(rawUrl + '/README.md', { cache: 'no-cache' })
+            .then(function (response) { return response.text(); })
+            .then(function (data) {
+              var readme = new DOMParser().parseFromString(data, 'text/html');
+
+              const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
+              const description = readme.getElementById('description').innerText.trim();
+              const information = readme.getElementById('information').innerText.trim().split('\n');
+              const difficulty = information[0].split(':')[1].substring(1);
+              const robot = information[1].split(':')[1].substring(1);
+              const language = information[2].split(':')[1].substring(1);
+              const commitment = information[3].split(':')[1].substring(1);
+
+              document.getElementById('competition-title').innerHTML = title;
+              document.getElementById('competition-information-description').innerHTML = description;
+              document.getElementById('competition-difficulty').innerHTML = difficulty;
+              document.getElementById('competition-robot').innerHTML = robot;
+              document.getElementById('competition-language').innerHTML = language;
+              document.getElementById('competition-commitment').innerHTML = commitment;
+
+              // preview window
+              const reference = rawUrl + '/preview/';
+              if (project && !project.competitionUrl)
+                project.competitionUrl = url;
+              project.runWebotsView(reference);
+            });
+          fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
+            .then(function (response) { return response.text(); })
+            .then(function (data) {
+              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              higherIsBetter = data.match(/higher-is-better: ([a-zA-Z-]+)/)[1].toLowerCase() === 'true';
+              const performanceColumn = (metric == 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
+              const leaderBoard =
+                `<section class="section is-active" data-content="rankings" style="padding: 0">
+                <div class="table-container rankings-table mx-auto">
+                  <div class="search-bar" style="max-width: 280px; padding-bottom: 20px; display: none;">
+                    <div class="control has-icons-right">
+                      <input class="input is-small" id="rankings-search-input" type="text" placeholder="Search for users...">
+                      <span class="icon is-small is-right is-clickable" id="rankings-search-click">
+                        <i class="fas fa-search" id="rankings-search-icon"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <table class="table is-striped is-hoverable">
+                    <thead>
+                      <tr>
+                        <th class="has-text-centered">Ranking</th>
+                        <th class="has-text-centered">Country</th>
+                        <th>Name</th>
+                        ${performanceColumn}
+                        <th class="has-text-centered">Updated</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="rankings-table">
+                    </tbody>
+                  </table>
+                  <div class="empty-search" id="rankings-empty-search" style="display: none;">
+                    <i class="fas fa-xl fa-search" id="no-project-icon"
+                      style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;"></i>
+                    <p id="rankings-empty-search-text"></p>
+                  </div>
+                </div>
+                <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
+              </section>`;
+              document.getElementById('leaderboard').innerHTML = leaderBoard;
+              fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
+                .then(function (response) { return response.json(); })
+                .then(function (participants) {
+                  function getFlag(countryCode) {
+                    const country = countryCode.toLowerCase();
+                    if (country.length != 2 || country == 'ru')
+                      return `<svg width="32" height="24">
+                              <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
+                              </svg>`;
+                    return `<img src="images/flags/${country}.svg" width="32">`;
+                  }
+                  let ranking = 1;
+                  for (const participant of participants['participants']) {
+                    const dateArray = participant.date.split('T');
+                    const date = `<span style="font-size:smaller;display:inline-block">` +
+                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
+                    let tableContent = document.createElement('template');
+                    const performanceLine = (metric == 'ranking') ? `` :
+                      `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
+                    const link = participant.private ? `${participant.name}` :
+                      `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const button = (metric == 'ranking' && ranking == 1) ? `<span style="font-size:x-large">&#127942;</span>` :
+                      `<button class="button is-small is-primary" style="background-color: #007acc;"` +
+                      `id="${participant.id}-view">View</button>`;
+                    tableContent.innerHTML = `<tr>
+                    <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
+                    <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
+                     title="${participant.country}">${getFlag(participant.country)}</td>
+                    <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
+                    ${performanceLine}
+                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
+                  </tr>`;
+                    ranking++;
+                    document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
+                    let viewButton = document.getElementById(participant.id + '-view');
+                    if (viewButton)
+                      viewButton.addEventListener('click', viewEntryRun);
+                  }
+                  document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                });
+            });
+        });
+    }
+    function viewEntryRun(eventOrId) {
+      createCompetitionPageButton();
+      const url = project.competitionUrl;
+      const [, , , username, repo, , branch] = url.split('/');
+      let id;
+      if (typeof eventOrId === 'string')
+        id = eventOrId;
+      else if (typeof eventOrId === 'object') {
+        id = eventOrId.target.id.split('-')[0];
+        var newURL = new URL(window.location);
+        newURL.searchParams.append('context', 'view');
+        newURL.searchParams.append('id', id);
+        window.history.pushState({ path: newURL.href }, '', newURL.href);
+      }
+      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+          const lastSha = data[0].sha;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
+          const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
+          project.runWebotsView(entryAnimation);
+        });
+    }
+    function createCompetitionPageButton() {
+      const backButtonTemplate = document.createElement('template');
+      backButtonTemplate.innerHTML =
+        `<div class="navbar-item">
+        <a class="button is-small is-light is-outlined" id="competition-page-button">
+          <span>Competition Page</span>
+        </a>
+      </div>`;
+      document.querySelector('.navbar-start').prepend(backButtonTemplate.content);
+      var pageURL = new URL(window.location);
+      pageURL.searchParams.delete('context');
+      pageURL.searchParams.delete('id');
+      document.getElementById('competition-page-button').onclick = () => { location.href = pageURL.href; };
+    }
+    function registerPopUp() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          <p style="padding-bottom:15px;">
+           To register, you will need to create your own robot controller on GitHub.
+           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a>.
+          </p>
+        </div>`;
+      ModalDialog.run(`Register to the competition`, content.innerHTML);
+    }
   }
 });
