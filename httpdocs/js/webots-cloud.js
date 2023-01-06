@@ -1458,13 +1458,17 @@ document.addEventListener('DOMContentLoaded', function () {
                       `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
                     const link = participant.private ? `${participant.name}` :
                       `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const button = (metric == 'ranking' && ranking == 1) ? `<span style="font-size:x-large">&#127942;</span>` :
+                    const button = (metric == 'ranking' && ranking == 1) ?
+                      `<span style="font-size:x-large">&#127942;</span>` :
                       `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view">View</button>`;
+                    const flag = participant.repository.startsWith(`${username}/`) ?
+                      '<span style="font-size:small">demo</span>' :
+                      getFlag(participant.country);
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
-                     title="${participant.country}">${getFlag(participant.country)}</td>
+                     title="${participant.country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
@@ -1524,7 +1528,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `<div class="field">
           <p style="padding-bottom:15px;">
            To register, you will need to create your own robot controller on GitHub.
-           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}">repository of the competition organizer</a>.
+           Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}#readme">repository of the competition organizer</a>.
           </p>
         </div>`;
       ModalDialog.run(`Register to the competition`, content.innerHTML);
