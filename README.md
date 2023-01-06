@@ -51,9 +51,8 @@ Finally, you should add a new demo from the https://webots.cloud/demo page and i
 
 ### Competition
 
-A competition is a simulation scenario which proposes a challenge.
-A robot has to address a problem and its behavior is evaluated against a performance metrics.
-This performance metrics is a scalar value which allows to compare the performance of different participants on the challenge.
+A competition is a simulation scenario which proposes a challenge involving one or two participants.
+A robot has to address a problem and its behavior is evaluated against a performance metric.
 
 # Technical Details
 
