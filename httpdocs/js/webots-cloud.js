@@ -1470,8 +1470,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function runPage(project) {
     // discriminate between demos and competition using search parameters
-    let searchParams = new URLSearchParams(window.location.search);
-    let type = searchParams.get('type');
+    const searchParams = new URLSearchParams(window.location.search);
+    const type = searchParams.get('type');
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
@@ -1490,10 +1490,14 @@ document.addEventListener('DOMContentLoaded', function () {
           mainContainer(project);
           break;
       }
-    } else // proto
-      protoContainer(project);
+    } else { // proto
+      console.log(searchParams)
+      const urlParts = searchParams.get('url').split('/');
+      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+      protoContainer(project, protoName);
+    }
 
-    function protoContainer(proto) {
+    function protoContainer(proto, protoName) {
       console.log(proto)
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -1519,6 +1523,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </ul>
       </div>
       <div class="container is-widescreen">
+        <h1 class='proto-title'>${protoName}</h1>
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
