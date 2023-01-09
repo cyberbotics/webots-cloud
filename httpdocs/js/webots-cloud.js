@@ -1494,6 +1494,7 @@ document.addEventListener('DOMContentLoaded', function () {
       protoContainer(project);
 
     function protoContainer(proto) {
+      console.log(proto)
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
@@ -1509,46 +1510,15 @@ document.addEventListener('DOMContentLoaded', function () {
         <li data-tab="competition" class="data-tab is-active">
           <a href="/competition">Competition</a>
         </li>
+        <li data-tab="proto" class="data-tab">
+          <a href="/proto">Proto</a>
+        </li>
         <li data-tab="server" class="data-tab">
           <a href="/server">Server</a>
         </li>
       </ul>
       </div>
       <div class="container is-widescreen">
-        <section class="section is-active">
-          <div class="tile is-ancestor">
-            <p class="title is-size-1 is-regular" id="competition-title"></p>
-          </div>
-          <div class="tile is-ancestor">
-            <div class="tile is-parent is-4">
-              <article class="tile is-child box">
-                <p class="title">Information</p>
-                <p id="competition-information-description" style="margin-bottom: 25px;"></p>
-                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
-                  Register
-                </a>
-              </article>
-            </div>
-            <div class="tile is-parent">
-              <article class="tile is-child box">
-                <p class="title">Preview</p>
-                <div class="content">
-                  <div id="competition-preview-container"></div>
-                </div>
-              </article>
-            </div>
-          </div>
-
-          <div class="tile is-ancestor">
-            <div class="tile is-parent">
-              <div class="tile is-child box">
-                <p class="title">Leaderboard</p>
-                <div class="content" id="leaderboard">
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
