@@ -1511,10 +1511,10 @@ document.addEventListener('DOMContentLoaded', function () {
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
         </li>
-        <li data-tab="competition" class="data-tab is-active">
+        <li data-tab="competition" class="data-tab">
           <a href="/competition">Competition</a>
         </li>
-        <li data-tab="proto" class="data-tab">
+        <li data-tab="proto" class="data-tab is-active">
           <a href="/proto">Proto</a>
         </li>
         <li data-tab="server" class="data-tab">
@@ -1523,7 +1523,9 @@ document.addEventListener('DOMContentLoaded', function () {
       </ul>
       </div>
       <div class="container is-widescreen">
-        <h1 class='proto-title'>${protoName}</h1>
+        <section class="section is-active">
+          <h1 class='class="title is-size-1 is-regular"'>${protoName}</h1>
+        </section>
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
