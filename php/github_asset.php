@@ -76,7 +76,6 @@ function github_check_yaml($check_url, $proto) {
   # yaml file variables
   $publish = 'true (default)';
   $type = '';
-  $benchmark = '';
   $competition = '';
 
   # delete empty lines
@@ -88,8 +87,6 @@ function github_check_yaml($check_url, $proto) {
       $publish = trim(substr($line, 8), " ");
     elseif (substr($line, 0, 5) === 'type:')
       $type = trim(substr($line, 5), " ");
-    elseif (substr($line, 0, 10) === 'benchmark:')
-      $benchmark = trim(substr($line, 10), " ");
     elseif (substr($line, 0, 12) === 'competition:')
       $competition = trim(substr($line, 12), " ");
     $line = strtok("\r\n");
@@ -97,16 +94,16 @@ function github_check_yaml($check_url, $proto) {
 
   # check if configuration makes sense
   if ($publish === 'false')
-    return yaml_error("project publish failed. Make sure to set 'publish: true' in webots.yaml");
-  elseif ($type === 'competitor') {
-    if ($benchmark !== '' && $competition !== '')
-      return yaml_error("competitor type only requires one scenario (benchmark or competition)");
-    elseif ($benchmark === '' && $competition === '')
-      return yaml_error("competitor type requires a scenario (benchmark or competition)");
+    return "Project removed because 'publish' is set to false in webots.yaml. To allow the project to be published, set it to true.";
+  elseif ($type === 'participant') {
+    if ($competition !== '')
+      return yaml_error("participant type only requires one scenario");
+    elseif ($competition === '')
+      return yaml_error("participant type requires a scenario");
   } elseif ($type === '' && $proto === false)
     return yaml_error("type not defined.");
 
   # return array with YAML file info
-  return array($type, $benchmark, $competition);
+  return array($type, $competition);
 }
 ?>
