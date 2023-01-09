@@ -1469,6 +1469,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function runPage(project) {
+    console.log("runPage")
     // discriminate between demos and competition using search parameters
     let searchParams = new URLSearchParams(window.location.search);
     let type = searchParams.get('type');
