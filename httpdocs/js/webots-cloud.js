@@ -1472,7 +1472,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // discriminate between demos and competition using search parameters
     let searchParams = new URLSearchParams(window.location.search);
     let type = searchParams.get('type');
-    if (type === 'demo')
+    if (type === 'demo' || typeof type === 'undefined') // if type is undefined then it is a proto.
       project.runWebotsView();
     else if (type === 'competition') {
       let url = searchParams.get('url');

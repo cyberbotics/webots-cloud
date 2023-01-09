@@ -116,7 +116,6 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    console.log("runWebotsView")
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
