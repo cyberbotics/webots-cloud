@@ -116,6 +116,7 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
+    console.log("runWebotsView")
     let that = this;
     let reference;
     const url = this.findGetParameter('url');
@@ -215,7 +216,6 @@ export default class Project extends User {
         Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
     } else if (url.endsWith('.proto')) {
-      console.log("proto")
       this.setupWebotsView('proto');
       let urlArray = url.substring(19).split('/');
       urlArray.splice(2, 1);
