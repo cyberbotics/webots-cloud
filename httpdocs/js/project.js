@@ -117,16 +117,14 @@ export default class Project extends User {
   }
   runWebotsView(data, version) {
     let that = this;
-    let reference;
     const url = this.findGetParameter('url');
-    const mode = this.findGetParameter('mode');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
         version = data ? data.version : this.findGetParameter('version');
     }
-    version = 'benchmark';
+
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
@@ -185,7 +183,7 @@ export default class Project extends User {
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
-        if (data.includes('wb_animation_'))  // user performance view
+        if (data.includes('wb_animation_')) // user performance view
           this.setupWebotsView('run');
         else
           this.setupPreviewWebotsView();
