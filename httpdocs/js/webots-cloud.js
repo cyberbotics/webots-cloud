@@ -205,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
-    }
 
       project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
@@ -881,7 +880,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
         updateSearchIcon('competition');
-        updaeSearchIcon('proto');
+        updateSearchIcon('proto');
       }
     }
 
@@ -1447,24 +1446,25 @@ document.addEventListener('DOMContentLoaded', function () {
           });
       });
     }
-      function whatIsCompetitionPopUp() {
-        let content = {};
-        content.innerHTML =
-          `<div class="field">
-            A competition is a simulation scenario which proposes a challenge.
-            A robot has to address a problem and its behavior is evaluated against a performance metric.
-            <br><br>
-            The performance metric may be either absolute or relative:
-            <br><br>
-            An absolute performance metric is a scalar value measuring the performance of a robot on a given task.
-            For example, the time spent running a 100 meters race is an absolute performance metric.
-            <br><br>
-            A relative performance metric is a ranking of the performance of a robots against others.
-            For example, the tennis ATP ranking is a relative performance metric.
-            <br><br>
-            To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
-          </div>`;
-        ModalDialog.run(`What is a competition?`, content.innerHTML);
+
+    function whatIsCompetitionPopUp() {
+      let content = {};
+      content.innerHTML =
+        `<div class="field">
+          A competition is a simulation scenario which proposes a challenge.
+          A robot has to address a problem and its behavior is evaluated against a performance metric.
+          <br><br>
+          The performance metric may be either absolute or relative:
+          <br><br>
+          An absolute performance metric is a scalar value measuring the performance of a robot on a given task.
+          For example, the time spent running a 100 meters race is an absolute performance metric.
+          <br><br>
+          A relative performance metric is a ranking of the performance of a robots against others.
+          For example, the tennis ATP ranking is a relative performance metric.
+          <br><br>
+          To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
+        </div>`;
+      ModalDialog.run(`What is a competition?`, content.innerHTML);
     }
   }
 
