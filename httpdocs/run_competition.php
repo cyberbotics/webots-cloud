@@ -82,12 +82,6 @@ function check_repo_token($github_token, $participant_repo) {
   return false;
 }
 
-$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-if ($mysqli->connect_errno)
-  die("Can't connect to MySQL database: $mysqli->connect_error");
-$mysqli->set_charset('utf8');
-$mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
-
 if (!isset($_POST['organizer']))
   die("Error: missing organizer parameter.");
 
@@ -96,6 +90,18 @@ if (!isset($_POST['participant']))
 
 $organizer = $_POST['organizer'];
 $participant = $_POST['participant'];
+
+if ($organizer == $participant)
+  die("Called by the organizer, ignored.");
+
+$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+if ($mysqli->connect_errno)
+  die("Can't connect to MySQL database: $mysqli->connect_error");
+$mysqli->set_charset('utf8');
+$mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
+
+$organizer = $mysqli->real_escape_string($organizer);
+$participant = $mysqli->real_escape_string($participant);
 
 $query = "SELECT id FROM project WHERE `url` LIKE 'https://github.com/$organizer/%'";
 $result = $mysqli->query($query) or die($mysqli->error);
