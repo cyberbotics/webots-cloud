@@ -74,12 +74,7 @@ function simulation_check_yaml($check_url) {
   # check if configuration makes sense
   if ($publish === 'false')
     return "Project removed because 'publish' is set to false in webots.yaml. To allow the project to be published, set it to true.";
-  elseif ($type === 'participant') {
-    if ($competition !== '')
-      return yaml_error("participant type only requires one scenario");
-    elseif ($competition === '')
-      return yaml_error("participant type requires a scenario");
-  } elseif ($type === '')
+  elseif ($type === '')
     return yaml_error("type not defined.");
 
   # return array with YAML file info
