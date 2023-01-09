@@ -129,9 +129,6 @@ export default class Project extends User {
     version = 'benchmark';
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
-    if (!data)
-      that._updateSimulationViewCount(url);
-
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
 
@@ -181,7 +178,8 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
-    if (!data) this._updateSimulationViewCount(url);
+    if (!data)
+      this._updateSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
