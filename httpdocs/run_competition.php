@@ -100,6 +100,9 @@ if ($mysqli->connect_errno)
 $mysqli->set_charset('utf8');
 $mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
 
+$organizer = $mysqli->real_escape_string($organizer);
+$participant = $mysqli->real_escape_string($participant);
+
 $query = "SELECT id FROM project WHERE `url` LIKE 'https://github.com/$organizer/%'";
 $result = $mysqli->query($query) or die($mysqli->error);
 $project = $result->fetch_array(MYSQLI_ASSOC);
