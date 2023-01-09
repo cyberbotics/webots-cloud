@@ -92,7 +92,7 @@ $organizer = $_POST['organizer'];
 $participant = $_POST['participant'];
 
 if ($organizer == $participant)
-  die("Called by the organizer, ignored.")
+  die("Called by the organizer, ignored.");
 
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
