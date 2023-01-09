@@ -320,11 +320,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (data.type === 'demo' || proto) {
         const dotIndex = data.url.lastIndexOf('/') + 1;
         thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
-          'raw.githubusercontent.com').replace('/blob', '')
+          'raw.githubusercontent.com').replace('/blob', '');
         if (proto)
-          thumbnailUrl = thumbnail_not_available.replace('.proto', '.jpg');
+          thumbnailUrl = thumbnailUrl.replace('.proto', '.jpg');
         else
-          thumbnailUrl = thumbnail_not_available.replace('.wbt', '.jpg');
+          thumbnailUrl = thumbnailUrl.replace('.wbt', '.jpg');
       } else if (data.type === 'competition') {
         const [, , , username, repo, , branch] = data.url.split('/');
         thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
