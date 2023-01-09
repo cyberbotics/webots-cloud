@@ -1524,12 +1524,6 @@ document.addEventListener('DOMContentLoaded', function () {
               <article class="tile is-child box">
                 <p class="title">Information</p>
                 <p id="competition-information-description" style="margin-bottom: 25px;"></p>
-                <div class="content">
-                  ${information}
-                </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
-                  Try Competition
-                </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
                   Register
                 </a>
