@@ -126,7 +126,7 @@ export default class Project extends User {
       else
         version = data ? data.version : this.findGetParameter('version');
     }
-    version = 'benchmark';
+    version = 'proto';
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     if (!data)
