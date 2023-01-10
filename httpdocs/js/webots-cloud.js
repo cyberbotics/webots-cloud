@@ -1490,13 +1490,14 @@ document.addEventListener('DOMContentLoaded', function() {
           mainContainer(project);
           break;
       }
-    } else { // proto
-      const urlParts = searchParams.get('url').split('/');
-      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
-      protoContainer(project, protoName);
-    }
+    } else // proto
+      protoContainer(project, searchParams);
 
-    function protoContainer(proto, protoName) {
+    function protoContainer(proto, searchParams) {
+      const url = searchParams.get('url');
+      const urlParts = url.split('/');
+      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
@@ -1524,6 +1525,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <section class="section is-active">
         <h1 class='proto-title'>${protoName}</h1>
         <div id='proto-webots-container'></div>
+        <div class='proto-doc'></div>
         </section>
       </div>`;
       const template = document.createElement('template');
@@ -1531,6 +1533,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('proto', template.content);
       project.runWebotsView();
+      const prefix = url.substr(0, url.lastIndexOf('/'));
+      console.log(prefix)
+
+      loadMd(url);
+    }
+
+    function loadMd(url) {
+
     }
 
     function mainContainer(project) {
