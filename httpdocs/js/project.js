@@ -225,6 +225,7 @@ export default class Project extends User {
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
       const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
       this.setupProtoWebotsView();
+      console.log("setupProtoview")
       Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
       resolve();
     } else { // demo simulation
