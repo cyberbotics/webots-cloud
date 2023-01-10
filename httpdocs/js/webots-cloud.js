@@ -1525,7 +1525,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="container is-widescreen">
         <section class="section is-active">
         <h1 class='class="title is-size-1 is-regular"'>${protoName}</h1>
-        <div class='webots-container'></div>
+        <div class='proto-webots-container'></div>
         </section>
       </div>`;
       const template = document.createElement('template');
