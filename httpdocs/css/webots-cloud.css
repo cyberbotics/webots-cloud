@@ -433,6 +433,12 @@ nav.pagination > a[disabled] {
   \-ms-transition: opacity 0.2s ease-in-out 0.1s;
 }
 
+.proto-doc .anchor-header {
+  position: relative;
+  left: -20px;
+  padding: 9px 0px;
+}
+
 .proto-doc h3 {
     font-size: 26px;
 }
