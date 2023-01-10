@@ -1536,9 +1536,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const prefix = url.substr(0, url.lastIndexOf('/'));
       let mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
       if (mdUrl.includes('github.com')) {
-        mdUrl.replace('github.com', 'raw.githubusercontent.com');
-        mdUrl.replace('blob/', '');
-        console.log("REPLACE")
+        mdUrl = mdUrl.replace('github.com', 'raw.githubusercontent.com');
+        mdUrl = mdUrl.replace('blob/', '');
       }
       loadMd(mdUrl);
     }
