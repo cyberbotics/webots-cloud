@@ -1,5 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
+import {populateProtoViewDiv} from 'https://cyberbotics.ch/wwi/proto/viewer.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -1543,9 +1544,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
-      fetch(url).then(answer => {
-        console.log(answer)
-      })
+      fetch(url)
+        .then(response => response.text())
+        .then(content => populateProtoViewDiv(content))
+        .catch(error => {
+          console.error('Error: ' + error);
+          // TODO load from comments
+        });
       console.log(url)
     }
 
