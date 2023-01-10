@@ -1534,13 +1534,12 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup('proto', template.content);
       project.runWebotsView();
       const prefix = url.substr(0, url.lastIndexOf('/'));
-      console.log(prefix)
-
-      loadMd(url);
+      const mdUrl = prefix + '/docs/' + protoName + '.md';
+      loadMd(mdUrl);
     }
 
     function loadMd(url) {
-
+      console.log(url)
     }
 
     function mainContainer(project) {
