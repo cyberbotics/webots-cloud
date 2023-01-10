@@ -447,7 +447,7 @@ nav.pagination > a[disabled] {
     word-wrap: break-word;
 }
 
-.proto-doc ul, {
+.proto-doc ul {
     margin: 0.5em 1em;
     padding-left: 1em;
     list-style-type: circle;
