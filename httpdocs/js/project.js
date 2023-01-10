@@ -126,7 +126,6 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    console.log("runWebotsView")
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'proto.webots.cloud')
         version = 'proto';
@@ -226,7 +225,6 @@ export default class Project extends User {
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
       const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
       this.setupProtoWebotsView();
-      console.log("setupProtoview")
       Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
       resolve();
     } else { // demo simulation
