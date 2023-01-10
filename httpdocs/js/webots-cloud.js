@@ -1522,7 +1522,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div class="container is-widescreen">
         <section class="section is-active">
-        <h1 class='class="title is-size-1 is-regular"'>${protoName}</h1>
+        <h1 class='proto-title'>${protoName}</h1>
         <div id='proto-webots-container'></div>
         </section>
       </div>`;

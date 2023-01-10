@@ -336,6 +336,11 @@ nav.pagination > a[disabled] {
 
 /* Proto */
 
+.proto-title {
+  text-align: center;
+  padding-bottom: 50px;
+}
+
 #proto-webots-container {
   width: 100%;
   aspect-ratio: 16 / 9;
