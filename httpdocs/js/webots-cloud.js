@@ -1534,7 +1534,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup('proto', template.content);
       project.runWebotsView();
       const prefix = url.substr(0, url.lastIndexOf('/'));
-      const mdUrl = prefix + '/docs/' + protoName + '.md';
+      const mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
       loadMd(mdUrl);
     }
 
