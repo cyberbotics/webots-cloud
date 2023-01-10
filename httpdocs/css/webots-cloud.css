@@ -341,6 +341,7 @@ nav.pagination > a[disabled] {
   font-weight: 600;
   line-height: 1.125;
   font-size: 3rem;
+  padding-bottom: 40px;
 }
 
 #proto-webots-container {
