@@ -444,27 +444,38 @@ nav.pagination > a[disabled] {
 }
 
 .proto-doc h3 {
-    font-size: 26px;
+  font-size: 26px;
 }
 
 .proto-doc h1, .proto-doc h2, .proto-doc h3, .proto-doc h4, .proto-doc h5, .proto-doc h6 {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: normal;
-    color: #0e6f8c;
-    clear: both;
-    margin: 20px auto;
-    word-wrap: break-word;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  color: #0e6f8c;
+  clear: both;
+  margin: 20px auto;
+  word-wrap: break-word;
 }
 
 .proto-doc ul {
-    margin: 0.5em 1em;
-    padding-left: 1em;
-    list-style-type: disc;
+  margin: 0.5em 1em;
+  padding-left: 1em;
+  list-style-type: disc;
 }
 
 .proto-doc .illustrated-section {
   overflow: hidden;
   padding: 10px 0px;
   margin: 20px 10px;
+}
+
+.proto-doc .illustrated-section img {
+  max-width: 30%;
+  min-width: 120px;
+  float: left;
+  padding: 3px 10px 0px 0px;
+}
+
+.proto-doc .illustrated-section p {
+  margin: 0px;
 }
