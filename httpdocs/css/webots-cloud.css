@@ -458,3 +458,9 @@ nav.pagination > a[disabled] {
     padding-left: 1em;
     list-style-type: disc;
 }
+
+.proto-doc .illustrated-section {
+  overflow: hidden;
+  padding: 10px 0px;
+  margin: 20px 10px;
+}

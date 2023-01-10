@@ -1553,7 +1553,6 @@ document.addEventListener('DOMContentLoaded', function() {
           console.error('Error: ' + error);
           // TODO load from comments
         });
-      console.log(url)
     }
 
     function mainContainer(project) {
