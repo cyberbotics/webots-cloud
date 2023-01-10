@@ -1539,6 +1539,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
+      fetch(url).then(answer => {
+        console.log(answer)
+      })
       console.log(url)
     }
 
