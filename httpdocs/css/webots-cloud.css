@@ -423,7 +423,7 @@ nav.pagination > a[disabled] {
 
 .proto-doc .anchor-link-image {
   padding-left: 20px;
-  background: url("https://raw.githubusercontent.com/cyberbotics/released/docs/css/images/anchor.png") left center no-repeat;
+  background: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/images/anchor.png") left center no-repeat;
   background-size: 20px;
 }
 .proto-doc .anchor-link {
