@@ -1530,6 +1530,7 @@ document.addEventListener('DOMContentLoaded', function() {
       template.innerHTML = contentHtml;
       // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('proto', template.content);
+      project.runWebotsView();
     }
 
     function mainContainer(project) {
