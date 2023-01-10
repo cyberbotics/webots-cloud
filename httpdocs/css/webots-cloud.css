@@ -333,3 +333,10 @@ nav.pagination > a[disabled] {
   opacity: 1;
   color: #aaa;
 }
+
+/* Proto */
+
+#proto-webots-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
