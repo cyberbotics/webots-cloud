@@ -1534,7 +1534,11 @@ document.addEventListener('DOMContentLoaded', function() {
       project.setup('proto', template.content);
       project.runWebotsView();
       const prefix = url.substr(0, url.lastIndexOf('/'));
-      const mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
+      let mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
+      if (mdUrl.contains('github.com')) {
+        mdUrl.replace('github.com', 'raw.githubusercontent.com');
+        mdUrl.replace('blob/', '');
+      }
       loadMd(mdUrl);
     }
 
