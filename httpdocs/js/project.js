@@ -115,6 +115,16 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
+  setupProtoWebotsView() {
+    if (Project.webotsView) {
+      Project.webotsView.close();
+      document.getElementById('proto-webots-container').innerHTML = '';
+      document.getElementById('proto-webots-container').appendChild(Project.webotsView);
+    } else {
+      document.getElementById('proto-webots-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
+      Project.webotsView = document.querySelector('webots-view');
+    }
+  }
   runWebotsView(data, version) {
     let that = this;
     let reference;
@@ -220,6 +230,7 @@ export default class Project extends User {
       urlArray.splice(2, 1);
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
       const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
+      this.setupProtoWebotsView();
       Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
       resolve();
     } else { // demo simulation
