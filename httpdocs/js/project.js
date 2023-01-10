@@ -220,7 +220,7 @@ export default class Project extends User {
         Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
     } else if (url.endsWith('.proto')) {
-      this.setupWebotsView('proto');
+      // this.setupWebotsView('proto');
       let urlArray = url.substring(19).split('/');
       urlArray.splice(2, 1);
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
