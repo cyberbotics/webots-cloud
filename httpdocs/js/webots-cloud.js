@@ -1524,7 +1524,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
       <div class="container is-widescreen">
         <section class="section is-active">
-        <p class='class="title is-size-1 is-regular"'>${protoName}</p>
+        <h1 class='class="title is-size-1 is-regular"'>${protoName}</h1>
         </section>
       </div>`;
       const template = document.createElement('template');
