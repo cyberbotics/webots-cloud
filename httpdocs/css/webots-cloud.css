@@ -447,6 +447,10 @@ nav.pagination > a[disabled] {
   font-size: 26px;
 }
 
+.proto-doc h4 {
+    font-size: 18px;
+}
+
 .proto-doc h1, .proto-doc h2, .proto-doc h3, .proto-doc h4, .proto-doc h5, .proto-doc h6 {
   font-family: 'Roboto';
   font-style: normal;
@@ -478,4 +482,12 @@ nav.pagination > a[disabled] {
 
 .proto-doc .illustrated-section p {
   margin: 0px;
+}
+
+.proto-doc p > code, .webots-doc li > code {
+    color: #222;
+    background: #eee;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: normal;
 }
