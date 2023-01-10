@@ -540,3 +540,14 @@ nav.pagination > a[disabled] {
     font-family: "Roboto Mono", monospace;
     word-wrap: break-word;
 }
+
+.proto-doc {
+  padding-top: 50px;
+}
+
+.proto-doc iframe {
+    width: 70%;
+    height: 400px;
+    margin: 30px auto;
+    display: block;
+}
