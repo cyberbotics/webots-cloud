@@ -1546,8 +1546,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadMd(url) {
       fetch(url)
         .then(response => response.text())
-        .then(content => populateProtoViewDiv(content))
-        .catch(error => {
+        .then(content => {
+          const prefix = url.substr(0, url.lastIndexOf('/') + 1);
+          populateProtoViewDiv(content, prefix);
+        }).catch(error => {
           console.error('Error: ' + error);
           // TODO load from comments
         });
