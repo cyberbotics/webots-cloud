@@ -337,10 +337,13 @@ nav.pagination > a[disabled] {
 /* Proto */
 
 .proto-title {
-  text-align: center;
-  padding-bottom: 50px;
-  font-size: 3rem;
-  font-weight: 600;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: normal;
+  color: #0e6f8c;
+  clear: both;
+  margin: 20px auto;
+  word-wrap: break-word;
 }
 
 #proto-webots-container {
