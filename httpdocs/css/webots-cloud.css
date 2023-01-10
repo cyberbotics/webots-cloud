@@ -345,7 +345,7 @@ nav.pagination > a[disabled] {
   aspect-ratio: 16 / 9;
 }
 
-.webots-doc .modal-window {
+.modal-window {
   display: none;
   position: fixed;
   z-index: 100;
