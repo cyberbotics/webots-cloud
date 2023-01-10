@@ -1,6 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
-import {populateProtoViewDiv} from 'https://cyberbotics.com/wwi/proto/viewer.js';
+import {populateProtoViewDiv} from 'https://cyberbotics.com/wwi/proto/proto-viewer.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
