@@ -1535,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', function() {
       project.runWebotsView();
       const prefix = url.substr(0, url.lastIndexOf('/'));
       let mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
-      if (mdUrl.contains('github.com')) {
+      if (mdUrl.includes('github.com')) {
         mdUrl.replace('github.com', 'raw.githubusercontent.com');
         mdUrl.replace('blob/', '');
       }
