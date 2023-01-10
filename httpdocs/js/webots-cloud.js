@@ -1538,6 +1538,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (mdUrl.includes('github.com')) {
         mdUrl.replace('github.com', 'raw.githubusercontent.com');
         mdUrl.replace('blob/', '');
+        console.log("REPLACE")
       }
       loadMd(mdUrl);
     }
