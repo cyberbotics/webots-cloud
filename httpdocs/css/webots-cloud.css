@@ -336,8 +336,11 @@ nav.pagination > a[disabled] {
 
 /* Proto */
 
-.proto-doc .proto-title {
+.proto-title {
   text-align: center;
+  font-weight: 600;
+  line-height: 1.125;
+  font-size: 3rem;
 }
 
 #proto-webots-container {
