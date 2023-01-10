@@ -1,7 +1,7 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
@@ -189,10 +189,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initSearch(search);
     updateSearchIcon();
 
-    project.content.querySelector('#add-a-new-scene').addEventListener('click', function (event) { addAnimation('S'); });
-    project.content.querySelector('#add-a-new-animation').addEventListener('click', function (event) { addAnimation('A'); });
-    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function (event) { addSimulation('D'); });
-    project.content.querySelector('#add-a-new-competition').addEventListener('click', function (event) { addSimulation('C'); });
+    project.content.querySelector('#add-a-new-scene').addEventListener('click', function(event) { addAnimation('S'); });
+    project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
+    project.content.querySelector('#add-a-new-simulation').addEventListener('click', function(event) { addSimulation('D'); });
+    project.content.querySelector('#add-a-new-competition').addEventListener('click', function(event) { addSimulation('C'); });
     project.content.querySelector('#add-a-new-proto').addEventListener('click', function(event) { addProto(); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
-        title.addEventListener('click', function (e) {
+        title.addEventListener('click', function(e) {
           const sortIcon = title.querySelector('.sort-icon');
           const type = title.id.split('-')[0];
           const previousSort = getSort(type).split('-')[0];
@@ -779,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
       for (let type of ['scene', 'animation', 'simulation', 'competition', 'proto']) {
-        document.getElementById(type + '-search-input').addEventListener('keyup', function (event) {
+        document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
             setTimeout(() => {
@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, '300');
           }
         });
-        document.getElementById(type + '-search-click').addEventListener('click', function (event) {
+        document.getElementById(type + '-search-click').addEventListener('click', function(event) {
           if (document.getElementById(type + '-search-icon').classList.contains('fa-xmark')) {
             document.getElementById(type + '-search-input').value = '';
             setSearches(type, document.getElementById(type + '-search-input').value);
@@ -893,7 +893,7 @@ document.addEventListener('DOMContentLoaded', function () {
         script = 'ajax/proto/create.php';
         typeName = 'proto';
       } else {
-        typeName = document.location.pathname.substring(1);  // either 'simulation' or 'competition'
+        typeName = document.location.pathname.substring(1);     // either 'simulation' or 'competition'
         searchString = getSearch(typeName);
         script = 'ajax/project/create.php';
       }
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           const old = document.querySelector('#sync-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -918,7 +918,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             let dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
             dialog.error('Project has been deleted.');
-            dialog.querySelector('form').addEventListener('submit', function (e) {
+            dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
               dialog.close();
@@ -951,10 +951,10 @@ document.addEventListener('DOMContentLoaded', function () {
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
       fetch('ajax/server/update.php', { method: 'post', body: JSON.stringify({ url: url, id: id }) })
-        .then(function (response) {
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           const old = document.querySelector('#sync-server-' + id).parentNode.parentNode;
           const parent = old.parentNode;
           if (data.error) {
@@ -1033,28 +1033,28 @@ document.addEventListener('DOMContentLoaded', function () {
       const typeName = (type === 'A') ? 'animation' : 'scene';
       let input = modal.querySelector(`#${typeName}-file`);
       input.focus();
-      modal.querySelector('button.cancel').addEventListener('click', function () { cancelled = true; });
-      modal.querySelector('form').addEventListener('submit', function (event) {
+      modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
+      modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         let body = new FormData(modal.querySelector('form'));
         body.append('user', project.id);
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', { method: 'post', body: body })
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             if (data.error)
               modal.error(data.error);
             else if (!cancelled) {
               const id = data.id;
               const total = data.total;
               fetch('/ajax/animation/create.php', { method: 'post', body: JSON.stringify({ uploading: 0, uploadId: id }) })
-                .then(function (response) {
+                .then(function(response) {
                   return response.json();
                 })
-                .then(function (data) {
+                .then(function(data) {
                   if (data.status !== 'uploaded')
                     modal.error(data.error);
                   else {
@@ -1107,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
-      modal.querySelector('form').addEventListener('submit', function (event) {
+      modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
         const worldFile = modal.querySelector('#world-file').value.trim();
@@ -1122,10 +1122,10 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         };
         fetch('/ajax/project/create.php', content)
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             if (data.error) {
               let errorMsg = data.error;
               if (errorMsg.startsWith('YAML file error:')) {
@@ -1221,10 +1221,10 @@ document.addEventListener('DOMContentLoaded', function () {
         method: 'post',
         body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
       })
-        .then(function (response) {
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
@@ -1247,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
                   p = 1;
-                node.addEventListener('click', function (event) { deleteAnimation(event, type, project, p); });
+                node.addEventListener('click', function(event) { deleteAnimation(event, type, project, p); });
               }
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
@@ -1269,10 +1269,10 @@ document.addEventListener('DOMContentLoaded', function () {
         method: 'post',
         body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
       })
-        .then(function (response) {
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run(`${capitalizedTypeName} listing error`, data.error);
           else {
@@ -1293,7 +1293,7 @@ document.addEventListener('DOMContentLoaded', function () {
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeGithub);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function (event) { deleteSimulation(event, project); });
+                  .addEventListener('click', function(event) { deleteSimulation(event, project); });
             }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
@@ -1340,10 +1340,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function listServers(page) {
       let offset = (page - 1) * pageLimit;
       fetch('/ajax/server/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: pageLimit }) })
-        .then(function (response) {
+        .then(function(response) {
           return response.json();
         })
-        .then(function (data) {
+        .then(function(data) {
           if (data.error)
             ModalDialog.run('Server listing error', data.error);
           else {
@@ -1367,7 +1367,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
       let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete ${capitalizedTypeName}`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function (event) {
+      dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
         const content = {
@@ -1380,10 +1380,10 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         };
         fetch('ajax/animation/delete.php', content)
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`${capitalizedTypeName} deletion error`, data.error);
@@ -1405,17 +1405,17 @@ document.addEventListener('DOMContentLoaded', function () {
       const id = event.target.id.substring(7);
       let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete simulation`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function (event) {
+      dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
         fetch('ajax/project/delete.php', {
           method: 'post',
           body: JSON.stringify({ user: project.id, password: project.password, id: id })
         })
-          .then(function (response) {
+          .then(function(response) {
             return response.json();
           })
-          .then(function (data) {
+          .then(function(data) {
             dialog.close();
             if (data.error)
               ModalDialog.run(`Simulation deletion error`, data.error);
@@ -1491,14 +1491,12 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
       }
     } else { // proto
-      console.log(searchParams)
       const urlParts = searchParams.get('url').split('/');
       const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
       protoContainer(project, protoName);
     }
 
     function protoContainer(proto, protoName) {
-      console.log(proto)
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
       <ul>
@@ -1634,16 +1632,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function getCompetition(url) {
       let metric;
-      let higherIsBetter;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-        .then(function (response) { return response.json(); })
-        .then(function (data) {
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
           const lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
           fetch(rawUrl + '/README.md', { cache: 'no-cache' })
-            .then(function (response) { return response.text(); })
-            .then(function (data) {
+            .then(function(response) { return response.text(); })
+            .then(function(data) {
               var readme = new DOMParser().parseFromString(data, 'text/html');
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
@@ -1668,11 +1665,10 @@ document.addEventListener('DOMContentLoaded', function () {
               project.runWebotsView(reference);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
-            .then(function (response) { return response.text(); })
-            .then(function (data) {
+            .then(function(response) { return response.text(); })
+            .then(function(data) {
               metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
-              higherIsBetter = data.match(/higher-is-better: ([a-zA-Z-]+)/)[1].toLowerCase() === 'true';
-              const performanceColumn = (metric == 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
+              const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
                 <div class="table-container rankings-table mx-auto">
@@ -1708,11 +1704,11 @@ document.addEventListener('DOMContentLoaded', function () {
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
               fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
-                .then(function (response) { return response.json(); })
-                .then(function (participants) {
+                .then(function(response) { return response.json(); })
+                .then(function(participants) {
                   function getFlag(countryCode) {
                     const country = countryCode.toLowerCase();
-                    if (country.length != 2 || country == 'ru')
+                    if (country.length !== 2 || country === 'ru')
                       return `<svg width="32" height="24">
                               <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
                               </svg>`;
@@ -1722,19 +1718,19 @@ document.addEventListener('DOMContentLoaded', function () {
                   for (const participant of participants['participants']) {
                     const dateArray = participant.date.split('T');
                     const date = `<span style="font-size:smaller;display:inline-block">` +
-                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`
+                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`;
                     let tableContent = document.createElement('template');
-                    const performanceLine = (metric == 'ranking') ? `` :
-                      `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
-                    const link = participant.private ? `${participant.name}` :
-                      `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const button = (metric == 'ranking' && ranking == 1) ?
-                      `<span style="font-size:x-large">&#127942;</span>` :
-                      `<button class="button is-small is-primary" style="background-color: #007acc;"` +
+                    const performanceLine = (metric === 'ranking') ? ``
+                      : `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
+                    const link = participant.private ? `${participant.name}`
+                      : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const button = (metric === 'ranking' && ranking === 1)
+                      ? `<span style="font-size:x-large">&#127942;</span>`
+                      : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view">View</button>`;
-                    const flag = participant.repository.startsWith(`${username}/`) ?
-                      '<span style="font-size:small">demo</span>' :
-                      getFlag(participant.country);
+                    const flag = participant.repository.startsWith(`${username}/`)
+                      ? '<span style="font-size:small">demo</span>'
+                      : getFlag(participant.country);
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
@@ -1770,8 +1766,8 @@ document.addEventListener('DOMContentLoaded', function () {
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-        .then(function (response) { return response.json(); })
-        .then(function (data) {
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
           const lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
           const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;

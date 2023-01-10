@@ -82,12 +82,6 @@ function check_repo_token($github_token, $participant_repo) {
   return false;
 }
 
-$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-if ($mysqli->connect_errno)
-  die("Can't connect to MySQL database: $mysqli->connect_error");
-$mysqli->set_charset('utf8');
-$mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
-
 if (!isset($_POST['organizer']))
   die("Error: missing organizer parameter.");
 
@@ -97,15 +91,27 @@ if (!isset($_POST['participant']))
 $organizer = $_POST['organizer'];
 $participant = $_POST['participant'];
 
+if ($organizer == $participant)
+  die("Called by the organizer, ignored.");
+
+$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+if ($mysqli->connect_errno)
+  die("Can't connect to MySQL database: $mysqli->connect_error");
+$mysqli->set_charset('utf8');
+$mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
+
+$organizer = $mysqli->real_escape_string($organizer);
+$participant = $mysqli->real_escape_string($participant);
+
 $query = "SELECT id FROM project WHERE `url` LIKE 'https://github.com/$organizer/%'";
 $result = $mysqli->query($query) or die($mysqli->error);
 $project = $result->fetch_array(MYSQLI_ASSOC);
-$project_id = $project['id'];
+$project_id = intval($project['id']);
 
 if (isset($_POST['organizer_repo_token'])) {
   if (!check_repo_token($_POST['organizer_repo_token'], $organizer))
     die("Error: wrong organizer repository token.");
-  $query = "DELETE FROM queue WHERE queue.project=$project_id AND queue.participant = 'R:$participant'";
+  $query = "DELETE FROM queue WHERE project=$project_id AND participant='R:$participant'";
   $mysqli->query($query) or die($mysqli->error);
   if ($mysqli->affected_rows === 0)
     die("Error: could not delete repository dispatch queue for $participant");
@@ -136,7 +142,7 @@ if ($total == 0)
   $running = 'R:';
 else
   $running = '';
-$query = "INSERT IGNORE INTO queue(project, participant) VALUES((SELECT id FROM project WHERE url LIKE 'https://github.com/$organizer/%'), '$running$participant')";
+$query = "INSERT IGNORE INTO queue(project, participant) VALUES($project_id, '$running$participant')";
 $mysqli->query($query) or die($mysqli->error);
 
 if ($total == 0)

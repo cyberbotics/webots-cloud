@@ -126,21 +126,14 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    let that = this;
-    let reference;
-    const url = this.findGetParameter('url');
-    const mode = this.findGetParameter('mode');
     if (!version || version === 'undefined') {
       if (window.location.hostname === 'proto.webots.cloud')
         version = 'proto';
       else
         version = data ? data.version : this.findGetParameter('version');
     }
-    version = 'proto';
-    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
-    if (!data)
-      that._updateProtoAndSimulationViewCount(url);
+    const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
@@ -191,7 +184,8 @@ export default class Project extends User {
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
-    if (!data) this._updateProtoAndSimulationViewCount(url);
+    if (!data)
+      this._updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
