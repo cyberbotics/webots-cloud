@@ -1549,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function() {
       fetch(url).then(response => response.text())
         .then(proto => {
           console.log("bonjour");
-          // fetch(mdUrl)
+          fetch(mdUrl).catch(e => console.log("eee"))
           //   .then(response => response.text())
           //   .then(content => {
           //     let infoArray = createMdFromProto(protoURl, proto);
