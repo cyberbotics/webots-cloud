@@ -1662,7 +1662,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // remove enumerations
         matches = fieldsDefinition.matchAll(removeEnumRegex);
         for (const match of matches) {
-          fieldEnumeration.set(match[4]) = match[2];
+          fieldEnumeration.set(match[4], match[2]);
         }
       }
       console.log(fieldEnumeration)
