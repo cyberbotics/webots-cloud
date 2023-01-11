@@ -1666,7 +1666,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (match[0].includes('\n')) {
             const string = ' '.repeat(match[0].indexOf(match[2]));
             fieldsDefinition = fieldsDefinition.replace(string + match[4], match[4]);
-            fieldsDefinition = fieldsDefinition.replace(match[2] + '\n', '')
+            fieldsDefinition = fieldsDefinition.replace(match[2] + '\n', '');
+            if (match[2].length < 40)
+              fieldsDefinition = fieldsDefinition.replace(match[2], ' '.repeat(match[2].length));
+            else
+              fieldsDefinition = fieldsDefinition.replace(match[2], '');
           }
         }
         console.log(fieldsDefinition)
