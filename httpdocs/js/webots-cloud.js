@@ -1534,25 +1534,34 @@ document.addEventListener('DOMContentLoaded', function() {
       // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('proto', template.content);
       project.runWebotsView();
+      loadMd(url);
+    }
+
+    function loadMd(url) {
       const prefix = url.substr(0, url.lastIndexOf('/'));
+      const protoName = url.substr(url.lastIndexOf('/') + 1);
       let mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
       if (mdUrl.includes('github.com')) {
         mdUrl = mdUrl.replace('github.com', 'raw.githubusercontent.com');
         mdUrl = mdUrl.replace('blob/', '');
       }
-      loadMd(mdUrl);
-    }
 
-    function loadMd(url) {
       fetch(url)
         .then(response => response.text())
         .then(content => {
           const prefix = url.substr(0, url.lastIndexOf('/') + 1);
           populateProtoViewDiv(content, prefix);
-        }).catch(error => {
-          console.error('Error: ' + error);
-          // TODO load from comments
+        }).catch(() => {
+          // No md file, so we read the description from the proto file
+          fetch(url)
+            .then(response => response.text())
+            .then(content => {
+              generateMd(content);
+            });
         });
+    }
+
+    function generateMd(proto) {
     }
 
     function mainContainer(project) {
