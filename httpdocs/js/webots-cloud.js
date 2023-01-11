@@ -1554,7 +1554,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(content => {
               let infoArray = createMdFromProto(protoURl, proto);
               populateProtoViewDiv(content, prefix, infoArray);
-            }).catch((error) => {
+            }).catch(error => {
               console.error("MD NOT FOUND" + error)
               // No md file, so we read the description from the proto file
               fetch(url)
@@ -1563,7 +1563,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   createMdFromProto(protoURl, proto, true);
                 });
             });
-        });
+        }).catch(e => console.log("other catch"));
     }
 
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
