@@ -525,4 +525,6 @@ nav.pagination > a[disabled] {
 .proto-info-array {
   display: grid;
   border: 1px solid black;
+  width: max-content;
+  margin-bottom: 50px;
 }
