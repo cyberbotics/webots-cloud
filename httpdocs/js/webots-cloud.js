@@ -1554,6 +1554,7 @@ document.addEventListener('DOMContentLoaded', function() {
               let infoArray = createMdFromProto(protoURl, proto);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
+              console.log("MD NOT FOUND")
             // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
@@ -1566,6 +1567,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     const fieldRegex = /\[\n((.*\n)*)\]/ig;
+
     function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
       let version, license, licenseUrl;
