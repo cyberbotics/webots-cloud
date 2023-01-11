@@ -1571,7 +1571,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     const fieldRegex = /\[\n((.*\n)*)\]/ig;
     const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
-
+    const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
     function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
       let version, license, licenseUrl;
@@ -1673,6 +1673,7 @@ document.addEventListener('DOMContentLoaded', function() {
               fieldsDefinition = fieldsDefinition.replace(match[2], '');
           }
         }
+
         console.log(fieldsDefinition)
       }
       return infoGrid;
