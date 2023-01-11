@@ -1553,9 +1553,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(content => {
               let infoArray = createMdFromProto(protoURl, proto);
               populateProtoViewDiv(content, prefix, infoArray);
-            }).catch(() => {
-              console.log("MD NOT FOUND")
-            // No md file, so we read the description from the proto file
+            }).catch(error => {
+              console.log("MD NOT FOUND" + error)
+              // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
