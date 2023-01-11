@@ -1564,7 +1564,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createMdFromProto(proto, generateAll) {
-      console.log(proto)
+      // parse header
+      let version, license, licenseUrl;
+      for (const line of proto.split('\n')) {
+        if (!line.startsWith('#'))
+          break;
+
+        if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
+          version = line.substring(line.indexOf('VRML_SIM')).split(' ')[0];
+        else if (line.startsWith('# license')) {
+
+        } else if (line.startsWith('#tags') || line.startsWith('# tags') || line.startsWith('# template language') ||
+          line.startsWith('#template language') || line.startsWith('# documentation url') ||
+          line.startsWith('#documentation url'))
+          continue;
+      }
     }
 
     function mainContainer(project) {
