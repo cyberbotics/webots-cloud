@@ -537,3 +537,17 @@ nav.pagination > a[disabled] {
 .info-array-cell {
   border-bottom: 1px solid #dbdbdb;
 }
+
+.first-row-cell {
+  border-top: 1px solid #dbdbdb;
+}
+
+.first-column-cell {
+  border-left: 1px solid #dbdbdb;
+}
+
+.last-column-cell {
+  border-right: 1px solid #dbdbdb;
+}
+
+.
