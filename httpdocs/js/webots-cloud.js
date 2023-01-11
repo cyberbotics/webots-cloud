@@ -1579,6 +1579,7 @@ document.addEventListener('DOMContentLoaded', function() {
           line.startsWith('#documentation url'))
           continue;
       }
+      console.log(version)
     }
 
     function mainContainer(project) {
