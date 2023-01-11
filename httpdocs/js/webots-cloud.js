@@ -1538,9 +1538,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
-      const prefix = url.substr(0, url.lastIndexOf('/') + 1);
+      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
-      let mdUrl = prefix + 'docs/' + protoName.toLowerCase() + '.md';
+      let mdUrl = prefix + protoName.toLowerCase() + '.md';
       if (mdUrl.includes('github.com')) {
         mdUrl = mdUrl.replace('github.com', 'raw.githubusercontent.com');
         mdUrl = mdUrl.replace('blob/', '');
