@@ -1537,7 +1537,8 @@ document.addEventListener('DOMContentLoaded', function() {
       loadMd(url);
     }
 
-    function loadMd(url) {
+    function loadMd(protoUrl) {
+      let url = protoUrl;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
         url = url.replace('blob/', '');
@@ -1545,22 +1546,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
-
-      fetch(mdUrl)
-        .then(response => response.text())
+      fetch(protoUrl).then(response => response.text())
         .then(content => {
-          populateProtoViewDiv(content, prefix);
-        }).catch(() => {
-          // No md file, so we read the description from the proto file
-          fetch(url)
+          fetch(mdUrl)
             .then(response => response.text())
             .then(content => {
-              generateMd(content);
+              let infoArray = createMdFromProto(content);
+              populateProtoViewDiv(content, prefix, infoArray);
+            }).catch(() => {
+            // No md file, so we read the description from the proto file
+              fetch(url)
+                .then(response => response.text())
+                .then(content => {
+                  createMdFromProto(content, true);
+                });
             });
         });
     }
 
-    function generateMd(proto) {
+    function generateMd(proto, generateAll) {
+      console.log(proto)
     }
 
     function mainContainer(project) {
