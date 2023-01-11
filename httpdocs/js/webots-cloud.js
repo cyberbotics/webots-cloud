@@ -1601,12 +1601,14 @@ document.addEventListener('DOMContentLoaded', function() {
       licenseP.textContent = 'License:';
       licenseP.style.gridRow = 2;
       licenseP.style.gridColumn = 1;
+      licenseP.style.backgroundColor = '#fafafa';
       infoGrid.appendChild(licenseP);
 
       const licenseContentA = document.createElement('a');
       licenseContentA.textContent = license;
       licenseContentA.href = licenseUrl;
       licenseContentA.target = '_blank';
+      licenseContentA.style.backgroundColor = '#fafafa';
       licenseContentA.style.gridRow = 2;
       licenseContentA.style.gridColumn = 2;
       infoGrid.appendChild(licenseContentA);
