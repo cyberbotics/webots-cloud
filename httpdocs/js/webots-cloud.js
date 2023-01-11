@@ -1572,14 +1572,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
           version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
-        else if (line.startsWith('# license')) {
-
-        } else if (line.startsWith('#tags') || line.startsWith('# tags') || line.startsWith('# template language') ||
-          line.startsWith('#template language') || line.startsWith('# documentation url') ||
-          line.startsWith('#documentation url'))
+        else if (line.startsWith('# license:') || line.startsWith('#license:'))
+          license = line.substring(line.indexOf('license:') + 9).split(' ')[0];
+        else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
+          licenseUrl = line.substring(line.indexOf('license url:') + 13).split(' ')[0];
+        else if (line.startsWith('#tags:') || line.startsWith('# tags:') || line.startsWith('# template language:') ||
+          line.startsWith('#template language:') || line.startsWith('# documentation url:') ||
+          line.startsWith('#documentation url:'))
           continue;
       }
-      console.log(version)
+      console.log(license + ': ' + licenseUrl)
     }
 
     function mainContainer(project) {
