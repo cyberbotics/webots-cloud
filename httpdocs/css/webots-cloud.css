@@ -517,3 +517,7 @@ nav.pagination > a[disabled] {
 .proto-doc a {
   color: #007acc;
 }
+
+.proto-doc a:hover {
+  color: darkblue;
+}
