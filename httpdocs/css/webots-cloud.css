@@ -513,3 +513,7 @@ nav.pagination > a[disabled] {
     margin: 30px auto;
     display: block;
 }
+
+proto-doc a {
+  color: #007acc;
+}
