@@ -417,8 +417,8 @@ nav.pagination > a[disabled] {
 
 .proto-doc p {
   color: black;
-  margin-left: 10px;
-  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
   font-size: 16px;
   text-align: justify;
   line-height: 140%;
@@ -530,6 +530,6 @@ nav.pagination > a[disabled] {
 }
 
 .proto-info-array a {
-  margin-left: 10px;
-  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
