@@ -1290,6 +1290,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>Number of participants:</td>
             <td style="font-weight: bold;" id="competition-participants"></td>
           </tr>
+          <tr>
+            <td>Evaluation Queue:</td>
+            <td style="font-weight: bold;" id="competition-queue"></td>
+          </tr>
         </tbody>
         </table>`;
 
@@ -1357,7 +1361,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
-      // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('competition', template.content);
       document.getElementById('submit-entry').onclick = registerPopUp;
       getCompetition(project.competitionUrl);
@@ -1479,6 +1482,29 @@ document.addEventListener('DOMContentLoaded', function() {
                       viewButton.addEventListener('click', viewEntryRun);
                   }
                   document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+
+                  fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
+                    .then(function(response) { return response.json(); })
+                    .then(function(queue) {
+                      let item = document.getElementById('competition-queue');
+                      item.innerHTML = queue.length;
+                      let title = '';
+                      let counter = 0;
+                      queue.forEach(i => {
+                        for (const participant of participants['participants'])
+                          if (i == participant.repository) {
+                            title += counter + ': ' + participant.name + '\n';
+                            break;
+                          } else if (i == 'R:' + participant.repository) {
+                            title += 'R: ' + participant.name + '\n';
+                            break;
+                          }
+                        counter++;
+                      });
+                      item.title = title;
+                      console.log(queue);
+                    });
+
                 });
             });
         });
