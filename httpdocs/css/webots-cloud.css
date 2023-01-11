@@ -535,6 +535,7 @@ nav.pagination > a[disabled] {
 
 .info-array-cell {
   border-bottom: 1px solid #dbdbdb;
+  line-height: 50px;
 }
 
 .first-row-cell {

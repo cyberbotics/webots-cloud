@@ -1587,7 +1587,7 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.className = 'proto-info-array';
 
       const versionP = document.createElement('p');
-      versionP.textContent = 'Version:';
+      versionP.textContent = 'Version';
       versionP.className = 'info-array-cell first-column-cell first-row-cell';
       versionP.style.gridRow = 1;
       versionP.style.gridColumn = 1;
@@ -1601,7 +1601,7 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(versionContentP);
 
       const licenseP = document.createElement('p');
-      licenseP.textContent = 'License:';
+      licenseP.textContent = 'License';
       licenseP.className = 'info-array-cell first-column-cell';
       licenseP.style.gridRow = 2;
       licenseP.style.gridColumn = 1;
@@ -1619,7 +1619,7 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(licenseContentA);
 
       const sourceP = document.createElement('p');
-      sourceP.textContent = 'Source:';
+      sourceP.textContent = 'Source';
       sourceP.className = 'info-array-cell first-column-cell';
       sourceP.style.gridRow = 3;
       sourceP.style.gridColumn = 1;
