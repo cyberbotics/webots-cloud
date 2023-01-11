@@ -1538,6 +1538,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
+      let protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
         url = url.replace('blob/', '');
@@ -1550,14 +1551,14 @@ document.addEventListener('DOMContentLoaded', function() {
           fetch(mdUrl)
             .then(response => response.text())
             .then(content => {
-              let infoArray = createMdFromProto(url, proto);
+              let infoArray = createMdFromProto(protoURl, proto);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
             // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(url, proto, true);
+                  createMdFromProto(protoURl, proto, true);
                 });
             });
         });
