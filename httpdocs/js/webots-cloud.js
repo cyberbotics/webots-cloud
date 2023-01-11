@@ -1557,8 +1557,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(content => {
               let infoArray = createMdFromProto(protoURl, proto);
               populateProtoViewDiv(content, prefix, infoArray);
-            }).catch(error => {
-              console.error("MD NOT FOUND" + error)
+            }).catch(() => {
               // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
@@ -1571,6 +1570,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     const fieldRegex = /\[\n((.*\n)*)\]/ig;
+    const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
 
     function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
@@ -1651,7 +1651,9 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(sourceContentA);
 
       if (generateAll) {
-        console.log(proto.match(fieldRegex));
+        let fields = proto.match(fieldRegex);
+        fields = fields[0].match(removeEnumRegex);
+        console.log(fields)
       }
 
       return infoGrid;
