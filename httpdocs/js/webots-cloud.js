@@ -1546,18 +1546,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
       fetch(url).then(response => response.text())
-        .then(content => {
+        .then(proto => {
           fetch(mdUrl)
             .then(response => response.text())
             .then(content => {
-              let infoArray = createMdFromProto(content);
+              let infoArray = createMdFromProto(proto);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
             // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(content, true);
+                  createMdFromProto(proto, true);
                 });
             });
         });
