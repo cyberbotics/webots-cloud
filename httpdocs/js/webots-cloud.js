@@ -1548,21 +1548,24 @@ document.addEventListener('DOMContentLoaded', function() {
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
       fetch(url).then(response => response.text())
         .then(proto => {
-          console.log("bonjour");
-          fetch('https://raw.githubusercontent.com/BenjaminDeleze/sandbox/master/protoExample/protos/docs/officechair.md').catch(e => console.log("eee"))
-          //   .then(response => response.text())
-          //   .then(content => {
-          //     let infoArray = createMdFromProto(protoURl, proto);
-          //     populateProtoViewDiv(content, prefix, infoArray);
-          //   }).catch(error => {
-          //     console.error("MD NOT FOUND" + error)
-          //     // No md file, so we read the description from the proto file
-          //     fetch(url)
-          //       .then(response => response.text())
-          //       .then(content => {
-          //         createMdFromProto(protoURl, proto, true);
-          //       });
-          //   });
+          fetch(mdUrl)
+            .then(response => {
+              if (!response.ok)
+                throw new Error('');
+              response.text();
+            })
+            .then(content => {
+              let infoArray = createMdFromProto(protoURl, proto);
+              populateProtoViewDiv(content, prefix, infoArray);
+            }).catch(error => {
+              console.error("MD NOT FOUND" + error)
+              // No md file, so we read the description from the proto file
+              fetch(url)
+                .then(response => response.text())
+                .then(content => {
+                  createMdFromProto(protoURl, proto, true);
+                });
+            });
         });
     }
 
