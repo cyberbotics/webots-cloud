@@ -1563,7 +1563,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function generateMd(proto, generateAll) {
+    function createMdFromProto(proto, generateAll) {
       console.log(proto)
     }
 
