@@ -1556,11 +1556,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }).catch(error => {
               console.log("MD NOT FOUND" + error)
               // No md file, so we read the description from the proto file
-              fetch(url)
-                .then(response => response.text())
-                .then(content => {
-                  createMdFromProto(protoURl, proto, true);
-                });
+              // fetch(url)
+              //   .then(response => response.text())
+              //   .then(content => {
+              //     createMdFromProto(protoURl, proto, true);
+              //   });
             });
         });
     }
