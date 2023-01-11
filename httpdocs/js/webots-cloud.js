@@ -894,7 +894,7 @@ document.addEventListener('DOMContentLoaded', function() {
         script = 'ajax/proto/create.php';
         typeName = 'proto';
       } else {
-        typeName = document.location.pathname.substring(1);     // either 'simulation' or 'competition'
+        typeName = document.location.pathname.substring(1); // either 'simulation' or 'competition'
         searchString = getSearch(typeName);
         script = 'ajax/project/create.php';
       }
@@ -1538,13 +1538,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
+      if (url.includes('github.com')) {
+        url = url.replace('github.com', 'raw.githubusercontent.com');
+        url = url.replace('blob/', '');
+      }
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
-      let mdUrl = prefix + protoName.toLowerCase() + '.md';
-      if (mdUrl.includes('github.com')) {
-        mdUrl = mdUrl.replace('github.com', 'raw.githubusercontent.com');
-        mdUrl = mdUrl.replace('blob/', '');
-      }
+      const mdUrl = prefix + protoName.toLowerCase() + '.md';
 
       fetch(mdUrl)
         .then(response => response.text())
