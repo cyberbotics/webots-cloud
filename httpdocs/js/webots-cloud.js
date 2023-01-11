@@ -1664,8 +1664,8 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const match of matches) {
           fieldEnumeration.set(match[4], match[2]);
         }
+        console.log(fieldEnumeration)
       }
-      console.log(fieldEnumeration)
       return infoGrid;
     }
 
