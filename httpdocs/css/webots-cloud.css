@@ -528,3 +528,8 @@ nav.pagination > a[disabled] {
   width: max-content;
   margin-bottom: 50px;
 }
+
+.proto-info-array a {
+  margin-left: 10px;
+  margin-right: 10px;
+}
