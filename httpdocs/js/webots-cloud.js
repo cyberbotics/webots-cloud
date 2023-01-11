@@ -1571,7 +1571,7 @@ document.addEventListener('DOMContentLoaded', function() {
           break;
 
         if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
-          version = line.substring(line.indexOf('VRML_SIM') + 8).split(' ')[0];
+          version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
         else if (line.startsWith('# license')) {
 
         } else if (line.startsWith('#tags') || line.startsWith('# tags') || line.startsWith('# template language') ||
