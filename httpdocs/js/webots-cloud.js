@@ -1508,14 +1508,14 @@ document.addEventListener('DOMContentLoaded', function() {
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
         </li>
+        <li data-tab="proto" class="data-tab is-active">
+          <a href="/proto">Proto</a>
+        </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
         </li>
         <li data-tab="competition" class="data-tab">
           <a href="/competition">Competition</a>
-        </li>
-        <li data-tab="proto" class="data-tab is-active">
-          <a href="/proto">Proto</a>
         </li>
         <li data-tab="server" class="data-tab">
           <a href="/server">Server</a>
@@ -1600,6 +1600,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
+        </li>
+        <li data-tab="proto" class="data-tab is-active">
+          <a href="/proto">Proto</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
