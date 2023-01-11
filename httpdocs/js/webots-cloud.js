@@ -1651,9 +1651,14 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(sourceContentA);
 
       if (generateAll) {
-        let fields = proto.match(fieldRegex);
-        fields = fields[0].match(removeEnumRegex);
-        console.log(fields)
+        let matches = proto.matchAll(fieldRegex);
+        for (const match of matches) {
+          console.log(match[0])
+          console.log(match[1])
+          break;
+        }
+        // fields = fields[0].match(removeEnumRegex);
+        // console.log(fields)
       }
 
       return infoGrid;
