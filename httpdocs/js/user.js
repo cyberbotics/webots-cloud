@@ -5,7 +5,7 @@ import md5 from './md5.min.js';
 export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
-    this.routes.push({url: '/settings', setup: settingsPage});
+    this.routes.push({ url: '/settings', setup: settingsPage });
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
@@ -161,7 +161,7 @@ export default class User extends Router {
         event.preventDefault();
         choose.querySelector('button[type="submit"]').classList.add('is-loading');
         that.sha256Hash(choose.querySelector('#choose-password').value + that.title).then(function(hash) {
-          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({id: id, token: token, password: hash})})
+          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({ id: id, token: token, password: hash }) })
             .then(function(response) {
               return response.json();
             })
@@ -246,8 +246,10 @@ export default class User extends Router {
         dialog.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
           dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post',
-            body: JSON.stringify({email: that.email, password: that.password})})
+          fetch('/ajax/user/delete.php', {
+            method: 'post',
+            body: JSON.stringify({ email: that.email, password: that.password })
+          })
             .then(function(response) {
               return response.json();
             })
@@ -404,7 +406,7 @@ export default class User extends Router {
           return;
         }
         // check if this e-mail address is not already registered
-        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({email: email}) })
+        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({ email: email }) })
           .then(function(response) {
             return response.json();
           })
@@ -425,7 +427,7 @@ export default class User extends Router {
         event.preventDefault();
         const email = modal.querySelector('#sign-up-email').value;
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({email: email}) })
+        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({ email: email }) })
           .then(function(response) {
             return response.json();
           })
@@ -516,8 +518,10 @@ export default class User extends Router {
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads === null)
         uploads = [];
-      fetch('/ajax/user/authenticate.php', { method: 'post',
-        body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
+      fetch('/ajax/user/authenticate.php', {
+        method: 'post',
+        body: JSON.stringify({ email: this.email, password: this.password, uploads: uploads })
+      })
         .then(function(response) {
           return response.json();
         })
@@ -557,7 +561,7 @@ export default class User extends Router {
     return hashHex;
   }
   forgotPassword(email, callback = null) {
-    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({email: email})})
+    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({ email: email }) })
       .then(function(response) {
         return response.json();
       })
