@@ -116,17 +116,12 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    let that = this;
-    const url = this.findGetParameter('url');
     if (!version || version === undefined) {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
-        version = data ? data.version : this.findGetParameter('version');
+        version = data && data.version ? data.version : this.findGetParameter('version');
     }
-
-    if (version === undefined)
-      console.error('version is undefined');
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
