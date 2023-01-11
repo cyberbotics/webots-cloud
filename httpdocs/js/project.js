@@ -116,13 +116,12 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    let that = this;
     const url = this.findGetParameter('url');
     if (!version || version === undefined) {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
-        version = data ? data.version : this.findGetParameter('version');
+        version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
     if (version === undefined)
@@ -147,9 +146,9 @@ export default class Project extends User {
         };
         script.onerror = () => {
           console.warn(
-            'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
+            'Could not find Webots version, reloading with R2023a instead. This could cause some unwanted behaviour.');
           script.remove();
-          this.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
+          this.runWebotsView(data, 'R2023a'); // if release not found, default to R2023a
         };
         document.body.appendChild(script);
       } else
