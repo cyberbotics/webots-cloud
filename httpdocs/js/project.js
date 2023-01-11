@@ -125,10 +125,8 @@ export default class Project extends User {
         version = data ? data.version : this.findGetParameter('version');
     }
 
-    if (version === undefined) {
-      console.error('version is undefined, returning');
-      return;
-    }
+    if (version === undefined)
+      console.error('version is undefined');
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
