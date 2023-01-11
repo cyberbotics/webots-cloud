@@ -1664,7 +1664,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const match of matches) {
           fieldEnumeration.set(match[4], match[2].slice(1, -1).split(','));
           if (match[0].includes('\n')) {
-            const string = ' '.repeat(match[0].index(match[2]));
+            const string = ' '.repeat(match[0].indexOf(match[2]));
             fieldsDefinition = fieldsDefinition.replace(string + match[4], match[4]);
             fieldsDefinition = fieldsDefinition.replace(match[2] + '\n', '')
           }
