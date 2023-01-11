@@ -37,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
       setup: homePage
     },
     {
-      url: '/simulation',
+      url: '/proto',
       setup: homePage
     },
     {
-      url: '/proto',
+      url: '/simulation',
       setup: homePage
     },
     {
@@ -417,14 +417,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
             </li>
+            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Proto</a>
+            </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
             </li>
             <li data-tab="competition" ${(activeTab === 'competition') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Competition</a>
-            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Proto</a>
-            </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
             </li>
