@@ -1593,12 +1593,14 @@ document.addEventListener('DOMContentLoaded', function() {
       versionP.style.gridColumn = 1;
       infoGrid.appendChild(versionP);
 
-      const versionContentP = document.createElement('p');
-      versionContentP.textContent = version;
-      versionContentP.className = 'info-array-cell last-column-cell first-row-cell';
-      versionContentP.style.gridRow = 1;
-      versionContentP.style.gridColumn = 2;
-      infoGrid.appendChild(versionContentP);
+      const versionContentA = document.createElement('a');
+      versionContentA.textContent = version;
+      versionContentA.href = 'https://github.com/cyberbotics/webots/releases/tag/' + version;
+      versionContentA.target = '_blank';
+      versionContentA.className = 'info-array-cell last-column-cell first-row-cell';
+      versionContentA.style.gridRow = 1;
+      versionContentA.style.gridColumn = 2;
+      infoGrid.appendChild(versionContentA);
 
       const licenseP = document.createElement('p');
       licenseP.textContent = 'License';
