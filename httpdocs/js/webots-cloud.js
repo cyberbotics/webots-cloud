@@ -1564,9 +1564,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    const fieldRegex = /\[\n((.*\n)*)\]/ig;
     function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
       let version, license, licenseUrl;
+      let description = '';
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
           break;
@@ -1581,6 +1584,11 @@ document.addEventListener('DOMContentLoaded', function() {
           line.startsWith('#template language:') || line.startsWith('# documentation url:') ||
           line.startsWith('#documentation url:'))
           continue;
+        else {
+          let newLine = line.replace('#', '').replace('_', '\\_').trim()
+          newLine = newLine.replace(urlRegex, url => `[${url}](${url})`);
+          description += newLine + '\n'
+        }
       }
 
       const infoGrid = document.createElement('div');
@@ -1637,6 +1645,7 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(sourceContentA);
 
       if (generateAll) {
+        console.log(proto.match(fieldRegex));
       }
 
       return infoGrid;
