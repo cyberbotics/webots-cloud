@@ -1538,20 +1538,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function loadMd(url) {
-      const prefix = url.substr(0, url.lastIndexOf('/'));
+      const prefix = url.substr(0, url.lastIndexOf('/') + 1);
       const protoName = url.substr(url.lastIndexOf('/') + 1);
-      let mdUrl = prefix + '/docs/' + protoName.toLowerCase() + '.md';
+      let mdUrl = prefix + 'docs/' + protoName.toLowerCase() + '.md';
       if (mdUrl.includes('github.com')) {
         mdUrl = mdUrl.replace('github.com', 'raw.githubusercontent.com');
         mdUrl = mdUrl.replace('blob/', '');
       }
 
-      fetch(url)
+      fetch(mdUrl)
         .then(response => response.text())
-        .then(content => {
-          const prefix = url.substr(0, url.lastIndexOf('/') + 1);
-          populateProtoViewDiv(content, prefix);
-        }).catch(() => {
+        .then(content => populateProtoViewDiv(content, prefix))
+        .catch(() => {
           // No md file, so we read the description from the proto file
           fetch(url)
             .then(response => response.text())
