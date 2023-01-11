@@ -1,38 +1,3 @@
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  src: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/fonts/Roboto-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 400;
-  src: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/fonts/Roboto-Italic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
-  src: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/fonts/Roboto-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Roboto";
-  font-style: italic;
-  font-weight: 700;
-  src: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/fonts/Roboto-BoldItalic.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Roboto Mono";
-  font-style: normal;
-  src: url("https://raw.githubusercontent.com/cyberbotics/webots/released/docs/css/fonts/Roboto-Mono.ttf") format("truetype");
-}
-
-
 html {
   height: 100%;
   overflow-y: auto;
@@ -451,7 +416,6 @@ nav.pagination > a[disabled] {
 }
 
 .proto-doc p {
-  font-family: "Roboto";
   color: black;
   margin-left: 10px;
   margin-right: 10px;
@@ -498,10 +462,9 @@ nav.pagination > a[disabled] {
 }
 
 .proto-doc h1, .proto-doc h2, .proto-doc h3, .proto-doc h4, .proto-doc h5, .proto-doc h6 {
-  font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
-  color: #0e6f8c;
+  color: #007acc;
   clear: both;
   margin: 20px auto;
   word-wrap: break-word;
@@ -537,7 +500,6 @@ nav.pagination > a[disabled] {
     border-radius: 4px;
     white-space: normal;
     font-size: 15px;
-    font-family: "Roboto Mono", monospace;
     word-wrap: break-word;
 }
 
