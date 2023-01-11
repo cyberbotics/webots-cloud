@@ -521,3 +521,8 @@ nav.pagination > a[disabled] {
 .proto-doc a:hover {
   color: darkblue;
 }
+
+.proto-info-array {
+  display: grid;
+  border: 1px solid black;
+}

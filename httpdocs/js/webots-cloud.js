@@ -1550,20 +1550,20 @@ document.addEventListener('DOMContentLoaded', function() {
           fetch(mdUrl)
             .then(response => response.text())
             .then(content => {
-              let infoArray = createMdFromProto(proto);
+              let infoArray = createMdFromProto(url, proto);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
             // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(proto, true);
+                  createMdFromProto(url, proto, true);
                 });
             });
         });
     }
 
-    function createMdFromProto(proto, generateAll) {
+    function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
       let version, license, licenseUrl;
       for (const line of proto.split('\n')) {
@@ -1580,8 +1580,52 @@ document.addEventListener('DOMContentLoaded', function() {
           line.startsWith('#template language:') || line.startsWith('# documentation url:') ||
           line.startsWith('#documentation url:'))
           continue;
+
+        const infoGrid = document.createElement('div');
+        infoGrid.className = 'proto-info-array';
+
+        const versionP = document.createElement('p');
+        versionP.textContent = 'Version:';
+        versionP.style.gridRow = 1;
+        versionP.style.gridColumn = 1;
+        infoGrid.appendChild(versionP);
+
+        const versionContentP = document.createElement('p');
+        versionContentP.textContent = version;
+        versionContentP.style.gridRow = 1;
+        versionContentP.style.gridColumn = 2;
+        infoGrid.appendChild(versionContentP);
+
+        const licenseP = document.createElement('p');
+        licenseP.textContent = 'License:';
+        licenseP.style.gridRow = 2;
+        licenseP.style.gridColumn = 1;
+        infoGrid.appendChild(licenseP);
+
+        const licenseContentP = document.createElement('p');
+        licenseContentP.textContent = license;
+        licenseContentP.style.gridRow = 2;
+        licenseContentP.style.gridColumn = 2;
+        infoGrid.appendChild(licenseContentP);
+
+        const sourceP = document.createElement('p');
+        sourceP.textContent = 'Source:';
+        sourceP.style.gridRow = 3;
+        sourceP.style.gridColumn = 1;
+        infoGrid.appendChild(sourceP);
+
+        const sourceContentP = document.createElement('p');
+        sourceContentP.textContent = licenseUrl;
+        sourceContentP.style.gridRow = 3;
+        sourceContentP.style.gridColumn = 2;
+        infoGrid.appendChild(sourceContentP);
+
+        if (generateAll) {
+
+        }
+
+        return infoGrid;
       }
-      console.log(license + ': ' + licenseUrl)
     }
 
     function mainContainer(project) {
