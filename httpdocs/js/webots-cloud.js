@@ -1652,15 +1652,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (generateAll) {
         let matches = proto.matchAll(fieldRegex);
+        let fieldsDefinition;
+        let fieldEnumeration = new Map();
         for (const match of matches) {
-          console.log(match[0])
-          console.log(match[1])
+          fieldsDefinition = match[1];
           break;
         }
-        // fields = fields[0].match(removeEnumRegex);
-        // console.log(fields)
-      }
 
+        // remove enumerations
+        matches = fieldsDefinition.matchAll(removeEnumRegex);
+        for (const match of matches) {
+          fieldEnumeration.set(match[4]) = match[2];
+        }
+      }
+      console.log(fieldEnumeration)
       return infoGrid;
     }
 
