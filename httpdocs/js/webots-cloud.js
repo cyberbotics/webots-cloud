@@ -1587,18 +1587,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const versionP = document.createElement('p');
       versionP.textContent = 'Version:';
+      versionP.className = 'info-array-cell';
       versionP.style.gridRow = 1;
       versionP.style.gridColumn = 1;
       infoGrid.appendChild(versionP);
 
       const versionContentP = document.createElement('p');
       versionContentP.textContent = version;
+      versionContentP.className = 'info-array-cell';
       versionContentP.style.gridRow = 1;
       versionContentP.style.gridColumn = 2;
       infoGrid.appendChild(versionContentP);
 
       const licenseP = document.createElement('p');
       licenseP.textContent = 'License:';
+      licenseP.className = 'info-array-cell';
       licenseP.style.gridRow = 2;
       licenseP.style.gridColumn = 1;
       licenseP.style.backgroundColor = '#fafafa';
@@ -1606,6 +1609,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const licenseContentA = document.createElement('a');
       licenseContentA.textContent = license;
+      licenseContentA.className = 'info-array-cell';
       licenseContentA.href = licenseUrl;
       licenseContentA.target = '_blank';
       licenseContentA.style.backgroundColor = '#fafafa';
@@ -1615,12 +1619,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const sourceP = document.createElement('p');
       sourceP.textContent = 'Source:';
+      sourceP.className = 'info-array-cell';
       sourceP.style.gridRow = 3;
       sourceP.style.gridColumn = 1;
       infoGrid.appendChild(sourceP);
 
       const sourceContentA = document.createElement('a');
       sourceContentA.href = protoURl;
+      sourceContentA.className = 'info-array-cell';
       sourceContentA.textContent = protoURl;
       sourceContentA.target = '_blank';
       sourceContentA.style.gridRow = 3;

@@ -533,3 +533,7 @@ nav.pagination > a[disabled] {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.info-array-cell {
+  border-bottom: 1px solid #dbdbdb;
+}
