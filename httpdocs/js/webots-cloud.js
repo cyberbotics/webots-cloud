@@ -1548,15 +1548,20 @@ document.addEventListener('DOMContentLoaded', function() {
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
       fetch(url).then(response => response.text())
         .then(proto => {
-          fetch(mdUrl).catch((error) => {
-              console.log("MD NOT FOUND" + error)
-              // No md file, so we read the description from the proto file
-              fetch(url)
-                .then(response => response.text())
-                .then(content => {
-                  createMdFromProto(protoURl, proto, true);
-                });
-            });
+          fetch(mdUrl)
+            .then(response => response.text())
+            .then(content => {
+              let infoArray = createMdFromProto(protoURl, proto);
+              populateProtoViewDiv(content, prefix, infoArray);
+            }).catch((error) => console.log(error))//{
+            //   console.log("MD NOT FOUND" + error)
+            //   // No md file, so we read the description from the proto file
+            //   fetch(url)
+            //     .then(response => response.text())
+            //     .then(content => {
+            //       createMdFromProto(protoURl, proto, true);
+            //     });
+            // });
         });
     }
 
