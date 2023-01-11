@@ -1502,7 +1502,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         counter++;
                       });
                       item.title = title;
-                      console.log(queue);
                     });
 
                 });
