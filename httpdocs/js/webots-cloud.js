@@ -1548,8 +1548,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
       fetch(url).then(response => response.text())
         .then(proto => {
-          console.log("bonjour")
-          fetch(mdUrl);
+          console.log("bonjour");
           // fetch(mdUrl)
           //   .then(response => response.text())
           //   .then(content => {
