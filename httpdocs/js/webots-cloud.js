@@ -1548,22 +1548,22 @@ document.addEventListener('DOMContentLoaded', function() {
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
       fetch(url).then(response => response.text())
         .then(proto => {
-          console.log("dslu")
-          fetch(mdUrl).catch(e => console.log("BONJOUR"))
-            .then(response => response.text())
-            .then(content => {
-              let infoArray = createMdFromProto(protoURl, proto);
-              populateProtoViewDiv(content, prefix, infoArray);
-            }).catch(error => {
-              console.error("MD NOT FOUND" + error)
-              // No md file, so we read the description from the proto file
-              fetch(url)
-                .then(response => response.text())
-                .then(content => {
-                  createMdFromProto(protoURl, proto, true);
-                });
-            });
-        }).catch(e => console.log("other catch"));
+          console.log("bonjour")
+          // fetch(mdUrl)
+          //   .then(response => response.text())
+          //   .then(content => {
+          //     let infoArray = createMdFromProto(protoURl, proto);
+          //     populateProtoViewDiv(content, prefix, infoArray);
+          //   }).catch(error => {
+          //     console.error("MD NOT FOUND" + error)
+          //     // No md file, so we read the description from the proto file
+          //     fetch(url)
+          //       .then(response => response.text())
+          //       .then(content => {
+          //         createMdFromProto(protoURl, proto, true);
+          //       });
+          //   });
+        });
     }
 
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
