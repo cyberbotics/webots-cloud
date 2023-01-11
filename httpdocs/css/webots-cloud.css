@@ -514,6 +514,6 @@ nav.pagination > a[disabled] {
     display: block;
 }
 
-proto-doc a {
+.proto-doc a {
   color: #007acc;
 }
