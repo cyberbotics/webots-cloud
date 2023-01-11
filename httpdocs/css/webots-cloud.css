@@ -522,31 +522,31 @@ nav.pagination > a[disabled] {
   color: darkblue;
 }
 
-.proto-info-array {
+.proto-doc .proto-info-array {
   display: grid;
   border: 1px solid #dbdbdb;
   margin-bottom: 50px;
 }
 
-.proto-info-array a {
+.proto-doc .proto-info-array a {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-.info-array-cell {
+.proto-doc .proto-info-array .info-array-cell {
   border-bottom: 1px solid #dbdbdb;
   line-height: 50px;
 }
 
-.first-row-cell {
+.proto-doc .proto-info-array .first-row-cell {
   border-top: 1px solid #dbdbdb;
 }
 
-.first-column-cell {
+.proto-doc .proto-info-array .first-column-cell {
   border-left: 1px solid #dbdbdb;
 }
 
-.last-column-cell {
+.proto-doc .proto-info-array .last-column-cell {
   border-right: 1px solid #dbdbdb;
 }
 
