@@ -49,7 +49,7 @@ export default class TermsAndPrivacy {
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a>.</p>
           </div>
         </section>`;
-      project.setup('terms-of-service', [], template.content);
+      project.setup('terms-of-service', template.content);
     }
     function privacyPolicyPage() {
       const template = document.createElement('template');
@@ -106,7 +106,7 @@ export default class TermsAndPrivacy {
               <a href="mailto: info@cyberbotics.com">info@cyberbotics.com</a>.</p>
           </div>
         </section>`;
-      project.setup('privacy-policy', [], template.content);
+      project.setup('privacy-policy', template.content);
     }
   }
 }

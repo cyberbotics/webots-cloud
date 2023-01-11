@@ -19,7 +19,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
         .then(function(response) {
           return response.json();
         })
@@ -38,7 +38,7 @@ export default class Project extends User {
             } else {
               fetch('/ajax/user/authenticate.php', {
                 method: 'post',
-                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})
+                body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
               })
                 .then(function(response) {
                   return response.json();
@@ -118,12 +118,15 @@ export default class Project extends User {
   runWebotsView(data, version) {
     let that = this;
     const url = this.findGetParameter('url');
-    if (!version || version === 'undefined') {
+    if (!version || version === undefined) {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
         version = data ? data.version : this.findGetParameter('version');
     }
+
+    if (version === undefined)
+      console.error('version is undefined');
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
@@ -222,7 +225,7 @@ export default class Project extends User {
     }
   }
   _updateSimulationViewCount(url) {
-    fetch('/ajax/project/list.php', {method: 'post', body: JSON.stringify({url: url})})
+    fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {
         return response.json();
       })
