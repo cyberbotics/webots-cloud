@@ -1580,54 +1580,55 @@ document.addEventListener('DOMContentLoaded', function() {
           line.startsWith('#template language:') || line.startsWith('# documentation url:') ||
           line.startsWith('#documentation url:'))
           continue;
-
-        console.log(licenseUrl)
-        const infoGrid = document.createElement('div');
-        infoGrid.className = 'proto-info-array';
-
-        const versionP = document.createElement('p');
-        versionP.textContent = 'Version:';
-        versionP.style.gridRow = 1;
-        versionP.style.gridColumn = 1;
-        infoGrid.appendChild(versionP);
-
-        const versionContentP = document.createElement('p');
-        versionContentP.textContent = version;
-        versionContentP.style.gridRow = 1;
-        versionContentP.style.gridColumn = 2;
-        infoGrid.appendChild(versionContentP);
-
-        const licenseP = document.createElement('p');
-        licenseP.textContent = 'License:';
-        licenseP.style.gridRow = 2;
-        licenseP.style.gridColumn = 1;
-        infoGrid.appendChild(licenseP);
-
-        const licenseContentP = document.createElement('p');
-        licenseContentP.textContent = license;
-        licenseContentP.style.gridRow = 2;
-        licenseContentP.style.gridColumn = 2;
-        infoGrid.appendChild(licenseContentP);
-
-        const sourceP = document.createElement('p');
-        sourceP.textContent = 'Source:';
-        sourceP.style.gridRow = 3;
-        sourceP.style.gridColumn = 1;
-        infoGrid.appendChild(sourceP);
-
-        const sourceContentP = document.createElement('a');
-        sourceContentP.href = protoURl;
-        sourceContentP.target = '_blank';
-        sourceContentP.style.gridRow = 3;
-        sourceContentP.style.gridColumn = 2;
-        infoGrid.appendChild(sourceContentP);
-
-        if (generateAll) {
-
-        }
-
-        return infoGrid;
       }
+
+      const infoGrid = document.createElement('div');
+      infoGrid.className = 'proto-info-array';
+
+      const versionP = document.createElement('p');
+      versionP.textContent = 'Version:';
+      versionP.style.gridRow = 1;
+      versionP.style.gridColumn = 1;
+      infoGrid.appendChild(versionP);
+
+      const versionContentP = document.createElement('p');
+      versionContentP.textContent = version;
+      versionContentP.style.gridRow = 1;
+      versionContentP.style.gridColumn = 2;
+      infoGrid.appendChild(versionContentP);
+
+      const licenseP = document.createElement('p');
+      licenseP.textContent = 'License:';
+      licenseP.style.gridRow = 2;
+      licenseP.style.gridColumn = 1;
+      infoGrid.appendChild(licenseP);
+
+      const licenseContentA = document.createElement('a');
+      licenseContentA.textContent = license;
+      licenseContentA.href = licenseUrl;
+      licenseContentA.target = '_blank';
+      licenseContentA.style.gridRow = 2;
+      licenseContentA.style.gridColumn = 2;
+      infoGrid.appendChild(licenseContentA);
+
+      const sourceP = document.createElement('p');
+      sourceP.textContent = 'Source:';
+      sourceP.style.gridRow = 3;
+      sourceP.style.gridColumn = 1;
+      infoGrid.appendChild(sourceP);
+
+      const sourceContentA = document.createElement('a');
+      sourceContentA.href = protoURl;
+      sourceContentA.textContent = protoURl;
+      sourceContentA.target = '_blank';
+      sourceContentA.style.gridRow = 3;
+      sourceContentA.style.gridColumn = 2;
+      infoGrid.appendChild(sourceContentA);
+
+      if (generateAll) {
+      }
+
+      return infoGrid;
     }
 
     function mainContainer(project) {
