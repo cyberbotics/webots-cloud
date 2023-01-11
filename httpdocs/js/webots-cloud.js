@@ -1581,7 +1581,7 @@ document.addEventListener('DOMContentLoaded', function() {
           line.startsWith('#documentation url:'))
           continue;
 
-        console.log(proto)
+        console.log(licenseUrl)
         const infoGrid = document.createElement('div');
         infoGrid.className = 'proto-info-array';
 
@@ -1615,8 +1615,9 @@ document.addEventListener('DOMContentLoaded', function() {
         sourceP.style.gridColumn = 1;
         infoGrid.appendChild(sourceP);
 
-        const sourceContentP = document.createElement('p');
-        sourceContentP.textContent = protoURl;
+        const sourceContentP = document.createElement('a');
+        sourceContentP.href = protoURl;
+        sourceContentP.target = '_blank';
         sourceContentP.style.gridRow = 3;
         sourceContentP.style.gridColumn = 2;
         infoGrid.appendChild(sourceContentP);
