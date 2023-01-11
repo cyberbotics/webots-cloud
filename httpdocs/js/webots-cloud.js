@@ -1537,8 +1537,7 @@ document.addEventListener('DOMContentLoaded', function() {
       loadMd(url);
     }
 
-    function loadMd(protoUrl) {
-      let url = protoUrl;
+    function loadMd(url) {
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
         url = url.replace('blob/', '');
@@ -1546,7 +1545,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
-      fetch(protoUrl).then(response => response.text())
+      fetch(url).then(response => response.text())
         .then(content => {
           fetch(mdUrl)
             .then(response => response.text())
