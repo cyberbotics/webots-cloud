@@ -1760,9 +1760,9 @@ document.addEventListener('DOMContentLoaded', function() {
           file += '```\n\n';
 
           if (describedField) {
-            file += '### `' + protoName + '` Field Summary\n\n';
+            file += '### ' + protoName + ' Field Summary\n\n';
             for (const [fieldType, fieldName, fielDescription] of describedField) {
-              file += '- ' + fieldName + ' : ' + fielDescription;
+              file += '- `' + fieldName + '` : ' + fielDescription;
               const isMFField = fieldType.startsWith('MF');
               if (fieldEnumeration.has(fieldName)) {
                 const values = fieldEnumeration.get(fieldName);
