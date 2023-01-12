@@ -1555,8 +1555,8 @@ document.addEventListener('DOMContentLoaded', function() {
               return response.text();
             })
             .then(content => {
-              let infoArray = createArrayFromProto(protoURl, proto);
-              console.log(content)
+              let results = parseProtoHeader(proto);
+              let infoArray = createArrayFromProto(results[0], results[1], results[2], protoURl);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
@@ -1569,8 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function createArrayFromProto(protoURl, proto, protoName) {
-      // parse header
+    function parseProtoHeader(proto) {
       let version, license, licenseUrl;
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
@@ -1584,6 +1583,10 @@ document.addEventListener('DOMContentLoaded', function() {
           licenseUrl = line.substring(line.indexOf('license url:') + 13);
       }
 
+      return [version, license, licenseUrl];
+    }
+
+    function createArrayFromProto(version, license, licenseUrl, protoURl) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
