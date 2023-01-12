@@ -1450,6 +1450,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return `<img src="images/flags/${country}.svg" width="32">`;
                   }
                   let ranking = 1;
+                  let upper_name = '';
                   for (const participant of participants['participants']) {
                     const dateArray = participant.date.split('T');
                     const date = `<span style="font-size:smaller;display:inline-block">` +
@@ -1459,10 +1460,14 @@ document.addEventListener('DOMContentLoaded', function() {
                       : `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
                     const link = participant.private ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const title = (metric == 'ranking')
+                      ? `Game won by ${upper_name} over ${participant.name}`
+                      : `Performance of ${participant.name}`;
+                    upper_name = participant.name;
                     const button = (metric === 'ranking' && ranking === 1)
-                      ? `<span style="font-size:x-large">&#127942;</span>`
+                      ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
-                      `id="${participant.id}-view">View</button>`;
+                      `id="${participant.id}-view" title="${title}">View</button>`;
                     const flag = participant.repository.startsWith(`${username}/`)
                       ? '<span style="font-size:small">demo</span>'
                       : getFlag(participant.country);
