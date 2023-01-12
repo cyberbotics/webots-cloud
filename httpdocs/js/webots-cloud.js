@@ -1709,7 +1709,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const fieldName = match[4];
             const fieldComment = match[7].trim();
             // skip 'Is `NodeType.fieldName`.' descriptions
-            const isComment = fieldComment.match(isDescriptionRegex).length > 0;
+            const isComment = fieldComment.match(isDescriptionRegex);
             if (fieldComment && !isComment) {
               // add link to base nodes:
               for (const baseNode of baseNodeList) {
