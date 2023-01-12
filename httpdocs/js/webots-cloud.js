@@ -1700,6 +1700,7 @@ document.addEventListener('DOMContentLoaded', function() {
           'Material'];
 
         matches = fieldsDefinition.matchAll(cleaningRegex);
+        console.log(matches[0])
         const removeCommentRegex = /\s*(#.*)/ig;
         const removeInitialFieldRegex = /^\s*.*field\s/ig;
         for (const match of matches) {
