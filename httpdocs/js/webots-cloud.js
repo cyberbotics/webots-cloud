@@ -1752,7 +1752,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
 
             file += description + '\n';
-            file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + '.\n\n';
+            file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
             file += '```\n';
             file += protoName + ' {\n';
             file += fields;
