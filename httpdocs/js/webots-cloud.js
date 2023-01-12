@@ -1568,14 +1568,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    const fieldRegex = /\[\n((.*\n)*)\]/ig;
-    const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
-    const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
     function createMdFromProto(protoURl, proto, generateAll) {
       // parse header
       let version, license, licenseUrl;
       let description = '';
+      const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
           break;
@@ -1593,7 +1590,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else {
           let newLine = line.replace('#', '').replace('_', '\\_').trim()
           newLine = newLine.replace(urlRegex, url => `[${url}](${url})`);
-          description += newLine + '\n'
+          description += newLine + '\n';
         }
       }
 
@@ -1651,15 +1648,19 @@ document.addEventListener('DOMContentLoaded', function() {
       infoGrid.appendChild(sourceContentA);
 
       if (generateAll) {
+        const fieldRegex = /\[\n((.*\n)*)\]/ig;
         let matches = proto.matchAll(fieldRegex);
         let fieldsDefinition;
-        let fieldEnumeration = new Map();
+        const fieldEnumeration = new Map();
+        const describedField = [];
+        let fields = '';
         for (const match of matches) {
           fieldsDefinition = match[1];
           break;
         }
 
         // remove enumerations
+        const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
         matches = fieldsDefinition.matchAll(removeEnumRegex);
         for (const match of matches) {
           fieldEnumeration.set(match[4], match[2].slice(1, -1).split(','));
@@ -1673,8 +1674,68 @@ document.addEventListener('DOMContentLoaded', function() {
               fieldsDefinition = fieldsDefinition.replace(match[2], '');
           }
         }
+        const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/ig;
+        matches = fieldsDefinition.matchAll(spacingRegex);
+        let minSpaces = 2000;
+        for (const match of matches) {
+          let spaces = match[2];
+          if (spaces.length < minSpaces)
+            minSpaces = spaces.length;
+        }
+        const spacesToRemove = Math.max(minSpaces - 2, 0);
 
-        console.log(fieldsDefinition)
+        const cleaningRegex = /^\s*(.*?ield)\s+([^ \{]*)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)((\n*(    |  \]).*)*)/ig;
+        const isDescriptionRegex = /Is\s`([a-zA-Z]*).([a-zA-Z]*)`./ig;
+
+        const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
+          'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
+          'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
+          'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
+          'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
+          'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
+          'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
+          'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
+          'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
+          'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
+          'Material'];
+
+        matches = fieldsDefinition.matchAll(cleaningRegex);
+        const removeCommentRegex = /\s*(#.*)/ig;
+        const removeInitialFieldRegex = /^\s*.*field\s/ig;
+        for (const match of matches) {
+          if (!(match[1].includes('hiddenField') || match[1].includes('deprecatedField'))) {
+            const fieldType = match[2];
+            const spaces = match[3];
+            const fieldName = match[4];
+            const fieldComment = match[7].trim();
+            // skip 'Is `NodeType.fieldName`.' descriptions
+            const isComment = fieldComment.match(isDescriptionRegex).length > 0;
+            if (fieldComment && !isComment) {
+              // add link to base nodes:
+              for (const baseNode of baseNodeList) {
+                if (fieldComment.indexOf(baseNode) !== -1) {
+                  const link = ' [' + baseNode + '](https://cyberbotics.com/doc/reference/' + baseNode.toLowerCase()+')';
+                  fieldComment.replace(' ' + baseNode, link);
+                }
+              }
+              describedField.push([fieldType, fieldName, fieldComment]);
+            }
+            // remove the comment
+            let fieldString = match[0];
+            fieldString = fieldString.replace(removeCommentRegex, '');
+            // remove intial '*field' string
+            fieldString = fieldString.replace(removeInitialFieldRegex, '');
+            fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
+
+            // remove unwanted spaces between field type and field name (if needed)
+            if (spacesToRemove > 0)
+              fieldString = fieldString.replace(fieldType + ' '.repeat(spacesToRemove), fieldType);
+
+            fields += fieldString;
+          }
+        }
+
+        console.log(fields)
       }
       return infoGrid;
     }
