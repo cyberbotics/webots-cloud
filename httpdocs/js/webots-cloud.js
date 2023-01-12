@@ -1552,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
               if (!response.ok)
                 throw new Error('');
-              response.text();
+              return response.text();
             })
             .then(content => {
               let infoArray = createArrayFromProto(protoURl, proto);
