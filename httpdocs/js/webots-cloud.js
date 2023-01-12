@@ -1751,7 +1751,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
 
-            file += description + '\n';
+            file += description + '\n\n';
             file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
             file += '```\n';
             file += protoName + ' {\n';
@@ -1760,7 +1760,7 @@ document.addEventListener('DOMContentLoaded', function() {
             file += '```\n\n';
 
             if (describedField) {
-              file += ' ### ' + protoName + ' Field Summary\n\n';
+              file += '### ' + protoName + ' Field Summary\n\n';
               for (const [fieldType, fieldName, fielDescription] of describedField) {
                 file += '- ' + fieldName + ' : ' + fielDescription;
                 const isMFField = fieldType.startsWith('MF');
