@@ -1562,13 +1562,13 @@ document.addEventListener('DOMContentLoaded', function() {
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(protoURl, proto, protoName, true);
+                  createMdFromProto(protoURl, proto, protoName, prefix, true);
                 });
             });
         });
     }
-    
-    function createMdFromProto(protoURl, proto, protoName, generateAll) {
+
+    function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
       // parse header
       let version, license, licenseUrl;
       let description = '';
@@ -1576,7 +1576,7 @@ document.addEventListener('DOMContentLoaded', function() {
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
           break;
-    
+
         if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
           version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
         else if (line.startsWith('# license:') || line.startsWith('#license:'))
@@ -1593,17 +1593,17 @@ document.addEventListener('DOMContentLoaded', function() {
           description += newLine + '\n';
         }
       }
-    
+
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
-    
+
       const versionP = document.createElement('p');
       versionP.textContent = 'Version';
       versionP.className = 'info-array-cell first-column-cell first-row-cell';
       versionP.style.gridRow = 1;
       versionP.style.gridColumn = 1;
       infoGrid.appendChild(versionP);
-    
+
       const versionContentA = document.createElement('a');
       versionContentA.textContent = version;
       versionContentA.href = 'https://github.com/cyberbotics/webots/releases/tag/' + version;
@@ -1612,7 +1612,7 @@ document.addEventListener('DOMContentLoaded', function() {
       versionContentA.style.gridRow = 1;
       versionContentA.style.gridColumn = 2;
       infoGrid.appendChild(versionContentA);
-    
+
       const licenseP = document.createElement('p');
       licenseP.textContent = 'License';
       licenseP.className = 'info-array-cell first-column-cell';
@@ -1620,7 +1620,7 @@ document.addEventListener('DOMContentLoaded', function() {
       licenseP.style.gridColumn = 1;
       licenseP.style.backgroundColor = '#fafafa';
       infoGrid.appendChild(licenseP);
-    
+
       const licenseContentA = document.createElement('a');
       licenseContentA.textContent = license;
       licenseContentA.className = 'info-array-cell last-column-cell';
@@ -1630,14 +1630,14 @@ document.addEventListener('DOMContentLoaded', function() {
       licenseContentA.style.gridRow = 2;
       licenseContentA.style.gridColumn = 2;
       infoGrid.appendChild(licenseContentA);
-    
+
       const sourceP = document.createElement('p');
       sourceP.textContent = 'Source';
       sourceP.className = 'info-array-cell first-column-cell';
       sourceP.style.gridRow = 3;
       sourceP.style.gridColumn = 1;
       infoGrid.appendChild(sourceP);
-    
+
       const sourceContentA = document.createElement('a');
       sourceContentA.href = protoURl;
       sourceContentA.className = 'info-array-cell last-column-cell';
@@ -1646,7 +1646,7 @@ document.addEventListener('DOMContentLoaded', function() {
       sourceContentA.style.gridRow = 3;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
-    
+
       if (generateAll) {
         const fieldRegex = /\[\n((.*\n)*)\]/mg;
         let matches = proto.matchAll(fieldRegex);
@@ -1659,7 +1659,7 @@ document.addEventListener('DOMContentLoaded', function() {
           fieldsDefinition = match[1];
           break;
         }
-    
+
         // remove enumerations
         const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
         matches = fieldsDefinition.matchAll(removeEnumRegex);
@@ -1675,7 +1675,7 @@ document.addEventListener('DOMContentLoaded', function() {
               fieldsDefinition = fieldsDefinition.replace(match[2], '');
           }
         }
-    
+
         const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
         matches = fieldsDefinition.matchAll(spacingRegex);
         let minSpaces = 2000;
@@ -1685,10 +1685,10 @@ document.addEventListener('DOMContentLoaded', function() {
             minSpaces = spaces.length;
         }
         const spacesToRemove = Math.max(minSpaces - 2, 0);
-    
+
         const cleaningRegex = /^\s*(.*?ield)\s+([^ \{]*)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)((\n*( {4}| {2}\]).*)*)/gm;
         const isDescriptionRegex = /Is\s`([a-zA-Z]*).([a-zA-Z]*)`./g;
-    
+
         const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
           'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
           'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
@@ -1794,6 +1794,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 file += '\n\n';
               }
             }
+            populateProtoViewDiv(file, prefix, infoGrid);
             console.log(file)
           });
       }
