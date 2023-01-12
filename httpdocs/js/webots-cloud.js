@@ -1556,6 +1556,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(content => {
               let infoArray = createArrayFromProto(protoURl, proto);
+              console.log(content)
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
