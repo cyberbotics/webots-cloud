@@ -1701,7 +1701,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //remove enumeration
         matches = fieldsDefinition.matchAll(cleaningRegex);
-        console.log(matches.next().hasNext())
+        console.log([...matches])
         const removeCommentRegex = /\s*(#.*)/ig;
         const removeInitialFieldRegex = /^\s*.*field\s/ig;
         for (const match of matches) {
