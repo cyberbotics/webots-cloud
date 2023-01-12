@@ -1699,8 +1699,9 @@ document.addEventListener('DOMContentLoaded', function() {
           'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
           'Material'];
 
+        //remove enumeration
         matches = fieldsDefinition.matchAll(cleaningRegex);
-        console.log(matches[0])
+        console.log(matches)
         const removeCommentRegex = /\s*(#.*)/ig;
         const removeInitialFieldRegex = /^\s*.*field\s/ig;
         for (const match of matches) {
