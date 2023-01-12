@@ -1556,7 +1556,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(content => {
               let results = parseProtoHeader(proto);
-              let infoArray = createArrayFromProto(results[0], results[1], results[2], protoURl);
+              let infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
@@ -1586,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return [version, license, licenseUrl];
     }
 
-    function createArrayFromProto(version, license, licenseUrl, protoURl) {
+    function createProtoArray(version, license, licenseUrl, protoURl) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1644,84 +1644,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
-      // parse header
-      let version, license, licenseUrl;
-      let description = '';
-      const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-      for (const line of proto.split('\n')) {
-        if (!line.startsWith('#'))
-          break;
-
-        if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
-          version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
-        else if (line.startsWith('# license:') || line.startsWith('#license:'))
-          license = line.substring(line.indexOf('license:') + 9);
-        else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
-          licenseUrl = line.substring(line.indexOf('license url:') + 13);
-        else if (line.startsWith('#tags:') || line.startsWith('# tags:') || line.startsWith('# template language:') ||
-          line.startsWith('#template language:') || line.startsWith('# documentation url:') ||
-          line.startsWith('#documentation url:'))
-          continue;
-        else {
-          let newLine = line.replace('#', '').replace('_', '\\_').trim()
-          newLine = newLine.replace(urlRegex, url => `[${url}](${url})`);
-          description += newLine + '\n';
-        }
-      }
-
-      const infoGrid = document.createElement('div');
-      infoGrid.className = 'proto-info-array';
-
-      const versionP = document.createElement('p');
-      versionP.textContent = 'Version';
-      versionP.className = 'info-array-cell first-column-cell first-row-cell';
-      versionP.style.gridRow = 1;
-      versionP.style.gridColumn = 1;
-      infoGrid.appendChild(versionP);
-
-      const versionContentA = document.createElement('a');
-      versionContentA.textContent = version;
-      versionContentA.href = 'https://github.com/cyberbotics/webots/releases/tag/' + version;
-      versionContentA.target = '_blank';
-      versionContentA.className = 'info-array-cell last-column-cell first-row-cell';
-      versionContentA.style.gridRow = 1;
-      versionContentA.style.gridColumn = 2;
-      infoGrid.appendChild(versionContentA);
-
-      const licenseP = document.createElement('p');
-      licenseP.textContent = 'License';
-      licenseP.className = 'info-array-cell first-column-cell';
-      licenseP.style.gridRow = 2;
-      licenseP.style.gridColumn = 1;
-      licenseP.style.backgroundColor = '#fafafa';
-      infoGrid.appendChild(licenseP);
-
-      const licenseContentA = document.createElement('a');
-      licenseContentA.textContent = license;
-      licenseContentA.className = 'info-array-cell last-column-cell';
-      licenseContentA.href = licenseUrl;
-      licenseContentA.target = '_blank';
-      licenseContentA.style.backgroundColor = '#fafafa';
-      licenseContentA.style.gridRow = 2;
-      licenseContentA.style.gridColumn = 2;
-      infoGrid.appendChild(licenseContentA);
-
-      const sourceP = document.createElement('p');
-      sourceP.textContent = 'Source';
-      sourceP.className = 'info-array-cell first-column-cell';
-      sourceP.style.gridRow = 3;
-      sourceP.style.gridColumn = 1;
-      infoGrid.appendChild(sourceP);
-
-      const sourceContentA = document.createElement('a');
-      sourceContentA.href = protoURl;
-      sourceContentA.className = 'info-array-cell last-column-cell';
-      sourceContentA.textContent = protoURl;
-      sourceContentA.target = '_blank';
-      sourceContentA.style.gridRow = 3;
-      sourceContentA.style.gridColumn = 2;
-      infoGrid.appendChild(sourceContentA);
-
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition;
@@ -1823,8 +1745,12 @@ document.addEventListener('DOMContentLoaded', function() {
               break;
             }
           }
-          const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
 
+          if (!protoNode)
+            return;
+
+          const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
+          const description = protoNode.getElementsByTagName('description')[0].textContent;
           file += description + '\n\n';
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
           file += '```\n';
@@ -1868,7 +1794,17 @@ document.addEventListener('DOMContentLoaded', function() {
               file += '\n\n';
             }
           }
-          populateProtoViewDiv(file, prefix, infoGrid);
+
+          const license = protoNode.getElementsByTagName('license')[0].textContent;
+          const licenseUrl = protoNode.getElementsByTagName('license-url')[0].textContent;
+          let version;
+          for (const line of proto.split('\n')) {
+            if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM')) {
+              version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
+              break;
+            }
+          }
+          populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
     }
 
