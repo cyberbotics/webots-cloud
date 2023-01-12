@@ -1703,6 +1703,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const removeCommentRegex = /\s*(#.*)/ig;
         const removeInitialFieldRegex = /^\s*.*field\s/ig;
         for (const match of matches) {
+          console.log(match[0])
           if (!(match[1].includes('hiddenField') || match[1].includes('deprecatedField'))) {
             const fieldType = match[2];
             const spaces = match[3];
