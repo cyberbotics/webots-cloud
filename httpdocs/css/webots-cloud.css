@@ -269,7 +269,6 @@ nav.pagination > a[disabled] {
 
 .thumbnail-image {
   height: 180px;
-  width: 320px;
   object-fit: cover;
   box-shadow: 0 0 10px black;
   z-index: 2;
@@ -308,7 +307,6 @@ nav.pagination > a[disabled] {
 
   .thumbnail-image {
     height: 144px;
-    width: 256px;
   }
 }
 
