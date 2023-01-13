@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (proto) {
         const prefix = data.url.substr(0, data.url.lastIndexOf('/') + 1).replace('github.com',
           'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
-        const imageName = data.url.substr(data.url.lastIndexOf('/') + 1).replace('.proto', 'png');
+        const imageName = data.url.substr(data.url.lastIndexOf('/') + 1).replace('.proto', '.png');
         thumbnailUrl = prefix + imageName;
       }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
