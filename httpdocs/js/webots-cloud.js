@@ -1701,10 +1701,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // remove enumeration
       matches = fieldsDefinition.matchAll(cleaningRegex);
-      console.log(fieldsDefinition)
       const removeCommentRegex = /\s*(#.*)/mg;
       const removeInitialFieldRegex = /^\s*.*field\s/mg;
       for (const match of matches) {
+        console.log(match[0])
         if (!(match[1].includes('hiddenField') || match[1].includes('deprecatedField'))) {
           const fieldType = match[2];
           const fieldName = match[4];
