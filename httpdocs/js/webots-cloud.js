@@ -271,18 +271,18 @@ document.addEventListener('DOMContentLoaded', function() {
         ? `<i${style} class="is-clickable far fa-trash-alt" id="${typeName}-${data.id}" title="${tooltip}"></i>` : '';
       const uploaded = data.uploaded.replace(' ', `<br>${deleteIcon} `);
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
-      let row = `<td class="has-text-centered">${data.viewed}</td>`;
-      row += `<td>
-                <a class="table-title has-text-dark" href="${url}">${title}</a>
-                <div class="thumbnail">
-                  <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
-                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
-                  </div>
-                </div>
-              </td>`;
-      row += `<td><a class="has-text-dark" href="${versionUrl}" target="_blank"
-        title="View Webots release">${data.version}</a></td>`;
+      let row = `
+<td class="has-text-centered">${data.viewed}</td>
+<td>
+  <a class="table-title has-text-dark" href="${url}">${title}</a>
+  <div class="thumbnail">
+    <div class="thumbnail-container">
+      <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+      <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+    </div>
+  </div>
+</td>
+<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>`;
       if (data.duration !== 0)
         row += `<td class="has-text-right">${duration}</td>`;
       row += `<td class="has-text-right">${size}</td><td class="has-text-right is-size-7">${uploaded}</td>`;
@@ -311,37 +311,25 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      let row = `<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${data.viewed}</a>`;
-      row += `<td class="title-cell">
-                <a class="table-title has-text-dark"` +
-        ` href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
-                <div class="thumbnail">
-                  <div class="thumbnail-container">
-                    <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
-                    <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
-                  </div>
-                </div>
-              </td>`;
-      row += `<td>
-                <a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">
-                  ${words[3]}
-                </a>
-              </td>
-              </td>
-              <td class="has-text-centered">
-                <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">
-                  ${data.stars}
-                </a>
-              </td>
-              <td>
-                <a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">
-                  ${data.version}
-                </a>
-              </td>
-              <td class="has-text-right is-size-7" title="Last synchronization with GitHub">
-                ${updated}
-              </td>
-              ${deleteProject}`;
+      const second_column = (data.type === 'competition') ? data.participants : data.viewed;
+      let row = `
+<td class="has-text-centered">
+  <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
+</td>
+<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${second_column}</a></td>
+<td class="title-cell">
+  <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+  <div class="thumbnail">
+    <div class="thumbnail-container">
+      <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
+      <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+    </div>
+  </div>
+</td>
+<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>
+<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>
+<td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>
+${deleteProject}`;
       return row;
     }
 
@@ -413,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Popularity"
+                    <th class="is-clickable column-title" id="scene-sort-viewed" title="Number of views"
                       style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -464,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="animation-sort-viewed" title="Popularity"
+                    <th class="is-clickable column-title" id="animation-sort-viewed" title="Number of views"
                       style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -520,7 +508,12 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="simulation-sort-viewed" title="Popularity"
+                    <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="simulation-sort-viewed" title="Number of runs"
                       style="text-align:center; width: 65px;">
                       <i class="fas fa-chart-column"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -531,11 +524,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </th>
                     <th class="column-title" id="simulation-sort-title" title="Branch or Tag of the simulation">
                       Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="simulation-sort-version" title="Webots release of the simulation"
                       style="width: 85px;">
@@ -576,9 +564,14 @@ document.addEventListener('DOMContentLoaded', function() {
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                    <th class="is-clickable column-title" id="competition-sort-viewed" title="Popularity"
+                    <th class="is-clickable column-title" id="competition-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="competition-sort-participants" title="Number of participants"
                       style="text-align:center; width: 65px;">
-                      <i class="fas fa-chart-column"></i>
+                      <i class="fa-solid fa-users"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="competition-sort-title" title="Title of the competition"
@@ -587,11 +580,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </th>
                     <th class="column-title" id="competition-sort-title" title="Branch or Tag of the competition">
                       Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="competition-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="competition-sort-version" title="Webots release of the competition"
                       style="width: 85px;">
