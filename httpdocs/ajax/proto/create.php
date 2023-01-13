@@ -54,7 +54,7 @@ while ($line !== false) {
       if (strtolower(substr($line, 0, 9)) !== '# license' && strtolower(substr($line, 0, 8)) !== '#license' &&
           strtolower(substr($line, 0, 10)) !== '# template' && strtolower(substr($line, 0, 9)) !== '#template' && substr($line, 0, 5) !== '#VRML') {
         if(strtolower(substr($line, 0, 6)) !== '# tags' && strtolower(substr($line, 0, 5)) !== '#tags') {
-          if (strpos($line, 'deprecated' || strpos($line, 'hidden')
+          if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
             error("This proto is either deprecated or hidden and should not be added.");
         } else if ($description !== '')
           $description .= "\n";
