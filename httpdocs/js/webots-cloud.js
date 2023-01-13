@@ -1766,9 +1766,9 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const [fieldType, fieldName, fielDescription] of describedField) {
               file += '- `' + fieldName + '` : ' + fielDescription;
               const isMFField = fieldType.startsWith('MF');
-              console.log(fieldEnumeration)
               if (fieldEnumeration.has(fieldName)) {
                 const values = fieldEnumeration.get(fieldName);
+                console.log(values)
                 if (isMFField)
                   file += ' This field accept a list of ';
                 else {
