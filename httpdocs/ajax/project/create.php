@@ -104,7 +104,7 @@ if ($mysqli->affected_rows != 1) {
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
-$condition = "branch=\"$branch\"";
+$condition = "type=\"$type\" AND branch=\"$branch\"";
 if ($search != "")
   $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
 
