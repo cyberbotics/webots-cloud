@@ -1750,7 +1750,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
 
           const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
-          const description = protoNode.getElementsByTagName('description')[0].innerHTML.replace('\\n', '</br>');
+          const description = protoNode.getElementsByTagName('description')[0].textContent.replace('\\n', '');
           file += description + '\n\n';
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
           file += '```\n';
