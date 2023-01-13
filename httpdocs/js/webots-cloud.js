@@ -1785,6 +1785,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     else
                       file += '`' + value.trim() + '`.';
                   } else if (i === values.length - 2) {
+                    console.log(value)
                     if (values.length === 2)
                       file += '`' + value.trim() + '` and ';
                     else
