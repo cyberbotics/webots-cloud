@@ -1751,6 +1751,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
           const description = protoNode.getElementsByTagName('description')[0].textContent.replace('\n', '</br>');
+          console.log(description)
           file += description + '\n\n';
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
           file += '```\n';
