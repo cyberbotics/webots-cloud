@@ -1701,7 +1701,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // remove enumeration
       matches = fieldsDefinition.matchAll(cleaningRegex);
-
+      console.log(fieldsDefinition)
       const removeCommentRegex = /\s*(#.*)/mg;
       const removeInitialFieldRegex = /^\s*.*field\s/mg;
       for (const match of matches) {
@@ -1766,7 +1766,6 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const [fieldType, fieldName, fielDescription] of describedField) {
               file += '- `' + fieldName + '` : ' + fielDescription;
               const isMFField = fieldType.startsWith('MF');
-              console.log(fieldName);
               if (fieldEnumeration.has(fieldName)) {
                 const values = fieldEnumeration.get(fieldName);
                 if (isMFField)
