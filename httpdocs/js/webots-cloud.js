@@ -1723,7 +1723,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let fieldString = match[0];
           fieldString = fieldString.replace(removeCommentRegex, '');
           // remove intial '*field' string
-          fieldString = fieldString.replace(removeInitialFieldRegex, '');
+          fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
           fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
 
           // remove unwanted spaces between field type and field name (if needed)
@@ -1755,7 +1755,7 @@ document.addEventListener('DOMContentLoaded', function() {
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
           file += '```\n';
           file += protoName + ' {\n';
-          file += '  ' + fields;
+          file += fields;
           file += '}\n';
           file += '```\n\n';
 
