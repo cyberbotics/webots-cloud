@@ -1766,6 +1766,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const [fieldType, fieldName, fielDescription] of describedField) {
               file += '- `' + fieldName + '` : ' + fielDescription;
               const isMFField = fieldType.startsWith('MF');
+              console.log(fieldEnumeration)
               if (fieldEnumeration.has(fieldName)) {
                 const values = fieldEnumeration.get(fieldName);
                 if (isMFField)
@@ -1785,7 +1786,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     else
                       file += '`' + value.trim() + '`.';
                   } else if (i === values.length - 2) {
-                    console.log(value)
                     if (values.length === 2)
                       file += '`' + value.trim() + '` and ';
                     else
