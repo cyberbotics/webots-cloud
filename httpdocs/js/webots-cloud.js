@@ -1788,7 +1788,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     else
                       file += '`' + value.trim() + '`, and ';
                   } else
-                    file += '`' + value.trim() + ', ';
+                    file += '`' + value.trim() + '`, ';
                 }
               }
               file += '\n\n';
