@@ -1456,8 +1456,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     const date = `<span style="font-size:smaller;display:inline-block">` +
                       `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`;
                     let tableContent = document.createElement('template');
+                    let performanceString;
+                    if (metric === 'percent')
+                      performanceString = (participant.performance * 100).toFixed(2) + '%';
+                    else if (metric === 'time') {
+                      // we want to display 2341:29:35:07 or 9:24:12 or 2:11
+                      let seconds = participant.performance;
+                      const hours = Math.floor(seconds / 3600);
+                      seconds %= 3600;
+                      const minutes = Math.floor(seconds / 60);
+                      seconds %= 60;
+                      if (hours > 0)
+                        performanceString = String(hours) + ':';
+                      if (hours > 0 || minutes > 0) {
+                        if (hours == 0 && minutes < 10)
+                          performanceString += String(minutes) + ':';
+                        else
+                          performanceString += String(minutes).padStart(2, '0') + ':';
+                      }
+                      if (hours > 0 || minutes > 0 || seconds >= 10)
+                        performanceString += String(Math.floor(seconds)).padStart(2, '0') + ':';
+                      else
+                        performanceString += String(Math.floor(seconds)) + ':';
+                      const cents = Math.floor(100 * (seconds % 1));
+                      performanceString += String(cents).padStart(2, '0');
+                    }
+                    else if (metric === 'distance')
+                      performanceString = participant.performance.toFixed(3) + ' m.';
+                    else if (metric !== 'ranking')
+                      performanceString = participant.performance;
                     const performanceLine = (metric === 'ranking') ? ``
-                      : `<td style="vertical-align:middle;" class="has-text-centered">${participant.performance}</td>`;
+                      : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
                     const link = participant.private ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
                     const title = (metric == 'ranking')
