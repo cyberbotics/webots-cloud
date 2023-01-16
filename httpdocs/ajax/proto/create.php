@@ -60,9 +60,9 @@ while ($line !== false) {
             error("This proto is either deprecated or hidden and should not be added.");
         elseif (strtolower(substr($line, 0, 11)) !== 'license url')
           $license_url = trim(preg_replace("/license url\s*:/", '', $line));
-        elseif (strtolower(substr($line, 0, 7)) !== 'license') {
+        elseif (strtolower(substr($line, 0, 7)) !== 'license')
           $license = trim(preg_replace("/license\s*:/", '', $line));
-        } else {
+        else {
           if ($description !== '')
             $description .= "\n";
           $description .= $mysqli->escape_string(substr($line, 2));
@@ -89,7 +89,7 @@ $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
   $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\")";
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW() "
