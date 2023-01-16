@@ -1662,7 +1662,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
       matches = fieldsDefinition.matchAll(removeEnumRegex);
       for (const match of matches) {
-        console.log(match[0])
         fieldEnumeration.set(match[4], match[2].slice(1, -1).split(','));
         if (match[0].includes('\n')) {
           const string = ' '.repeat(match[0].indexOf(match[2]));
@@ -1673,6 +1672,7 @@ document.addEventListener('DOMContentLoaded', function() {
           else
             fieldsDefinition = fieldsDefinition.replace(match[2], '');
         }
+        console.log(fieldEnumeration)
       }
 
       const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
