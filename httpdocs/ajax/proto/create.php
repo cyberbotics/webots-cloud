@@ -106,6 +106,7 @@ $parent_url = $url;
 while(!in_array($base_type, $base_nodes)) {
   $found_parent = false;
   for($i = 0; $i < count($externprotos); $i++) {
+    error("aie".$externprotos[$i][0]);
     if ($externprotos[$i][0] === $base_type) {
       $found_parent = true;
       $extern_url = $externprotos[$i][1];
@@ -140,7 +141,6 @@ while(!in_array($base_type, $base_nodes)) {
       if ($match)
         $base_type = $match[1];
 
-      error($match[1]);
       break;
     }
   }
