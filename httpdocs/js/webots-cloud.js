@@ -1797,8 +1797,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
 
-          const license = protoNode.getElementsByTagName('license')[0].textContent;
-          const licenseUrl = protoNode.getElementsByTagName('license-url')[0].textContent;
+          const license = protoNode.getElementsByTagName('license')[0]?.textContent;
+          const licenseUrl = protoNode.getElementsByTagName('license-url')[0]?.textContent;
           let version;
           for (const line of proto.split('\n')) {
             if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM')) {
