@@ -106,8 +106,8 @@ $parent_url = $url;
 while(!in_array($base_type, $base_nodes)) {
   $found_parent = false;
   for($i = 0; $i < count($externprotos); $i++) {
-    error("aie".$externprotos[$i][0]);
     if ($externprotos[$i][0] === $base_type) {
+      error("aie".$externprotos[$i][0]);
       $found_parent = true;
       $extern_url = $externprotos[$i][1];
       if (str_starts_with($extern_url, "webots://"))
