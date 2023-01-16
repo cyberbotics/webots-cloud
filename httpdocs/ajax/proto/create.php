@@ -41,27 +41,35 @@ if (!is_array($check_yaml)) {
   error($check_yaml);
 }
 
-# retrieve the title and info (description) from the header.
+# retrieve the title and infos from the header.
 $info = false;
 $title = '';
 $description = '';
+$license = '';
+$license_url = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
 while ($line !== false) {
   $line == trim($line);
   if ($line[0] === '#') {
-      if (strtolower(substr($line, 0, 9)) !== '# license' && strtolower(substr($line, 0, 8)) !== '#license' &&
-          strtolower(substr($line, 0, 10)) !== '# template' && strtolower(substr($line, 0, 9)) !== '#template' && substr($line, 0, 5) !== '#VRML') {
-        if(strtolower(substr($line, 0, 6)) !== '# tags' && strtolower(substr($line, 0, 5)) !== '#tags') {
+      $line = trim(str_replace('#', '', $line));
+      if (strtolower(substr($line, 0, 8)) !== 'template' && substr($line, 0, 4) !== 'VRML') {
+        if(strtolower(substr($line, 0, 4)) !== 'tags') {
           if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
             error("This proto is either deprecated or hidden and should not be added.");
-        } else if ($description !== '')
-          $description .= "\n";
-        $description .= $mysqli->escape_string(substr($line, 2));
+        elseif (strtolower(substr($line, 0, 11)) !== 'license url')
+          $license_url = trim(preg_replace("/license url\s*:/", '', $line));
+        elseif (strtolower(substr($line, 0, 7)) !== 'license') {
+          $license = trim(preg_replace("/license\s*:/", '', $line));
+        } else {
+          if ($description !== '')
+            $description .= "\n";
+          $description .= $mysqli->escape_string(substr($line, 2));
+        }
       }
     }
-  elseif (substr($line, 0, 6) === 'PROTO ')
+  } elseif (substr($line, 0, 6) === 'PROTO ')
     $title = trim(substr($line, 6));
     if (!empty($title) && $title[-1] === '[')
       $title = trim(substr($title, 0, -1));

@@ -86,13 +86,18 @@ ALTER TABLE `server_branch`
 CREATE TABLE `proto` (
   `id` int(11) NOT NULL,
   `url` varchar(2048) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `viewed` int(11) NOT NULL,
   `stars` int(11) NOT NULL,
   `title` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `description` varchar(2048) CHARACTER SET utf8mb4 NOT NULL,
-  `version` varchar(16) NOT NULL,
-  `branch` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `version` varchar(16) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `viewed` int(11) NOT NULL
+  `license_url` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `license` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `needs_robot_ancestor` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `base_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `slot_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `proto`
