@@ -104,8 +104,8 @@ $base_nodes = ['Gyro', 'DistanceSensor', 'Recognition', 'TouchSensor', 'ContactP
 
 while(!in_array($base_type, $base_nodes)) {
   for($i = 0; $i < count($externprotos); $i++) {
-    if ($externprotos[i][0] === $base_type) {
-      $base_type = $externprotos[i][1];
+    if ($externprotos[$i][0] === $base_type) {
+      $base_type = $externprotos[$i][1];
       // $query = "SELECT base_type FROM proto WHERE url=\"$url\";
       break;
     }
