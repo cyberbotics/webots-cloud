@@ -139,6 +139,8 @@ while(!in_array($base_type, $base_nodes)) {
       preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $extern_proto_content, $match);
       if ($match)
         $base_type = $match[1];
+
+      error($match[1]);
       break;
     }
   }
