@@ -118,7 +118,7 @@ while(!in_array($base_type, $base_nodes)) {
       if (!is_array($check_url))
         error($check_url);
       list($extern_username, $extern_repository, $extern_tag_or_branch, $extern_folder, $extern_proto) = $check_url;
-      $extern_proto_url = "https://raw.githubusercontent.com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder/protos/$pextern_protoroto";
+      $extern_proto_url = "https://raw.githubusercontent.com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder/protos/$extern_proto";
       $extern_proto_content = @file_get_contents($extern_proto_url);
       if ($extern_proto_content === false)
         error("Could not retrieve parent proto with url'$extern_url'");
