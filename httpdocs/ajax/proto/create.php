@@ -142,7 +142,7 @@ while(!in_array($base_type, $base_nodes)) {
     }
   }
   if(!$found_parent)
-    error("Seems like the parent node is missing from the EXTERNPROTO.");
+    error("Seems like the parent node is missing from the EXTERNPROTO.$base_type ".$externprotos[$i][0]);
 }
 
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
