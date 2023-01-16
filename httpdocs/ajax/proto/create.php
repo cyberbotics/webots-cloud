@@ -91,7 +91,7 @@ $base_type = '';
 preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $proto_content, $match);
 if ($match)
   $base_type = $match[1];
-$base_proto = $base_type
+$base_proto = $base_type;
 $base_nodes = ['Gyro', 'DistanceSensor', 'Recognition', 'TouchSensor', 'ContactProperties', 'TextureCoordinate', 'Color',
   'Camera', 'Accelerometer', 'Slot', 'Radar', 'Transform', 'Zoom', 'RangeFinder', 'PointSet', 'Capsule', 'Speaker', 'Lens',
   'Viewpoint', 'IndexedFaceSet', 'Solid', 'Group', 'Muscle', 'Lidar', 'InertialUnit', 'DirectionalLight',
