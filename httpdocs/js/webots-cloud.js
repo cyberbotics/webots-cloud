@@ -1699,12 +1699,12 @@ document.addEventListener('DOMContentLoaded', function() {
         'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
         'Material'];
 
-      // remove enumeration
+      // create the final cleaned PROTO header
+      console.log(fieldsDefinition)
       matches = fieldsDefinition.matchAll(cleaningRegex);
       const removeCommentRegex = /\s*(#.*)/mg;
       const removeInitialFieldRegex = /^\s*.*field\s/mg;
       for (const match of matches) {
-        console.log(match[0])
         if (!(match[1].includes('hiddenField') || match[1].includes('deprecatedField'))) {
           const fieldType = match[2];
           const fieldName = match[4];
