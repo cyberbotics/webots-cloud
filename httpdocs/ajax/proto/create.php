@@ -136,14 +136,14 @@ while(!in_array($base_type, $base_nodes)) {
         }
       }
 
-      preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $proto_content, $match);
+      preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $extern_proto_content, $match);
       if ($match)
         $base_type = $match[1];
       break;
     }
   }
   if(!$found_parent)
-    error("Seems like the parent node is missing from the EXTERNPROTO.$base_type ".$externprotos[0][0]);
+    error("Seems like the parent node is missing from the EXTERNPROTO.");
 }
 
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
