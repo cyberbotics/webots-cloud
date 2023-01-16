@@ -65,7 +65,7 @@ while ($line !== false) {
         else {
           if ($description !== '')
             $description .= "\n";
-          $description .= $mysqli->escape_string(substr($line, 2));
+          $description .= $mysqli->escape_string($line);
         }
       }
     }
