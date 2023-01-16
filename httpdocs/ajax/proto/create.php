@@ -50,6 +50,7 @@ $license_url = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
+$externprotos = [];
 while ($line !== false) {
   $line == trim($line);
   if ($line[0] === '#') {
@@ -69,11 +70,47 @@ while ($line !== false) {
         }
       }
     }
+  } elseif (substr($line, 0, 11) === 'EXTERNPROTO') {
+    $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
+    $proto_name = str_replace('.proto"', '', $line);
+    $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
+    array_push($externprotos, [$proto_name, $proto_url]);
   } elseif (substr($line, 0, 6) === 'PROTO ')
     $title = trim(substr($line, 6));
-    if (!empty($title) && $title[-1] === '[')
-      $title = trim(substr($title, 0, -1));
+  if (!empty($title) && $title[-1] === '[')
+    $title = trim(substr($title, 0, -1));
   $line = strtok("\r\n");
+}
+
+$title = $mysqli->escape_string($title);
+$license = $mysqli->escape_string($license);
+$license_url = $mysqli->escape_string($license_url);
+
+$base_type = '';
+preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $proto_content, $match);
+if ($match)
+  $base_type = $match[1];
+
+$base_nodes = ['Gyro', 'DistanceSensor', 'Recognition', 'TouchSensor', 'ContactProperties', 'TextureCoordinate', 'Color',
+  'Camera', 'Accelerometer', 'Slot', 'Radar', 'Transform', 'Zoom', 'RangeFinder', 'PointSet', 'Capsule', 'Speaker', 'Lens',
+  'Viewpoint', 'IndexedFaceSet', 'Solid', 'Group', 'Muscle', 'Lidar', 'InertialUnit', 'DirectionalLight',
+  'HingeJointParameters', 'Compass', 'Normal', 'Propeller', 'Physics', 'RotationalMotor', 'Microphone', 'ImageTexture', 'Fog',
+  'Mesh', 'Track', 'Background', 'LED', 'Material', 'Box', 'PointLight', 'Cylinder', 'Damping', 'GPS', 'Radio', 'Pen', 'Cone',
+  'WorldInfo', 'SpotLight', 'TextureTransform', 'LinearMotor', 'Receiver', 'Coordinate', 'Hinge2JointParameters', 'CadShape',
+  'LensFlare', 'TrackWheel', 'PBRAppearance', 'Shape', 'Altimeter', 'PositionSensor', 'Connector', 'HingeJoint', 'Plane',
+  'Brake', 'Appearance', 'ElevationGrid', 'BallJointParameters', 'Fluid', 'Robot', 'SolidReference', 'Sphere', 'Skin',
+  'IndexedLineSet', 'ImmersionProperties', 'JointParameters', 'Focus', 'SliderJoint', 'Emitter', 'Hinge2Joint', 'BallJoint',
+  'LightSensor', 'Display', 'Billboard', 'Charger'];
+
+while(!in_array($base_type, $base_nodes)) {
+  for($i = 0; $i < count($externprotos); $i++) {
+    if ($externprotos[i][0] === $base_type) {
+      $base_type = $externprotos[i][1];
+      // $query = "SELECT base_type FROM proto WHERE url=\"$url\";
+      break;
+    }
+  }
+  break;
 }
 
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
@@ -88,8 +125,8 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\")";
+  $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, base_type) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\", \"$base_type\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW() "
