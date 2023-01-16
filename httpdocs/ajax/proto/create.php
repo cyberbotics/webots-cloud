@@ -107,7 +107,6 @@ while(!in_array($base_type, $base_nodes)) {
   $found_parent = false;
   for($i = 0; $i < count($externprotos); $i++) {
     if ($externprotos[$i][0] === $base_type) {
-      error("aie".$externprotos[$i][0]);
       $found_parent = true;
       $extern_url = $externprotos[$i][1];
       if (str_starts_with($extern_url, "webots://"))
@@ -135,6 +134,7 @@ while(!in_array($base_type, $base_nodes)) {
           $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
           array_push($externprotos, [$proto_name, $proto_url]);
         }
+        $line = strtok("\r\n");
       }
 
       preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/", $extern_proto_content, $match);
