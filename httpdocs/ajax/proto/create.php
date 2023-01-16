@@ -110,7 +110,7 @@ while(!in_array($base_type, $base_nodes)) {
       $found_parent = true;
       $extern_url = $externprotos[$i][1];
       if (str_starts_with($extern_url, "webots://"))
-        $extern_url = str_replace("webots://", "https://github.com/cyberbotics/webots/blob/released/");
+        $extern_url = str_replace("webots://", "https://github.com/cyberbotics/webots/blob/released/", $extern_url);
       else if (!srt_starts_with($extern_url, "https"))
         $extern_url = substr($parent_url, 0, strrpos($parent_url, '/') + 1).$extern_url;
       $parent_url = $extern_url;
