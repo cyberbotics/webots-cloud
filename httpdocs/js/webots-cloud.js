@@ -1664,15 +1664,16 @@ document.addEventListener('DOMContentLoaded', function() {
       for (const match of matches) {
         fieldEnumeration.set(match[4], match[2].slice(1, -1).split(','));
         if (match[0].includes('\n')) {
+          console.log(fieldsDefinition)
           const string = ' '.repeat(match[0].indexOf(match[2]));
           fieldsDefinition = fieldsDefinition.replace(string + match[4], match[4]);
           fieldsDefinition = fieldsDefinition.replace(match[2] + '\n', '');
+          console.log(fieldsDefinition)
           if (match[2].length < 40)
             fieldsDefinition = fieldsDefinition.replace(match[2], ' '.repeat(match[2].length));
           else
             fieldsDefinition = fieldsDefinition.replace(match[2], '');
         }
-        console.log(fieldEnumeration)
       }
 
       const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
