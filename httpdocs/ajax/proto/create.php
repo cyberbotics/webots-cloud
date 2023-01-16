@@ -123,6 +123,7 @@ while(!in_array($base_type, $base_nodes)) {
       if ($extern_proto_content === false)
         error("Could not retrieve parent proto with url'$extern_url'");
 
+      strtok($extern_proto_content, "\r\n");
       $line = strtok("\r\n");
       $externprotos = [];
       while ($line !== false) {
@@ -142,7 +143,7 @@ while(!in_array($base_type, $base_nodes)) {
     }
   }
   if(!$found_parent)
-    error("Seems like the parent node is missing from the EXTERNPROTO.$base_type ".$externprotos[1][0]);
+    error("Seems like the parent node is missing from the EXTERNPROTO.$base_type ".$externprotos[0][0]);
 }
 
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
