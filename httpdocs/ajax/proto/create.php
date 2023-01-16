@@ -102,6 +102,7 @@ $base_nodes = ['Gyro', 'DistanceSensor', 'Recognition', 'TouchSensor', 'ContactP
   'IndexedLineSet', 'ImmersionProperties', 'JointParameters', 'Focus', 'SliderJoint', 'Emitter', 'Hinge2Joint', 'BallJoint',
   'LightSensor', 'Display', 'Billboard', 'Charger'];
 
+# search for the base type
 $parent_url = $url;
 while(!in_array($base_type, $base_nodes)) {
   $found_parent = false;
@@ -148,6 +149,11 @@ while(!in_array($base_type, $base_nodes)) {
     error("Seems like the parent node is missing from the EXTERNPROTO.");
 }
 
+$device_regex = "/(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/"
+$needs_robot_ancestor = 0;
+if in_array($base_type, ['Solid', 'Transform', 'Group'])
+  $needs_robot_ancestor = $preg_match($device_regex, $proto_content);
+
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
@@ -160,8 +166,8 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, base_type) "
-          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\", \"$base_type\")";
+  $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, base_type, needs_robot_ancestor) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\", \"$base_type\", \"$needs_robot_ancestor\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW() "
