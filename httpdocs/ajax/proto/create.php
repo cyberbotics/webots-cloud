@@ -58,9 +58,9 @@ while ($line !== false) {
         if(strtolower(substr($line, 0, 4)) !== 'tags') {
           if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
             error("This proto is either deprecated or hidden and should not be added.");
-        elseif (strtolower(substr($line, 0, 11)) !== 'license url')
+        elseif (strtolower(substr($line, 0, 11)) === 'license url')
           $license_url = trim(preg_replace("/license url\s*:/", '', $line));
-        elseif (strtolower(substr($line, 0, 7)) !== 'license')
+        elseif (strtolower(substr($line, 0, 7)) === 'license')
           $license = trim(preg_replace("/license\s*:/", '', $line));
         else {
           if ($description !== '')
