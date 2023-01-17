@@ -905,7 +905,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const url = event.target.getAttribute('data-url');
       fetch(script, {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
         .then(function(response) {
-          console.log(response.text())
           return response.json();
         })
         .then(function(data) {
@@ -1191,7 +1190,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         fetch('/ajax/proto/create.php', content)
           .then(function(response) {
-            console.log(response.text())
             return response.json();
           })
           .then(function(data) {
