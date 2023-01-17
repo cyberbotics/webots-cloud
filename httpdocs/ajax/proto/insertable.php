@@ -21,7 +21,7 @@
   $query->execute($base_types);
   $result = $query->get_result();
   $protos = array();
-  $row = $result->fetch_assoc()
+  $row = $result->fetch_assoc();
   // while() {
   //   settype($row['id'], 'integer');
   //   settype($row['viewed'], 'integer');
