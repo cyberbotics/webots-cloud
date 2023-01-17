@@ -24,7 +24,7 @@
     $condition .= " AND slot_type=\"".$mysqli->escape_string($slot_type)."\"";
   }
 
-  if (isset($data->skip_no_robot_ancestor && $data->skip_no_robot_ancestor))
+  if (isset($data->skip_no_robot_ancestor) && $data->skip_no_robot_ancestor)
     $condition .= " AND needs_robot_ancestor=0";
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
