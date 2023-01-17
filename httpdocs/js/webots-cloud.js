@@ -1740,7 +1740,6 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(content => {
-          console.log(content)
           const baseType = content.base_type;
           const description = content.description;
           file += description + '\n\n';
