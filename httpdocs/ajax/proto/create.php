@@ -48,6 +48,7 @@ $description = '';
 $license = '';
 $license_url = '';
 $line = strtok($proto_content, "\r\n");
+die($proto_content)
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 $line = strtok("\r\n");
 $externprotos = [];
