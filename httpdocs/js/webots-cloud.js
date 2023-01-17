@@ -1740,7 +1740,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.text();
         })
         .then(content => {
-          const baseType = content.baseType;
+          const baseType = content.base_type;
           const description = content.description;
           file += description + '\n\n';
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
