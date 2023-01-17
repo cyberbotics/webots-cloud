@@ -13,6 +13,8 @@
   $mysqli->set_charset('utf8');
   $base_types = $data->base_types;
   $branch = basename(dirname(__FILE__, 4));
+  if (!$branch)
+    $branch = 'proto';
   $placeholders = implode(',', array_fill(0, count($base_types), '?'));
   $condition = "branch=\"$branch\" and base_type IN ( $placeholders)";
   $query = $mysqli->prepare("SELECT * FROM proto WHERE $condition");
