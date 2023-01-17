@@ -15,9 +15,9 @@
   $branch = basename(dirname(__FILE__, 4));
   if (!$branch)
     $branch = "proto";
-  $condition = "branch=\"$branch\" AND base_type IN (\""
-     . implode("'\",\"", array_map(fn($string): string => mysqli_real_escape_string($mysqli, $string),$base_types))
-     . "\")";
+  $condition = "branch=\"$branch\" AND base_type IN ('"
+     . implode("','", "\"".array_map(fn($string): string => mysqli_real_escape_string($mysqli, $string),$base_types)."\"")
+     . "')";
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
   $row = $result->fetch_assoc();
