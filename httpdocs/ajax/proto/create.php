@@ -106,47 +106,11 @@ $base_nodes = ['Gyro', 'DistanceSensor', 'Recognition', 'TouchSensor', 'ContactP
 # search for the base type
 $parent_url = $url;
 while(!in_array($base_type, $base_nodes)) {
-  $found_parent = false;
-  for($i = 0; $i < count($externprotos); $i++) {
-    if ($externprotos[$i][0] === $base_type) {
-      $found_parent = true;
-      $extern_url = $externprotos[$i][1];
-      if (str_starts_with($extern_url, "webots://"))
-        $extern_url = str_replace("webots://", "https://github.com/cyberbotics/webots/blob/released/", $extern_url);
-      else if (!srt_starts_with($extern_url, "https"))
-        $extern_url = substr($parent_url, 0, strrpos($parent_url, '/') + 1).$extern_url;
-      $parent_url = $extern_url;
-      $check_url = proto_check_url($extern_url);
-      if (!is_array($check_url))
-        error($check_url);
-      list($extern_username, $extern_repository, $extern_tag_or_branch, $extern_folder, $extern_proto) = $check_url;
-      $extern_proto_url = "https://raw.githubusercontent.com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder/protos/$extern_proto";
-      $extern_proto_content = @file_get_contents($extern_proto_url);
-      if ($extern_proto_content === false)
-        error("Could not retrieve parent proto with url'$extern_url'");
-
-      $line = strtok($extern_proto_content, "\r\n");
-      $line = strtok("\r\n");
-      $externprotos = [];
-      while ($line !== false) {
-        $line == trim($line);
-        if (substr($line, 0, 11) === 'EXTERNPROTO') {
-          $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
-          $proto_name = str_replace('.proto"', '', $line);
-          $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
-          array_push($externprotos, [$proto_name, $proto_url]);
-        }
-        $line = strtok("\r\n");
-      }
-
-      preg_match("/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/",
-        $extern_proto_content, $match);
-      if ($match)
-        $base_type = $match[1];
-
-      break;
-    }
-  }
+  $results = get_parent($externprotos, $base_type, $parent_url);
+  $externprotos = $results[0];
+  $base_type = $results[1];
+  $parent_url = $results[3];
+  $found_parent = $results[4];
   if(!$found_parent)
     error("Seems like the parent node is missing from the EXTERNPROTO.");
 }
@@ -173,6 +137,7 @@ if ($base_type === "Slot") {
       $base_proto = $results[1];
       $current_proto_content = $results[2];
       $parent_url = $results[3];
+      $found_parent = $results[4];
       if(!$found_parent)
         error("Seems like the parent node is missing from the EXTERNPROTO.");
     }
@@ -232,6 +197,7 @@ $answer['total'] = $total;
 die(json_encode($answer));
 
 function get_parent($externprotos, $base_proto, $parent_url) {
+  $found_parent = false;
   for($i = 0; $i < count($externprotos); $i++) {
     if ($externprotos[$i][0] === $base_proto) {
       $found_parent = true;
@@ -273,6 +239,6 @@ function get_parent($externprotos, $base_proto, $parent_url) {
       break;
     }
   }
-  return array($externprotos, $base_proto, $current_proto_content, $parent_url);
+  return array($externprotos, $base_proto, $current_proto_content, $parent_url, $found_parent);
 }
 ?>
