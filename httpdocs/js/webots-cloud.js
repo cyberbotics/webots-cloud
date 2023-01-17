@@ -1737,7 +1737,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       fetch('ajax/proto/documentation.php', {method: 'post', body: JSON.stringify({url: protoURl})})
         .then(function(response) {
-          return response.json();
+          return response.text();
         })
         .then(content => {
           console.log(content);
