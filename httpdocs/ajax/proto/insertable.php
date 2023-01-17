@@ -19,7 +19,8 @@
   $query->execute($base_types);
   $result = $query->get_result();
   $protos = array();
-  // while($row = ) {
+  $row = $result->fetch_assoc()
+  // while() {
   //   settype($row['id'], 'integer');
   //   settype($row['viewed'], 'integer');
   //   settype($row['stars'], 'integer');
@@ -28,5 +29,6 @@
   //   $row['version'] = htmlentities($row['version']);
   //   array_push($protos, $row);
   // }
-  die(json_encode($result->fetch_assoc()));
+  $result->free();
+  die(json_encode($branch));
  ?>
