@@ -28,6 +28,5 @@
   //   $row['version'] = htmlentities($row['version']);
   //   array_push($protos, $row);
   // }
-  $result->free();
   die(json_encode($result->fetch_assoc()));
  ?>
