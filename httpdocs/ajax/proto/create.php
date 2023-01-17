@@ -230,7 +230,7 @@ if ($id === 0)
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", \"$license\", \"$base_type\", \"$needs_robot_ancestor\", \"$slot_type\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
-          ."version=\"$version\", updated=NOW() "
+          ."version=\"$version\", updated=NOW(), license_url=\"$license_url\", license=\"$license\", base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\" "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
