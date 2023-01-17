@@ -1740,7 +1740,7 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
         })
         .then(content => {
-          console.log(content);
+          console.log(protoURl);
         });
       fetch('https://cyberbotics.com/wwi/proto/protoVisualizer/temporary-proto-list.xml')
         .then(result => result.text())
