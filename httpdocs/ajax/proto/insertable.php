@@ -19,15 +19,15 @@
   $query->execute($base_types);
   $result = $query->get_result();
   $protos = array();
-  while($row = $result->fetch_assoc()) {
-    settype($row['id'], 'integer');
-    settype($row['viewed'], 'integer');
-    settype($row['stars'], 'integer');
-    $row['title'] = htmlentities($row['title']);
-    $row['description'] = htmlentities($row['description']);
-    $row['version'] = htmlentities($row['version']);
-    array_push($protos, $row);
-  }
+  // while($row = ) {
+  //   settype($row['id'], 'integer');
+  //   settype($row['viewed'], 'integer');
+  //   settype($row['stars'], 'integer');
+  //   $row['title'] = htmlentities($row['title']);
+  //   $row['description'] = htmlentities($row['description']);
+  //   $row['version'] = htmlentities($row['version']);
+  //   array_push($protos, $row);
+  // }
   $result->free();
-  die(json_encode($row));
+  die(json_encode($result->fetch_assoc()));
  ?>
