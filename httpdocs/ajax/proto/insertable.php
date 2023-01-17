@@ -11,7 +11,7 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  $base_types = $mysqli->escape_string($data->base_types);
+  $base_types = $data->base_types;
   $branch = basename(dirname(__FILE__, 4));
   $placeholders = implode(',', array_fill(0, count($base_types), '?'));
   $condition = "branch=\"$branch\" and base_type IN ( $placeholders)";
