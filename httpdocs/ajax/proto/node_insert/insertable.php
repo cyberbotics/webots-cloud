@@ -26,5 +26,5 @@
     $row['version'] = htmlentities($row['version']);
     array_push($protos, $row);
   }
-  die(json_encode($protos));
+  die("Bonjour");
  ?>
