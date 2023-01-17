@@ -15,12 +15,10 @@
   $branch = basename(dirname(__FILE__, 4));
   if (!$branch)
     $branch = "proto";
-  $placeholders = implode(',', array_fill(0, count($base_types), '?'));
-  $condition = "branch=\"$branch\" AND base_type IN ( $placeholders)";
-  $query = $mysqli->prepare("SELECT * FROM proto WHERE $condition");
-  $arr = ('\"Transform\"', '\"Robot\"', '\"Solid\"');
-  $query->execute($arr);
-  $result = $query->get_result();
+  $condition = "branch=\"$branch\" AND base_type IN ('"
+     . implode("','", array_map('mysqli_real_escape_string', $base_types))
+     . "')";
+  $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
   $row = $result->fetch_assoc();
   // while() {
