@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   $branch = basename(dirname(__FILE__, 4));
   $url = $mysqli->escape_string($data->url);
-  $condition = "branch=\"$branch\" AND url=\"$url\"";
+  $condition = "branch=\"$branch\"";
   $query = "SELECT * FROM proto WHERE $condition";
   $result = $mysqli->query($query) or error($mysqli->error);
   die(json_encode($result));
