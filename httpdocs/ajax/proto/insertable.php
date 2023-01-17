@@ -17,8 +17,9 @@
   $condition = "branch=\"$branch\" and base_type IN ( $placeholders)";
   $query = $mysqli->prepare("SELECT * FROM proto WHERE $condition");
   $query->execute($base_types);
+  $result = $query->get_result();
   $protos = array();
-  while($row = $query->fetch_assoc()) {
+  while($row = $result->fetch_assoc()) {
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
     settype($row['stars'], 'integer');
@@ -27,5 +28,6 @@
     $row['version'] = htmlentities($row['version']);
     array_push($protos, $row);
   }
+  $result->free();
   die("Bonjour");
  ?>
