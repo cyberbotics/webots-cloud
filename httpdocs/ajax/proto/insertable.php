@@ -29,5 +29,5 @@
     array_push($protos, $row);
   }
   $result->free();
-  die("Bonjour");
+  die(json_encode($base_types));
  ?>
