@@ -32,5 +32,5 @@
   //   array_push($protos, $row);
   // }
   $result->free();
-  die("\"$branch\"");
+  die(json_encode($row));
  ?>
