@@ -31,5 +31,5 @@
   //   array_push($protos, $row);
   // }
   $result->free();
-  die(json_encode($condition));
+  die(json_encode($row));
  ?>
