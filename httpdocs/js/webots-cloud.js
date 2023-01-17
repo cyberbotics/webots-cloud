@@ -1735,6 +1735,13 @@ document.addEventListener('DOMContentLoaded', function() {
           fields += fieldString + '\n';
         }
       }
+      fetch('ajax/proto/documentation.php', {method: 'post', body: JSON.stringify({url: protoURl})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(content => {
+          console.log(content);
+        });
       fetch('https://cyberbotics.com/wwi/proto/protoVisualizer/temporary-proto-list.xml')
         .then(result => result.text())
         .then(content => {
