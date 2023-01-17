@@ -16,7 +16,7 @@
   if (!$branch)
     $branch = "proto";
   $condition = "branch=\"$branch\" AND base_type IN ('"
-     . implode("','", array_map('mysqli_real_escape_string', $base_types))
+     . implode("','", array_map('mysqli_real_escape_string', $mysqli, $base_types))
      . "')";
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
