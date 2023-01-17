@@ -15,5 +15,5 @@
   $condition = "branch=\"$branch\" AND url=\"$url\"";
   $query = "SELECT * FROM proto WHERE $condition";
   $result = $mysqli->query($query) or error($mysqli->error);
-  die($result->fetch_array(MYSQLI_ASSOC));
+  die(json_encode($result->fetch_array(MYSQLI_ASSOC)));
  ?>
