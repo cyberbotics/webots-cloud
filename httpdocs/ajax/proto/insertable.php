@@ -17,7 +17,7 @@
     $branch = "proto";
   $placeholders = implode(',', array_fill(0, count($base_types), '?'));
   $condition = "branch=\"$branch\" and base_type IN ( $placeholders)";
-  $query = $mysqli->prepare("SELECT * FROM proto WHERE $condition");
+  $query = $mysqli->prepare("SELECT * FROM proto");
   $query->execute($base_types);
   $result = $query->get_result();
   $protos = array();
