@@ -18,8 +18,9 @@
   $condition = "branch=\"$branch\" AND base_type IN ('"
      . implode("','", array_map(fn($string): string => mysqli_real_escape_string($mysqli, $string),$base_types))
      . "')";
-  $slot_type = $data->slotType;
-  if ($slot_type)
+
+  if (isset($data->slotType));
+    $slot_type = $data->slotType;
     $condition .= " AND slot_type=".$mysqli->escape_string($slot_type);
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
