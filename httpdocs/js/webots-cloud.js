@@ -1740,26 +1740,8 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.text();
         })
         .then(content => {
-          console.log(content);
-        });
-      fetch('https://cyberbotics.com/wwi/proto/protoVisualizer/temporary-proto-list.xml')
-        .then(result => result.text())
-        .then(content => {
-          const xml = new window.DOMParser().parseFromString(content, 'text/xml');
-          const protos = xml.getElementsByTagName('proto');
-          let protoNode;
-          for (const proto of protos) {
-            if (proto.getElementsByTagName('name')[0].textContent === protoName) {
-              protoNode = proto;
-              break;
-            }
-          }
-
-          if (!protoNode)
-            return;
-
-          const baseType = protoNode.getElementsByTagName('base-type')[0].textContent;
-          const description = protoNode.getElementsByTagName('description')[0].textContent.replace('\\n', '');
+          const baseType = content.baseType;
+          const description = content.description;
           file += description + '\n\n';
           file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType.toLowerCase() + ').\n\n';
           file += '```\n';
@@ -1804,15 +1786,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
 
-          const license = protoNode.getElementsByTagName('license')[0]?.textContent;
-          const licenseUrl = protoNode.getElementsByTagName('license-url')[0]?.textContent;
-          let version;
-          for (const line of proto.split('\n')) {
-            if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM')) {
-              version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
-              break;
-            }
-          }
+          const license = content.license;
+          const licenseUrl = content.license_url;
+          let version = content.version;
           populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
     }
