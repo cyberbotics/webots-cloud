@@ -18,7 +18,7 @@
   $placeholders = implode(',', array_fill(0, count($base_types), '?'));
   $condition = "branch=\"$branch\" AND base_type IN ( $placeholders)";
   $query = $mysqli->prepare("SELECT * FROM proto WHERE $condition");
-  $arr = ['\"Transform\"', '\"Robot\"', '\"Solid\"'];
+  $arr = ('\"Transform\"', '\"Robot\"', '\"Solid\"');
   $query->execute($arr);
   $result = $query->get_result();
   $protos = array();
