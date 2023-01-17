@@ -21,7 +21,7 @@
 
   if (isset($data->slot_type)){
     $slot_type = $data->slot_type;
-    $condition .= " AND slot_type=".$mysqli->escape_string($slot_type);
+    $condition .= " AND slot_type=\"".$mysqli->escape_string($slot_type)."\"";
   }
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
