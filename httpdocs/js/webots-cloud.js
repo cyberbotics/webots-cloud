@@ -1518,7 +1518,7 @@ ${deleteProject}`;
                             title += counter + ': ' + participant.name + '\n';
                             break;
                           } else if (i == 'R:' + participant.repository) {
-                            title += 'R: ' + participant.name + '\n';
+                            title += 'Running now: ' + participant.name + '\n';
                             break;
                           }
                         counter++;
