@@ -1359,8 +1359,8 @@ ${deleteProject}`;
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
         .then(function(data) {
-          const lastSha = data[0].sha;
-          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
+          project.lastSha = data[0].sha;
+          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
           fetch(rawUrl + '/README.md', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
@@ -1544,14 +1544,9 @@ ${deleteProject}`;
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-          const lastSha = data[0].sha;
-          const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${lastSha}`;
-          const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
-          project.runWebotsView(entryAnimation);
-        });
+      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
+      project.runWebotsView(entryAnimation);
     }
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
