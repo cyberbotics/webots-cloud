@@ -321,8 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (data.type === 'demo') {
         const dotIndex = data.url.lastIndexOf('/') + 1;
         thumbnailUrl = (data.url.slice(0, dotIndex) + '.' + data.url.slice(dotIndex)).replace('github.com',
-          'raw.githubusercontent.com').replace('/blob', '');
-        thumbnailUrl = thumbnailUrl.replace('.wbt', '.jpg');
+          'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       } else if (data.type === 'competition') {
         const [, , , username, repo, , branch] = data.url.split('/');
         thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
@@ -342,12 +341,12 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete row as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const second_column = (data.type === 'competition') ? data.participants : data.viewed;
+      const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
-<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${second_column}</a></td>
+<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">
   <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
   <div class="thumbnail">
@@ -1970,7 +1969,7 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32">`;
                   }
                   let ranking = 1;
-                  let upper_name = '';
+                  let upperName = '';
                   for (const participant of participants['participants']) {
                     const dateArray = participant.date.split('T');
                     const date = `<span style="font-size:smaller;display:inline-block">` +
@@ -1989,7 +1988,7 @@ ${deleteProject}`;
                       if (hours > 0)
                         performanceString = String(hours) + ':';
                       if (hours > 0 || minutes > 0) {
-                        if (hours == 0 && minutes < 10)
+                        if (hours === 0 && minutes < 10)
                           performanceString += String(minutes) + ':';
                         else
                           performanceString += String(minutes).padStart(2, '0') + ':';
@@ -2000,8 +1999,7 @@ ${deleteProject}`;
                         performanceString += String(Math.floor(seconds)) + ':';
                       const cents = Math.floor(100 * (seconds % 1));
                       performanceString += String(cents).padStart(2, '0');
-                    }
-                    else if (metric === 'distance')
+                    } else if (metric === 'distance')
                       performanceString = participant.performance.toFixed(3) + ' m.';
                     else if (metric !== 'ranking')
                       performanceString = participant.performance;
@@ -2009,10 +2007,10 @@ ${deleteProject}`;
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
                     const link = participant.private ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const title = (metric == 'ranking')
-                      ? `Game won by ${upper_name} over ${participant.name}`
+                    const title = (metric === 'ranking')
+                      ? `Game won by ${upperName} over ${participant.name}`
                       : `Performance of ${participant.name}`;
-                    upper_name = participant.name;
+                    upperName = participant.name;
                     const button = (metric === 'ranking' && ranking === 1)
                       ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
@@ -2045,19 +2043,19 @@ ${deleteProject}`;
                       let title = '';
                       let counter = 0;
                       queue.forEach(i => {
-                        for (const participant of participants['participants'])
-                          if (i == participant.repository) {
+                        for (const participant of participants['participants']) {
+                          if (i === participant.repository) {
                             title += counter + ': ' + participant.name + '\n';
                             break;
-                          } else if (i == 'R:' + participant.repository) {
+                          } else if (i === 'R:' + participant.repository) {
                             title += 'Running now: ' + participant.name + '\n';
                             break;
                           }
+                        }
                         counter++;
                       });
                       item.title = title;
                     });
-
                 });
             });
         });
