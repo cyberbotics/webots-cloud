@@ -92,13 +92,13 @@ CREATE TABLE `proto` (
   `description` varchar(2048) CHARACTER SET utf8mb4 NOT NULL,
   `version` varchar(16) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `license_url` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `license` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
-  `needs_robot_ancestor` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `base_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
-  `slot_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `needs_robot_ancestor` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `slot_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `proto`
   ADD PRIMARY KEY (`id`),
