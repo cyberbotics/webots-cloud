@@ -1438,7 +1438,6 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32">`;
                   }
                   let ranking = 1;
-                  let upper_name = '';
                   for (const participant of participants['participants']) {
                     const dateArray = participant.date.split('T');
                     const date = `<span style="font-size:smaller;display:inline-block">` +
@@ -1478,9 +1477,8 @@ ${deleteProject}`;
                     const link = participant.private ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
                     const title = (metric == 'ranking')
-                      ? `Game won by ${upper_name} over ${participant.name}`
+                      ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
-                    upper_name = participant.name;
                     const button = (metric === 'ranking' && ranking === 1)
                       ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
