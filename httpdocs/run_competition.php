@@ -103,7 +103,8 @@ $mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
 $organizer = $mysqli->real_escape_string($organizer);
 $participant = $mysqli->real_escape_string($participant);
 
-$query = "SELECT id FROM project WHERE `url` LIKE 'https://github.com/$organizer/%'";
+$branch = basename(dirname(__FILE__, 2));
+$query = "SELECT id FROM project WHERE branch=\"$branch\" AND `url` LIKE 'https://github.com/$organizer/%'";
 $result = $mysqli->query($query) or die($mysqli->error);
 $project = $result->fetch_array(MYSQLI_ASSOC);
 $project_id = intval($project['id']);
@@ -118,8 +119,8 @@ if (isset($_POST['organizer_repo_token'])) {
   $query = "SELECT participant FROM queue WHERE project=$project_id ORDER BY `date` ASC";  # pick the oldest entry from the queue (FIFO)
   $result = $mysqli->query($query) or die($mysqli->error);
   $next = $result->fetch_array(MYSQLI_ASSOC);
-  $participant = $next['participant'];
   if ($next) {
+    $participant = $next['participant'];
     repository_dispatch($organizer, $participant);
     $query = "UPDATE queue SET participant='R:$participant' WHERE project=$project_id AND participant='$participant'";  # mark it running (R:)
     $mysqli->query($query) or die($mysqli->error);

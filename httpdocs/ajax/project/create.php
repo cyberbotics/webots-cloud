@@ -81,7 +81,18 @@ $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['Us
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
-$participants = 0;
+if ($type === 'demo')
+  $participants = 0;
+else {  # competition
+  $participants_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch/participants.json";
+  $participants_content = @file_get_contents($participants_url);
+  $participants = 0;
+  if ($participants_content) {
+    $json = @json_decode($participants_content);
+    if ($json && isset($json->participants) && is_array($json->participants))
+      $participants = count($json->participants);
+  }
+}
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
 $result = $mysqli->query($query) or error($mysqli->error);
 $row = $result->fetch_array(MYSQLI_ASSOC);
@@ -104,7 +115,7 @@ if ($mysqli->affected_rows != 1) {
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
-$condition = "branch=\"$branch\"";
+$condition = "type=\"$type\" AND branch=\"$branch\"";
 if ($search != "")
   $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
 

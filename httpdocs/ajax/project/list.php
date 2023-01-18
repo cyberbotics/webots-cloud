@@ -24,7 +24,7 @@
     die('{"status":"updated"}');
   }
   $sortBy = isset($data->sortBy) && $data->sortBy != "default" && $data->sortBy != "undefined" ?
-    $mysqli->escape_string($data->sortBy) : "viewed-desc";
+    $mysqli->escape_string($data->sortBy) : "stars-desc";
   $parameter = explode("-", $sortBy)[0];
   $order = explode("-", $sortBy)[1];
   if ($parameter == "title" || $parameter == "Version") {

@@ -19,7 +19,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
         .then(function(response) {
           return response.json();
         })
@@ -38,7 +38,7 @@ export default class Project extends User {
             } else {
               fetch('/ajax/user/authenticate.php', {
                 method: 'post',
-                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})
+                body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
               })
                 .then(function(response) {
                   return response.json();
@@ -126,11 +126,11 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    if (!version || version === 'undefined') {
+    if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'proto.webots.cloud')
         version = 'proto';
       else
-        version = data ? data.version : this.findGetParameter('version');
+        version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
@@ -240,7 +240,7 @@ export default class Project extends User {
   }
   _updateProtoAndSimulationViewCount(url) {
     let phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
-    fetch(phpFile, {method: 'post', body: JSON.stringify({url: url})})
+    fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {
         return response.json();
       })
