@@ -891,7 +891,7 @@ ${deleteProject}`;
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch(script, {method: 'post', body: JSON.stringify({url: url, id: id, search: searchString})})
+      fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
         .then(function(response) {
           return response.json();
         })
