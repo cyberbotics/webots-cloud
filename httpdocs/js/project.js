@@ -150,7 +150,7 @@ export default class Project extends User {
         script.onload = () => {
           this._loadContent(data, resolve);
         };
-        script.onerror = _ => {
+        script.onerror = () => {
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
