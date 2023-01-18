@@ -414,6 +414,7 @@ ${deleteProject}`;
             </li>
             <li data-tab="competition" ${(activeTab === 'competition') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Competition</a>
+            </li>
             <li data-tab="server" ${(activeTab === 'server') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Server</a>
             </li>
