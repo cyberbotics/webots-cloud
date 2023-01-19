@@ -654,6 +654,11 @@ ${deleteProject}`;
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
+                  <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
                     <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
                       style="text-align:center; min-width: 65px;">
                       <i class="fas fa-chart-column"></i>
