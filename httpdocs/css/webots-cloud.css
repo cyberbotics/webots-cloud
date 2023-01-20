@@ -199,6 +199,15 @@ div.table-container {
   max-width: none;
 }
 
+/*  Webots competition preview window  */
+
+#competition-preview-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 10px;
+  overflow: hidden;
+}
+
 /*  Pagination  */
 
 nav.pagination > a[disabled] {
@@ -318,4 +327,9 @@ nav.pagination > a[disabled] {
     overflow: auto;
     overflow-x: auto;
   }
+}
+
+::placeholder {
+  opacity: 1;
+  color: #aaa;
 }
