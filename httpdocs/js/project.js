@@ -238,7 +238,7 @@ export default class Project extends User {
     }
   }
   _updateProtoAndSimulationViewCount(url) {
-    let phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
+    const phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
     fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {
         return response.json();
