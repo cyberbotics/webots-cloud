@@ -1257,23 +1257,7 @@ ${deleteProject}`;
       simulationUrl.searchParams.append('context', 'try');
       const information =
         `<table style="font-size: small">
-        <tbody>
-          <tr>
-            <td>Difficulty level:</td>
-            <td style="font-weight: bold;" id="competition-difficulty"></td>
-          </tr>
-          <tr>
-            <td>Robot:</td>
-            <td style="font-weight: bold;" id="competition-robot"></td>
-          </tr>
-          <tr>
-            <td>Programming language:</td>
-            <td style="font-weight: bold;" id="competition-language"></td>
-          </tr>
-          <tr>
-            <td>Minimum commitment:</td>
-            <td style="font-weight: bold;" id="competition-commitment"></td>
-          </tr>
+        <tbody id="competition-information">
           <tr>
             <td>Number of participants:</td>
             <td style="font-weight: bold;" id="competition-participants"></td>
@@ -1353,6 +1337,7 @@ ${deleteProject}`;
       document.getElementById('submit-entry').onclick = registerPopUp;
       getCompetition(project.competitionUrl);
     }
+
     function getCompetition(url) {
       let metric;
       const [, , , username, repo, , branch] = url.split('/');
@@ -1367,25 +1352,42 @@ ${deleteProject}`;
               var readme = new DOMParser().parseFromString(data, 'text/html');
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
-              const description = readme.getElementById('description').innerText.trim();
-              const information = readme.getElementById('information').innerText.trim().split('\n');
-              const difficulty = information[0].split(':')[1].substring(1);
-              const robot = information[1].split(':')[1].substring(1);
-              const language = information[2].split(':')[1].substring(1);
-              const commitment = information[3].split(':')[1].substring(1);
-
               document.getElementById('competition-title').innerHTML = title;
+              const description = readme.getElementById('description').innerText.trim();
               document.getElementById('competition-information-description').innerHTML = description;
-              document.getElementById('competition-difficulty').innerHTML = difficulty;
-              document.getElementById('competition-robot').innerHTML = robot;
-              document.getElementById('competition-language').innerHTML = language;
-              document.getElementById('competition-commitment').innerHTML = commitment;
-
-              // preview window
-              const reference = rawUrl + '/preview/';
+              const information = readme.getElementById('information').innerText.trim().split('\n');
+              const escapeHtml = (unsafe) => {
+                return unsafe.
+                  replaceAll('&', '&amp;').
+                  replaceAll('<', '&lt;').
+                  replaceAll('>', '&gt;').
+                  replaceAll('"', '&quot;').
+                  replaceAll("'", '&#039;');
+              }
+              for (let i = information.length - 1; i >= 0; i--) {
+                const array = information[i].split(': ');
+                const name = escapeHtml(array[0].substring(2));  // skip "- "
+                const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
+                document.getElementById('competition-information').prepend(tr);
+              }
+              // preview image
+              let div = document.createElement('div');
+              div.classList.add('thumbnail-button-container');
+              let img = document.createElement('img');
+              img.src = rawUrl + '/preview/thumbnail.jpg';
+              div.append(img);
+              let button = document.createElement('button');
+              button.innerHTML = 'Load Animation';
+              div.append(button);
+              button.onclick = function() {
+                document.getElementById('competition-preview-container').innerHTML = '';
+                project.runWebotsView(rawUrl + '/preview/');
+              };
+              document.getElementById('competition-preview-container').append(div);
               if (project && !project.competitionUrl)
                 project.competitionUrl = url;
-              project.runWebotsView(reference);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })

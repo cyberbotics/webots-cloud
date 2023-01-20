@@ -167,7 +167,7 @@ div.table-container {
   display: block;
 }
 
-.tabs > li {
+.tabs>li {
   user-select: none;
 }
 
@@ -186,7 +186,7 @@ div.table-container {
 }
 
 @media only screen and (max-width: 500px) {
-  .panel-tabs > a {
+  .panel-tabs>a {
     font-size: 12px;
     padding: 0.3em;
   }
@@ -210,9 +210,9 @@ div.table-container {
 
 /*  Pagination  */
 
-nav.pagination > a[disabled] {
+nav.pagination>a[disabled] {
   background-color: #fff;
-  border-color:#dbdbdb;
+  border-color: #dbdbdb;
   box-shadow: none;
   opacity: 0.5;
   cursor: not-allowed;
@@ -293,7 +293,30 @@ nav.pagination > a[disabled] {
   z-index: 1;
 }
 
-.table-title:hover ~ .thumbnail {
+.thumbnail-button-container {
+  position: relative;
+}
+
+.thumbnail-button-container button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.thumbnail-button-container button:hover {
+  background-color: black;
+}
+
+.table-title:hover~.thumbnail {
   opacity: 1;
   transition: all 0.2s ease-in-out;
   transition-delay: 0.5s;
