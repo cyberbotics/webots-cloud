@@ -1,4 +1,4 @@
-<?php # This script initializes a new protos
+<?php # This script initializes a new proto
 # exit and error message
 function error($message) {
   die("{\"error\":\"$message\"}");
