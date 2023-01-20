@@ -18,18 +18,18 @@ export default class Router {
         element = element.parentElement;
       if (element.tagName === 'A' && element.href && event.button === 0) { // left click on an <a href=...>
         if (element.origin === document.location.origin &&
-            (element.pathname !== document.location.pathname || document.location.hash === element.hash ||
-              element.hash === '')) {
+          (element.pathname !== document.location.pathname || document.location.hash === element.hash ||
+            element.hash === '')) {
           // same-origin navigation: a link within the site (we are skipping linking to the same page with possibly hashtags)
           event.preventDefault(); // prevent the browser from doing the navigation
           that.load(element.pathname + element.search + element.hash);
           if (element.hash === '')
-            window.scrollTo(0, 0);
+            document.getElementById('scrollable-body').scrollTo(0, 0);
         }
       }
     });
     window.onpopstate = function(event) {
-      that.load(document.location.pathname + document.location.hash, false);
+      that.load(document.location.pathname + document.location.search + document.location.hash, false);
       event.preventDefault();
     };
   }
@@ -37,11 +37,29 @@ export default class Router {
     let navbar = document.querySelector('.navbar');
     if (navbar)
       document.body.removeChild(navbar);
+    let type = document.location.pathname.substring(1, 2);
+    let homeLink = '/';
+    switch (type) {
+      case 'S':
+        homeLink = '/scene';
+        break;
+      case 'A':
+        homeLink = '/animation';
+        break;
+      case 'r':
+        let url = new URL(window.location);
+        type = url.searchParams.get('type');
+        if (type === 'demo')
+          homeLink = '/simulation';
+        else if (type === 'competition')
+          homeLink = '/competition';
+        break;
+    }
     let template = document.createElement('template');
     template.innerHTML =
       `<nav id="navbar" class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/">
+          <a class="navbar-item" href="${homeLink}">
             <img src="https://cyberbotics.com/assets/images/webots.png" /> &nbsp; ${this.title}
           </a>
           <a class="navbar-burger burger" data-target="router-navbar">
@@ -86,7 +104,7 @@ export default class Router {
           const route = that.routes[i];
           if (url.pathname === route.url) {
             if (pushHistory)
-              window.history.pushState(null, name, url.pathname + url.search + url.hash);
+              window.history.pushState(null, '', url.pathname + url.search + url.hash);
             route.setup(that);
             found = true;
             resolve();
@@ -107,7 +125,7 @@ export default class Router {
     let promise = new Promise((resolve, reject) => {
       that.notFound();
       if (pushHistory)
-        window.history.pushState(null, name, url.pathname + url.search + url.hash);
+        window.history.pushState(null, '', url.pathname + url.search + url.hash);
       resolve();
     });
     return promise;
@@ -115,7 +133,7 @@ export default class Router {
   notFound() {
     const pathname = window.location.pathname;
     const url = window.location.origin + pathname;
-    window.history.pushState(null, '404 Not Found', url);
+    window.history.pushState(null, '', url);
     const hostname = document.location.hostname;
     let template = document.createElement('template');
     template.innerHTML =
@@ -128,14 +146,10 @@ export default class Router {
       </div>
       </div>
       </section>`;
-    this.setup('page not found', [], template.content);
+    this.setup('page not found', template.content);
   }
-  setup(title, anchors, content, fullpage = false) {
+  setup(title, content, fullpage = false) {
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
-    let menu = '';
-    for (let i = 0; i < anchors.length; i++)
-      menu += `<a class="navbar-item" href="#${anchors[i].toLowerCase()}">${anchors[i]}</a>`;
-    document.body.querySelector('.navbar-start').innerHTML = menu;
     this.content.innerHTML = '';
     NodeList.prototype.forEach = Array.prototype.forEach;
     let that = this;

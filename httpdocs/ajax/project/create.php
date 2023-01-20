@@ -40,7 +40,7 @@ if (!is_array($check_yaml)) {
   $mysqli->query($query) or error($mysqli->error);
   error($check_yaml);
 }
-list($type, $benchmark, $competition) = $check_yaml;
+list($type, $competition) = $check_yaml;
 
 # retrieve the title and info (description) from the WorldInfo node (assuming the default format from a Webots saved world file)
 $world_info = false;
@@ -81,13 +81,29 @@ $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['Us
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
 $info = json_decode($info_json);
 $stars = intval($info->{'stargazers_count'});
-$competitors = 0;
+if ($type === 'demo')
+  $participants = 0;
+else {  # competition
+  $participants_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch/participants.json";
+  $participants_content = @file_get_contents($participants_url);
+  $participants = 0;
+  if ($participants_content) {
+    $json = @json_decode($participants_content);
+    if ($json && isset($json->participants) && is_array($json->participants))
+      $participants = count($json->participants);
+  }
+}
+$query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
+$result = $mysqli->query($query) or error($mysqli->error);
+$row = $result->fetch_array(MYSQLI_ASSOC);
+$viewed = ($result && $row) ? $row['viewed'] : 0;
+$branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
-  $query = "INSERT IGNORE INTO project(url, stars, title, description, version, competitors, type) "
-          ."VALUES(\"$url\", $stars, \"$title\", \"$description\", \"$version\", $competitors, \"$type\")";
+  $query = "INSERT IGNORE INTO project(url, viewed, stars, title, description, version, participants, type, branch) "
+          ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", $participants, \"$type\", \"$branch\")";
 else
-  $query = "UPDATE project SET stars=$stars, title=\"$title\", description=\"$description\", "
-          ."version=\"$version\", competitors=$competitors, type=\"$type\", updated=NOW() "
+  $query = "UPDATE project SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
+          ."version=\"$version\", participants=$participants, type=\"$type\", updated=NOW() "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
@@ -98,20 +114,26 @@ if ($mysqli->affected_rows != 1) {
 }
 
 # return answer
-$result = $mysqli->query("SELECT COUNT(*) AS count FROM project") or error($mysqli->error);
+$search = isset($data->search) ? $data->search : "";
+$condition = "type=\"$type\" AND branch=\"$branch\"";
+if ($search != "")
+  $condition .= " AND LOWER(title) LIKE LOWER('%$search%')";
+
+$result = $mysqli->query("SELECT COUNT(*) AS count FROM project WHERE $condition") or error($mysqli->error);
 $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
 
 $answer = array();
 $answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
 $answer['url'] = $url;
+$answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
 $answer['title'] = $title;
 $answer['type'] = $type;
 $answer['description'] = $description;
 $answer['version'] = $version;
-$answer['competitors'] = $competitors;
+$answer['participants'] = $participants;
 $answer['updated'] = date("Y-m-d H:i:s");
-$answer['total'] =  $total;
+$answer['total'] = $total;
 die(json_encode($answer));
 ?>

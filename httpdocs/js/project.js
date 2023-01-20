@@ -1,10 +1,12 @@
 import User from './user.js';
 import ModalDialog from './modal_dialog.js';
+import TermsAndPrivacy from './termsAndPrivacy';
 
 export default class Project extends User {
   constructor(title, footer, routes) {
     super(title, footer, routes);
-    this.load();
+    this.termsOfService = new TermsAndPrivacy(routes, this);
+    this.load(null, false);
   }
   static run(title, footer, routes) {
     Project.current = new Project(title, footer, routes);
@@ -17,7 +19,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
-      fetch('/ajax/animation/list.php', {method: 'post', body: JSON.stringify({url: url, type: url.pathname[1]})})
+      fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
         .then(function(response) {
           return response.json();
         })
@@ -34,8 +36,10 @@ export default class Project extends User {
                 uploads.push(data.animation.id);
               window.localStorage.setItem('uploads', JSON.stringify(uploads));
             } else {
-              fetch('/ajax/user/authenticate.php', { method: 'post',
-                body: JSON.stringify({email: that.email, password: that.password, uploads: [data.animation.id]})})
+              fetch('/ajax/user/authenticate.php', {
+                method: 'post',
+                body: JSON.stringify({ email: that.email, password: that.password, uploads: [data.animation.id] })
+              })
                 .then(function(response) {
                   return response.json();
                 })
@@ -53,7 +57,7 @@ export default class Project extends User {
             pushUrl = url.pathname + url.hash;
           }
           if (pushHistory)
-            window.history.pushState(null, name, pushUrl);
+            window.history.pushState(null, '', pushUrl);
           if (data.error) { // no such animation
             that.notFound();
             resolve();
@@ -65,12 +69,12 @@ export default class Project extends User {
     });
     return promise;
   }
-  setup(title, anchors, content, fullpage = false) {
+  setup(title, content, fullpage = false) {
     if (Project.webotsView) {
       Project.webotsView.close();
       document.querySelector('#main-container').classList.remove('webotsView');
     }
-    super.setup(title, anchors, content, fullpage);
+    super.setup(title, content, fullpage);
   }
   findGetParameter(parameterName) {
     let result;
@@ -94,20 +98,31 @@ export default class Project extends User {
       template.innerHTML += `<div><h1 class="subtitle" style="margin:10px 0">${data.title}</h1>${description}</div>`;
     }
     template.innerHTML += '</section>';
-    this.setup(page, [], template.content);
+    this.setup(page, template.content);
     if (!Project.webotsView)
       Project.webotsView = document.querySelector('webots-view');
     else
       document.querySelector('#webots-view-container').appendChild(Project.webotsView);
     document.querySelector('#main-container').classList.add('webotsView');
   }
-  runWebotsView(data, fallbackVersion) {
-    let that = this;
-    let reference;
-    const url = this.findGetParameter('url');
-    const mode = this.findGetParameter('mode');
-    const version = (fallbackVersion && fallbackVersion !== 'undefined') ? fallbackVersion :
-      (data ? data.version : this.findGetParameter('version'));
+  setupPreviewWebotsView() {
+    if (Project.webotsView) {
+      Project.webotsView.close();
+      document.getElementById('competition-preview-container').innerHTML = '';
+      document.getElementById('competition-preview-container').appendChild(Project.webotsView);
+    } else {
+      document.getElementById('competition-preview-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
+      Project.webotsView = document.querySelector('webots-view');
+    }
+  }
+  runWebotsView(data, version) {
+    if (!version || version === undefined) {
+      if (window.location.hostname === 'testing.webots.cloud')
+        version = 'testing';
+      else
+        version = data && data.version ? data.version : this.findGetParameter('version');
+    }
+
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     let promise = new Promise((resolve, reject) => {
@@ -123,66 +138,96 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          if (data) {
-            reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-            that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-            if (data.duration > 0)
-              Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-                this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            else
-              Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-            resolve();
-          } else {
-            that.setupWebotsView('run');
-            let dotIndex = url.lastIndexOf('/') + 1;
-            let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-            Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-              false, undefined, 300, thumbnailUrl);
-            Project.webotsView.showQuit = false;
-            resolve();
-          }
+          this._loadContent(data, resolve);
         };
         script.onerror = () => {
           console.warn(
             'Could not find Webots version, reloading with R2022b instead. This could cause some unwanted behaviour.');
           script.remove();
-          that.runWebotsView(data, 'R2022b') // if release not found, default to R2022b
+          this.runWebotsView(data, 'R2022b'); // if release not found, default to R2022b
         };
         document.body.appendChild(script);
-      } else if (data) {
-        reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
-        that.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
-        if (data.duration > 0)
-          Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
-            this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-        else
-          Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
-      } else {
-        that.setupWebotsView('run');
-        let dotIndex = url.lastIndexOf('/') + 1;
-        let thumbnailUrl = (url.slice(0, dotIndex) + "." + url.slice(dotIndex)).replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
-        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-          false, undefined, 300, thumbnailUrl);
-        Project.webotsView.showQuit = false;
-      }
+      } else
+        this._loadContent(data, resolve);
     });
 
     promise.then(() => {
       if (document.querySelector('#user-menu')) {
-        if (that.email && that.password) {
+        if (this.email && this.password) {
           document.querySelector('#user-menu').style.display = 'auto';
           document.querySelector('#log-in').style.display = 'none';
           document.querySelector('#sign-up').style.display = 'none';
-          that.updateDisplayName();
+          this.updateDisplayName();
         } else {
           document.querySelector('#user-menu').style.display = 'none';
           document.querySelector('#log-in').style.display = 'flex';
           document.querySelector('#sign-up').style.display = 'flex';
         }
-        if (that.email === '!')
-          that.login();
+        if (this.email === '!')
+          this.login();
       }
     });
+  }
+  _loadContent(data, resolve) {
+    // if data empty -> demo or competition simulation
+    // if data is object -> scene or animation
+    const url = this.findGetParameter('url');
+    const mode = this.findGetParameter('mode');
+    const type = this.findGetParameter('type');
+    if (!data)
+      this._updateSimulationViewCount(url);
+    if (type === 'competition') {
+      const [, , , username, repo, , branch] = this.competitionUrl.split('/');
+      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
+      if (data) {
+        // if there is animation data, it is the preview window or a user performance
+        if (data.includes('wb_animation_')) // user performance view
+          this.setupWebotsView('run');
+        else
+          this.setupPreviewWebotsView();
+
+        Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
+          this._isMobileDevice(), `${thumbnailUrl}`);
+        resolve();
+      } else {
+        // if there is no data, it is a testing simulation
+        this.setupWebotsView('run');
+        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
+          false, undefined, 300, thumbnailUrl);
+        Project.webotsView.showQuit = false;
+        Project.webotsView.showWorldSelection = false;
+        resolve();
+      }
+    } else if (data) {
+      // scene or animation
+      const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
+      this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
+      if (data.duration > 0) {
+        Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+          this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      } else
+        Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+      resolve();
+    } else { // demo simulation
+      this.setupWebotsView('run');
+      let dotIndex = url.lastIndexOf('/') + 1;
+      let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
+        .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
+        false, undefined, 300, thumbnailUrl);
+      Project.webotsView.showQuit = false;
+      resolve();
+    }
+  }
+  _updateSimulationViewCount(url) {
+    fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.error)
+          console.warn(data.error);
+      });
   }
   _isMobileDevice() {
     // https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser

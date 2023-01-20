@@ -43,6 +43,19 @@
     }
     return $value;
   }
+
+  function  move_assets($total_assets, $assets_type, $folder) {
+    mkdir("$folder/$assets_type");
+    for($i = 0; $i < $total_assets; $i++) {
+      $target = basename($_FILES[$assets_type]['name'][$i]);
+      if ($target == '')
+        continue;
+      if (!move_uploaded_file($_FILES[$assets_type]['tmp_name'][$i], "$folder/$assets_type/$target"))
+        error("Cannot move $total_assets $target");
+    }
+  }
+
+  header('Content-Type: application/json');
   // connect to database
   require '../../../php/database.php';
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
@@ -51,7 +64,6 @@
   $mysqli->set_charset('utf8');
 
   // check if uploading is done
-  header('Content-Type: application/json');
   $json = file_get_contents('php://input');
   $data = json_decode($json);
   $uploading = (isset($data->uploading)) ? intval($data->uploading) : 1;
@@ -69,9 +81,13 @@
   $thumbnailAvailable = (array_key_exists('thumbnail-file', $_FILES) && $_FILES['thumbnail-file']['tmp_name'] !== '') ? true : false;
   $size += $thumbnailAvailable ? $_FILES['thumbnail-file']['size'] : 0;
 
-  $total = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
-  for($i = 0; $i < $total; $i++)
+  $total_textures = $_FILES['textures']['name'][0] ? count($_FILES['textures']['name']) : 0;
+  for($i = 0; $i < $total_textures; $i++)
     $size += $_FILES['textures']['size'][$i];
+
+  $total_meshes = $_FILES['meshes']['name'][0] ? count($_FILES['meshes']['name']) : 0;
+  for($i = 0; $i < $total_meshes; $i++)
+    $size += $_FILES['meshes']['size'][$i];
   $user = (isset($_POST['user'])) ? intval($_POST['user']) : 0;
 
   // determine title, info and version
@@ -123,8 +139,9 @@
     if ($password['password'] !== $_POST['password'])
       error("Wrong password for user $user.");
   }
-  $query = "INSERT INTO animation(title, description, version, duration, size, user) ".
-           "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user)";
+  $branch = basename(dirname(__FILE__, 4));
+  $query = "INSERT INTO animation(title, description, version, duration, size, user, branch) ".
+           "VALUES(\"$escaped_title\", \"$escaped_description\", \"$escaped_version\", $duration, $size, $user, \"$branch\")";
   $mysqli->query($query) or error($mysqli->error);
   $id = $mysqli->insert_id;
 
@@ -140,22 +157,17 @@
     error('Cannot move scene file.');
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
-  if ($total > 0) {
-    mkdir("$folder/textures");
-    for($i = 0; $i < $total; $i++) {
-      $target = basename($_FILES['textures']['name'][$i]);
-      if ($target == '')
-        continue;
-      if (!move_uploaded_file($_FILES['textures']['tmp_name'][$i], "$folder/textures/$target"))
-        error("Cannot move $total $target");
-    }
-  }
+  if ($total_textures > 0)
+    move_assets($total_textures, "textures", $folder);
+  if ($total_meshes > 0)
+    move_assets($total_meshes, "meshes", $folder);
 
+  $condition = "branch=\"$branch\" AND ";
   if ($type === 'S') // scene
-    $extra_condition = 'duration=0';
+    $condition .= 'duration=0';
   else // animation
-    $extra_condition = 'duration>0';
-  $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $extra_condition") or error($mysqli->error);
+    $condition .= 'duration>0';
+  $result = $mysqli->query("SELECT COUNT(*) AS total FROM animation WHERE $condition") or error($mysqli->error);
   $count = $result->fetch_array(MYSQLI_ASSOC);
   $total = intval($count['total']);
 
