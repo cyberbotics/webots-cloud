@@ -1368,17 +1368,17 @@ ${deleteProject}`;
                 const array = information[i].split(': ');
                 const name = escapeHtml(array[0].substring(2));  // skip "- "
                 const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
-                let tr = document.createElement('tr');
+                const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
                 document.getElementById('competition-information').prepend(tr);
               }
               // preview image
-              let div = document.createElement('div');
+              const div = document.createElement('div');
               div.classList.add('thumbnail-button-container');
-              let img = document.createElement('img');
+              const img = document.createElement('img');
               img.src = rawUrl + '/preview/thumbnail.jpg';
               div.append(img);
-              let button = document.createElement('button');
+              const button = document.createElement('button');
               button.innerHTML = 'Load Animation';
               div.append(button);
               button.onclick = function() {
