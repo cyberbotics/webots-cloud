@@ -196,6 +196,7 @@ export default class Project extends User {
           false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
         Project.webotsView.showWorldSelection = false;
+        Project.webotsView.openMainRobotWindow = true;
         resolve();
       }
     } else if (data) {
