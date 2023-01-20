@@ -192,10 +192,11 @@ export default class Project extends User {
       } else {
         // if there is no data, it is a testing simulation
         this.setupWebotsView('run');
-        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
-          false, undefined, 300, thumbnailUrl);
         Project.webotsView.showQuit = false;
         Project.webotsView.showWorldSelection = false;
+        Project.webotsView.openMainRobotWindow = true;
+        Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
+          false, undefined, 300, thumbnailUrl);
         resolve();
       }
     } else if (data) {
@@ -213,9 +214,9 @@ export default class Project extends User {
       let dotIndex = url.lastIndexOf('/') + 1;
       let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
         .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
+      Project.webotsView.showQuit = false;
       Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,
         false, undefined, 300, thumbnailUrl);
-      Project.webotsView.showQuit = false;
       resolve();
     }
   }
