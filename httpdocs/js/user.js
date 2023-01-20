@@ -5,7 +5,7 @@ import md5 from './md5.min.js';
 export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
-    this.routes.push({url: '/settings', setup: settingsPage});
+    this.routes.push({ url: '/settings', setup: settingsPage });
     let that = this;
     function findGetParameter(parameterName) {
       let result = null;
@@ -161,7 +161,7 @@ export default class User extends Router {
         event.preventDefault();
         choose.querySelector('button[type="submit"]').classList.add('is-loading');
         that.sha256Hash(choose.querySelector('#choose-password').value + that.title).then(function(hash) {
-          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({id: id, token: token, password: hash})})
+          fetch('/ajax/user/password.php', { method: 'post', body: JSON.stringify({ id: id, token: token, password: hash }) })
             .then(function(response) {
               return response.json();
             })
@@ -188,7 +188,7 @@ export default class User extends Router {
       // we need to be logged in to view this page
       if (!that.password || !that.email)
         return false;
-      const emailBeginning = that.email.substring(0, that.email.indexOf("@"));
+      const emailBeginning = that.email.substring(0, that.email.indexOf('@'));
       const template = document.createElement('template');
       const md5sum = md5(that.email.toLowerCase());
       const hostname = document.location.hostname;
@@ -234,7 +234,7 @@ export default class User extends Router {
             </div>
           </div>
         </section>`;
-      that.setup('settings', [], template.content);
+      that.setup('settings', template.content);
       document.querySelector('#change-password').addEventListener('click', function(event) {
         event.target.classList.add('is-loading');
         that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
@@ -246,8 +246,10 @@ export default class User extends Router {
         dialog.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
           dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-          fetch('/ajax/user/delete.php', { method: 'post',
-            body: JSON.stringify({email: that.email, password: that.password})})
+          fetch('/ajax/user/delete.php', {
+            method: 'post',
+            body: JSON.stringify({ email: that.email, password: that.password })
+          })
             .then(function(response) {
               return response.json();
             })
@@ -284,7 +286,7 @@ export default class User extends Router {
     const md5sum = md5(that.email.toLowerCase());
     let head = document.getElementsByTagName('head')[0];
     if (typeof displayName === 'undefined') {
-      const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf("@")) : 'Anonymous';
+      const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf('@')) : 'Anonymous';
       let script = document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `let displayName = '${emailBeginning}';
@@ -318,34 +320,29 @@ export default class User extends Router {
     script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
     head.appendChild(script);
   }
-  load(page = null, pushHistory = true) {
-    let that = this;
-    super.load(page, pushHistory).then(() => {
-      if (document.querySelector('#user-menu')) {
-        if (that.email && that.password) {
-          document.querySelector('#user-menu').style.display = 'auto';
-          document.querySelector('#log-in').style.display = 'none';
-          document.querySelector('#sign-up').style.display = 'none';
-          that.updateDisplayName();
-        } else {
-          document.querySelector('#user-menu').style.display = 'none';
-          document.querySelector('#log-in').style.display = 'flex';
-          document.querySelector('#sign-up').style.display = 'flex';
-        }
-        if (that.email === '!')
-          that.login();
-      }
-    });
-  }
-  setup(title, anchors, content, fullpage = false) {
-    super.setup(title, anchors, content, fullpage);
+  setup(title, content, fullpage = false) {
+    super.setup(title, content, fullpage);
     let navbarEnd = document.body.querySelector('.navbar-end');
     navbarEnd.parentNode.replaceChild(this.menu(), navbarEnd);
+    if (document.querySelector('#user-menu')) {
+      if (this.email && this.password) {
+        document.querySelector('#user-menu').style.display = 'auto';
+        document.querySelector('#log-in').style.display = 'none';
+        document.querySelector('#sign-up').style.display = 'none';
+        this.updateDisplayName();
+      } else {
+        document.querySelector('#user-menu').style.display = 'none';
+        document.querySelector('#log-in').style.display = 'flex';
+        document.querySelector('#sign-up').style.display = 'flex';
+      }
+      if (this.email === '!')
+        this.login();
+    }
   }
   menu() {
     let div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
-    const emailBeginning = this.email ? this.email.substring(0, this.email.indexOf("@")) : 'Anonymous';
+    const emailBeginning = this.email ? this.email.substring(0, this.email.indexOf('@')) : 'Anonymous';
     const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
     const hostname = document.location.hostname;
     const name = (typeof displayName === 'undefined') ? emailBeginning : displayName;
@@ -409,7 +406,7 @@ export default class User extends Router {
           return;
         }
         // check if this e-mail address is not already registered
-        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({email: email}) })
+        fetch('/ajax/user/uniqueness.php', { method: 'post', body: JSON.stringify({ email: email }) })
           .then(function(response) {
             return response.json();
           })
@@ -430,7 +427,7 @@ export default class User extends Router {
         event.preventDefault();
         const email = modal.querySelector('#sign-up-email').value;
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({email: email}) })
+        fetch('/ajax/user/sign-up.php', { method: 'post', body: JSON.stringify({ email: email }) })
           .then(function(response) {
             return response.json();
           })
@@ -521,8 +518,10 @@ export default class User extends Router {
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads === null)
         uploads = [];
-      fetch('/ajax/user/authenticate.php', { method: 'post',
-        body: JSON.stringify({email: this.email, password: this.password, uploads: uploads})})
+      fetch('/ajax/user/authenticate.php', {
+        method: 'post',
+        body: JSON.stringify({ email: this.email, password: this.password, uploads: uploads })
+      })
         .then(function(response) {
           return response.json();
         })
@@ -562,7 +561,7 @@ export default class User extends Router {
     return hashHex;
   }
   forgotPassword(email, callback = null) {
-    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({email: email})})
+    fetch('/ajax/user/forgot.php', { method: 'post', body: JSON.stringify({ email: email }) })
       .then(function(response) {
         return response.json();
       })
