@@ -1526,7 +1526,6 @@ ${deleteProject}`;
       </div>`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
-      // document.querySelector('section.is-active').innerHTML = contentHtml;
       project.setup('proto', template.content);
       project.runWebotsView();
       loadMd(url);
