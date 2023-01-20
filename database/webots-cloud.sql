@@ -4,12 +4,12 @@ CREATE TABLE `animation` (
   `uploaded` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
-  `version` varchar(16) NOT NULL,
+  `version` varchar(16) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `duration` int(11) NOT NULL,
   `size` int(11) NOT NULL,
   `viewed` int(11) NOT NULL DEFAULT '0',
   `user` int(11) NOT NULL,
-  `branch` varchar(256) NOT NULL DEFAULT 'main',
+  `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT 'main',
   `uploading` bit(1) DEFAULT b'1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -39,10 +39,10 @@ CREATE TABLE `project` (
   `stars` int(11) NOT NULL,
   `title` varchar(256) NOT NULL,
   `description` varchar(2048) NOT NULL,
-  `version` varchar(16) NOT NULL,
-  `type` enum('demo','competition','benchmark','') NOT NULL,
-  `branch` varchar(256) CHARACTER SET utf8 NOT NULL DEFAULT 'main',
-  `competitors` int(11) NOT NULL,
+  `version` varchar(16) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `type` enum('demo','competition') CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT 'main',
+  `participants` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `viewed` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -76,10 +76,19 @@ ALTER TABLE `repository`
 
 CREATE TABLE `server_branch` (
   `id` int(11) NOT NULL,
-  `branch` varchar(256) NOT NULL DEFAULT 'main'
+  `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT 'main'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `server_branch`
   ADD PRIMARY KEY (`id`,`branch`);
+
+CREATE TABLE `queue` (
+  `project` int(11) NOT NULL,
+  `participant` varchar(2048)  CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `queue`
+  ADD UNIQUE KEY `project` (`project`,`participant`);
 
 COMMIT;
