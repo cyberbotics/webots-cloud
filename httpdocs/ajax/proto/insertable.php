@@ -28,9 +28,8 @@
     $condition .= " AND needs_robot_ancestor=0";
   $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   $protos = array();
-  while($row = $result->fetch_assoc()) {
+  while($row = $result->fetch_assoc())
     array_push($protos, $row);
-  }
   $result->free();
   die(json_encode($protos));
  ?>
