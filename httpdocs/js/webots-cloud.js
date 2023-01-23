@@ -654,7 +654,7 @@ ${deleteProject}`;
               <table class="table is-striped is-hoverable">
                 <thead>
                   <tr>
-                  <th class="is-clickable column-title" id="simulation-sort-stars" title="Number of GitHub stars"
+                  <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
                       style="text-align: center;">
                       <i class="far fa-star"></i>
                       <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
@@ -670,11 +670,6 @@ ${deleteProject}`;
                     </th>
                     <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
                       Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
                     </th>
                     <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
                       style="min-width: 85px;">
