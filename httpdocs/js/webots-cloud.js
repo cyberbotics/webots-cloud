@@ -1,6 +1,5 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
-import {populateProtoViewDiv} from 'https://cyberbotics.com/wwi/proto/proto_viewer.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -1543,9 +1542,10 @@ ${deleteProject}`;
                 throw new Error('');
               return response.text();
             })
-            .then(content => {
+            .then(async function(content) {
               const results = parseProtoHeader(proto);
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
+              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/proto/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
@@ -1726,7 +1726,7 @@ ${deleteProject}`;
         .then(function(response) {
           return response.json();
         })
-        .then(content => {
+        .then(async function(content) {
           const baseType = content.base_type;
           const description = content.description;
           file += description + '\n\n';
@@ -1776,6 +1776,7 @@ ${deleteProject}`;
           const license = content.license;
           const licenseUrl = content.license_url;
           const version = content.version;
+          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/proto/proto_viewer.js');
           populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
     }
