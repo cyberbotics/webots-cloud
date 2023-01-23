@@ -1776,7 +1776,7 @@ ${deleteProject}`;
           const license = content.license;
           const licenseUrl = content.license_url;
           const version = content.version;
-          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/proto/proto_viewer.js');
+          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + version + '/proto_viewer.js');
           populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
     }
