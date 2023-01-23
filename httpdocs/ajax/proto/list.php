@@ -22,9 +22,9 @@
   $order = explode("-", $sortBy)[1];
   if ($parameter == "title" || $parameter == "version") {
     if ($order == "asc")
-      $order = "desc";
+      $order = "DESC";
     else
-      $order = "asc";
+      $order = "ASC";
   }
   $branch = basename(dirname(__FILE__, 4));
   $condition = "branch=\"$branch\"";
