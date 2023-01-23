@@ -1893,16 +1893,16 @@ ${deleteProject}`;
               document.getElementById('competition-information-description').innerHTML = description;
               const information = readme.getElementById('information').innerText.trim().split('\n');
               const escapeHtml = (unsafe) => {
-                return unsafe.
-                  replaceAll('&', '&amp;').
-                  replaceAll('<', '&lt;').
-                  replaceAll('>', '&gt;').
-                  replaceAll('"', '&quot;').
-                  replaceAll("'", '&#039;');
-              }
+                return unsafe
+                  .replaceAll('&', '&amp;')
+                  .replaceAll('<', '&lt;')
+                  .replaceAll('>', '&gt;')
+                  .replaceAll('"', '&quot;')
+                  .replaceAll("'", '&#039;');
+              };
               for (let i = information.length - 1; i >= 0; i--) {
                 const array = information[i].split(': ');
-                const name = escapeHtml(array[0].substring(2));  // skip "- "
+                const name = escapeHtml(array[0].substring(2)); // skip "- "
                 const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
@@ -2013,7 +2013,7 @@ ${deleteProject}`;
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
                     const link = participant.private ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const title = (metric == 'ranking')
+                    const title = (metric === 'ranking')
                       ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
                     const button = (metric === 'ranking' && ranking === 1)
@@ -2068,7 +2068,7 @@ ${deleteProject}`;
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, , branch] = url.split('/');
+      const [, , , username, repo, ,] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
