@@ -1545,7 +1545,7 @@ ${deleteProject}`;
             .then(async function(content) {
               const results = parseProtoHeader(proto);
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
-              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/proto/proto_viewer.js');
+              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
@@ -1776,9 +1776,19 @@ ${deleteProject}`;
           const license = content.license;
           const licenseUrl = content.license_url;
           const version = content.version;
-          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + version + '/proto_viewer.js');
+          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
           populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
+    }
+
+    // check that the proto is at least from R2023b
+    function checkProtoVersion(version) {
+      return 'proto'; // TODO: remove once feature-web-proto is merged in develop
+      const year = version.substring(1, version.length - 2);
+      if (year < 2023 || (year === 2023 && version[version.length - 1] === 'a'))
+        return 'R2023b';
+
+      return version;
     }
 
     function mainContainer(project) {
