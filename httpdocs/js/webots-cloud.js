@@ -1340,6 +1340,7 @@ ${deleteProject}`;
 
     function getCompetition(url) {
       let metric;
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
@@ -1476,7 +1477,7 @@ ${deleteProject}`;
                       performanceString = participant.performance;
                     const performanceLine = (metric === 'ranking') ? ``
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
-                    const link = participant.private ? `${participant.name}`
+                    const link = participant.private && !admin ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
                     const title = (metric == 'ranking')
                       ? `Game lost by ${participant.name}`
