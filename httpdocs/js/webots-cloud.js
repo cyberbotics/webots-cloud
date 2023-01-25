@@ -1,5 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
+import country_codes from './country_codes.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -1492,7 +1493,7 @@ ${deleteProject}`;
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
-                     title="${participant.country}">${flag}</td>
+                     title="${country_codes[participant.country]}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
