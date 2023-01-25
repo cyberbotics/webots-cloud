@@ -1439,7 +1439,7 @@ ${deleteProject}`;
                       return `<svg width="32" height="24">
                               <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
                               </svg>`;
-                    return `<img src="images/flags/${country}.svg" width="32">`;
+                    return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
                   for (const participant of participants['participants']) {
