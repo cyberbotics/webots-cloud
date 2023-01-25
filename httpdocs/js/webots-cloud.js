@@ -1444,11 +1444,11 @@ ${deleteProject}`;
                   let ranking = 1;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
-                    const date = `<span style="font-size:smaller;display:inline-block">` +
+                    const dateString = `<span style="font-size:smaller;display:inline-block">` +
                       `${dateObject.toLocaleDateString()}<br>${dateObject.toLocaleTimeString()}</span>`;
-                    const date_link = (typeof participant.log !== 'undefined')
-                      ? `<a href="${participant.log}" target="_blank">${date}</a>`
-                      : date;
+                    const date = (typeof participant.log !== 'undefined')
+                      ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
+                      : dateString;
                     let tableContent = document.createElement('template');
                     let performanceString;
                     if (metric === 'percent')
@@ -1499,7 +1499,7 @@ ${deleteProject}`;
                      title="${country_codes[participant.country]}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
-                    <td style="vertical-align:middle;" class="has-text-centered">${date_link}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
