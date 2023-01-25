@@ -112,6 +112,7 @@ export default class Router {
           }
         }
         if (!found) {
+          console.log("not found")
           that.dynamicPage(url, pushHistory).then(() => {
             resolve();
           });
