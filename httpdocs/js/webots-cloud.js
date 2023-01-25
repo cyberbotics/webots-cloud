@@ -1446,6 +1446,7 @@ ${deleteProject}`;
                     const dateArray = participant.date.split('T');
                     const date = `<span style="font-size:smaller;display:inline-block">` +
                       `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`;
+                    const date_link = (typeof participant.log !== 'undefined') ? `<a href="${participant.log}">${date}</a>` : date;
                     let tableContent = document.createElement('template');
                     let performanceString;
                     if (metric === 'percent')
@@ -1496,7 +1497,7 @@ ${deleteProject}`;
                      title="${country_codes[participant.country]}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
-                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${date_link}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
