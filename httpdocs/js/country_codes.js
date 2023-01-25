@@ -249,3 +249,5 @@ const country_codes = {
     "ZW": "Zimbabwe",
     "AX": "Åland Islands"
 };
+
+export default country_codes;
