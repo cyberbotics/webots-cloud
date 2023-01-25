@@ -149,7 +149,6 @@ export default class Router {
     this.setup('page not found', template.content);
   }
   setup(title, content, fullpage = false) {
-    console.log(title)
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
     this.content.innerHTML = '';
     NodeList.prototype.forEach = Array.prototype.forEach;
