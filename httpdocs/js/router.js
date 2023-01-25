@@ -131,7 +131,6 @@ export default class Router {
     return promise;
   }
   notFound() {
-    console.log("not found")
     const pathname = window.location.pathname;
     const url = window.location.origin + pathname;
     window.history.pushState(null, '', url);
