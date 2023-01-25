@@ -19,6 +19,7 @@ export default class Project extends User {
         that.notFound();
         resolve();
       }
+      console.log(url)
       fetch('/ajax/animation/list.php', { method: 'post', body: JSON.stringify({ url: url, type: url.pathname[1] }) })
         .then(function(response) {
           return response.json();
