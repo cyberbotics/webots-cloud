@@ -1443,9 +1443,9 @@ ${deleteProject}`;
                   }
                   let ranking = 1;
                   for (const participant of participants['participants']) {
-                    const dateArray = participant.date.split('T');
+                    const dateObject = new Date(participant.date);
                     const date = `<span style="font-size:smaller;display:inline-block">` +
-                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`;
+                      `${dateObject.toLocaleDateString()}<br>${dateObject.toLocaleTimeString()}</span>`;
                     const date_link = (typeof participant.log !== 'undefined')
                       ? `<a href="${participant.log}" target="_blank">${date}</a>`
                       : date;
