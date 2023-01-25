@@ -1515,17 +1515,26 @@ ${deleteProject}`;
                       let title = '';
                       let counter = 0;
                       queue.forEach(i => {
+                        let found = false;
                         for (const participant of participants['participants'])
                           if (i == participant.repository) {
                             title += counter + ': ' + participant.name + '\n';
+                            found = true;
                             break;
                           } else if (i == 'R:' + participant.repository) {
                             title += 'Running now: ' + participant.name + '\n';
+                            found = true;
                             break;
                           }
+                        if (!found) {
+                          if (i.startsWith('R:'))
+                            title += 'Running now:=> new participant\n';
+                          else
+                            title += counter + ':=> new participant'
+                        }
                         counter++;
                       });
-                      item.title = title;
+                      item.parentElement.title = title;
                     });
 
                 });
