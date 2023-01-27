@@ -250,4 +250,4 @@ const country_codes = {
     "AX": "Åland Islands"
 };
 
-export default country_codes;
+export default countryCodes;

@@ -1,6 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
-import country_codes from './country_codes.js';
+import countryCodes from './country_codes.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -312,12 +312,12 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const second_column = (data.type === 'competition') ? data.participants : data.viewed;
+      const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
-<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${second_column}</a></td>
+<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">
   <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
   <div class="thumbnail">
@@ -1359,16 +1359,16 @@ ${deleteProject}`;
               document.getElementById('competition-information-description').innerHTML = description;
               const information = readme.getElementById('information').innerText.trim().split('\n');
               const escapeHtml = (unsafe) => {
-                return unsafe.
-                  replaceAll('&', '&amp;').
-                  replaceAll('<', '&lt;').
-                  replaceAll('>', '&gt;').
-                  replaceAll('"', '&quot;').
-                  replaceAll("'", '&#039;');
-              }
+                return unsafe
+                  .replaceAll('&', '&amp;')
+                  .replaceAll('<', '&lt;')
+                  .replaceAll('>', '&gt;')
+                  .replaceAll('"', '&quot;')
+                  .replaceAll("'", '&#039;');
+              };
               for (let i = information.length - 1; i >= 0; i--) {
                 const array = information[i].split(': ');
-                const name = escapeHtml(array[0].substring(2));  // skip "- "
+                const name = escapeHtml(array[0].substring(2)); // skip "- "
                 const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
@@ -1463,7 +1463,7 @@ ${deleteProject}`;
                       if (hours > 0)
                         performanceString = String(hours) + ':';
                       if (hours > 0 || minutes > 0) {
-                        if (hours == 0 && minutes < 10)
+                        if (hours === 0 && minutes < 10)
                           performanceString += String(minutes) + ':';
                         else
                           performanceString += String(minutes).padStart(2, '0') + ':';
@@ -1474,8 +1474,7 @@ ${deleteProject}`;
                         performanceString += String(Math.floor(seconds)) + ':';
                       const cents = Math.floor(100 * (seconds % 1));
                       performanceString += String(cents).padStart(2, '0');
-                    }
-                    else if (metric === 'distance')
+                    } else if (metric === 'distance')
                       performanceString = participant.performance.toFixed(3) + ' m.';
                     else if (metric !== 'ranking')
                       performanceString = participant.performance;
@@ -1483,7 +1482,7 @@ ${deleteProject}`;
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
                     const link = participant.private && !admin ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const title = (metric == 'ranking')
+                    const title = (metric === 'ranking')
                       ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
                     const button = (metric === 'ranking' && ranking === 1)
@@ -1496,7 +1495,7 @@ ${deleteProject}`;
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
-                     title="${country_codes[participant.country]}">${flag}</td>
+                     title="${countryCodes[participant.country]}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
@@ -1519,27 +1518,27 @@ ${deleteProject}`;
                       let counter = 0;
                       queue.forEach(i => {
                         let found = false;
-                        for (const participant of participants['participants'])
-                          if (i == participant.repository) {
+                        for (const participant of participants['participants']) {
+                          if (i === participant.repository) {
                             title += counter + ': ' + participant.name + '\n';
                             found = true;
                             break;
-                          } else if (i == 'R:' + participant.repository) {
+                          } else if (i === 'R:' + participant.repository) {
                             title += 'Running now: ' + participant.name + '\n';
                             found = true;
                             break;
                           }
+                        }
                         if (!found) {
                           if (i.startsWith('R:'))
                             title += 'Running now:=> new participant\n';
                           else
-                            title += counter + ':=> new participant'
+                            title += counter + ':=> new participant';
                         }
                         counter++;
                       });
                       item.parentElement.title = title;
                     });
-
                 });
             });
         });
@@ -1547,7 +1546,7 @@ ${deleteProject}`;
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, , branch] = url.split('/');
+      const [, , , username, repo, ,] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
