@@ -1453,7 +1453,7 @@ ${deleteProject}`;
                       `<svg height="10" width="18">` +
                       `<circle cx="5" cy="5" r="4" stroke="grey" stroke-width="1" fill="hsl(${h},100%,50%)" />` +
                       `</svg>` +
-                      `${dateObject.toLocaleTimeString()}</span>`;
+                      `${dateObject.toLocaleTimeString('en-US-u-hc-h23')}</span>`;
                     const date = (typeof participant.log !== 'undefined')
                       ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
                       : dateString;
