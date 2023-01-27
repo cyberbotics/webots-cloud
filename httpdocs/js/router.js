@@ -10,7 +10,7 @@ export default class Router {
     this.resetNavbar();
     scrollableBody.append(this.content);
     scrollableBody.append(footer);
-    let that = this;
+    const that = this;
     // Catch clicks on the root-level element.
     body.addEventListener('click', function(event) {
       let element = event.target;
@@ -34,7 +34,7 @@ export default class Router {
     };
   }
   resetNavbar() {
-    let navbar = document.querySelector('.navbar');
+    const navbar = document.querySelector('.navbar');
     if (navbar)
       document.body.removeChild(navbar);
     let type = document.location.pathname.substring(1, 2);
@@ -47,7 +47,7 @@ export default class Router {
         homeLink = '/animation';
         break;
       case 'r':
-        let url = new URL(window.location);
+        const url = new URL(window.location);
         type = url.searchParams.get('type');
         if (type === 'demo')
           homeLink = '/simulation';
@@ -55,7 +55,7 @@ export default class Router {
           homeLink = '/competition';
         break;
     }
-    let template = document.createElement('template');
+    const template = document.createElement('template');
     template.innerHTML =
       `<nav id="navbar" class="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -89,8 +89,8 @@ export default class Router {
     }
   }
   load(page = null, pushHistory = true) {
-    let that = this;
-    let promise = new Promise((resolve, reject) => {
+    const that = this;
+    const promise = new Promise((resolve, reject) => {
       if (page === null)
         page = window.location.pathname + window.location.search + window.location.hash;
       that.resetNavbar();
@@ -121,8 +121,8 @@ export default class Router {
     return promise;
   }
   dynamicPage(url, pushHistory) {
-    let that = this;
-    let promise = new Promise((resolve, reject) => {
+    const that = this;
+    const promise = new Promise((resolve, reject) => {
       that.notFound();
       if (pushHistory)
         window.history.pushState(null, '', url.pathname + url.search + url.hash);
@@ -135,7 +135,7 @@ export default class Router {
     const url = window.location.origin + pathname;
     window.history.pushState(null, '', url);
     const hostname = document.location.hostname;
-    let template = document.createElement('template');
+    const template = document.createElement('template');
     template.innerHTML =
       `<section>
       <div class="hero-body">
@@ -152,7 +152,7 @@ export default class Router {
     document.head.querySelector('#title').innerHTML = this.title + ' - ' + title;
     this.content.innerHTML = '';
     NodeList.prototype.forEach = Array.prototype.forEach;
-    let that = this;
+    const that = this;
     if (content.childNodes) {
       content.childNodes.forEach(function(item) {
         that.content.appendChild(item);
