@@ -13,8 +13,8 @@ export default class Project extends User {
     return Project.current;
   }
   dynamicPage(url, pushHistory) {
-    let that = this;
-    let promise = new Promise((resolve, reject) => {
+    const that = this;
+    const promise = new Promise((resolve, reject) => {
       if (!url.pathname.startsWith('/A') && !url.pathname.startsWith('/M') && url.pathname.length !== 8) {
         that.notFound();
         resolve();
@@ -79,7 +79,7 @@ export default class Project extends User {
   findGetParameter(parameterName) {
     let result;
     let tmp = [];
-    let items = window.location.search.substr(1).split('&');
+    const items = window.location.search.substr(1).split('&');
     for (let index = 0; index < items.length; index++) {
       tmp = items[index].split('=');
       if (tmp[0] === parameterName)
@@ -90,7 +90,7 @@ export default class Project extends User {
   setupWebotsView(page, data) {
     const view = (!Project.webotsView)
       ? '<webots-view id="webots-view" style="height:100%; width:100%; display:block;"></webots-view>' : '';
-    let template = document.createElement('template');
+    const template = document.createElement('template');
     template.innerHTML = `<section class="section" style="padding:0;height:100%">
       <div class="container" id="webots-view-container">${view}</div>`;
     if (data) {
@@ -125,7 +125,7 @@ export default class Project extends User {
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
-    let promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       let script = document.getElementById('webots-view-version');
 
       if (!script || (script && script.src !== src)) {
@@ -211,8 +211,8 @@ export default class Project extends User {
       resolve();
     } else { // demo simulation
       this.setupWebotsView('run');
-      let dotIndex = url.lastIndexOf('/') + 1;
-      let thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
+      const dotIndex = url.lastIndexOf('/') + 1;
+      const thumbnailUrl = (url.slice(0, dotIndex) + '.' + url.slice(dotIndex))
         .replace('github.com', 'raw.githubusercontent.com').replace('/blob', '').replace('.wbt', '.jpg');
       Project.webotsView.showQuit = false;
       Project.webotsView.connect('https://' + window.location.hostname + '/ajax/server/session.php?url=' + url, mode,

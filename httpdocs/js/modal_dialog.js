@@ -38,7 +38,7 @@ export default class ModalDialog extends HTMLElement {
       p.innerHTML = '&nbsp;';
     });
     document.addEventListener('keydown', ModalDialog.closeEvent);
-    let submit = this.querySelector('button[type="submit"]');
+    const submit = this.querySelector('button[type="submit"]');
     if (submit)
       submit.classList.remove('is-loading');
     this.querySelector('button.delete').addEventListener('click', ModalDialog.closeEvent);
@@ -59,7 +59,7 @@ export default class ModalDialog extends HTMLElement {
   }
   error(message) {
     this.querySelector('.modal-card-foot div').innerHTML = message;
-    let submit = this.querySelector('button[type="submit"]');
+    const submit = this.querySelector('button[type="submit"]');
     if (submit)
       submit.classList.remove('is-loading');
   }

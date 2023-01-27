@@ -1,5 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
+import countryCodes from './country_codes.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }]);
 
   function footer() {
-    let template = document.createElement('template');
+    const template = document.createElement('template');
     template.innerHTML =
       `<footer class="footer">
         <div class="content has-text-centered" id="footer-github" style="margin-bottom:14px">
@@ -189,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
-      let nav = document.querySelector(`section[data-content="${tab}"] > nav`);
-      let content = {};
+      const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
+      const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
         ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
       const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}"`;
@@ -239,9 +240,9 @@ document.addEventListener('DOMContentLoaded', function() {
         size = Math.round(size);
       size += ' <small>' + unit + '</small>';
       let millisecond = data.duration % 1000;
-      let second = Math.trunc(data.duration / 1000) % 60;
-      let minute = Math.trunc(data.duration / 60000) % 60;
-      let hour = Math.trunc(data.duration / 3600000);
+      const second = Math.trunc(data.duration / 1000) % 60;
+      const minute = Math.trunc(data.duration / 60000) % 60;
+      const hour = Math.trunc(data.duration / 3600000);
       if (millisecond < 10)
         millisecond = '00' + millisecond;
       else if (millisecond < 100)
@@ -311,12 +312,12 @@ document.addEventListener('DOMContentLoaded', function() {
         title="Delete ${data.type} as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
-      const second_column = (data.type === 'competition') ? data.participants : data.viewed;
-      let row = `
+      const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
+      const row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
-<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${second_column}</a></td>
+<td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">
   <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
   <div class="thumbnail">
@@ -666,7 +667,7 @@ ${deleteProject}`;
             sort += '-desc';
           } else
             sort += '-desc';
-          let icon = title.querySelector('.sort-icon');
+          const icon = title.querySelector('.sort-icon');
           if (icon)
             icon.style.display = 'inline';
           setSorts(type, sort);
@@ -709,7 +710,7 @@ ${deleteProject}`;
       const ACTIVE_CLASS = 'is-active';
       TABS.forEach((tab) => {
         tab.addEventListener('click', (e) => {
-          let selected = tab.getAttribute('data-tab');
+          const selected = tab.getAttribute('data-tab');
           document.querySelector('a.navbar-item').href = `/${selected}`;
           TABS.forEach((t) => {
             if (t && t.classList.contains(ACTIVE_CLASS))
@@ -720,7 +721,7 @@ ${deleteProject}`;
           page = getPage(activeTab);
           sort = getSort(activeTab);
           search = getSearch(activeTab);
-          let url = new URL(document.location.origin + '/' + activeTab);
+          const url = new URL(document.location.origin + '/' + activeTab);
           if (getPage(activeTab) !== 1)
             url.searchParams.append('p', getPage(activeTab));
           if (getSort(activeTab) && getSort(activeTab) !== 'default')
@@ -733,7 +734,7 @@ ${deleteProject}`;
           CONTENT.forEach((item) => {
             if (item && item.classList.contains(ACTIVE_CLASS))
               item.classList.remove(ACTIVE_CLASS);
-            let data = item.getAttribute('data-content');
+            const data = item.getAttribute('data-content');
             if (data === selected)
               item.classList.add(ACTIVE_CLASS);
           });
@@ -742,7 +743,7 @@ ${deleteProject}`;
     }
 
     function searchAndSortTable(type, isSearch) {
-      let url = new URL(document.location.origin + document.location.pathname);
+      const url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
       else
@@ -803,7 +804,7 @@ ${deleteProject}`;
                   cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
                 </div>`;
             }
-            let dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
+            const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
             dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
@@ -813,7 +814,7 @@ ${deleteProject}`;
             event.target.classList.remove('fa-spin');
             project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
-            let tr = document.createElement('tr');
+            const tr = document.createElement('tr');
             tr.innerHTML = simulationRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
@@ -842,7 +843,7 @@ ${deleteProject}`;
             ModalDialog.run('Server synchronization error', data.error);
             parent.removeChild(old);
           } else {
-            let tr = document.createElement('tr');
+            const tr = document.createElement('tr');
             tr.innerHTML = serverRow(data);
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-server-' + data.id).addEventListener('click', synchronizeServer);
@@ -853,7 +854,7 @@ ${deleteProject}`;
     }
 
     function addAnimation(type) {
-      let content = {};
+      const content = {};
       if (type === 'A')
         content.innerHTML = `<div class="field">
           <label class="label">Webots animation</label>
@@ -910,15 +911,15 @@ ${deleteProject}`;
         </div>`;
       let cancelled = false;
       const title = (type === 'A') ? 'Add an animation' : 'Add a scene';
-      let modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
+      const modal = ModalDialog.run(title, content.innerHTML, 'Cancel', 'Add');
       const typeName = (type === 'A') ? 'animation' : 'scene';
-      let input = modal.querySelector(`#${typeName}-file`);
+      const input = modal.querySelector(`#${typeName}-file`);
       input.focus();
       modal.querySelector('button.cancel').addEventListener('click', function() { cancelled = true; });
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         modal.querySelector('button[type="submit"]').classList.add('is-loading');
-        let body = new FormData(modal.querySelector('form'));
+        const body = new FormData(modal.querySelector('form'));
         body.append('user', project.id);
         body.append('password', project.password);
         fetch('/ajax/animation/create.php', { method: 'post', body: body })
@@ -962,9 +963,9 @@ ${deleteProject}`;
     }
 
     function addSimulation(type) {
-      let demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
-      let competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
-      let content = {};
+      const demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
+      const competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
+      const content = {};
       content.innerHTML =
         `<div class="field">
           <div style="padding-bottom: 10px;">Please enter the full URL link to the world file of your project's repository:
@@ -983,9 +984,9 @@ ${deleteProject}`;
             WARNING: your world must be from version R2022b or newer.
           </div>
         </div>`;
-      let typeName = (type === 'D') ? 'simulation' : 'competition';
-      let modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
-      let input = modal.querySelector('#world-file');
+      const typeName = (type === 'D') ? 'simulation' : 'competition';
+      const modal = ModalDialog.run(`Add a ${typeName}`, content.innerHTML, 'Cancel', 'Add');
+      const input = modal.querySelector('#world-file');
       input.focus();
       input.selectionStart = input.selectionEnd = input.value.length;
       modal.querySelector('form').addEventListener('submit', function(event) {
@@ -1054,12 +1055,12 @@ ${deleteProject}`;
             let line = ``;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
-            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            const table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
             table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
-            let tbody = table.querySelector(`tbody`);
+            const tbody = table.querySelector(`tbody`);
             tbody.innerHTML = line;
             for (let i = 0; i < data.animations.length; i++) {
-              let node = tbody.querySelector(`#${typeName}-${data.animations[i].id}`);
+              const node = tbody.querySelector(`#${typeName}-${data.animations[i].id}`);
               if (node) {
                 let p = (data.animations.length === 1) ? page - 1 : page;
                 if (p === 0)
@@ -1081,7 +1082,7 @@ ${deleteProject}`;
           return 'competition';
       })();
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
-      let offset = (page - 1) * pageLimit;
+      const offset = (page - 1) * pageLimit;
       fetch('/ajax/project/list.php', {
         method: 'post',
         body: JSON.stringify({ offset: offset, limit: pageLimit, type: type, sortBy: sortBy, search: searchString })
@@ -1102,11 +1103,11 @@ ${deleteProject}`;
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
-            let table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            const table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
             table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
-              let id = data.projects[i].id;
+              const id = data.projects[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
@@ -1120,7 +1121,7 @@ ${deleteProject}`;
     }
 
     function listServers(page) {
-      let offset = (page - 1) * pageLimit;
+      const offset = (page - 1) * pageLimit;
       fetch('/ajax/server/list.php', { method: 'post', body: JSON.stringify({ offset: offset, limit: pageLimit }) })
         .then(function(response) {
           return response.json();
@@ -1132,7 +1133,7 @@ ${deleteProject}`;
             let line = ``;
             for (let i = 0; i < data.servers.length; i++)
               line += '<tr>' + serverRow(data.servers[i]) + '</tr>';
-            let table = project.content.querySelector('section[data-content="server"] > div > table');
+            const table = project.content.querySelector('section[data-content="server"] > div > table');
             table.style.marginBottom = (50 * (pageLimit - data.servers.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.servers.length; i++)
@@ -1147,7 +1148,7 @@ ${deleteProject}`;
       const animation = parseInt(event.target.id.substring((type === 'A') ? 10 : 6)); // skip 'animation-' or 'scene-'
       const typeName = (type === 'A') ? 'animation' : 'scene';
       const capitalizedTypeName = typeName.charAt(0).toUpperCase() + typeName.slice(1);
-      let dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+      const dialog = ModalDialog.run(`Really delete ${typeName}?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete ${capitalizedTypeName}`, 'is-danger');
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -1185,7 +1186,7 @@ ${deleteProject}`;
 
     function deleteSimulation(event, project) {
       const id = event.target.id.substring(7);
-      let dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+      const dialog = ModalDialog.run(`Really delete simulation?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
         `Delete simulation`, 'is-danger');
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -1208,7 +1209,7 @@ ${deleteProject}`;
     }
 
     function whatIsCompetitionPopUp() {
-      let content = {};
+      const content = {};
       content.innerHTML =
         `<div class="field">
           A competition is a simulation scenario which proposes a challenge.
@@ -1230,14 +1231,14 @@ ${deleteProject}`;
 
   function runPage(project) {
     // discriminate between demos and competition using search parameters
-    let searchParams = new URLSearchParams(window.location.search);
-    let type = searchParams.get('type');
+    const searchParams = new URLSearchParams(window.location.search);
+    const type = searchParams.get('type');
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      let url = searchParams.get('url');
+      const url = searchParams.get('url');
       project.competitionUrl = url;
-      let context = searchParams.get('context');
+      const context = searchParams.get('context');
       switch (context) {
         case 'try':
           createCompetitionPageButton();
@@ -1253,27 +1254,11 @@ ${deleteProject}`;
     }
 
     function mainContainer(project) {
-      let simulationUrl = new URL(window.location);
+      const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
       const information =
         `<table style="font-size: small">
-        <tbody>
-          <tr>
-            <td>Difficulty level:</td>
-            <td style="font-weight: bold;" id="competition-difficulty"></td>
-          </tr>
-          <tr>
-            <td>Robot:</td>
-            <td style="font-weight: bold;" id="competition-robot"></td>
-          </tr>
-          <tr>
-            <td>Programming language:</td>
-            <td style="font-weight: bold;" id="competition-language"></td>
-          </tr>
-          <tr>
-            <td>Minimum commitment:</td>
-            <td style="font-weight: bold;" id="competition-commitment"></td>
-          </tr>
+        <tbody id="competition-information">
           <tr>
             <td>Number of participants:</td>
             <td style="font-weight: bold;" id="competition-participants"></td>
@@ -1353,8 +1338,10 @@ ${deleteProject}`;
       document.getElementById('submit-entry').onclick = registerPopUp;
       getCompetition(project.competitionUrl);
     }
+
     function getCompetition(url) {
       let metric;
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
@@ -1367,25 +1354,42 @@ ${deleteProject}`;
               var readme = new DOMParser().parseFromString(data, 'text/html');
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
-              const description = readme.getElementById('description').innerText.trim();
-              const information = readme.getElementById('information').innerText.trim().split('\n');
-              const difficulty = information[0].split(':')[1].substring(1);
-              const robot = information[1].split(':')[1].substring(1);
-              const language = information[2].split(':')[1].substring(1);
-              const commitment = information[3].split(':')[1].substring(1);
-
               document.getElementById('competition-title').innerHTML = title;
+              const description = readme.getElementById('description').innerText.trim();
               document.getElementById('competition-information-description').innerHTML = description;
-              document.getElementById('competition-difficulty').innerHTML = difficulty;
-              document.getElementById('competition-robot').innerHTML = robot;
-              document.getElementById('competition-language').innerHTML = language;
-              document.getElementById('competition-commitment').innerHTML = commitment;
-
-              // preview window
-              const reference = rawUrl + '/preview/';
+              const information = readme.getElementById('information').innerText.trim().split('\n');
+              const escapeHtml = (unsafe) => {
+                return unsafe
+                  .replaceAll('&', '&amp;')
+                  .replaceAll('<', '&lt;')
+                  .replaceAll('>', '&gt;')
+                  .replaceAll('"', '&quot;')
+                  .replaceAll("'", '&#039;');
+              };
+              for (let i = information.length - 1; i >= 0; i--) {
+                const array = information[i].split(': ');
+                const name = escapeHtml(array[0].substring(2)); // skip "- "
+                const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
+                document.getElementById('competition-information').prepend(tr);
+              }
+              // preview image
+              const div = document.createElement('div');
+              div.classList.add('thumbnail-button-container');
+              const img = document.createElement('img');
+              img.src = rawUrl + '/preview/thumbnail.jpg';
+              div.append(img);
+              const button = document.createElement('button');
+              button.innerHTML = 'Load Animation';
+              div.append(button);
+              button.onclick = function() {
+                document.getElementById('competition-preview-container').innerHTML = '';
+                project.runWebotsView(rawUrl + '/preview/');
+              };
+              document.getElementById('competition-preview-container').append(div);
               if (project && !project.competitionUrl)
                 project.competitionUrl = url;
-              project.runWebotsView(reference);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
@@ -1435,14 +1439,17 @@ ${deleteProject}`;
                       return `<svg width="32" height="24">
                               <rect width="32" height="24" fill="#fff" style="stroke-width:1;stroke:rgb(0,0,0)" />
                               </svg>`;
-                    return `<img src="images/flags/${country}.svg" width="32">`;
+                    return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
                   for (const participant of participants['participants']) {
-                    const dateArray = participant.date.split('T');
-                    const date = `<span style="font-size:smaller;display:inline-block">` +
-                      `${dateArray[0]}<br>${dateArray[1].slice(0, -1)}</span>`;
-                    let tableContent = document.createElement('template');
+                    const dateObject = new Date(participant.date);
+                    const dateString = `<span style="font-size:smaller;display:inline-block">` +
+                      `${dateObject.toLocaleDateString()}<br>${dateObject.toLocaleTimeString()}</span>`;
+                    const date = (typeof participant.log !== 'undefined')
+                      ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
+                      : dateString;
+                    const tableContent = document.createElement('template');
                     let performanceString;
                     if (metric === 'percent')
                       performanceString = (participant.performance * 100).toFixed(2) + '%';
@@ -1456,7 +1463,7 @@ ${deleteProject}`;
                       if (hours > 0)
                         performanceString = String(hours) + ':';
                       if (hours > 0 || minutes > 0) {
-                        if (hours == 0 && minutes < 10)
+                        if (hours === 0 && minutes < 10)
                           performanceString += String(minutes) + ':';
                         else
                           performanceString += String(minutes).padStart(2, '0') + ':';
@@ -1467,16 +1474,15 @@ ${deleteProject}`;
                         performanceString += String(Math.floor(seconds)) + ':';
                       const cents = Math.floor(100 * (seconds % 1));
                       performanceString += String(cents).padStart(2, '0');
-                    }
-                    else if (metric === 'distance')
+                    } else if (metric === 'distance')
                       performanceString = participant.performance.toFixed(3) + ' m.';
                     else if (metric !== 'ranking')
                       performanceString = participant.performance;
                     const performanceLine = (metric === 'ranking') ? ``
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
-                    const link = participant.private ? `${participant.name}`
+                    const link = participant.private && !admin ? `${participant.name}`
                       : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
-                    const title = (metric == 'ranking')
+                    const title = (metric === 'ranking')
                       ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
                     const button = (metric === 'ranking' && ranking === 1)
@@ -1489,7 +1495,7 @@ ${deleteProject}`;
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
-                     title="${participant.country}">${flag}</td>
+                     title="${countryCodes[participant.country]}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
@@ -1497,7 +1503,7 @@ ${deleteProject}`;
                   </tr>`;
                     ranking++;
                     document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                    let viewButton = document.getElementById(participant.id + '-view');
+                    const viewButton = document.getElementById(participant.id + '-view');
                     if (viewButton)
                       viewButton.addEventListener('click', viewEntryRun);
                   }
@@ -1506,24 +1512,33 @@ ${deleteProject}`;
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
                     .then(function(queue) {
-                      let item = document.getElementById('competition-queue');
+                      const item = document.getElementById('competition-queue');
                       item.innerHTML = queue.length;
                       let title = '';
                       let counter = 0;
                       queue.forEach(i => {
-                        for (const participant of participants['participants'])
-                          if (i == participant.repository) {
+                        let found = false;
+                        for (const participant of participants['participants']) {
+                          if (i === participant.repository) {
                             title += counter + ': ' + participant.name + '\n';
+                            found = true;
                             break;
-                          } else if (i == 'R:' + participant.repository) {
+                          } else if (i === 'R:' + participant.repository) {
                             title += 'Running now: ' + participant.name + '\n';
+                            found = true;
                             break;
                           }
+                        }
+                        if (!found) {
+                          if (i.startsWith('R:'))
+                            title += 'Running now:=> new participant\n';
+                          else
+                            title += counter + ':=> new participant';
+                        }
                         counter++;
                       });
-                      item.title = title;
+                      item.parentElement.title = title;
                     });
-
                 });
             });
         });
@@ -1531,7 +1546,7 @@ ${deleteProject}`;
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, , branch] = url.split('/');
+      const [, , , username, repo, ,] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
@@ -1561,7 +1576,7 @@ ${deleteProject}`;
       document.getElementById('competition-page-button').onclick = () => { location.href = pageURL.href; };
     }
     function registerPopUp() {
-      let content = {};
+      const content = {};
       content.innerHTML =
         `<div class="field">
           <p style="padding-bottom:15px;">
