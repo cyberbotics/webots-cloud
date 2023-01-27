@@ -1446,10 +1446,11 @@ ${deleteProject}`;
                     const dateObject = new Date(participant.date);
                     const today = new Date();
                     const hourDelay = (today - dateObject) / 3600000;
-                    const s = Math.ceil((24 - hourDelay) * 100 / 24);
-                    const color = s > 0 ? `color:hsl(24,${s}%,38%);` : 'color:hsl(24,0%,38%)';
-                    const dateString = `<span style="font-size:smaller;display:inline-block;${color}">` +
+                    const h = Math.ceil(hourDelay * 10);
+                    # const color = s > 0 ? `color:hsl(24,${s}%,38%);` : 'color:hsl(24,0%,38%)';
+                    const dateString = `<span style="font-size:smaller;display:inline-block;">` +
                       `${dateObject.toLocaleDateString()}<br>` +
+                      `<svg><circle cx="5" cy="5" r="4" stroke="grey" stroke-width="1" fill="hsl(h,100%,50%)" /></svg>` +
                       `${dateObject.toLocaleTimeString()}</span>`;
                     const date = (typeof participant.log !== 'undefined')
                       ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
