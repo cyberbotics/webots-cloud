@@ -6,11 +6,11 @@ export default class User extends Router {
   constructor(title, footer, routes) {
     super(title, footer, routes);
     this.routes.push({ url: '/settings', setup: settingsPage });
-    let that = this;
+    const that = this;
     function findGetParameter(parameterName) {
       let result = null;
       let tmp = [];
-      let items = location.search.substr(1).split('&');
+      const items = location.search.substr(1).split('&');
       for (let index = 0; index < items.length; index++) {
         tmp = items[index].split('=');
         if (tmp[0] === parameterName)
@@ -19,7 +19,7 @@ export default class User extends Router {
       return result;
     }
     function resetPassword(id, token, email) {
-      let content = {};
+      const content = {};
       content.innerHTML =
         `<div class="field">
         <label class="label">E-mail</label>
@@ -52,7 +52,7 @@ export default class User extends Router {
         </div>
         <div id="choose-confirm-help" class="help">&nbsp;</div>
         </div>`;
-      let choose = ModalDialog.run('Choose a password', content.innerHTML, 'Cancel', 'Ok');
+      const choose = ModalDialog.run('Choose a password', content.innerHTML, 'Cancel', 'Ok');
       choose.querySelector('#choose-password').focus();
       choose.querySelector('button[type="submit"]').disabled = true;
       choose.querySelector('#choose-password').value = '';
@@ -79,7 +79,7 @@ export default class User extends Router {
         const password = choose.querySelector('#choose-password').value;
         const confirm = choose.querySelector('#choose-confirm-password').value;
         if (event.type === 'input') {
-          let length = password.length;
+          const length = password.length;
           let message = '';
           if (length < 8)
             message = '8 characters minimum';
@@ -94,7 +94,7 @@ export default class User extends Router {
             else if (password[i] >= 'a' && password[i] <= 'z')
               lowercaseCount++;
           }
-          let symbolCount = length - numberCount - uppercaseCount - lowercaseCount;
+          const symbolCount = length - numberCount - uppercaseCount - lowercaseCount;
           if (lowercaseCount === 0 || uppercaseCount === 0 || numberCount === 0 || symbolCount === 0) {
             if (message === '')
               message = 'Missing ';
@@ -240,7 +240,7 @@ export default class User extends Router {
         that.forgotPassword(that.email, function() { event.target.classList.remove('is-loading'); });
       });
       document.querySelector('#delete-account').addEventListener('click', function(event) {
-        let dialog = ModalDialog.run('Really delete account?',
+        const dialog = ModalDialog.run('Really delete account?',
           '<p>All your data will be deleted from our database, including scenes and animations.</p>' +
           '<p>There is no way to recover deleted data.</p>', 'Cancel', 'Delete Account', 'is-danger');
         dialog.querySelector('form').addEventListener('submit', function(event) {
@@ -282,12 +282,12 @@ export default class User extends Router {
     }
   }
   updateDisplayName() {
-    let that = this;
+    const that = this;
     const md5sum = md5(that.email.toLowerCase());
-    let head = document.getElementsByTagName('head')[0];
+    const head = document.getElementsByTagName('head')[0];
     if (typeof displayName === 'undefined') {
       const emailBeginning = that.email ? that.email.substring(0, that.email.indexOf('@')) : 'Anonymous';
-      let script = document.createElement('script');
+      const script = document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `let displayName = '${emailBeginning}';
         function User_profile(data) {
@@ -303,7 +303,7 @@ export default class User extends Router {
         displayName = '${emailBeginning}';
         } else
         displayName = '${emailBeginning}';
-        let x = document.getElementsByName("displayName");
+        const x = document.getElementsByName("displayName");
         let i;
         for (i = 0; i < x.length; i++)
         x[i].innerHTML = displayName;
@@ -311,10 +311,10 @@ export default class User extends Router {
       head.appendChild(script);
     } else
       User_profile();
-    let gq = document.getElementById('gravatar-query');
+    const gq = document.getElementById('gravatar-query');
     if (gq)
       gq.remove();
-    let script = document.createElement('script');
+    const script = document.createElement('script');
     script.id = 'gravatar-query';
     script.type = 'text/javascript';
     script.src = `https://www.gravatar.com/${md5sum}.json?callback=User_profile}`;
@@ -322,7 +322,7 @@ export default class User extends Router {
   }
   setup(title, content, fullpage = false) {
     super.setup(title, content, fullpage);
-    let navbarEnd = document.body.querySelector('.navbar-end');
+    const navbarEnd = document.body.querySelector('.navbar-end');
     navbarEnd.parentNode.replaceChild(this.menu(), navbarEnd);
     if (document.querySelector('#user-menu')) {
       if (this.email && this.password) {
@@ -340,7 +340,7 @@ export default class User extends Router {
     }
   }
   menu() {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.setAttribute('class', 'navbar-end');
     const emailBeginning = this.email ? this.email.substring(0, this.email.indexOf('@')) : 'Anonymous';
     const md5sum = this.email ? md5(this.email.toLowerCase()) : '';
@@ -365,7 +365,7 @@ export default class User extends Router {
           <a class="navbar-item" id="log-out"><i class="fas fa-power-off"> &nbsp; </i>Log out</a>
         </div>
       </div>`;
-    let that = this;
+    const that = this;
 
     div.querySelector('a#log-out').addEventListener('click', function(event) {
       that.password = null;
@@ -379,7 +379,7 @@ export default class User extends Router {
 
     div.querySelector('a#sign-up').addEventListener('click', function(event) {
       event.preventDefault();
-      let content = {};
+      const content = {};
       content.innerHTML =
         `<div class="field">
           <label class="label">E-mail</label>
@@ -391,14 +391,14 @@ export default class User extends Router {
           </div>
           <div id="sign-up-email-help" class="help">We will send you an e-mail to verify this address.</div>
         </div>`;
-      let modal = ModalDialog.run('Sign up', content.innerHTML, 'Cancel', 'Sign up');
+      const modal = ModalDialog.run('Sign up', content.innerHTML, 'Cancel', 'Sign up');
       modal.querySelector('#sign-up-email').focus();
       modal.querySelector('#sign-up-email').addEventListener('change', function(event) {
         event.target.setCustomValidity('');
         const email = event.target.value;
         const help = modal.querySelector('#sign-up-email-help');
         // check if e-mail address is valid
-        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(String(email).toLowerCase())) {
           help.innerHTML = 'This e-mail address is invalid.';
           help.classList.add('is-danger');
@@ -446,7 +446,7 @@ export default class User extends Router {
 
     div.querySelector('a#log-in').addEventListener('click', function(event) {
       event.preventDefault();
-      let content = {};
+      const content = {};
       content.innerHTML =
         `<div class="field">
           <label class="label">E-mail</label>
@@ -468,11 +468,11 @@ export default class User extends Router {
           <div class="has-text-right"><a id="log-in-forgot" class="help">Forgot your password?</a></div>
         </div>
         <p id="log-in-help" class="help"></p>`;
-      let modal = ModalDialog.run('Log in', content.innerHTML, 'Cancel', 'Log in');
+      const modal = ModalDialog.run('Log in', content.innerHTML, 'Cancel', 'Log in');
       modal.querySelector('#log-in-email').focus();
       modal.querySelector('#log-in-forgot').addEventListener('click', function(event) {
         modal.close();
-        let content = {};
+        const content = {};
         content.innerHTML =
           `<div class="field">
             <label class="label">E-mail</label>
@@ -484,7 +484,7 @@ export default class User extends Router {
               </span>
             </div>
           </div>`;
-        let forgot = ModalDialog.run('Forgot your password?', content.innerHTML, 'Cancel', 'Reset Password');
+        const forgot = ModalDialog.run('Forgot your password?', content.innerHTML, 'Cancel', 'Reset Password');
         forgot.querySelector('#forgot-email').focus();
         forgot.querySelector('form').addEventListener('submit', function(event) {
           event.preventDefault();
@@ -494,8 +494,8 @@ export default class User extends Router {
       });
       modal.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
-        let email = modal.querySelector('#log-in-email').value;
-        let password = modal.querySelector('#log-in-password').value;
+        const email = modal.querySelector('#log-in-email').value;
+        const password = modal.querySelector('#log-in-password').value;
         that.email = email;
         that.sha256Hash(password + that.title).then(function(hash) {
           that.password = hash;
@@ -514,7 +514,7 @@ export default class User extends Router {
       document.querySelector('#user-menu').style.display = 'none';
       document.querySelector('#log-in').style.display = 'none';
       document.querySelector('#sign-up').style.display = 'none';
-      let that = this;
+      const that = this;
       let uploads = JSON.parse(window.localStorage.getItem('uploads'));
       if (uploads === null)
         uploads = [];
