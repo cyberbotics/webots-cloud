@@ -1450,7 +1450,9 @@ ${deleteProject}`;
                     // const color = s > 0 ? `color:hsl(24,${s}%,38%);` : 'color:hsl(24,0%,38%)';
                     const dateString = `<span style="font-size:smaller;display:inline-block;">` +
                       `${dateObject.toLocaleDateString()}<br>` +
-                      `<svg><circle cx="5" cy="5" r="4" stroke="grey" stroke-width="1" fill="hsl(h,100%,50%)" /></svg>` +
+                      `<svg height="10" width="18">` +
+                      `<circle cx="5" cy="5" r="4" stroke="grey" stroke-width="1" fill="hsl(${h},100%,50%)" />` +
+                      `</svg>` +
                       `${dateObject.toLocaleTimeString()}</span>`;
                     const date = (typeof participant.log !== 'undefined')
                       ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
