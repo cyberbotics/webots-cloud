@@ -1447,8 +1447,7 @@ ${deleteProject}`;
                     const today = new Date();
                     const hourDelay = (today - dateObject) / 3600000;
                     const s = Math.ceil((24 - hourDelay) * 100 / 24);
-                    console.log(s);
-                    const color = s > 0 ? `color:hsl(24,${s}%,38%);` : '';
+                    const color = s > 0 ? `color:hsl(24,${s}%,38%);` : 'color:hsl(24,0%,38%)';
                     const dateString = `<span style="font-size:smaller;display:inline-block;${color}">` +
                       `${dateObject.toLocaleDateString()}<br>` +
                       `${dateObject.toLocaleTimeString()}</span>`;
