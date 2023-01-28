@@ -1446,7 +1446,7 @@ ${deleteProject}`;
                     const dateObject = new Date(participant.date);
                     const today = new Date();
                     const hourDelay = (today - dateObject) / 3600000;
-                    const h = Math.ceil(hourDelay * 10);
+                    const h = hourDelay > 24 ? 240 : Math.ceil(hourDelay * 10);
                     const dateString = `<span style="font-size:smaller;display:inline-block;">` +
                       `${dateObject.toLocaleDateString('en-GB')}<br>` +
                       `<svg height="10" width="18">` +
