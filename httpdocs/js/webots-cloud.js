@@ -1545,7 +1545,7 @@ ${deleteProject}`;
                           if (i.startsWith('R:'))
                             title += 'Running now:=> new participant\n';
                           else
-                            title += counter + ':=> new participant';
+                            title += counter + ':=> new participant\n';
                         }
                         counter++;
                       });
