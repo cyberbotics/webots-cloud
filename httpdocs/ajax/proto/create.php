@@ -226,7 +226,8 @@ function get_parent($externprotos, $base_proto, $parent_url) {
         if (substr($line, 0, 11) === 'EXTERNPROTO') {
           $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
           $proto_name = str_replace('.proto"', '', $line);
-          $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
+          if (strrpos($proto_name, '/'))
+            $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
           array_push($externprotos, [$proto_name, $proto_url]);
         }
         $line = strtok("\r\n");
