@@ -23,7 +23,7 @@ $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
-$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/$world";
+$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder$world";
 $world_content = @file_get_contents($world_url);
 if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
