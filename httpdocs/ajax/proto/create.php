@@ -222,7 +222,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
       $line = strtok($extern_proto_content, "\r\n");
       $line = strtok("\r\n");
       $externprotos = [];
-      while ($line !== false) {if (strrpos($proto_name, '/'))
+      while ($line !== false) {
         $line == trim($line);
         if (substr($line, 0, 11) === 'EXTERNPROTO') {
           $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
