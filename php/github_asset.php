@@ -62,7 +62,7 @@ function github_check_yaml($check_url, $proto) {
     $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return yaml_error("webots.yaml file not found.");
+      return yaml_error("webots.yaml file not found.".$yaml_folder);
   }
 
   # yaml file variables
