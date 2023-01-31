@@ -206,7 +206,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
       $extern_url = $externprotos[$i][1];
       if (str_starts_with($extern_url, "webots://"))
         $extern_url = str_replace("webots://", "https://github.com/cyberbotics/webots/blob/released/", $extern_url);
-      else if (!srt_starts_with($extern_url, "https"))
+      else if (!str_starts_with($extern_url, "https"))
         $extern_url = substr($parent_url, 0, strrpos($parent_url, '/') + 1).$extern_url;
       $parent_url = $extern_url;
       $check_url = proto_check_url($extern_url);
