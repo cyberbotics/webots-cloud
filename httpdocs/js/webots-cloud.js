@@ -1,6 +1,6 @@
 import Project from './project.js';
 import ModalDialog from './modal_dialog.js';
-import country_codes from './country_codes.js';
+import countryCodes from './country_codes.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
@@ -1072,8 +1072,8 @@ ${deleteProject}`;
     }
 
     function addSimulation(type) {
-      let demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
-      let competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
+      const demoExample = 'https://github.com/cyberbotics/webots/blob/R2022b/projects/languages/python/worlds/example.wbt';
+      const competitionExample = 'https://github.com/cyberbotics/robot-programming-competition/blob/main/worlds/robot_programming.wbt';
       const content = {};
       content.innerHTML =
         `<div class="field">
@@ -1883,7 +1883,9 @@ ${deleteProject}`;
 
     function getCompetition(url) {
       let metric;
-      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      // note: this is a temporary hack to allow Olivier to quickly check the repos of the wrestling participants while
+      // debugging / refining the competition infrastructure
+      const admin = project.email ? project.email === 'Olivier.Michel@cyberbotics.com' : false;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
@@ -1930,8 +1932,6 @@ ${deleteProject}`;
                 project.runWebotsView(rawUrl + '/preview/');
               };
               document.getElementById('competition-preview-container').append(div);
-              if (project && !project.competitionUrl)
-                project.competitionUrl = url;
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
@@ -1986,12 +1986,19 @@ ${deleteProject}`;
                   let ranking = 1;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
-                    const dateString = `<span style="font-size:smaller;display:inline-block">` +
-                      `${dateObject.toLocaleDateString()}<br>${dateObject.toLocaleTimeString()}</span>`;
+                    const today = new Date();
+                    const hourDelay = (today - dateObject) / 3600000;
+                    const h = hourDelay > 24 ? 240 : Math.ceil(hourDelay * 10);
+                    const dateString = `<span style="font-size:smaller;display:inline-block;">` +
+                      `${dateObject.toLocaleDateString('en-GB')}<br>` +
+                      `<svg height="10" width="18">` +
+                      `<circle cx="5" cy="5" r="4" stroke="grey" stroke-width="1" fill="hsl(${h},100%,50%)" />` +
+                      `</svg>` +
+                      `${dateObject.toLocaleTimeString('en-GB')}</span>`;
                     const date = (typeof participant.log !== 'undefined')
                       ? `<a href="${participant.log}" target="_blank">${dateString}</a>`
                       : dateString;
-                    let tableContent = document.createElement('template');
+                    const tableContent = document.createElement('template');
                     let performanceString;
                     if (metric === 'percent')
                       performanceString = (participant.performance * 100).toFixed(2) + '%';
@@ -2022,8 +2029,10 @@ ${deleteProject}`;
                       performanceString = participant.performance;
                     const performanceLine = (metric === 'ranking') ? ``
                       : `<td style="vertical-align:middle;" class="has-text-centered">${performanceString}</td>`;
-                    const link = participant.private && !admin ? `${participant.name}`
-                      : `<a href="https://github.com/${participant.repository}" target="_blank">${participant.name}</a>`;
+                    const linkUrl = 'https://github.com/' + (participant.private && !admin
+                      ? participant.repository.split('/')[0]
+                      : participant.repository);
+                    const link = `<a href="${linkUrl}" target="_blank">${participant.name}</a>`;
                     const title = (metric === 'ranking')
                       ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
@@ -2034,10 +2043,13 @@ ${deleteProject}`;
                     const flag = participant.repository.startsWith(`${username}/`)
                       ? '<span style="font-size:small">demo</span>'
                       : getFlag(participant.country);
+                    const country = participant.repository.startsWith(`${username}/`)
+                      ? 'Open-source demo controller'
+                      : countryCodes[participant.country];
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
-                     title="${country_codes[participant.country]}">${flag}</td>
+                     title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
@@ -2060,8 +2072,8 @@ ${deleteProject}`;
                       let counter = 0;
                       queue.forEach(i => {
                         let found = false;
-                        for (const participant of participants['participants'])
-                          if (i == participant.repository) {
+                        for (const participant of participants['participants']) {
+                          if (i === participant.repository) {
                             title += counter + ': ' + participant.name + '\n';
                             found = true;
                             break;
@@ -2070,11 +2082,12 @@ ${deleteProject}`;
                             found = true;
                             break;
                           }
+                        }
                         if (!found) {
                           if (i.startsWith('R:'))
                             title += 'Running now:=> new participant\n';
                           else
-                            title += counter + ':=> new participant'
+                            title += counter + ':=> new participant\n';
                         }
                         counter++;
                       });
