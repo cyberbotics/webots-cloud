@@ -1198,7 +1198,7 @@ ${deleteProject}`;
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
               updatePagination('proto', page, total);
-              console.log(total)
+              console.log(data.total)
               project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
