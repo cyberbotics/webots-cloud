@@ -31,7 +31,7 @@ function check_url($url, $proto = false) {
   $tag_or_branch = $exploded[3];
   if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $tag_or_branch))
     return 'Wrong GitHub tag or branch name';
-  $folder = implode('/', array_slice($exploded, 4, $count - 6));
+  $folder = implode('/', array_slice($exploded, 4, $count - 5));
   if ($folder !=='' and
       (!preg_match('/^[-a-z\d_.-\/]{1,100}$/i', $folder)  # no fancy folder name
        or substr($folder, 0, 1) === '/'                   # doesn't start with slash
@@ -41,17 +41,7 @@ function check_url($url, $proto = false) {
   if ($folder !== '')
     $folder = "/$folder";
 
-  $world_or_proto;
-  $worlds_or_protos_folder = $exploded[$count - 2];
-  if ($proto) {
-    if ($worlds_or_protos_folder != 'protos')
-      return 'Missing \'/protos/\' folder in URL';
-    $world_or_proto = $exploded[$count - 1];
-  } else {
-    if ($worlds_or_protos_folder != 'worlds')
-      return 'Missing \'/worlds/\' folder in URL';
-    $world_or_proto = $exploded[$count - 1];
-  }
+  $world_or_proto = $exploded[$count - 1];
 
   return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
