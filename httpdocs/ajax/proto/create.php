@@ -243,7 +243,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
   if (!$found_parent) {
     $str = '';
     for($i = 0; $i < count($externprotos); $i++) {
-      $str .= $externprotos[i][0];
+      $str .= $externprotos[$i][0];
     }
     error("$str base: $base_proto parent_url: $parent_url");
   }
