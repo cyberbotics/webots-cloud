@@ -1196,10 +1196,7 @@ ${deleteProject}`;
               const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              console.log(data.total)
-              console.log(pageLimit)
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-              console.log(total)
               updatePagination('proto', page, total);
 
               project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
