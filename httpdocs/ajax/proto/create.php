@@ -198,6 +198,7 @@ die(json_encode($answer));
 
 function get_parent($externprotos, $base_proto, $parent_url) {
   $found_parent = false;
+  $current_proto_content = false;
   for($i = 0; $i < count($externprotos); $i++) {
     if ($externprotos[$i][0] === $base_proto) {
       $found_parent = true;
