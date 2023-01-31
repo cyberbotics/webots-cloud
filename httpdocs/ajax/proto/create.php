@@ -73,7 +73,8 @@ while ($line !== false) {
   } elseif (substr($line, 0, 11) === 'EXTERNPROTO') {
     $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
     $proto_name = str_replace('.proto"', '', $proto_url);
-    $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
+    if (strrpos($proto_name, '/'))
+      $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
     array_push($externprotos, [$proto_name, $proto_url]);
   } elseif (substr($line, 0, 6) === 'PROTO ')
     $title = trim(substr($line, 6));
@@ -221,11 +222,11 @@ function get_parent($externprotos, $base_proto, $parent_url) {
       $line = strtok($extern_proto_content, "\r\n");
       $line = strtok("\r\n");
       $externprotos = [];
-      while ($line !== false) {
+      while ($line !== false) {if (strrpos($proto_name, '/'))
         $line == trim($line);
         if (substr($line, 0, 11) === 'EXTERNPROTO') {
           $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
-          $proto_name = str_replace('.proto"', '', $line);
+          $proto_name = str_replace('.proto"', '', $proto_url);
           if (strrpos($proto_name, '/'))
             $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
           array_push($externprotos, [$proto_name, $proto_url]);
@@ -244,7 +245,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
   if (!$found_parent) {
     $str = '';
     for($i = 0; $i < count($externprotos); $i++) {
-      $str .= ' '.$externprotos[$i][0];
+      $str .= $externprotos[$i][0];
     }
     error(" $str base: $base_proto parent_url: $parent_url");
   }
