@@ -1197,8 +1197,7 @@ ${deleteProject}`;
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-              const page = (total === 0) ? 1 : Math.ceil(total / pageLimit);
-              console.log(page)
+              page = total;
               updatePagination('proto', page, total);
 
               project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
