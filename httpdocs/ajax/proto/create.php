@@ -111,9 +111,8 @@ while(!in_array($base_type, $base_nodes)) {
   $base_type = $results[1];
   $parent_url = $results[3];
   $found_parent = $results[4];
-  $str = implode(', ', $externprotos);
   if(!$found_parent)
-    error("Base type: seems like the parent node ($str) is missing from the EXTERNPROTO.");
+    error("Base type: seems like the parent node is missing from the EXTERNPROTO.");
 }
 
 $device_regex = "/(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/";
@@ -240,6 +239,13 @@ function get_parent($externprotos, $base_proto, $parent_url) {
 
       break;
     }
+  }
+  if (!$found_parent) {
+    $str = '';
+    for($i = 0; $i < count($externprotos); $i++) {
+      $str .= $externprotos[i][0];
+    }
+    error("$str base: $base_proto parent_url: $parent_url")
   }
   return array($externprotos, $base_proto, $current_proto_content, $parent_url, $found_parent);
 }
