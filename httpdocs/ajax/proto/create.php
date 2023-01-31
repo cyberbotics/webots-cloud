@@ -72,7 +72,7 @@ while ($line !== false) {
     }
   } elseif (substr($line, 0, 11) === 'EXTERNPROTO') {
     $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
-    $proto_name = str_replace('.proto"', '', $proto_url);
+    $proto_name = str_replace('.proto', '', $proto_url);
     if (strrpos($proto_name, '/'))
       $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
     array_push($externprotos, [$proto_name, $proto_url]);
@@ -226,7 +226,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
         $line == trim($line);
         if (substr($line, 0, 11) === 'EXTERNPROTO') {
           $proto_url = trim(str_replace('"', '',str_replace('EXTERNPROTO', '', $line)));
-          $proto_name = str_replace('.proto"', '', $proto_url);
+          $proto_name = str_replace('.proto', '', $proto_url);
           if (strrpos($proto_name, '/'))
             $proto_name = substr($proto_name, strrpos($proto_name, '/') + 1);
           array_push($externprotos, [$proto_name, $proto_url]);
