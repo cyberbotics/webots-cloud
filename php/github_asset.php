@@ -55,7 +55,7 @@ function github_check_yaml($check_url, $proto) {
   # get file from github
   list($username, $repository, $version, $folder, $world_or_proto) = $check_url;
   $protos_index = strpos($folder, "/protos/");
-  $yaml_folder = substr($folder, 0, strlen($folder) - $protos_index);
+  $yaml_folder = substr($folder, 0, $protos_index);
   $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
