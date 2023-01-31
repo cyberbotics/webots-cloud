@@ -111,7 +111,7 @@ while(!in_array($base_type, $base_nodes)) {
   $base_type = $results[1];
   $parent_url = $results[3];
   $found_parent = $results[4];
-  $str = implode(', ', $externprotos)
+  $str = implode(', ', $externprotos);
   if(!$found_parent)
     error("Base type: seems like the parent node ($str) is missing from the EXTERNPROTO.");
 }
