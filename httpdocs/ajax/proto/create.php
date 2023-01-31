@@ -212,7 +212,6 @@ function get_parent($externprotos, $base_proto, $parent_url) {
         error($check_url);
       list($extern_username, $extern_repository, $extern_tag_or_branch, $extern_folder, $extern_proto) = $check_url;
       $extern_proto_url = "https://raw.githubusercontent.com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder$extern_proto";
-      die($extern_proto_url);
       $extern_proto_content = @file_get_contents($extern_proto_url);
       if ($extern_proto_content === false)
         error("Could not retrieve parent proto with url'$extern_url'");
