@@ -1740,7 +1740,7 @@ ${deleteProject}`;
           file += '}\n';
           file += '```\n\n';
 
-          if (describedField) {
+          if (describedField.length > 0) {
             file += '### ' + protoName + ' Field Summary\n\n';
             for (const [fieldType, fieldName, fielDescription] of describedField) {
               file += '- `' + fieldName + '` : ' + fielDescription;
