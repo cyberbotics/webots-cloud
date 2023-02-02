@@ -1350,6 +1350,21 @@ ${deleteProject}`;
         .then(function(data) {
           project.lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+          // preview image
+          const div = document.createElement('div');
+          div.classList.add('thumbnail-button-container');
+          const img = document.createElement('img');
+          img.src = rawUrl + '/preview/thumbnail.jpg';
+          div.append(img);
+          const button = document.createElement('button');
+          button.innerHTML = 'Load Animation';
+          div.append(button);
+          button.onclick = function() {
+            document.getElementById('competition-preview-container').innerHTML = '';
+            project.runWebotsView(rawUrl + '/preview/');
+          };
+          document.getElementById('competition-preview-container').append(div);
+
           fetch(rawUrl + '/README.md', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
@@ -1376,20 +1391,6 @@ ${deleteProject}`;
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
                 document.getElementById('competition-information').prepend(tr);
               }
-              // preview image
-              const div = document.createElement('div');
-              div.classList.add('thumbnail-button-container');
-              const img = document.createElement('img');
-              img.src = rawUrl + '/preview/thumbnail.jpg';
-              div.append(img);
-              const button = document.createElement('button');
-              button.innerHTML = 'Load Animation';
-              div.append(button);
-              button.onclick = function() {
-                document.getElementById('competition-preview-container').innerHTML = '';
-                project.runWebotsView(rawUrl + '/preview/');
-              };
-              document.getElementById('competition-preview-container').append(div);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
@@ -1430,6 +1431,7 @@ ${deleteProject}`;
                 <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
+
               fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
                 .then(function(response) { return response.json(); })
                 .then(function(participants) {
@@ -1520,6 +1522,10 @@ ${deleteProject}`;
                       viewButton.addEventListener('click', viewEntryRun);
                   }
                   document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                  const leaderboard = document.getElementById('leaderboard');
+                  leaderboard.removeAttribute('style');
+                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
