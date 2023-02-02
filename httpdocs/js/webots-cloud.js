@@ -1561,10 +1561,15 @@ ${deleteProject}`;
             });
         });
     }
+    function runEntry(username, repo, id) {
+      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
+      project.runWebotsView(entryAnimation);
+    }
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, ,] = url.split('/');
+      const [, , , username, repo, , branch] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
@@ -1575,9 +1580,15 @@ ${deleteProject}`;
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
-      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
-      project.runWebotsView(entryAnimation);
+      if (typeof project.lastSha === 'undefined') {
+        fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          project.lastSha = data[0].sha;
+          runEntry(username, repo, id);
+        });
+      } else
+        runEntry(username, repo, id);
     }
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
