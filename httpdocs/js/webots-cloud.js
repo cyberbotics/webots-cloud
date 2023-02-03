@@ -1505,7 +1505,7 @@ ${deleteProject}`;
                       : getFlag(participant.country);
                     const country = participant.repository.startsWith(`${username}/`)
                       ? 'Open-source demo controller'
-                      : countryCodes[participant.country];
+                      : countryCodes[participant.country.toUpperCase()];
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
@@ -1582,11 +1582,11 @@ ${deleteProject}`;
       }
       if (typeof project.lastSha === 'undefined') {
         fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-          project.lastSha = data[0].sha;
-          runEntry(username, repo, id);
-        });
+          .then(function(response) { return response.json(); })
+          .then(function(data) {
+            project.lastSha = data[0].sha;
+            runEntry(username, repo, id);
+          });
       } else
         runEntry(username, repo, id);
     }
