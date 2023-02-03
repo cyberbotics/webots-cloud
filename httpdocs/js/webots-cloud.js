@@ -1468,7 +1468,7 @@ ${deleteProject}`;
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      const url = searchParams.get('url');
+      const url = searchParams.get('url').replace('/blob/main/worlds/', '/blob/competition/worlds/');
       project.competitionUrl = url;
       const context = searchParams.get('context');
       switch (context) {
@@ -1894,6 +1894,21 @@ ${deleteProject}`;
         .then(function(data) {
           project.lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+          // preview image
+          const div = document.createElement('div');
+          div.classList.add('thumbnail-button-container');
+          const img = document.createElement('img');
+          img.src = rawUrl + '/preview/thumbnail.jpg';
+          div.append(img);
+          const button = document.createElement('button');
+          button.innerHTML = 'Load Animation';
+          div.append(button);
+          button.onclick = function() {
+            document.getElementById('competition-preview-container').innerHTML = '';
+            project.runWebotsView(rawUrl + '/preview/');
+          };
+          document.getElementById('competition-preview-container').append(div);
+
           fetch(rawUrl + '/README.md', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
@@ -1920,20 +1935,6 @@ ${deleteProject}`;
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
                 document.getElementById('competition-information').prepend(tr);
               }
-              // preview image
-              const div = document.createElement('div');
-              div.classList.add('thumbnail-button-container');
-              const img = document.createElement('img');
-              img.src = rawUrl + '/preview/thumbnail.jpg';
-              div.append(img);
-              const button = document.createElement('button');
-              button.innerHTML = 'Load Animation';
-              div.append(button);
-              button.onclick = function() {
-                document.getElementById('competition-preview-container').innerHTML = '';
-                project.runWebotsView(rawUrl + '/preview/');
-              };
-              document.getElementById('competition-preview-container').append(div);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
@@ -1974,6 +1975,7 @@ ${deleteProject}`;
                 <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
+
               fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
                 .then(function(response) { return response.json(); })
                 .then(function(participants) {
@@ -2047,7 +2049,7 @@ ${deleteProject}`;
                       : getFlag(participant.country);
                     const country = participant.repository.startsWith(`${username}/`)
                       ? 'Open-source demo controller'
-                      : countryCodes[participant.country];
+                      : countryCodes[participant.country.toUpperCase()];
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
@@ -2064,6 +2066,10 @@ ${deleteProject}`;
                       viewButton.addEventListener('click', viewEntryRun);
                   }
                   document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                  const leaderboard = document.getElementById('leaderboard');
+                  leaderboard.removeAttribute('style');
+                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
@@ -2099,10 +2105,15 @@ ${deleteProject}`;
             });
         });
     }
+    function runEntry(username, repo, id) {
+      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
+      project.runWebotsView(entryAnimation);
+    }
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, ,] = url.split('/');
+      const [, , , username, repo, , branch] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
@@ -2113,9 +2124,15 @@ ${deleteProject}`;
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
-      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
-      project.runWebotsView(entryAnimation);
+      if (typeof project.lastSha === 'undefined') {
+        fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
+          .then(function(response) { return response.json(); })
+          .then(function(data) {
+            project.lastSha = data[0].sha;
+            runEntry(username, repo, id);
+          });
+      } else
+        runEntry(username, repo, id);
     }
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
