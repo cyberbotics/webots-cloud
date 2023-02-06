@@ -1500,12 +1500,9 @@ ${deleteProject}`;
                       ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view" title="${title}">View</button>`;
-                    const flag = participant.repository.startsWith(`${username}/`)
-                      ? '<span style="font-size:small">demo</span>'
-                      : getFlag(participant.country);
-                    const country = participant.repository.startsWith(`${username}/`)
-                      ? 'Open-source demo controller'
-                      : countryCodes[participant.country.toUpperCase()];
+                    const demo = !participant.private && participant.country === 'demo';
+                    const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
+                    const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     tableContent.innerHTML = `<tr>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
