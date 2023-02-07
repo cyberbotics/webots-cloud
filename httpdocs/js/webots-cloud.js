@@ -1297,8 +1297,10 @@ ${deleteProject}`;
 
     function listProtos(page, sortBy, searchString) {
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/proto/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
+      fetch('/ajax/proto/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString })
+      })
         .then(function(response) {
           return response.json();
         })
@@ -1425,8 +1427,10 @@ ${deleteProject}`;
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/delete.php', {method: 'post',
-          body: JSON.stringify({user: project.id, password: project.password, id: id})})
+        fetch('ajax/proto/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
           .then(function(response) {
             return response.json();
           })
@@ -1548,7 +1552,7 @@ ${deleteProject}`;
             .then(async function(content) {
               const results = parseProtoHeader(proto);
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
-              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
+              const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
@@ -1725,7 +1729,7 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      fetch('ajax/proto/documentation.php', {method: 'post', body: JSON.stringify({url: protoURl})})
+      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: protoURl }) })
         .then(function(response) {
           return response.json();
         })
@@ -1779,7 +1783,7 @@ ${deleteProject}`;
           const license = content.license;
           const licenseUrl = content.license_url;
           const version = content.version;
-          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
+          const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
           populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
         });
     }
@@ -1987,6 +1991,7 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
+                  let demo_count = 0;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
                     const today = new Date();
@@ -2044,6 +2049,8 @@ ${deleteProject}`;
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view" title="${title}">View</button>`;
                     const demo = !participant.private && participant.country === 'demo';
+                    if (demo)
+                      demo_count++;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     tableContent.innerHTML = `<tr>
@@ -2061,7 +2068,12 @@ ${deleteProject}`;
                     if (viewButton)
                       viewButton.addEventListener('click', viewEntryRun);
                   }
-                  document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                  let count = (participants['participants'].length - demo_count).toString();
+                  if (demo_count == 1)
+                    count += ' + 1 demo';
+                  else if (demo_count > 1)
+                    count += ` + ${demo_count} demos`;
+                  document.getElementById('competition-participants').innerHTML = count;
                   // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
                   const leaderboard = document.getElementById('leaderboard');
                   leaderboard.removeAttribute('style');
