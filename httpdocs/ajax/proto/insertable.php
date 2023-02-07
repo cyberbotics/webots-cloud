@@ -14,7 +14,7 @@
   $base_types = $data->base_types;
   $branch = basename(dirname(__FILE__, 4));
   if (!$branch)
-    $branch = "proto";
+    $branch = "main";
   $condition = "branch=\"$branch\" AND base_type IN ('"
      . implode("','", array_map(fn($string): string => mysqli_real_escape_string($mysqli, $string),$base_types))
      . "')";
