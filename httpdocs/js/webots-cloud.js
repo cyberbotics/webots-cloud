@@ -6,17 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
   let scenePage = 1;
   let animationPage = 1;
   let simulationPage = 1;
+  let protoPage = 1;
   let serverPage = 1;
   let competitionPage = 1;
 
   let sceneSort = 'default';
   let animationSort = 'default';
   let simulationSort = 'default';
+  let protoSort = 'default';
   let competitionSort = 'default';
 
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
+  let protoSearch = '';
   let competitionSearch = '';
   let delaySearch = false;
 
@@ -31,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     {
       url: '/scene',
+      setup: homePage
+    },
+    {
+      url: '/proto',
       setup: homePage
     },
     {
@@ -82,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationPage = page;
     else if (activeTab === 'simulation')
       simulationPage = page;
+    else if (activeTab === 'proto')
+      protoPage = page;
     else if (activeTab === 'server')
       serverPage = page;
     else if (activeTab === 'competition')
@@ -95,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationPage;
     if (activeTab === 'simulation')
       return simulationPage;
+    if (activeTab === 'proto')
+      return protoPage;
     if (activeTab === 'server')
       return serverPage;
     if (activeTab === 'competition')
@@ -108,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSort = sort;
     else if (activeTab === 'simulation')
       simulationSort = sort;
+    else if (activeTab === 'proto')
+      protoSort = sort;
     else if (activeTab === 'competition')
       competitionSort = sort;
   }
@@ -119,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSort;
     if (activeTab === 'simulation')
       return simulationSort;
+    if (activeTab === 'proto')
+      return protoSort;
     if (activeTab === 'competition')
       return competitionSort;
   }
@@ -130,6 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
       animationSearch = search;
     else if (activeTab === 'simulation')
       simulationSearch = search;
+    else if (activeTab === 'proto')
+      protoSearch = search;
     else if (activeTab === 'competition')
       competitionSearch = search;
     else if (activeTab === 'delay')
@@ -143,6 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return animationSearch;
     if (activeTab === 'simulation')
       return simulationSearch;
+    if (activeTab === 'proto')
+      return protoSearch;
     if (activeTab === 'competition')
       return competitionSearch;
     if (activeTab === 'delay')
@@ -175,15 +194,20 @@ document.addEventListener('DOMContentLoaded', function() {
     project.content.querySelector('#add-a-new-animation').addEventListener('click', function(event) { addAnimation('A'); });
     project.content.querySelector('#add-a-new-simulation').addEventListener('click', function(event) { addSimulation('D'); });
     project.content.querySelector('#add-a-new-competition').addEventListener('click', function(event) { addSimulation('C'); });
+    project.content.querySelector('#add-a-new-proto').addEventListener('click', function(event) { addProto(); });
 
     listAnimations('S', scenePage, getSort('scene'), getSearch('scene'));
     listAnimations('A', animationPage, getSort('animation'), getSearch('animation'));
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
     listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
+    listProtos(protoPage, getSort('proto'), getSearch('proto'));
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
+        .appendChild(document.createElement('th'));
+
+      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
     }
 
@@ -290,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return row;
     }
 
-    function simulationRow(data) {
+    function githubRow(data, proto) {
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const words = data.url.substring(19).split('/');
       let thumbnailUrl;
@@ -301,6 +325,11 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (data.type === 'competition') {
         const [, , , username, repo, , branch] = data.url.split('/');
         thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
+      } else if (proto) {
+        const prefix = data.url.substr(0, data.url.lastIndexOf('/') + 1).replace('github.com',
+          'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+        const imageName = data.url.substr(data.url.lastIndexOf('/') + 1).replace('.proto', '.png');
+        thumbnailUrl = prefix + imageName;
       }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
@@ -309,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
       const deleteIcon = `<i style="color: red" class="is-clickable far fa-trash-alt fa-sm" id="delete-${data.id}"
-        title="Delete ${data.type} as administrator"></i>`;
+        title="Delete row as administrator"></i>`;
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
@@ -376,6 +405,9 @@ ${deleteProject}`;
             </li>
             <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
+            </li>
+            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Proto</a>
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
@@ -608,6 +640,64 @@ ${deleteProject}`;
               <button class="button" id="what-is-a-competition">What is a competition?</button>
             </div>
           </section>
+          <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+            <div class="table-container">
+              <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
+                <div class="control has-icons-right">
+                  <input class="input is-small" id="proto-search-input" type="text"
+                    placeholder="Search for protos...">
+                  <span class="icon is-small is-right is-clickable" id="proto-search-click">
+                    <i class="fas fa-search" id="proto-search-icon"></i>
+                  </span>
+                </div>
+              </div>
+              <table class="table is-striped is-hoverable">
+                <thead>
+                  <tr>
+                  <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
+                      style="text-align: center;">
+                      <i class="far fa-star"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
+                      style="text-align:center; min-width: 65px;">
+                      <i class="fas fa-chart-column"></i>
+                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-title" title="Title of the proto"
+                      style="min-width: 120px;">
+                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
+                      Branch/Tag
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
+                      style="min-width: 85px;">
+                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                    <th class="is-clickable column-title" id="proto-sort-updated" title="Last update time"
+                      style="text-align: right;">
+                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <div class="empty-search" id="proto-empty-search" style="display: none;">
+                <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
+                </i>
+                <p id="proto-empty-search-text"></p>
+              </div>
+            </div>
+            <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
+            </nav>
+            <div class="container is-fullhd">
+              <div class="buttons">
+                <button class="button" id="add-a-new-proto">Add a new proto</button>
+              </div>
+            </div>
+          </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
             <div class="table-container" style="margin-top:50px">
               <table class="table is-striped is-hoverable">
@@ -679,7 +769,7 @@ ${deleteProject}`;
     function initSearch(searchString) {
       if (activeTab !== 'server')
         document.getElementById(activeTab + '-search-input').value = searchString;
-      for (let type of ['scene', 'animation', 'simulation', 'competition']) {
+      for (const type of ['scene', 'animation', 'simulation', 'competition', 'proto']) {
         document.getElementById(type + '-search-input').addEventListener('keyup', function(event) {
           if (!getSearch('delay')) {
             setSearches('delay', true);
@@ -762,6 +852,8 @@ ${deleteProject}`;
         listSimulations('D', simulationPage, getSort(type), getSearch(type));
       else if (type === 'competition')
         listSimulations('C', competitionPage, getSort(type), getSearch(type));
+      else if (type === 'proto')
+        listProtos(protoPage, getSort(type), getSearch(type));
     }
 
     function updateSearchIcon(type) {
@@ -779,16 +871,27 @@ ${deleteProject}`;
         updateSearchIcon('animation');
         updateSearchIcon('simulation');
         updateSearchIcon('competition');
+        updateSearchIcon('proto');
       }
     }
 
-    function synchronizeSimulation(event) {
-      const typeName = document.location.pathname.substring(1); // either 'simulation' or 'competition'
-      const searchString = getSearch(typeName);
+    function synchronizeGithub(event, proto) {
+      let searchString;
+      let script;
+      let typeName;
+      if (proto) {
+        searchString = getSearch('proto');
+        script = 'ajax/proto/create.php';
+        typeName = 'proto';
+      } else {
+        typeName = document.location.pathname.substring(1); // either 'simulation' or 'competition'
+        searchString = getSearch(typeName);
+        script = 'ajax/project/create.php';
+      }
       const id = event.target.id.substring(5);
       event.target.classList.add('fa-spin');
       const url = event.target.getAttribute('data-url');
-      fetch('ajax/project/create.php', { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+      fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
         .then(function(response) {
           return response.json();
         })
@@ -815,12 +918,18 @@ ${deleteProject}`;
             project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
           } else {
             const tr = document.createElement('tr');
-            tr.innerHTML = simulationRow(data);
+            tr.innerHTML = githubRow(data, proto);
             parent.replaceChild(tr, old);
-            parent.querySelector('#sync-' + data.id).addEventListener('click', synchronizeSimulation);
-            if (parent.querySelector('#delete-' + id) !== null)
-              parent.querySelector('#delete-' + id).addEventListener('click',
-                function(event) { deleteSimulation(event, project); });
+            parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
+            if (parent.querySelector('#delete-' + id) !== null) {
+              if (proto)
+                parent.querySelector('#delete-' + id).addEventListener('click',
+                  function(event) { deleteProto(event, project); });
+              else
+                parent.querySelector('#delete-' + id).addEventListener('click',
+                  function(event) { deleteSimulation(event, project); });
+            }
+
             event.target.classList.remove('fa-spin');
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
@@ -1020,12 +1129,78 @@ ${deleteProject}`;
               modal.error(errorMsg);
             } else {
               modal.close();
-              const tr = '<tr class="has-background-warning-light">' + simulationRow(data) + '</tr>';
+              const tr = '<tr class="has-background-warning-light">' + githubRow(data) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
               const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
               updatePagination(typeName, page, total);
               project.load(`/${typeName}${(page > 1) ? ('?p=' + page) : ''}`);
+            }
+          });
+      });
+    }
+
+    function addProto() {
+      const content = {};
+      content.innerHTML =
+        `<div class="field">
+          <label class="label">Webots proto file</label>
+          <div class="control has-icons-left">
+            <input id="proto-file" class="input" type="url" required placeholder="https://github.com/my_name/my_repository/blob/tag/protos/my_proto.proto" value="https://github.com/">
+            <span class="icon is-small is-left">
+              <i class="fab fa-github"></i>
+            </span>
+          </div>
+          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+            <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto">
+              https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto
+            </a>
+            WARNING: your proto must be from version R2022b or newer.
+          </div>
+        </div>`;
+      const modal = ModalDialog.run('Add a proto', content.innerHTML, 'Cancel', 'Add');
+      const input = modal.querySelector('#proto-file');
+      input.focus();
+      input.selectionStart = input.selectionEnd = input.value.length;
+      modal.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        modal.querySelector('button[type="submit"]').classList.add('is-loading');
+        const protoFile = modal.querySelector('#proto-file').value.trim();
+        if (!protoFile.startsWith('https://github.com/')) {
+          modal.error('The world file should start with "https://github.com/".');
+          return;
+        }
+        const content = {
+          method: 'post',
+          body: JSON.stringify({
+            url: protoFile
+          })
+        };
+        fetch('/ajax/proto/create.php', content)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            if (data.error) {
+              let errorMsg = data.error;
+              if (errorMsg.startsWith('YAML file error:')) {
+                errorMsg = errorMsg +
+                  `<div class="help">
+                    More information at: <a target="_blank" href="https://cyberbotics.com/doc/guide/webots-cloud#yaml-file">
+                    cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
+                  </div>`;
+              }
+              modal.error(errorMsg);
+            } else {
+              modal.close();
+              const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
+              document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
+                'beforeend', tr);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              page = total;
+              updatePagination('proto', page, total);
+
+              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
             }
           });
       });
@@ -1102,13 +1277,13 @@ ${deleteProject}`;
               document.getElementById(typeName + '-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.projects.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + simulationRow(data.projects[i]) + '</tr>';
+              line += '<tr>' + githubRow(data.projects[i]) + '</tr>';
             const table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
             table.style.marginBottom = (50 * (pageLimit - data.projects.length)) + 'px';
             table.querySelector('tbody').innerHTML = line;
             for (let i = 0; i < data.projects.length; i++) {
               const id = data.projects[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeSimulation);
+              project.content.querySelector('#sync-' + id).addEventListener('click', synchronizeGithub);
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteSimulation(event, project); });
@@ -1116,6 +1291,41 @@ ${deleteProject}`;
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination(typeName, page, total);
             document.getElementById(typeName + '-search-input').value = searchString;
+          }
+        });
+    }
+
+    function listProtos(page, sortBy, searchString) {
+      const offset = (page - 1) * pageLimit;
+      fetch('/ajax/proto/list.php', {method: 'post',
+        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error)
+            ModalDialog.run('Proto listing error', data.error);
+          else {
+            if (data.total === 0 && searchString) {
+              const message = 'Your search - <strong>' + searchString + '</strong> - did not match any protos.';
+              document.getElementById('proto-empty-search-text').innerHTML = message;
+              document.getElementById('proto-empty-search').style.display = 'flex';
+            } else
+              document.getElementById('proto-empty-search').style.display = 'none';
+            let line = ``;
+            for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
+              line += '<tr>' + githubRow(data.protos[i], true) + '</tr>';
+            project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
+            for (let i = 0; i < data.protos.length; i++) {
+              let id = data.protos[i].id;
+              project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
+              if (project.content.querySelector('#delete-' + id) !== null)
+                project.content.querySelector('#delete-' + id)
+                  .addEventListener('click', function(event) { deleteProto(event, project); });
+            }
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            updatePagination('proto', page, total);
+            document.getElementById('proto-search-input').value = searchString;
           }
         });
     }
@@ -1208,6 +1418,28 @@ ${deleteProject}`;
       });
     }
 
+    function deleteProto(event, project) {
+      const id = event.target.id.substring(7);
+      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete proto`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/proto/delete.php', {method: 'post',
+          body: JSON.stringify({user: project.id, password: project.password, id: id})})
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Proto deletion error`, data.error);
+            else if (data.status === 1)
+              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
+          });
+      });
+    }
+
     function whatIsCompetitionPopUp() {
       const content = {};
       content.innerHTML =
@@ -1251,6 +1483,314 @@ ${deleteProject}`;
           mainContainer(project);
           break;
       }
+    } else // proto
+      protoContainer(project, searchParams);
+
+    function protoContainer(proto, searchParams) {
+      const url = searchParams.get('url');
+      const urlParts = url.split('/');
+      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+
+      const contentHtml =
+        `<div id="tabs" class="tabs is-centered is-small-medium">
+      <ul>
+        <li data-tab="scene" class="data-tab">
+          <a href="/scene">Scene</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a href="/animation">Animation</a>
+        </li>
+        <li data-tab="proto" class="data-tab is-active">
+          <a href="/proto">Proto</a>
+        </li>
+        <li data-tab="simulation" class="data-tab">
+          <a href="/simulation">Simulation</a>
+        </li>
+        <li data-tab="competition" class="data-tab">
+          <a href="/competition">Competition</a>
+        </li>
+        <li data-tab="server" class="data-tab">
+          <a href="/server">Server</a>
+        </li>
+      </ul>
+      </div>
+      <div class="container is-widescreen">
+        <section class="section is-active">
+        <h1 class='proto-title'>${protoName}</h1>
+        <div id='proto-webots-container'></div>
+        <div class='proto-doc'></div>
+        </section>
+      </div>`;
+      const template = document.createElement('template');
+      template.innerHTML = contentHtml;
+      project.setup('proto', template.content);
+      project.runWebotsView();
+      loadMd(url);
+    }
+
+    function loadMd(url) {
+      const protoURl = url;
+      if (url.includes('github.com')) {
+        url = url.replace('github.com', 'raw.githubusercontent.com');
+        url = url.replace('blob/', '');
+      }
+      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
+      const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
+      const mdUrl = prefix + protoName.toLowerCase() + '.md';
+      fetch(url).then(response => response.text())
+        .then(proto => {
+          fetch(mdUrl)
+            .then(response => {
+              if (!response.ok)
+                throw new Error('');
+              return response.text();
+            })
+            .then(async function(content) {
+              const results = parseProtoHeader(proto);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
+              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
+              populateProtoViewDiv(content, prefix, infoArray);
+            }).catch(() => {
+              // No md file, so we read the description from the proto file
+              fetch(url)
+                .then(response => response.text())
+                .then(content => {
+                  createMdFromProto(protoURl, proto, protoName, prefix, true);
+                });
+            });
+        });
+    }
+
+    function parseProtoHeader(proto) {
+      let version, license, licenseUrl;
+      for (const line of proto.split('\n')) {
+        if (!line.startsWith('#'))
+          break;
+
+        if (line.startsWith('#VRML_SIM') || line.startsWith('# VRML_SIM'))
+          version = line.substring(line.indexOf('VRML_SIM') + 9).split(' ')[0];
+        else if (line.startsWith('# license:') || line.startsWith('#license:'))
+          license = line.substring(line.indexOf('license:') + 9);
+        else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
+          licenseUrl = line.substring(line.indexOf('license url:') + 13);
+      }
+
+      return [version, license, licenseUrl];
+    }
+
+    function createProtoArray(version, license, licenseUrl, protoURl) {
+      const infoGrid = document.createElement('div');
+      infoGrid.className = 'proto-info-array';
+
+      const versionP = document.createElement('p');
+      versionP.textContent = 'Version';
+      versionP.className = 'info-array-cell first-column-cell first-row-cell';
+      versionP.style.gridRow = 1;
+      versionP.style.gridColumn = 1;
+      infoGrid.appendChild(versionP);
+
+      const versionContentA = document.createElement('a');
+      versionContentA.textContent = version;
+      versionContentA.href = 'https://github.com/cyberbotics/webots/releases/tag/' + version;
+      versionContentA.target = '_blank';
+      versionContentA.className = 'info-array-cell last-column-cell first-row-cell';
+      versionContentA.style.gridRow = 1;
+      versionContentA.style.gridColumn = 2;
+      infoGrid.appendChild(versionContentA);
+
+      const licenseP = document.createElement('p');
+      licenseP.textContent = 'License';
+      licenseP.className = 'info-array-cell first-column-cell';
+      licenseP.style.gridRow = 2;
+      licenseP.style.gridColumn = 1;
+      licenseP.style.backgroundColor = '#fafafa';
+      infoGrid.appendChild(licenseP);
+
+      const licenseContentA = document.createElement('a');
+      licenseContentA.textContent = license;
+      licenseContentA.className = 'info-array-cell last-column-cell';
+      licenseContentA.href = licenseUrl;
+      licenseContentA.target = '_blank';
+      licenseContentA.style.backgroundColor = '#fafafa';
+      licenseContentA.style.gridRow = 2;
+      licenseContentA.style.gridColumn = 2;
+      infoGrid.appendChild(licenseContentA);
+
+      const sourceP = document.createElement('p');
+      sourceP.textContent = 'Source';
+      sourceP.className = 'info-array-cell first-column-cell';
+      sourceP.style.gridRow = 3;
+      sourceP.style.gridColumn = 1;
+      infoGrid.appendChild(sourceP);
+
+      const sourceContentA = document.createElement('a');
+      sourceContentA.href = protoURl;
+      sourceContentA.className = 'info-array-cell last-column-cell';
+      sourceContentA.textContent = protoURl;
+      sourceContentA.target = '_blank';
+      sourceContentA.style.gridRow = 3;
+      sourceContentA.style.gridColumn = 2;
+      infoGrid.appendChild(sourceContentA);
+
+      return infoGrid;
+    }
+
+    function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
+      const fieldRegex = /\[\n((.*\n)*)\]/mg;
+      let matches = proto.matchAll(fieldRegex);
+      let fieldsDefinition = '';
+      const fieldEnumeration = new Map();
+      const describedField = [];
+      let fields = '';
+      let file = '';
+      for (const match of matches) {
+        fieldsDefinition = match[1];
+        break;
+      }
+
+      // remove enumerations
+      const removeEnumRegex = /.*ield\s+([^ ]*?)(\{(?:[^\[\n]*\,?\s?)(?<!(\{))\})\s+([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
+      matches = fieldsDefinition.matchAll(removeEnumRegex);
+      for (const match of matches) {
+        fieldEnumeration.set(match[4], match[2].slice(1, -1).split(','));
+        if (match[0].includes('\n')) {
+          const string = ' '.repeat(match[0].indexOf(match[2]));
+          fieldsDefinition = fieldsDefinition.replace(string + match[4], match[4]);
+          fieldsDefinition = fieldsDefinition.replace(match[2] + '\n', '');
+        }
+
+        if (match[2].length < 40)
+          fieldsDefinition = fieldsDefinition.replace(match[2], ' '.repeat(match[2].length));
+        else
+          fieldsDefinition = fieldsDefinition.replace(match[2], '');
+      }
+
+      const spacingRegex = /.*ield\s+([^ ]*?)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)/mg;
+      matches = fieldsDefinition.matchAll(spacingRegex);
+      let minSpaces = 2000;
+      for (const match of matches) {
+        const spaces = match[2];
+        if (spaces.length < minSpaces)
+          minSpaces = spaces.length;
+      }
+      const spacesToRemove = Math.max(minSpaces - 2, 0);
+
+      const cleaningRegex = /^\s*(.*?ield)\s+([^ \{]*)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)((\n*( {4}| {2}\]).*)*)/gm;
+      const isDescriptionRegex = /Is\s`([a-zA-Z]*).([a-zA-Z]*)`./g;
+
+      const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
+        'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
+        'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
+        'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
+        'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
+        'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
+        'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
+        'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
+        'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
+        'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
+        'Material'];
+
+      // create the final cleaned PROTO header
+      matches = fieldsDefinition.matchAll(cleaningRegex);
+      const removeCommentRegex = /\s*(#.*)/mg;
+      const removeInitialFieldRegex = /^\s*.*field\s/mg;
+      for (const match of matches) {
+        if (!(match[1].includes('hiddenField') || match[1].includes('deprecatedField'))) {
+          const fieldType = match[2];
+          const fieldName = match[4];
+          const fieldComment = match[7].trim();
+          // skip 'Is `NodeType.fieldName`.' descriptions
+          const isComment = fieldComment.match(isDescriptionRegex);
+          if (fieldComment && !isComment) {
+            // add link to base nodes:
+            for (const baseNode of baseNodeList) {
+              if (fieldComment.indexOf(baseNode) !== -1) {
+                const link = ' [' + baseNode + '](https://cyberbotics.com/doc/reference/' + baseNode.toLowerCase() + ')';
+                fieldComment.replace(' ' + baseNode, link);
+              }
+            }
+            describedField.push([fieldType, fieldName, fieldComment]);
+          }
+          // remove the comment
+          let fieldString = match[0];
+          fieldString = fieldString.replace(removeCommentRegex, '');
+          // remove intial '*field' string
+          fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
+          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
+
+          // remove unwanted spaces between field type and field name (if needed)
+          if (spacesToRemove > 0)
+            fieldString = fieldString.replace(fieldType + ' '.repeat(spacesToRemove), fieldType);
+
+          fields += fieldString + '\n';
+        }
+      }
+      fetch('ajax/proto/documentation.php', {method: 'post', body: JSON.stringify({url: protoURl})})
+        .then(function(response) {
+          return response.json();
+        })
+        .then(async function(content) {
+          const baseType = content.base_type;
+          const description = content.description;
+          file += description + '\n\n';
+          file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+          file += '```\n';
+          file += protoName + ' {\n';
+          file += fields;
+          file += '}\n';
+          file += '```\n\n';
+
+          if (describedField.length > 0) {
+            file += '### ' + protoName + ' Field Summary\n\n';
+            for (const [fieldType, fieldName, fielDescription] of describedField) {
+              file += '- `' + fieldName + '` : ' + fielDescription;
+              const isMFField = fieldType.startsWith('MF');
+              if (fieldEnumeration.has(fieldName)) {
+                const values = fieldEnumeration.get(fieldName);
+                if (isMFField)
+                  file += ' This field accept a list of ';
+                else {
+                  if (values.length > 1)
+                    file += ' This field accepts the following values: ';
+                  else
+                    file += ' This field accepts the following value: ';
+                }
+
+                for (let i = 0; i < values.length; i++) {
+                  const value = values[i].split('{')[0]; // In case of node keep only the type
+                  if (i === values.length - 1) {
+                    if (isMFField)
+                      file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
+                    else
+                      file += '`' + value.trim() + '`.';
+                  } else if (i === values.length - 2) {
+                    if (values.length === 2)
+                      file += '`' + value.trim() + '` and ';
+                    else
+                      file += '`' + value.trim() + '`, and ';
+                  } else
+                    file += '`' + value.trim() + '`, ';
+                }
+              }
+              file += '\n\n';
+            }
+          }
+
+          const license = content.license;
+          const licenseUrl = content.license_url;
+          const version = content.version;
+          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
+          populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
+        });
+    }
+
+    // check that the proto is at least from R2023b
+    function checkProtoVersion(version) {
+      const year = version.substring(1, version.length - 2);
+      if (year < 2023 || (year === 2023 && version[version.length - 1] === 'a'))
+        return 'R2023b';
+
+      return version;
     }
 
     function mainContainer(project) {
@@ -1278,6 +1818,9 @@ ${deleteProject}`;
         </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
+        </li>
+        <li data-tab="proto" class="data-tab is-active">
+          <a href="/proto">Proto</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
