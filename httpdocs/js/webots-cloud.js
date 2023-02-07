@@ -1638,7 +1638,7 @@ ${deleteProject}`;
     function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
-      let fieldsDefinition;
+      let fieldsDefinition = '';
       const fieldEnumeration = new Map();
       const describedField = [];
       let fields = '';
