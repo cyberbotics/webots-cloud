@@ -137,7 +137,7 @@ export default class Project extends User {
       console.log(this.findGetParameter('url'))
       version = await fetch('ajax/proto/documentation.php',
         { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
-        .then(response => console.log(response.text))//response.json())
+        .then(response => console.log(response.text()))//response.json())
         .then(json => json.version);
     }
     console.log(version)
