@@ -125,7 +125,7 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
-  runWebotsView(data, version) {
+  async runWebotsView(data, version) {
     if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -133,6 +133,12 @@ export default class Project extends User {
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
+    if (typeof version === 'undefined' && this.findGetParameter('url').endsWith('.proto')) {
+      version = await fetch('ajax/proto/documentation.php',
+        { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
+        .then(response => response.json())
+        .then(json => json.version);
+    }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     const promise = new Promise((resolve, reject) => {
@@ -179,7 +185,7 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
-    // if data empty -> demo or competition simulation
+    // if data empty -> demo, competition simulation or proto
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
