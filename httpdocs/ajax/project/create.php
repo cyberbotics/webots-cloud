@@ -10,7 +10,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 require '../../../php/github_oauth.php';
 require '../../../php/database.php';
-require '../../../php/simulation.php';
+require '../../../php/github_asset.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
@@ -23,7 +23,7 @@ $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
-$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder/worlds/$world";
+$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder$world";
 $world_content = @file_get_contents($world_url);
 if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
@@ -34,7 +34,7 @@ if ($world_content === false) {
 }
 
 # check and retrieve information from webots.yaml file
-$check_yaml = simulation_check_yaml($check_url);
+$check_yaml = github_check_yaml($check_url, $proto = false);
 if (!is_array($check_yaml)) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
@@ -108,9 +108,9 @@ else
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
   if ($id === 0)
-    error("This simulation already exists");
+    error("This simulation already exists.");
   else
-    error("Failed to update the simulation");
+    error("Failed to update the simulation.");
 }
 
 # return answer
