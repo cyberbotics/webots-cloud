@@ -125,7 +125,7 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
-  async unWebotsView(data, version) {
+  async runWebotsView(data, version) {
     if (!version || typeof version === 'undefined') {
       // if (window.location.hostname === 'testing.webots.cloud')
       //   version = 'testing';
