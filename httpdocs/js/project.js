@@ -127,9 +127,9 @@ export default class Project extends User {
   }
   runWebotsView(data, version) {
     if (!version || typeof version === 'undefined') {
-      // if (window.location.hostname === 'testing.webots.cloud')
-      //   version = 'testing';
-      // else
+      if (window.location.hostname === 'testing.webots.cloud')
+        version = 'testing';
+      else
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
