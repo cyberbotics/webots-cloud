@@ -4,6 +4,18 @@ function simulation_check_url($url) {
     return "The URL should start with 'https://github.com/'";
   if (substr($url, -4) != '.wbt')
     return "The URL should end with '.wbt': " . substr($url, -4);
+  return check_url($url);
+}
+
+function proto_check_url($url) {
+  if (substr($url, 0, 19) !== 'https://github.com/')
+    return "The URL should start with 'https://github.com/'";
+  if (substr($url, -6) != '.proto')
+    return "The URL should end with '.proto': " . substr($url, -6);
+  return check_url($url, true);
+}
+
+function check_url($url, $proto = false) {
   $exploded = explode('/', substr($url, 19));
   $count = count($exploded);
   if ($count < 6)
@@ -19,7 +31,7 @@ function simulation_check_url($url) {
   $tag_or_branch = $exploded[3];
   if (!preg_match('/^[a-z\d_.-]{0,100}$/i', $tag_or_branch))
     return 'Wrong GitHub tag or branch name';
-  $folder = implode('/', array_slice($exploded, 4, $count - 6));
+  $folder = implode('/', array_slice($exploded, 4, $count - 5));
   if ($folder !=='' and
       (!preg_match('/^[-a-z\d_.-\/]{1,100}$/i', $folder)  # no fancy folder name
        or substr($folder, 0, 1) === '/'                   # doesn't start with slash
@@ -27,29 +39,32 @@ function simulation_check_url($url) {
        or substr($folder, -1) === '/'))                   # doesn't end with slash
     return 'Wrong folder name';
   if ($folder !== '')
-    $folder = "/$folder";
-  $worlds_folder = $exploded[$count - 2];
-  if ($worlds_folder != 'worlds')
-    return 'Missing \'/worlds/\' folder in URL';
-  $world = $exploded[$count - 1];
-  return array($username, $repository, $tag_or_branch, $folder, $world);
+    $folder = "/$folder/";
+
+  $world_or_proto = $exploded[$count - 1];
+
+  return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
-function simulation_check_yaml($check_url) {
+function github_check_yaml($check_url, $proto) {
   # yaml error return
   function yaml_error($msg) {
     return "YAML file error: $msg";
   }
 
   # get file from github
-  list($username, $repository, $version, $folder, $world) = $check_url;
-  $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yaml";
+  list($username, $repository, $version, $folder, $world_or_proto) = $check_url;
+  $index = strpos($folder, "/protos/");
+  if (!$index)
+    $index = strpos($folder, "/worlds/");
+  $yaml_folder = substr($folder, 0, $index);
+  $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
-    $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$folder/webots.yml";
+    $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
-      return yaml_error("webots.yaml file not found.");
+      return yaml_error("webots.yaml file not $protos_index found.".$yaml_folder);
   }
 
   # yaml file variables
@@ -74,7 +89,7 @@ function simulation_check_yaml($check_url) {
   # check if configuration makes sense
   if ($publish === 'false')
     return "Project removed because 'publish' is set to false in webots.yaml. To allow the project to be published, set it to true.";
-  elseif ($type === '')
+  elseif ($type === '' && $proto === false)
     return yaml_error("type not defined.");
 
   # return array with YAML file info
