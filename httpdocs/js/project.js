@@ -126,13 +126,15 @@ export default class Project extends User {
     }
   }
   runWebotsView(data, version) {
-    console.log(data)
     if (!version || typeof version === 'undefined') {
       // if (window.location.hostname === 'testing.webots.cloud')
       //   version = 'testing';
       // else
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
+
+    if (version === 'undefined' && this.findGetParameter('url').endsWith('.proto'))
+      console.log("hello");
 
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
@@ -180,7 +182,7 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
-    // if data empty -> demo or competition simulation
+    // if data empty -> demo, competition simulation or proto
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
