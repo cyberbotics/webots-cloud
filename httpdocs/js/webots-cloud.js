@@ -1887,7 +1887,6 @@ ${deleteProject}`;
     }
 
     function getCompetition(url) {
-      let metric;
       // note: this is a temporary hack to allow Olivier to quickly check the repos of the wrestling participants while
       // debugging / refining the competition infrastructure
       const admin = project.email ? project.email === 'Olivier.Michel@cyberbotics.com' : false;
@@ -1942,7 +1941,11 @@ ${deleteProject}`;
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
-              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const hasQualification = data.match(/qualification: ([+-]?[0-9]*[.]?[0-9]+)/);
+              const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
+              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() == 't' : true;
+              const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
@@ -2053,7 +2056,17 @@ ${deleteProject}`;
                       demo_count++;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
-                    tableContent.innerHTML = `<tr>
+                    let qualified;
+                    if (isNaN(qualification))
+                      qualified = true;
+                    else if (higherIsBetter)
+                      qualified = participant.performance >= qualification;
+                    else
+                      qualified = participant.performance <= qualification;
+                    const style = qualified
+                      ? ''
+                      : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
+                    tableContent.innerHTML = `<tr${style}>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
