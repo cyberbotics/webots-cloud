@@ -136,7 +136,7 @@ export default class Project extends User {
     if (typeof version === 'undefined' && this.findGetParameter('url').endsWith('.proto')) {
       console.log(this.findGetParameter('url'))
       version = await fetch('ajax/proto/documentation.php',
-        { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
+        { method: 'post', body: JSON.stringify({ url: "https://github.com/cyberbotics/webots/blob/develop/projects/robots/softbank/nao/protos/Nao.proto" }) })
         .then(response => console.log(response.text()))//response.json())
         .then(json => json.version);
     }
