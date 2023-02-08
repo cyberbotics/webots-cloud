@@ -134,13 +134,11 @@ export default class Project extends User {
     }
 
     if (typeof version === 'undefined' && this.findGetParameter('url').endsWith('.proto')) {
-      console.log(this.findGetParameter('url'))
       version = await fetch('ajax/proto/documentation.php',
-        { method: 'post', body: JSON.stringify({ url: "https://github.com/cyberbotics/webots/blob/develop/projects/robots/softbank/nao/protos/Nao.proto" }) })
+        { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
         .then(response => response.json())
         .then(json => json.version);
     }
-    console.log(version)
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     const promise = new Promise((resolve, reject) => {
