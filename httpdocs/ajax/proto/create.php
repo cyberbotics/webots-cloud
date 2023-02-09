@@ -56,7 +56,7 @@ while ($line !== false) {
   if ($line[0] === '#') {
       $line = trim(str_replace('#', '', $line));
       if (strtolower(substr($line, 0, 8)) !== 'template' && strtolower(substr($line, 0, 17)) !== 'documentation url' && substr($line, 0, 4) !== 'VRML') {
-        if(strtolower(substr($line, 0, 4)) !== 'tags') {
+        if(strtolower(substr($line, 0, 4)) === 'tags') {
           if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
             error("This proto is either deprecated or hidden and should not be added.");
         elseif (strtolower(substr($line, 0, 11)) === 'license url')
