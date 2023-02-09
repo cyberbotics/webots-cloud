@@ -584,3 +584,12 @@ nav.pagination>a[disabled] {
   background-color: #ddd;
   word-wrap: break-word;
 }
+
+.proto-doc table td {
+  padding: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ddd;
+  background-color: transparent;
+  word-wrap: break-word;
+}
