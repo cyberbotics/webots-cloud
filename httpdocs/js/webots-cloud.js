@@ -403,11 +403,11 @@ ${deleteProject}`;
             <li data-tab="scene" ${(activeTab === 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Scene</a>
             </li>
-            <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Animation</a>
-            </li>
             <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Proto</a>
+            </li>
+            <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Animation</a>
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
@@ -1501,11 +1501,11 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
-        <li data-tab="animation" class="data-tab">
-          <a href="/animation">Animation</a>
-        </li>
         <li data-tab="proto" class="data-tab is-active">
           <a href="/proto">Proto</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a href="/animation">Animation</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
@@ -1820,11 +1820,11 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
+        <li data-tab="proto" class="data-tab">
+          <a href="/proto">Proto</a>
+        </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
-        </li>
-        <li data-tab="proto" class="data-tab is-active">
-          <a href="/proto">Proto</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
