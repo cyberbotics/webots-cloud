@@ -1820,7 +1820,7 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
-        <li data-tab="proto" class="data-tab is-active">
+        <li data-tab="proto" class="data-tab">
           <a href="/proto">Proto</a>
         </li>
         <li data-tab="animation" class="data-tab">
