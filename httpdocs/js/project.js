@@ -115,14 +115,30 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
-  runWebotsView(data, version) {
-    if (!version || version === undefined) {
+  setupProtoWebotsView() {
+    if (Project.webotsView) {
+      Project.webotsView.close();
+      document.getElementById('proto-webots-container').innerHTML = '';
+      document.getElementById('proto-webots-container').appendChild(Project.webotsView);
+    } else {
+      document.getElementById('proto-webots-container').innerHTML = '<webots-view id="webots-view"></webots-view>';
+      Project.webotsView = document.querySelector('webots-view');
+    }
+  }
+  async runWebotsView(data, version) {
+    if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
+    if (typeof version === 'undefined' && this.findGetParameter('url').endsWith('.proto')) {
+      version = await fetch('ajax/proto/documentation.php',
+        { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
+        .then(response => response.json())
+        .then(json => json.version);
+    }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     const promise = new Promise((resolve, reject) => {
@@ -169,13 +185,13 @@ export default class Project extends User {
     });
   }
   _loadContent(data, resolve) {
-    // if data empty -> demo or competition simulation
+    // if data empty -> demo, competition simulation or proto
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (!data)
-      this._updateSimulationViewCount(url);
+      this._updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
       const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
@@ -209,6 +225,14 @@ export default class Project extends User {
       } else
         Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
+    } else if (url.endsWith('.proto')) {
+      let urlArray = url.substring(19).split('/');
+      urlArray.splice(2, 1);
+      let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
+      const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
+      this.setupProtoWebotsView();
+      Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
+      resolve();
     } else { // demo simulation
       this.setupWebotsView('run');
       const dotIndex = url.lastIndexOf('/') + 1;
@@ -220,8 +244,9 @@ export default class Project extends User {
       resolve();
     }
   }
-  _updateSimulationViewCount(url) {
-    fetch('/ajax/project/list.php', { method: 'post', body: JSON.stringify({ url: url }) })
+  _updateProtoAndSimulationViewCount(url) {
+    const phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
+    fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {
         return response.json();
       })
