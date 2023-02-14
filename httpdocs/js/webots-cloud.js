@@ -403,11 +403,11 @@ ${deleteProject}`;
             <li data-tab="scene" ${(activeTab === 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Scene</a>
             </li>
-            <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Animation</a>
-            </li>
             <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Proto</a>
+            </li>
+            <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Animation</a>
             </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
@@ -1501,11 +1501,11 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
-        <li data-tab="animation" class="data-tab">
-          <a href="/animation">Animation</a>
-        </li>
         <li data-tab="proto" class="data-tab is-active">
           <a href="/proto">Proto</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a href="/animation">Animation</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
@@ -1800,6 +1800,7 @@ ${deleteProject}`;
     function mainContainer(project) {
       const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
+      const tryLink = simulationUrl.href.replace('%2Fblob%2Fmain%2Fworlds%2F', '%2Fblob%2Fcompetition%2Fworlds%2F');
       const information =
         `<table style="font-size: small">
         <tbody id="competition-information">
@@ -1820,11 +1821,11 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
+        <li data-tab="proto" class="data-tab">
+          <a href="/proto">Proto</a>
+        </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
-        </li>
-        <li data-tab="proto" class="data-tab is-active">
-          <a href="/proto">Proto</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
@@ -1850,7 +1851,7 @@ ${deleteProject}`;
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}">
                   Try Competition
                 </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
@@ -1887,7 +1888,6 @@ ${deleteProject}`;
     }
 
     function getCompetition(url) {
-      let metric;
       // note: this is a temporary hack to allow Olivier to quickly check the repos of the wrestling participants while
       // debugging / refining the competition infrastructure
       const admin = project.email ? project.email === 'Olivier.Michel@cyberbotics.com' : false;
@@ -1942,7 +1942,11 @@ ${deleteProject}`;
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
-              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const hasQualification = data.match(/qualification: ([+-]?[0-9]*[.]?[0-9]+)/);
+              const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
+              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() == 't' : true;
+              const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
@@ -2053,7 +2057,17 @@ ${deleteProject}`;
                       demo_count++;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
-                    tableContent.innerHTML = `<tr>
+                    let qualified;
+                    if (isNaN(qualification))
+                      qualified = true;
+                    else if (higherIsBetter)
+                      qualified = participant.performance >= qualification;
+                    else
+                      qualified = participant.performance <= qualification;
+                    const style = qualified
+                      ? ''
+                      : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
+                    tableContent.innerHTML = `<tr${style}>
                     <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>

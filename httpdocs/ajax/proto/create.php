@@ -54,20 +54,19 @@ $externprotos = [];
 while ($line !== false) {
   $line == trim($line);
   if ($line[0] === '#') {
-      $line = trim(str_replace('#', '', $line));
-      if (strtolower(substr($line, 0, 8)) !== 'template' && strtolower(substr($line, 0, 17)) !== 'documentation url' && substr($line, 0, 4) !== 'VRML') {
-        if(strtolower(substr($line, 0, 4)) === 'tags') {
-          if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
-            error("This proto is either deprecated or hidden and should not be added.");
-        elseif (strtolower(substr($line, 0, 11)) === 'license url')
-          $license_url = trim(preg_replace("/license url\s*:/", '', $line));
-        elseif (strtolower(substr($line, 0, 7)) === 'license')
-          $license = trim(preg_replace("/license\s*:/", '', $line));
-        else {
-          if ($description !== '')
-            $description .= "\n";
-          $description .= $mysqli->escape_string($line);
-        }
+    $line = trim(str_replace('#', '', $line));
+    if (strtolower(substr($line, 0, 8)) !== 'template' && strtolower(substr($line, 0, 17)) !== 'documentation url' && substr($line, 0, 4) !== 'VRML') {
+      if(strtolower(substr($line, 0, 4)) === 'tags') {
+        if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
+          error("This proto is either deprecated or hidden and should not be added.");
+      } elseif (strtolower(substr($line, 0, 11)) === 'license url')
+        $license_url = trim(preg_replace("/license url\s*:/", '', $line));
+      elseif (strtolower(substr($line, 0, 7)) === 'license')
+        $license = trim(preg_replace("/license\s*:/", '', $line));
+      else {
+        if ($description !== '')
+          $description .= "\n";
+        $description .= $mysqli->escape_string($line);
       }
     }
   } elseif (substr($line, 0, 11) === 'EXTERNPROTO') {
