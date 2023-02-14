@@ -28,7 +28,7 @@ $proto_content = @file_get_contents($proto_url);
 if ($proto_content === false) {
   $query = "DELETE FROM proto WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows === 0)
+  if ($mysqli->affected_rows === 0 and $id !== 0 )
     error("Failed to delete proto with proto file '$proto'");
   error("Failed to fetch proto file $proto");
 }
