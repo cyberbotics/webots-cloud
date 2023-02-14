@@ -44,13 +44,12 @@ CREATE TABLE `project` (
   `type` enum('demo','competition') CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT 'main',
   `participants` int(11) NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `viewed` int(11) NOT NULL
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `project`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url_branch` (`url`,`branch`);
+  ADD UNIQUE KEY `url_branch` (`url`,`branch`),
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `user` (
@@ -102,7 +101,7 @@ CREATE TABLE `proto` (
 
 ALTER TABLE `proto`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `url_branch` (`url`,`branch`) USING BTREE;
+  ADD UNIQUE KEY `url_branch` (`url`,`branch`) USING BTREE,
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `queue` (
