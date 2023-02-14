@@ -1800,6 +1800,7 @@ ${deleteProject}`;
     function mainContainer(project) {
       const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
+      const tryLink = simulationUrl.href.replace('%2Fblob%2Fmain%2Fworlds%2F', '%2Fblob%2Fcompetition%2Fworlds%2F');
       const information =
         `<table style="font-size: small">
         <tbody id="competition-information">
@@ -1850,7 +1851,7 @@ ${deleteProject}`;
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}">
                   Try Competition
                 </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
