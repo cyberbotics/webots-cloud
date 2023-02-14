@@ -28,7 +28,7 @@ $world_content = @file_get_contents($world_url);
 if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows === 0)
+  if ($mysqli->affected_rows === 0 and $id !== 0)
     error("Failed to delete simulation with world file '$world'");
   error("Failed to fetch world file $world");
 }
