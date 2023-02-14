@@ -1893,7 +1893,7 @@ ${deleteProject}`;
       const admin = project.email ? project.email === 'Olivier.Michel@cyberbotics.com' : false;
       const [, , , username, repo, , branch] = url.split('/');
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-        .then(function(response) { return responisPunctuationse.json(); })
+        .then(function(response) { return response.json(); })
         .then(function(data) {
           project.lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
