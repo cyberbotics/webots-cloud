@@ -1801,6 +1801,7 @@ ${deleteProject}`;
       const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
       const tryLink = simulationUrl.href.replace('%2Fblob%2Fmain%2Fworlds%2F', '%2Fblob%2Fcompetition%2Fworlds%2F');
+      const repository = `${project.competitionUrl.split('/blob')[0]}`;
       const information =
         `<table style="font-size: small">
         <tbody id="competition-information">
@@ -1851,11 +1852,18 @@ ${deleteProject}`;
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}">
-                  Try Competition
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}"
+                 title="Run the simulation and program the robot online">
+                  Try
                 </a>
-                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 title="Enter the competition: create your code repository on GitHub">
                   Register
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 href="${repository}/discussions"
+                 title="Discuss with the organizers and the other competitors">
+                  Discuss
                 </a>
               </article>
             </div>
