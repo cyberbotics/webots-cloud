@@ -2069,14 +2069,19 @@ ${deleteProject}`;
                       : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
                     let actualRanking = ranking - demo_count;
                     const rankingString = demo ? '&mdash;' : actualRanking;
+                    const rankingTitle = demo
+                      ? "Demo controllers don't compete" : qualified
+                        ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
                     tableContent.innerHTML = `<tr${style}>
-                    <td style="vertical-align:middle;${extraStyle}" class="has-text-centered">${rankingString}</td>
+                    <td style="vertical-align:middle;${extraStyle}" class="has-text-centered" title="${rankingTitle}">
+                      ${rankingString}
+                    </td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
-                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
