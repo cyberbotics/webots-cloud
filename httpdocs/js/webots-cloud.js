@@ -2058,17 +2058,20 @@ ${deleteProject}`;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     let qualified;
-                    if (isNaN(qualification))
-                      qualified = true;
+                    if (isNaN(qualification) || demo)
+                      qualified = !demo;
                     else if (higherIsBetter)
-                      qualified = participant.performance >= qualification;
+                      qualified = ranking - demo_count >= qualification;
                     else
-                      qualified = participant.performance <= qualification;
+                      qualified = ranking - demo_count <= qualification;
                     const style = qualified
                       ? ''
                       : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
+                    let actualRanking = ranking - demo_count;
+                    const rankingString = demo ? '&mdash;' : actualRanking;
+                    const extraStyle = qualified ? '' : ';color:#888;font-size:small';
                     tableContent.innerHTML = `<tr${style}>
-                    <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
+                    <td style="vertical-align:middle;${extraStyle}" class="has-text-centered">${rankingString}</td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
@@ -2083,6 +2086,8 @@ ${deleteProject}`;
                       viewButton.addEventListener('click', viewEntryRun);
                   }
                   let count = (participants['participants'].length - demo_count).toString();
+                  if (!isNaN(qualification) && metric == 'ranking')
+                    count += '/' + qualification;
                   if (demo_count == 1)
                     count += ' + 1 demo';
                   else if (demo_count > 1)
