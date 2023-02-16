@@ -17,6 +17,6 @@
     $branch = "main";
   $condition = "branch=\"$branch\" AND url=\"$url\"";
 
-  $result = $mysqli->query("SELECT needs_robot_ancestor FROM proto WHERE $condition");
+  $result = $mysqli->query("SELECT * FROM proto WHERE $condition");
   die($result->fetch_array(MYSQLI_ASSOC));
  ?>
