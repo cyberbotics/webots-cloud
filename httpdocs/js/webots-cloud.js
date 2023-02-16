@@ -1801,6 +1801,7 @@ ${deleteProject}`;
       const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
       const tryLink = simulationUrl.href.replace('%2Fblob%2Fmain%2Fworlds%2F', '%2Fblob%2Fcompetition%2Fworlds%2F');
+      const repository = `${project.competitionUrl.split('/blob')[0]}`;
       const information =
         `<table style="font-size: small">
         <tbody id="competition-information">
@@ -1851,11 +1852,18 @@ ${deleteProject}`;
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}">
-                  Try Competition
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}"
+                 title="Run the simulation and program the robot online">
+                  Try
                 </a>
-                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 title="Enter the competition: create your code repository on GitHub">
                   Register
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 href="${repository}/discussions"
+                 title="Discuss with the organizers and the other competitors">
+                  Discuss
                 </a>
               </article>
             </div>
@@ -2058,22 +2066,30 @@ ${deleteProject}`;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     let qualified;
-                    if (isNaN(qualification))
-                      qualified = true;
+                    if (isNaN(qualification) || demo)
+                      qualified = !demo;
                     else if (higherIsBetter)
-                      qualified = participant.performance >= qualification;
+                      qualified = ranking - demo_count >= qualification;
                     else
-                      qualified = participant.performance <= qualification;
+                      qualified = ranking - demo_count <= qualification;
                     const style = qualified
                       ? ''
                       : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
+                    let actualRanking = ranking - demo_count;
+                    const rankingString = demo ? '&mdash;' : actualRanking;
+                    const rankingTitle = demo
+                      ? "Demo controllers don't compete" : qualified
+                        ? 'Qualified for the finals' : 'Not qualified for the finals';
+                    const extraStyle = qualified ? '' : ';color:#888;font-size:small';
                     tableContent.innerHTML = `<tr${style}>
-                    <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
+                    <td style="vertical-align:middle;${extraStyle}" class="has-text-centered" title="${rankingTitle}">
+                      ${rankingString}
+                    </td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
                     ${performanceLine}
-                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
@@ -2083,6 +2099,8 @@ ${deleteProject}`;
                       viewButton.addEventListener('click', viewEntryRun);
                   }
                   let count = (participants['participants'].length - demo_count).toString();
+                  if (!isNaN(qualification) && metric == 'ranking')
+                    count += '/' + qualification;
                   if (demo_count == 1)
                     count += ' + 1 demo';
                   else if (demo_count > 1)
