@@ -49,6 +49,8 @@ $license = '';
 $license_url = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
+if (!str_starts_with($version, "R20"))
+  error("This proto is missing a version header or has an incorrect one.");
 $line = strtok("\r\n");
 $externprotos = [];
 while ($line !== false) {
