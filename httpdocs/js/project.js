@@ -194,19 +194,19 @@ export default class Project extends User {
       this._updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
-      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
+      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`
+      const thumbnailUrl = `${baseUrl}/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
-        if (data.includes('wb_animation_')) // user performance view
+        if (data.includes('/storage/competition/')) // user performance view
           this.setupWebotsView('run');
-        else
+        else  // FIXME: what is this case?
           this.setupPreviewWebotsView();
-
-        Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-          this._isMobileDevice(), `${thumbnailUrl}`);
+        Project.webotsView.loadAnimation(`${baseUrl}/scene.x3d`, `${data}/animation.json`, false, this._isMobileDevice(),
+          thumbnailUrl);
         resolve();
       } else {
-        // if there is no data, it is a testing simulation
+        // if there is no data, it is a simulation (Try button)
         this.setupWebotsView('run');
         Project.webotsView.showQuit = false;
         Project.webotsView.showWorldSelection = false;
