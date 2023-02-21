@@ -2,18 +2,6 @@
 
 require '../../../php/github_api.php';
 
-// should be used with a GH_TOKEN, not a Personal Access Token (PAT)
-function check_repo_token($github_token, $participant_repo) {
-  $participant = explode('/', $participant_repo)[0];
-  $http_code = 0;
-  $json = github_api('repos/' . $participant_repo, $github_token, $http_code, $custom_request = 'DELETE');
-  if ($http_code == 403 && $json['message'] == 'Resource not accessible by integration')
-    return true;
-  echo 'HTTP code for https://api.github.com/repos' . $participant_repo . ': ' . $http_code . "\n";
-  print_r($json);
-  return false;
-}  
-
 header('Content-Type: application/json');
 
 $participant_repository = $_POST['repository'];
