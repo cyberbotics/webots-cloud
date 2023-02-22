@@ -84,7 +84,7 @@ $stars = intval($info->{'stargazers_count'});
 if ($type === 'demo')
   $participants = 0;
 else {  # competition
-  $participants_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch/participants.json";
+  $participants_url = "../../storage/competition/$username/$repository/participants.json";
   $participants_content = @file_get_contents($participants_url);
   $participants = 0;
   if ($participants_content) {
