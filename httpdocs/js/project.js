@@ -200,7 +200,7 @@ export default class Project extends User {
         // if there is animation data, it is the preview window or a user performance
         if (data.includes('/storage/competition/')) // user performance view
           this.setupWebotsView('run');
-        else  // FIXME: what is this case?
+        else  // competition preview
           this.setupPreviewWebotsView();
         Project.webotsView.loadAnimation(`${baseUrl}/scene.x3d`, `${data}/animation.json`, false, this._isMobileDevice(),
           thumbnailUrl);
