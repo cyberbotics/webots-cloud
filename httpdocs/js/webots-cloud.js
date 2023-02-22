@@ -1528,7 +1528,7 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      project.runWebotsView();
+      // project.runWebotsView();
       loadMd(url);
     }
 
