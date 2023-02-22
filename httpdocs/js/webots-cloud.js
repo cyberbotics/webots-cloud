@@ -1745,7 +1745,7 @@ ${deleteProject}`;
           file += '```\n\n';
 
           if (describedField.length > 0) {
-            file += '### ' + protoName + ' Field Summary\n\n';
+            file += '### ' + protoName + ' Field Description\n\n';
             for (const [fieldType, fieldName, fielDescription] of describedField) {
               file += '- `' + fieldName + '` : ' + fielDescription;
               const isMFField = fieldType.startsWith('MF');
