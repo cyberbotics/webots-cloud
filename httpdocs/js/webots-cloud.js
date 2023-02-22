@@ -1533,6 +1533,9 @@ ${deleteProject}`;
         .then(response => {
           if (response.no3dview === '0')
             project.runWebotsView();
+          else {
+            document.getElementById('proto-webots-container').display = 'none';
+          }
         });
       loadMd(url);
     }
