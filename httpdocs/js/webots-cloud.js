@@ -1534,7 +1534,7 @@ ${deleteProject}`;
           if (response.no3dview === '0')
             project.runWebotsView();
           else {
-            document.getElementById('proto-webots-container').display = 'none';
+            document.getElementById('proto-webots-container').style.display = 'none';
           }
         });
       loadMd(url);
