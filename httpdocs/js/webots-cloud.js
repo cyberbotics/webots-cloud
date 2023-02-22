@@ -1528,7 +1528,12 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      project.runWebotsView();
+      fetch('ajax/proto/display_3d_view.php', { method: 'post', body: JSON.stringify({ url: url })})
+        .then(response => response.json())
+        .then(response => {
+          if (!response.no3dview)
+            project.runWebotsView();
+        });
       loadMd(url);
     }
 
