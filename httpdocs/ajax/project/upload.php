@@ -43,7 +43,7 @@ if (isset($_FILES['participants'])) {
   die('Error: unsupported file upload');
 
 $target_file = $target_folder . '/' . $file['name'];
-$max_file_size = 16 * 1024 * 1024;  // 16 MB
+$max_file_size = 256 * 1024 * 1024;  // 256 MB
 if ($file['size'] > $max_file_size)
   die('Error: file is too large: ' . $file['size'] . ' > ' . $max_file_size);
 if (file_exists($target_file))  # if a previous exists, delete it
