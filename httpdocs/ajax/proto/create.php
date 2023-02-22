@@ -161,7 +161,6 @@ $result = $mysqli->query($query) or error($mysqli->error);
 $row = $result->fetch_array(MYSQLI_ASSOC);
 $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
-error("tags: ".$no3dview);
 if ($id === 0)
   $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, "
           ."base_type, needs_robot_ancestor, slot_type, no3dview) "
