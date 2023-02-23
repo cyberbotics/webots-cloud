@@ -1531,7 +1531,7 @@ ${deleteProject}`;
       fetch('ajax/proto/display_3d_view.php', { method: 'post', body: JSON.stringify({ url: url })})
         .then(response => response.json())
         .then(response => {
-          if (response.no3dview === '0')
+          if (response.no_3d_view === '0')
             project.runWebotsView();
           else {
             const container = document.getElementById('proto-webots-container');

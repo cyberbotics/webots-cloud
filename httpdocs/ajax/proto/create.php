@@ -53,7 +53,7 @@ if (!str_starts_with($version, "R20"))
   error("This proto is missing a version header or has an incorrect one.");
 $line = strtok("\r\n");
 $externprotos = [];
-$no3dview = false;
+$no_3d_view = false;
 while ($line !== false) {
   $line == trim($line);
   if ($line[0] === '#') {
@@ -62,8 +62,8 @@ while ($line !== false) {
       if(strtolower(substr($line, 0, 4)) === 'tags') {
         if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
           error("This proto is either deprecated or hidden and should not be added.");
-        elseif (strpos($line, 'no3dview'))
-          $no3dview = true;
+        elseif (strpos($line, 'no_3d_view'))
+          $no_3d_view = true;
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
       elseif (strtolower(substr($line, 0, 7)) === 'license')
@@ -163,13 +163,13 @@ $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
   $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, "
-          ."base_type, needs_robot_ancestor, slot_type, no3dview) "
+          ."base_type, needs_robot_ancestor, slot_type, no_3d_view) "
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", "
-          ."\"$license\", \"$base_type\", \"$needs_robot_ancestor\", \"$slot_type\", \"$no3dview\")";
+          ."\"$license\", \"$base_type\", \"$needs_robot_ancestor\", \"$slot_type\", \"$no_3d_view\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW(), license_url=\"$license_url\", license=\"$license\", "
-          ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\", no3dview=\"$no3dview\" "
+          ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\", no_3d_view=\"$no_3d_view\" "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {
