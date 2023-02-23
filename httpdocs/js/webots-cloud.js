@@ -1535,7 +1535,7 @@ ${deleteProject}`;
             project.runWebotsView();
           else {
             const container = document.getElementById('proto-webots-container');
-            container.innerText = 'This proto has no graphical representation';
+            container.innerText = 'This proto has no graphical representation.';
             container.style.height = '20px';
           }
         });
