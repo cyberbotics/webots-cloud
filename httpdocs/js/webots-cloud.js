@@ -1528,7 +1528,7 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      fetch('ajax/proto/display_3d_view.php', { method: 'post', body: JSON.stringify({ url: url })})
+      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url })})
         .then(response => response.json())
         .then(response => {
           if (response.no_3d_view === '0')

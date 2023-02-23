@@ -13,7 +13,7 @@
   $branch = basename(dirname(__FILE__, 4));
   $url = $mysqli->escape_string($data->url);
   $condition = "branch=\"$branch\" AND url=\"$url\"";
-  $query = "SELECT base_type, description, version, license, license_url FROM proto WHERE $condition";
+  $query = "SELECT base_type, description, version, license, license_url, no_3d_view FROM proto WHERE $condition";
   $result = $mysqli->query($query) or error($mysqli->error);
   die(json_encode($result->fetch_array(MYSQLI_ASSOC)));
  ?>
