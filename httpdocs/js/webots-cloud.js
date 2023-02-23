@@ -1534,7 +1534,9 @@ ${deleteProject}`;
           if (response.no3dview === '0')
             project.runWebotsView();
           else {
-            document.getElementById('proto-webots-container').innerText = 'This proto has no graphical representation';
+            const container = document.getElementById('proto-webots-container');
+            container.innerText = 'This proto has no graphical representation';
+            container.style.height = '20px';
           }
         });
       loadMd(url);
