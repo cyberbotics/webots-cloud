@@ -1538,11 +1538,11 @@ ${deleteProject}`;
             container.innerText = 'This proto has no graphical representation.';
             container.style.height = '20px';
           }
+          loadMd(url, response);
         });
-      loadMd(url);
     }
 
-    function loadMd(url) {
+    function loadMd(url, information) {
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1569,7 +1569,7 @@ ${deleteProject}`;
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(protoURl, proto, protoName, prefix, true);
+                  createMdFromProto(protoURl, proto, protoName, prefix, information);
                 });
             });
         });
@@ -1649,7 +1649,7 @@ ${deleteProject}`;
       return infoGrid;
     }
 
-    function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
+    async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition = '';
@@ -1739,63 +1739,57 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: protoURl }) })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(async function(content) {
-          const baseType = content.base_type;
-          const description = content.description;
-          file += description + '\n\n';
-          file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
-          file += '```\n';
-          file += protoName + ' {\n';
-          file += fields;
-          file += '}\n';
-          file += '```\n\n';
+      const baseType = information.base_type;
+      const description = information.description;
+      file += description + '\n\n';
+      file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+      file += '```\n';
+      file += protoName + ' {\n';
+      file += fields;
+      file += '}\n';
+      file += '```\n\n';
 
-          if (describedField.length > 0) {
-            file += '### ' + protoName + ' Field Description\n\n';
-            for (const [fieldType, fieldName, fielDescription] of describedField) {
-              file += '- `' + fieldName + '` : ' + fielDescription;
-              const isMFField = fieldType.startsWith('MF');
-              if (fieldEnumeration.has(fieldName)) {
-                const values = fieldEnumeration.get(fieldName);
+      if (describedField.length > 0) {
+        file += '### ' + protoName + ' Field Description\n\n';
+        for (const [fieldType, fieldName, fielDescription] of describedField) {
+          file += '- `' + fieldName + '` : ' + fielDescription;
+          const isMFField = fieldType.startsWith('MF');
+          if (fieldEnumeration.has(fieldName)) {
+            const values = fieldEnumeration.get(fieldName);
+            if (isMFField)
+              file += ' This field accept a list of ';
+            else {
+              if (values.length > 1)
+                file += ' This field accepts the following values: ';
+              else
+                file += ' This field accepts the following value: ';
+            }
+
+            for (let i = 0; i < values.length; i++) {
+              const value = values[i].split('{')[0]; // In case of node keep only the type
+              if (i === values.length - 1) {
                 if (isMFField)
-                  file += ' This field accept a list of ';
-                else {
-                  if (values.length > 1)
-                    file += ' This field accepts the following values: ';
-                  else
-                    file += ' This field accepts the following value: ';
-                }
-
-                for (let i = 0; i < values.length; i++) {
-                  const value = values[i].split('{')[0]; // In case of node keep only the type
-                  if (i === values.length - 1) {
-                    if (isMFField)
-                      file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
-                    else
-                      file += '`' + value.trim() + '`.';
-                  } else if (i === values.length - 2) {
-                    if (values.length === 2)
-                      file += '`' + value.trim() + '` and ';
-                    else
-                      file += '`' + value.trim() + '`, and ';
-                  } else
-                    file += '`' + value.trim() + '`, ';
-                }
-              }
-              file += '\n\n';
+                  file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
+                else
+                  file += '`' + value.trim() + '`.';
+              } else if (i === values.length - 2) {
+                if (values.length === 2)
+                  file += '`' + value.trim() + '` and ';
+                else
+                  file += '`' + value.trim() + '`, and ';
+              } else
+                file += '`' + value.trim() + '`, ';
             }
           }
+          file += '\n\n';
+        }
+      }
 
-          const license = content.license;
-          const licenseUrl = content.license_url;
-          const version = content.version;
-          const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-          populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
-        });
+      const license = information.license;
+      const licenseUrl = information.license_url;
+      const version = information.version;
+      const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
     }
 
     // check that the proto is at least from R2023b
