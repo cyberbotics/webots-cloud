@@ -62,7 +62,7 @@ while ($line !== false) {
       if(strtolower(substr($line, 0, 4)) === 'tags') {
         if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
           error("This proto is either deprecated or hidden and should not be added.");
-        elseif (strpos($line, 'no_3d_view'))
+        elseif (strpos($line, 'no3dView'))
           $no_3d_view = true;
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
