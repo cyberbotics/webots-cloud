@@ -191,7 +191,7 @@ export default class Project extends User {
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (!data)
-      this._updateProtoAndSimulationViewCount(url);
+      this.updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
       const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`
@@ -244,7 +244,7 @@ export default class Project extends User {
       resolve();
     }
   }
-  _updateProtoAndSimulationViewCount(url) {
+  updateProtoAndSimulationViewCount(url) {
     const phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
     fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {

@@ -1534,6 +1534,7 @@ ${deleteProject}`;
           if (response.no_3d_view === '0')
             project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
           else {
+            project.updateProtoAndSimulationViewCount(url);
             const container = document.getElementById('proto-webots-container');
             container.innerText = 'This proto has no graphical representation.';
             container.style.height = '20px';
