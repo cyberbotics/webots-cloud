@@ -1532,7 +1532,7 @@ ${deleteProject}`;
         .then(response => response.json())
         .then(response => {
           if (response.no_3d_view === '0')
-            project.runWebotsView();
+            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
           else {
             const container = document.getElementById('proto-webots-container');
             container.innerText = 'This proto has no graphical representation.';
