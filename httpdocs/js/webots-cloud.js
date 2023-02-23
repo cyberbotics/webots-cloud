@@ -1915,6 +1915,7 @@ ${deleteProject}`;
         .then(function(data) {
           project.lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+          const competitionStorageUrl = `/storage/competition/${username}/${repo}`;
           // preview image
           const div = document.createElement('div');
           div.classList.add('thumbnail-button-container');
@@ -2001,7 +2002,7 @@ ${deleteProject}`;
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
 
-              fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
+              fetch(competitionStorageUrl + '/participants.json', { cache: 'no-cache' })
                 .then(function(response) { return response.json(); })
                 .then(function(participants) {
                   function getFlag(countryCode) {
@@ -2155,11 +2156,6 @@ ${deleteProject}`;
             });
         });
     }
-    function runEntry(username, repo, id) {
-      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
-      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
-      project.runWebotsView(entryAnimation);
-    }
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
@@ -2174,15 +2170,7 @@ ${deleteProject}`;
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      if (typeof project.lastSha === 'undefined') {
-        fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
-          .then(function(response) { return response.json(); })
-          .then(function(data) {
-            project.lastSha = data[0].sha;
-            runEntry(username, repo, id);
-          });
-      } else
-        runEntry(username, repo, id);
+      project.runWebotsView(`/storage/competition/${username}/${repo}/${id}`);
     }
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');
