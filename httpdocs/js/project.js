@@ -154,7 +154,7 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          this._loadContent(data, resolve);
+          this._loadContent(data, resolve, moveFloor);
         };
         script.onerror = () => {
           console.warn(
@@ -164,7 +164,7 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else
-        this._loadContent(data, resolve);
+        this._loadContent(data, resolve, moveFloor);
     });
 
     promise.then(() => {
