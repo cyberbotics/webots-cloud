@@ -96,6 +96,7 @@ CREATE TABLE `proto` (
   `base_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `needs_robot_ancestor` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `slot_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
+  `no_3d_view` tinyint(1) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
