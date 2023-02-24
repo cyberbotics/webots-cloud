@@ -1548,6 +1548,7 @@ ${deleteProject}`;
 
             const message = document.createElement('div');
             message.innerText = 'This proto has no 3D representation.';
+            container.style.height = '150px';
             container.appendChild(message);
           }
           loadMd(url, response);
