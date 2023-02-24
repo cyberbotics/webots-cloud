@@ -1531,7 +1531,7 @@ ${deleteProject}`;
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url })})
         .then(response => response.json())
         .then(response => {
-          if (response.no_3d_view === '0')
+          if (response && response.no_3d_view === '0')
             project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
           else {
             project.updateProtoAndSimulationViewCount(url);
@@ -1752,8 +1752,8 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      const baseType = information.base_type;
-      const description = information.description;
+      const baseType = information?.base_type;
+      const description = information?.description;
       file += description + '\n\n';
       file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
       file += '```\n';
@@ -1798,9 +1798,9 @@ ${deleteProject}`;
         }
       }
 
-      const license = information.license;
-      const licenseUrl = information.license_url;
-      const version = information.version;
+      const license = information?.license;
+      const licenseUrl = information?.license_url;
+      const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
       populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
     }
