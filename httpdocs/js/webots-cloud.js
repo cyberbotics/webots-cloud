@@ -2009,8 +2009,9 @@ ${deleteProject}`;
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
 
+              console.log(competitionStorageUrl)
               fetch(competitionStorageUrl + '/participants.json', { cache: 'no-cache' })
-                .then(function(response) { console.log(response.text());return response.json(); })
+                .then(function(response) { return response.json(); })
                 .then(function(participants) {
                   function getFlag(countryCode) {
                     const country = countryCode.toLowerCase();
