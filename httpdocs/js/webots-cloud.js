@@ -1542,8 +1542,8 @@ ${deleteProject}`;
               'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
             const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
             image.src = prefix + imageName;
-            container.appendChild(image);
-            container.innerText = 'This proto has no 3D representation.';
+            container.appendChild(image)
+            // container.innerText = 'This proto has no 3D representation.';
             container.style.height = '20px';
           }
           loadMd(url, response);
