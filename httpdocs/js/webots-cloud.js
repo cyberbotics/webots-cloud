@@ -1752,8 +1752,8 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      const baseType = information.base_type;
-      const description = information.description;
+      const baseType = information?.base_type;
+      const description = information?.description;
       file += description + '\n\n';
       file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
       file += '```\n';
