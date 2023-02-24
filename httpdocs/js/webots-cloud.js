@@ -2010,7 +2010,7 @@ ${deleteProject}`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
 
               fetch(competitionStorageUrl + '/participants.json', { cache: 'no-cache' })
-                .then(function(response) { console.log(response.text();return response.json(); })
+                .then(function(response) { console.log(response.text());return response.json(); })
                 .then(function(participants) {
                   function getFlag(countryCode) {
                     const country = countryCode.toLowerCase();
