@@ -1536,8 +1536,20 @@ ${deleteProject}`;
           else {
             project.updateProtoAndSimulationViewCount(url);
             const container = document.getElementById('proto-webots-container');
-            container.innerText = 'This proto has no graphical representation.';
-            container.style.height = '20px';
+
+            const image = document.createElement('img');
+            const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
+              'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+            const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
+            image.src = prefix + imageName;
+            image.style.display = 'block';
+            image.style.margin = 'auto';
+            container.appendChild(image);
+
+            const message = document.createElement('div');
+            message.innerText = 'This proto has no 3D representation.';
+            container.style.height = '150px';
+            container.appendChild(message);
           }
           loadMd(url, response);
         });
