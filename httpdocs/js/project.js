@@ -194,7 +194,7 @@ export default class Project extends User {
       this.updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
-      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`
+      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`;
       const thumbnailUrl = `${baseUrl}/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance

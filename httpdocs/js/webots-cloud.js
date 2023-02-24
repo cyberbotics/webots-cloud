@@ -1971,7 +1971,7 @@ ${deleteProject}`;
               const metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
               const hasQualification = data.match(/qualification: ([+-]?[0-9]*[.]?[0-9]+)/);
               const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
-              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() == 't' : true;
+              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() === 't' : true;
               const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
@@ -2021,7 +2021,7 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
-                  let demo_count = 0;
+                  let demoCount = 0;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
                     const today = new Date();
@@ -2080,20 +2080,20 @@ ${deleteProject}`;
                       `id="${participant.id}-view" title="${title}">View</button>`;
                     const demo = !participant.private && participant.country === 'demo';
                     if (demo)
-                      demo_count++;
+                      demoCount++;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     let qualified;
                     if (isNaN(qualification) || demo)
                       qualified = !demo;
                     else if (higherIsBetter)
-                      qualified = ranking - demo_count >= qualification;
+                      qualified = ranking - demoCount >= qualification;
                     else
-                      qualified = ranking - demo_count <= qualification;
+                      qualified = ranking - demoCount <= qualification;
                     const style = qualified
                       ? ''
                       : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
-                    let actualRanking = ranking - demo_count;
+                    let actualRanking = ranking - demoCount;
                     const rankingString = demo ? '&mdash;' : actualRanking;
                     const rankingTitle = demo
                       ? "Demo controllers don't compete" : qualified
@@ -2116,13 +2116,13 @@ ${deleteProject}`;
                     if (viewButton)
                       viewButton.addEventListener('click', viewEntryRun);
                   }
-                  let count = (participants['participants'].length - demo_count).toString();
-                  if (!isNaN(qualification) && metric == 'ranking')
+                  let count = (participants['participants'].length - demoCount).toString();
+                  if (!isNaN(qualification) && metric === 'ranking')
                     count += '/' + qualification;
-                  if (demo_count == 1)
+                  if (demoCount === 1)
                     count += ' + 1 demo';
-                  else if (demo_count > 1)
-                    count += ` + ${demo_count} demos`;
+                  else if (demoCount > 1)
+                    count += ` + ${demoCount} demos`;
                   document.getElementById('competition-participants').innerHTML = count;
                   // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
                   const leaderboard = document.getElementById('leaderboard');
@@ -2166,7 +2166,7 @@ ${deleteProject}`;
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, , branch] = url.split('/');
+      const [, , , username, repo, ,] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;
