@@ -95,7 +95,7 @@ else {  # competition
   } else {
     mkdir($participants_folder, 0777, true);
     $participants_file = fopen($participants_url, "w") or error("Unable to create participants.json file");
-    fwrite($participants_file, "{\"participants\":[]}");
+    fwrite($participants_file, "{\"participants\":[]}\n");
     fclose($participants_file);
   }
 }
