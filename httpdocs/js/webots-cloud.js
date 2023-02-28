@@ -2101,7 +2101,7 @@ ${deleteProject}`;
                         ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
                     const programming = ["Python", "C", "C++", "Java", "Rust", "ROS 2"].includes(participant.programming)
-                      ? `<img src="images/programming/${participant.programming}.png" title=${participant.programming} ` +
+                      ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
                       'style="height:24px" />'
                       : participant.programming;
                     tableContent.innerHTML = `<tr${style}>
