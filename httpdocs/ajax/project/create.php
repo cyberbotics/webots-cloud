@@ -84,13 +84,19 @@ $stars = intval($info->{'stargazers_count'});
 if ($type === 'demo')
   $participants = 0;
 else {  # competition
-  $participants_url = "../../storage/competition/$username/$repository/participants.json";
+  $participants_folder = "../../storage/competition/$username/$repository";
+  $participants_url = "$participants_folder/participants.json";
   $participants_content = @file_get_contents($participants_url);
   $participants = 0;
   if ($participants_content) {
     $json = @json_decode($participants_content);
     if ($json && isset($json->participants) && is_array($json->participants))
       $participants = count($json->participants);
+  } else {
+    mkdir($participants_folder, 0777, true);
+    $participants_file = fopen($participants_url, "w") or error("Unable to create participants.json file");
+    fwrite($participants_file, "{\"participants\":[]}");
+    fclose($participants_file);
   }
 }
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
