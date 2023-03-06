@@ -67,12 +67,27 @@ if ($organizer == $participant)
 
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
-  die("Can't connect to MySQL database: $mysqli->connect_error");
+  die("Error: Can't connect to MySQL database: $mysqli->connect_error");
 $mysqli->set_charset('utf8');
 $mysqli->query("LOCK TABLES queue WRITE, project READ") or die($mysqli->error);
 
 $organizer = $mysqli->real_escape_string($organizer);
 $participant = $mysqli->real_escape_string($participant);
+
+if (substr_count($organizer, '/') != 1)
+  die("Error: Wrong organizer: $organizer");
+
+if (substr_count($participant, '/') != 1)
+  die("Error: Wrong participant: $participant");
+
+// checking for new entry from the same user
+$participant_repository = explode('/', $participant);
+$json = json_decode(file_get_contents("storage/competition/$organizer/participants.json"));
+foreach($json->participants as $p) {
+  $repository = explode('/', $p->repository);
+  if ($p->private && $repository[0] == $participant_repository[0] && $repository[1] != $participant_repository[1])
+    die("Error: Participant already has an entry in the competition: " . $p->repository);
+}
 
 $branch = basename(dirname(__FILE__, 2));
 $query = "SELECT id FROM project WHERE branch=\"$branch\" AND `url` LIKE 'https://github.com/$organizer/%'";
