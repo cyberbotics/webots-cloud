@@ -1472,7 +1472,7 @@ ${deleteProject}`;
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      const url = searchParams.get('url').replace('/blob/main/worlds/', '/blob/competition/worlds/');
+      const url = searchParams.get('url').replace('/blob/competition/worlds/', '/blob/main/worlds/');
       project.competitionUrl = url;
       const context = searchParams.get('context');
       switch (context) {
