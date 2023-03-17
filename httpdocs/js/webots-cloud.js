@@ -342,13 +342,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      const row = `
+      let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
-<td class="title-cell">
-  <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+<td class="title-cell">`;
+      if (proto)
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`
+      else
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
+      row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
       <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
