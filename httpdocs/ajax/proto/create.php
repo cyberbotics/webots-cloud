@@ -28,7 +28,7 @@ $proto_content = @file_get_contents($proto_url);
 if ($proto_content === false) {
   $query = "DELETE FROM proto WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows === 0)
+  if ($mysqli->affected_rows === 0 and $id !== 0 )
     error("Failed to delete proto with proto file '$proto'");
   error("Failed to fetch proto file $proto");
 }
@@ -49,25 +49,29 @@ $license = '';
 $license_url = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
+if (!str_starts_with($version, "R20"))
+  error("This proto is missing a version header or has an incorrect one.");
 $line = strtok("\r\n");
 $externprotos = [];
+$no_3d_view = false;
 while ($line !== false) {
   $line == trim($line);
   if ($line[0] === '#') {
-      $line = trim(str_replace('#', '', $line));
-      if (strtolower(substr($line, 0, 8)) !== 'template' && strtolower(substr($line, 0, 17)) !== 'documentation url' && substr($line, 0, 4) !== 'VRML') {
-        if(strtolower(substr($line, 0, 4)) !== 'tags') {
-          if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
-            error("This proto is either deprecated or hidden and should not be added.");
-        elseif (strtolower(substr($line, 0, 11)) === 'license url')
-          $license_url = trim(preg_replace("/license url\s*:/", '', $line));
-        elseif (strtolower(substr($line, 0, 7)) === 'license')
-          $license = trim(preg_replace("/license\s*:/", '', $line));
-        else {
-          if ($description !== '')
-            $description .= "\n";
-          $description .= $mysqli->escape_string($line);
-        }
+    $line = trim(str_replace('#', '', $line));
+    if (strtolower(substr($line, 0, 8)) !== 'template' && strtolower(substr($line, 0, 17)) !== 'documentation url' && substr($line, 0, 4) !== 'VRML') {
+      if(strtolower(substr($line, 0, 4)) === 'tags') {
+        if (strpos($line, 'deprecated') || strpos($line, 'hidden'))
+          error("This proto is either deprecated or hidden and should not be added.");
+        elseif (strpos($line, 'no3dView'))
+          $no_3d_view = true;
+      } elseif (strtolower(substr($line, 0, 11)) === 'license url')
+        $license_url = trim(preg_replace("/license url\s*:/", '', $line));
+      elseif (strtolower(substr($line, 0, 7)) === 'license')
+        $license = trim(preg_replace("/license\s*:/", '', $line));
+      else {
+        if ($description !== '')
+          $description .= "\n";
+        $description .= $mysqli->escape_string($line);
       }
     }
   } elseif (substr($line, 0, 11) === 'EXTERNPROTO') {
@@ -159,13 +163,13 @@ $viewed = ($result && $row) ? $row['viewed'] : 0;
 $branch = basename(dirname(__FILE__, 4));
 if ($id === 0)
   $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, "
-          ."base_type, needs_robot_ancestor, slot_type) "
+          ."base_type, needs_robot_ancestor, slot_type, no_3d_view) "
           ."VALUES(\"$url\", $viewed, $stars, \"$title\", \"$description\", \"$version\", \"$branch\", \"$license_url\", "
-          ."\"$license\", \"$base_type\", \"$needs_robot_ancestor\", \"$slot_type\")";
+          ."\"$license\", \"$base_type\", \"$needs_robot_ancestor\", \"$slot_type\", \"$no_3d_view\")";
 else
   $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
           ."version=\"$version\", updated=NOW(), license_url=\"$license_url\", license=\"$license\", "
-          ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\" "
+          ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\", no_3d_view=\"$no_3d_view\" "
           ."WHERE url=\"$url\" AND id=$id";
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows != 1) {

@@ -342,13 +342,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      const row = `
+      let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
-<td class="title-cell">
-  <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+<td class="title-cell">`;
+      if (proto)
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`
+      else
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
+      row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
       <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -402,6 +406,9 @@ ${deleteProject}`;
           <ul>
             <li data-tab="scene" ${(activeTab === 'scene') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Scene</a>
+            </li>
+            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
+              <a>Proto</a>
             </li>
             <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
@@ -1297,8 +1304,10 @@ ${deleteProject}`;
 
     function listProtos(page, sortBy, searchString) {
       const offset = (page - 1) * pageLimit;
-      fetch('/ajax/proto/list.php', {method: 'post',
-        body: JSON.stringify({offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString})})
+      fetch('/ajax/proto/list.php', {
+        method: 'post',
+        body: JSON.stringify({ offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString })
+      })
         .then(function(response) {
           return response.json();
         })
@@ -1425,8 +1434,10 @@ ${deleteProject}`;
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/delete.php', {method: 'post',
-          body: JSON.stringify({user: project.id, password: project.password, id: id})})
+        fetch('ajax/proto/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
           .then(function(response) {
             return response.json();
           })
@@ -1468,7 +1479,7 @@ ${deleteProject}`;
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      const url = searchParams.get('url');
+      const url = searchParams.get('url').replace('/blob/main/worlds/', '/blob/competition/worlds/');
       project.competitionUrl = url;
       const context = searchParams.get('context');
       switch (context) {
@@ -1497,11 +1508,11 @@ ${deleteProject}`;
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
         </li>
-        <li data-tab="animation" class="data-tab">
-          <a href="/animation">Animation</a>
-        </li>
         <li data-tab="proto" class="data-tab is-active">
           <a href="/proto">Proto</a>
+        </li>
+        <li data-tab="animation" class="data-tab">
+          <a href="/animation">Animation</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
@@ -1524,11 +1535,34 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      project.runWebotsView();
-      loadMd(url);
+      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
+        .then(response => response.json())
+        .then(response => {
+          if (response && response.no_3d_view === '0')
+            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
+          else {
+            project.updateProtoAndSimulationViewCount(url);
+            const container = document.getElementById('proto-webots-container');
+
+            const image = document.createElement('img');
+            const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
+              'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+            const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
+            image.src = prefix + imageName;
+            image.style.display = 'block';
+            image.style.margin = 'auto';
+            container.appendChild(image);
+
+            const message = document.createElement('div');
+            message.innerText = 'This proto has no 3D representation.';
+            container.style.height = '150px';
+            container.appendChild(message);
+          }
+          loadMd(url, response);
+        });
     }
 
-    function loadMd(url) {
+    function loadMd(url, information) {
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1548,14 +1582,14 @@ ${deleteProject}`;
             .then(async function(content) {
               const results = parseProtoHeader(proto);
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
-              const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
+              const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
               // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(protoURl, proto, protoName, prefix, true);
+                  createMdFromProto(protoURl, proto, protoName, prefix, information);
                 });
             });
         });
@@ -1635,10 +1669,10 @@ ${deleteProject}`;
       return infoGrid;
     }
 
-    function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
+    async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
-      let fieldsDefinition;
+      let fieldsDefinition = '';
       const fieldEnumeration = new Map();
       const describedField = [];
       let fields = '';
@@ -1725,68 +1759,61 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      fetch('ajax/proto/documentation.php', {method: 'post', body: JSON.stringify({url: protoURl})})
-        .then(function(response) {
-          return response.json();
-        })
-        .then(async function(content) {
-          const baseType = content.base_type;
-          const description = content.description;
-          file += description + '\n\n';
-          file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
-          file += '```\n';
-          file += protoName + ' {\n';
-          file += fields;
-          file += '}\n';
-          file += '```\n\n';
+      const baseType = information?.base_type;
+      const description = information?.description;
+      file += description + '\n\n';
+      file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+      file += '```\n';
+      file += protoName + ' {\n';
+      file += fields;
+      file += '}\n';
+      file += '```\n\n';
 
-          if (describedField.length > 0) {
-            file += '### ' + protoName + ' Field Summary\n\n';
-            for (const [fieldType, fieldName, fielDescription] of describedField) {
-              file += '- `' + fieldName + '` : ' + fielDescription;
-              const isMFField = fieldType.startsWith('MF');
-              if (fieldEnumeration.has(fieldName)) {
-                const values = fieldEnumeration.get(fieldName);
+      if (describedField.length > 0) {
+        file += '### ' + protoName + ' Field Description\n\n';
+        for (const [fieldType, fieldName, fielDescription] of describedField) {
+          file += '- `' + fieldName + '` : ' + fielDescription;
+          const isMFField = fieldType.startsWith('MF');
+          if (fieldEnumeration.has(fieldName)) {
+            const values = fieldEnumeration.get(fieldName);
+            if (isMFField)
+              file += ' This field accept a list of ';
+            else {
+              if (values.length > 1)
+                file += ' This field accepts the following values: ';
+              else
+                file += ' This field accepts the following value: ';
+            }
+
+            for (let i = 0; i < values.length; i++) {
+              const value = values[i].split('{')[0]; // In case of node keep only the type
+              if (i === values.length - 1) {
                 if (isMFField)
-                  file += ' This field accept a list of ';
-                else {
-                  if (values.length > 1)
-                    file += ' This field accepts the following values: ';
-                  else
-                    file += ' This field accepts the following value: ';
-                }
-
-                for (let i = 0; i < values.length; i++) {
-                  const value = values[i].split('{')[0]; // In case of node keep only the type
-                  if (i === values.length - 1) {
-                    if (isMFField)
-                      file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
-                    else
-                      file += '`' + value.trim() + '`.';
-                  } else if (i === values.length - 2) {
-                    if (values.length === 2)
-                      file += '`' + value.trim() + '` and ';
-                    else
-                      file += '`' + value.trim() + '`, and ';
-                  } else
-                    file += '`' + value.trim() + '`, ';
-                }
-              }
-              file += '\n\n';
+                  file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
+                else
+                  file += '`' + value.trim() + '`.';
+              } else if (i === values.length - 2) {
+                if (values.length === 2)
+                  file += '`' + value.trim() + '` and ';
+                else
+                  file += '`' + value.trim() + '`, and ';
+              } else
+                file += '`' + value.trim() + '`, ';
             }
           }
+          file += '\n\n';
+        }
+      }
 
-          const license = content.license;
-          const licenseUrl = content.license_url;
-          const version = content.version;
-          const {populateProtoViewDiv} = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-          populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
-        });
+      const license = information?.license;
+      const licenseUrl = information?.license_url;
+      const version = information?.version;
+      const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
     }
 
     // check that the proto is at least from R2023b
     function checkProtoVersion(version) {
-      return 'proto'; // TODO: remove once feature-web-proto is merged in develop
       const year = version.substring(1, version.length - 2);
       if (year < 2023 || (year === 2023 && version[version.length - 1] === 'a'))
         return 'R2023b';
@@ -1797,6 +1824,8 @@ ${deleteProject}`;
     function mainContainer(project) {
       const simulationUrl = new URL(window.location);
       simulationUrl.searchParams.append('context', 'try');
+      const tryLink = simulationUrl.href.replace('%2Fblob%2Fmain%2Fworlds%2F', '%2Fblob%2Fcompetition%2Fworlds%2F');
+      const repository = `${project.competitionUrl.split('/blob')[0]}`;
       const information =
         `<table style="font-size: small">
         <tbody id="competition-information">
@@ -1816,6 +1845,9 @@ ${deleteProject}`;
       <ul>
         <li data-tab="scene" class="data-tab">
           <a href="/scene">Scene</a>
+        </li>
+        <li data-tab="proto" class="data-tab">
+          <a href="/proto">Proto</a>
         </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
@@ -1847,11 +1879,18 @@ ${deleteProject}`;
                 <div class="content">
                   ${information}
                 </div>
-                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${simulationUrl.href}">
-                  Try Competition
+                <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}"
+                 title="Run the simulation and program the robot online">
+                  Try
                 </a>
-                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;">
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 title="Enter the competition: create your code repository on GitHub">
                   Register
+                </a>
+                <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
+                 href="${repository}/discussions"
+                 title="Discuss with the organizers and the other competitors">
+                  Discuss
                 </a>
               </article>
             </div>
@@ -1884,7 +1923,6 @@ ${deleteProject}`;
     }
 
     function getCompetition(url) {
-      let metric;
       // note: this is a temporary hack to allow Olivier to quickly check the repos of the wrestling participants while
       // debugging / refining the competition infrastructure
       const admin = project.email ? project.email === 'Olivier.Michel@cyberbotics.com' : false;
@@ -1894,6 +1932,22 @@ ${deleteProject}`;
         .then(function(data) {
           project.lastSha = data[0].sha;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
+          const competitionStorageUrl = `/storage/competition/${username}/${repo}`;
+          // preview image
+          const div = document.createElement('div');
+          div.classList.add('thumbnail-button-container');
+          const img = document.createElement('img');
+          img.src = rawUrl + '/preview/thumbnail.jpg';
+          div.append(img);
+          const button = document.createElement('button');
+          button.innerHTML = 'Load Animation';
+          div.append(button);
+          button.onclick = function() {
+            document.getElementById('competition-preview-container').innerHTML = '';
+            project.runWebotsView(rawUrl + '/preview/');
+          };
+          document.getElementById('competition-preview-container').append(div);
+
           fetch(rawUrl + '/README.md', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
@@ -1920,25 +1974,15 @@ ${deleteProject}`;
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
                 document.getElementById('competition-information').prepend(tr);
               }
-              // preview image
-              const div = document.createElement('div');
-              div.classList.add('thumbnail-button-container');
-              const img = document.createElement('img');
-              img.src = rawUrl + '/preview/thumbnail.jpg';
-              div.append(img);
-              const button = document.createElement('button');
-              button.innerHTML = 'Load Animation';
-              div.append(button);
-              button.onclick = function() {
-                document.getElementById('competition-preview-container').innerHTML = '';
-                project.runWebotsView(rawUrl + '/preview/');
-              };
-              document.getElementById('competition-preview-container').append(div);
             });
           fetch(rawUrl + '/webots.yml', { cache: 'no-cache' })
             .then(function(response) { return response.text(); })
             .then(function(data) {
-              metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
+              const hasQualification = data.match(/qualification: ([+-]?[0-9]*[.]?[0-9]+)/);
+              const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
+              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() === 't' : true;
+              const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
@@ -1957,6 +2001,7 @@ ${deleteProject}`;
                         <th class="has-text-centered">Ranking</th>
                         <th class="has-text-centered">Country</th>
                         <th>Name</th>
+                        <th class="has-text-centered">Programming</th>
                         ${performanceColumn}
                         <th class="has-text-centered">Updated</th>
                         <th></th>
@@ -1974,7 +2019,8 @@ ${deleteProject}`;
                 <nav class="pagination is-small is-rounded mx-auto" role="navigation" aria-label="pagination"></nav>
               </section>`;
               document.getElementById('leaderboard').innerHTML = leaderBoard;
-              fetch(rawUrl + '/participants.json', { cache: 'no-cache' })
+
+              fetch(competitionStorageUrl + '/participants.json', { cache: 'no-cache' })
                 .then(function(response) { return response.json(); })
                 .then(function(participants) {
                   function getFlag(countryCode) {
@@ -1986,6 +2032,7 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
+                  let demoCount = 0;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
                     const today = new Date();
@@ -2042,19 +2089,41 @@ ${deleteProject}`;
                       ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
                       : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
                       `id="${participant.id}-view" title="${title}">View</button>`;
-                    const flag = participant.repository.startsWith(`${username}/`)
-                      ? '<span style="font-size:small">demo</span>'
-                      : getFlag(participant.country);
-                    const country = participant.repository.startsWith(`${username}/`)
-                      ? 'Open-source demo controller'
-                      : countryCodes[participant.country];
-                    tableContent.innerHTML = `<tr>
-                    <td style="vertical-align:middle;" class="has-text-centered">${ranking}</td>
+                    const demo = !participant.private && participant.country === 'demo';
+                    if (demo)
+                      demoCount++;
+                    const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
+                    const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
+                    let qualified;
+                    if (isNaN(qualification) || demo)
+                      qualified = !demo;
+                    else if (higherIsBetter)
+                      qualified = ranking - demoCount >= qualification;
+                    else
+                      qualified = ranking - demoCount <= qualification;
+                    const style = qualified
+                      ? ''
+                      : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
+                    let actualRanking = ranking - demoCount;
+                    const rankingString = demo ? '&mdash;' : actualRanking;
+                    const rankingTitle = demo
+                      ? "Demo controllers don't compete" : qualified
+                        ? 'Qualified for the finals' : 'Not qualified for the finals';
+                    const extraStyle = qualified ? '' : ';color:#888;font-size:small';
+                    const programming = ["Python", "C", "C++", "Java", "Rust", "ROS 2"].includes(participant.programming)
+                      ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
+                      'style="height:24px" />'
+                      : participant.programming;
+                    tableContent.innerHTML = `<tr${style}>
+                    <td style="vertical-align:middle;${extraStyle}" class="has-text-centered" title="${rankingTitle}">
+                      ${rankingString}
+                    </td>
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
+                    <td style="text-align:center;vertical-align:middle;">${programming}</td>
                     ${performanceLine}
-                    <td style="vertical-align:middle;" class="has-text-centered">${date}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
                   </tr>`;
                     ranking++;
@@ -2063,7 +2132,18 @@ ${deleteProject}`;
                     if (viewButton)
                       viewButton.addEventListener('click', viewEntryRun);
                   }
-                  document.getElementById('competition-participants').innerHTML = participants['participants'].length;
+                  let count = (participants['participants'].length - demoCount).toString();
+                  if (!isNaN(qualification) && metric === 'ranking')
+                    count += '/' + qualification;
+                  if (demoCount === 1)
+                    count += ' + 1 demo';
+                  else if (demoCount > 1)
+                    count += ` + ${demoCount} demos`;
+                  document.getElementById('competition-participants').innerHTML = count;
+                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                  const leaderboard = document.getElementById('leaderboard');
+                  leaderboard.removeAttribute('style');
+                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
@@ -2113,9 +2193,7 @@ ${deleteProject}`;
         newURL.searchParams.append('id', id);
         window.history.pushState({ path: newURL.href }, '', newURL.href);
       }
-      const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
-      const entryAnimation = `${rawUrl}/storage/wb_animation_${id}/`;
-      project.runWebotsView(entryAnimation);
+      project.runWebotsView(`/storage/competition/${username}/${repo}/${id}`);
     }
     function createCompetitionPageButton() {
       const backButtonTemplate = document.createElement('template');

@@ -125,7 +125,7 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
-  runWebotsView(data, version) {
+  async runWebotsView(data, version, moveFloor) {
     if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
@@ -135,6 +135,12 @@ export default class Project extends User {
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
 
+    if (typeof version === 'undefined' && this.findGetParameter('url').endsWith('.proto')) {
+      version = await fetch('ajax/proto/documentation.php',
+        { method: 'post', body: JSON.stringify({ url: this.findGetParameter('url') }) })
+        .then(response => response.json())
+        .then(json => json.version);
+    }
     const src = 'https://cyberbotics.com/wwi/' + version + '/WebotsView.js';
 
     const promise = new Promise((resolve, reject) => {
@@ -150,7 +156,7 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          this._loadContent(data, resolve);
+          this._loadContent(data, resolve, moveFloor);
         };
         script.onerror = () => {
           console.warn(
@@ -160,7 +166,7 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else
-        this._loadContent(data, resolve);
+        this._loadContent(data, resolve, moveFloor);
     });
 
     promise.then(() => {
@@ -180,29 +186,29 @@ export default class Project extends User {
       }
     });
   }
-  _loadContent(data, resolve) {
-    // if data empty -> demo or competition simulation
+  _loadContent(data, resolve, moveFloor) {
+    // if data empty -> demo, competition simulation or proto
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (!data)
-      this._updateProtoAndSimulationViewCount(url);
+      this.updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
-      const thumbnailUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview/thumbnail.jpg`;
+      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`;
+      const thumbnailUrl = `${baseUrl}/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
-        if (data.includes('wb_animation_')) // user performance view
+        if (data.includes('/storage/competition/')) // user performance view
           this.setupWebotsView('run');
-        else
+        else // competition preview
           this.setupPreviewWebotsView();
-
-        Project.webotsView.loadAnimation(`${data}/scene.x3d`, `${data}/animation.json`, false,
-          this._isMobileDevice(), `${thumbnailUrl}`);
+        Project.webotsView.loadAnimation(`${baseUrl}/scene.x3d`, `${data}/animation.json`, false, this._isMobileDevice(),
+          thumbnailUrl);
         resolve();
       } else {
-        // if there is no data, it is a testing simulation
+        // if there is no data, it is a simulation (Try button)
         this.setupWebotsView('run');
         Project.webotsView.showQuit = false;
         Project.webotsView.showWorldSelection = false;
@@ -227,7 +233,7 @@ export default class Project extends User {
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
       const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
       this.setupProtoWebotsView();
-      Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
+      Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl, moveFloor);
       resolve();
     } else { // demo simulation
       this.setupWebotsView('run');
@@ -240,7 +246,7 @@ export default class Project extends User {
       resolve();
     }
   }
-  _updateProtoAndSimulationViewCount(url) {
+  updateProtoAndSimulationViewCount(url) {
     const phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
     fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {

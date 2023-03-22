@@ -28,7 +28,7 @@ $world_content = @file_get_contents($world_url);
 if ($world_content === false) {
   $query = "DELETE FROM project WHERE id=$id";
   $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows === 0)
+  if ($mysqli->affected_rows === 0 and $id !== 0)
     error("Failed to delete simulation with world file '$world'");
   error("Failed to fetch world file $world");
 }
@@ -84,13 +84,19 @@ $stars = intval($info->{'stargazers_count'});
 if ($type === 'demo')
   $participants = 0;
 else {  # competition
-  $participants_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch/participants.json";
+  $participants_folder = "../../storage/competition/$username/$repository";
+  $participants_url = "$participants_folder/participants.json";
   $participants_content = @file_get_contents($participants_url);
   $participants = 0;
   if ($participants_content) {
     $json = @json_decode($participants_content);
     if ($json && isset($json->participants) && is_array($json->participants))
       $participants = count($json->participants);
+  } else {
+    mkdir($participants_folder, 0777, true);
+    $participants_file = fopen($participants_url, "w") or error("Unable to create participants.json file");
+    fwrite($participants_file, "{\"participants\":[]}\n");
+    fclose($participants_file);
   }
 }
 $query = "SELECT viewed FROM project WHERE url=\"$url\" AND id=$id";
