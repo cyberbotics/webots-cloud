@@ -413,9 +413,6 @@ ${deleteProject}`;
             <li data-tab="animation" ${(activeTab === 'animation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Animation</a>
             </li>
-            <li data-tab="proto" ${(activeTab === 'proto') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
-              <a>Proto</a>
-            </li>
             <li data-tab="simulation" ${(activeTab === 'simulation') ? ' class="data-tab is-active"' : 'class="data-tab"'}>
               <a>Simulation</a>
             </li>
@@ -1851,9 +1848,6 @@ ${deleteProject}`;
         </li>
         <li data-tab="animation" class="data-tab">
           <a href="/animation">Animation</a>
-        </li>
-        <li data-tab="proto" class="data-tab is-active">
-          <a href="/proto">Proto</a>
         </li>
         <li data-tab="simulation" class="data-tab">
           <a href="/simulation">Simulation</a>
