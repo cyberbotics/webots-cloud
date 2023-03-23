@@ -1532,6 +1532,7 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
+      console.log("print")
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
