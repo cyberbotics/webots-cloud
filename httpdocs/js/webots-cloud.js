@@ -655,39 +655,6 @@ ${deleteProject}`;
                   </span>
                 </div>
               </div>
-              <table class="table is-striped is-hoverable">
-                <thead>
-                  <tr>
-                  <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
-                      style="text-align:center; min-width: 65px;">
-                      <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-title" title="Title of the proto"
-                      style="min-width: 120px;">
-                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
-                      Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
-                      style="min-width: 85px;">
-                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-updated" title="Last update time"
-                      style="text-align: right;">
-                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
