@@ -206,9 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
-
-      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
-        .appendChild(document.createElement('th'));
     }
 
     function updatePagination(tab, current, max) {
@@ -1270,6 +1267,7 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
+      return;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
