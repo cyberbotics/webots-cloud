@@ -1532,7 +1532,8 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url })})
+      console.log("print")
+      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
           if (response && response.no_3d_view === '0')
@@ -1667,6 +1668,7 @@ ${deleteProject}`;
     }
 
     async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
+      console.log("createMdFromProto")
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition = '';
@@ -1747,7 +1749,7 @@ ${deleteProject}`;
           fieldString = fieldString.replace(removeCommentRegex, '');
           // remove intial '*field' string
           fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
-          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
+          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released/');
 
           // remove unwanted spaces between field type and field name (if needed)
           if (spacesToRemove > 0)
@@ -1995,6 +1997,7 @@ ${deleteProject}`;
                         <th class="has-text-centered">Ranking</th>
                         <th class="has-text-centered">Country</th>
                         <th>Name</th>
+                        <th class="has-text-centered">Programming</th>
                         ${performanceColumn}
                         <th class="has-text-centered">Updated</th>
                         <th></th>
@@ -2103,6 +2106,10 @@ ${deleteProject}`;
                       ? "Demo controllers don't compete" : qualified
                         ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
+                    const programming = ["Python", "C", "C++", "Java", "Rust", "ROS 2"].includes(participant.programming)
+                      ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
+                      'style="height:24px" />'
+                      : participant.programming;
                     tableContent.innerHTML = `<tr${style}>
                     <td style="vertical-align:middle;${extraStyle}" class="has-text-centered" title="${rankingTitle}">
                       ${rankingString}
@@ -2110,6 +2117,7 @@ ${deleteProject}`;
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
+                    <td style="text-align:center;vertical-align:middle;">${programming}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
