@@ -1748,7 +1748,7 @@ ${deleteProject}`;
           // remove intial '*field' string
           fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
           fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released/');
-
+          console.log("test")
           // remove unwanted spaces between field type and field name (if needed)
           if (spacesToRemove > 0)
             fieldString = fieldString.replace(fieldType + ' '.repeat(spacesToRemove), fieldType);
