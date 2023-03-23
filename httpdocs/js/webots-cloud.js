@@ -1747,7 +1747,7 @@ ${deleteProject}`;
           fieldString = fieldString.replace(removeCommentRegex, '');
           // remove intial '*field' string
           fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
-          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
+          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released/');
 
           // remove unwanted spaces between field type and field name (if needed)
           if (spacesToRemove > 0)
