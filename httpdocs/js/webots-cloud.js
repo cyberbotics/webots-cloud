@@ -2164,9 +2164,8 @@ ${deleteProject}`;
                         counter++;
                       });
                       item.parentElement.title = title;
-                      // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
-                      const leaderboard = document.getElementById('leaderboard');
-                      leaderboard.removeAttribute('style');
+                      // the following line is fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                      document.getElementById('leaderboard').removeAttribute('style');
                     });
                 });
             });
