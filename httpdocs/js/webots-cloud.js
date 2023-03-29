@@ -2134,10 +2134,6 @@ ${deleteProject}`;
                   else if (demoCount > 1)
                     count += ` + ${demoCount} demos`;
                   document.getElementById('competition-participants').innerHTML = count;
-                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
-                  const leaderboard = document.getElementById('leaderboard');
-                  leaderboard.removeAttribute('style');
-                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
@@ -2168,6 +2164,9 @@ ${deleteProject}`;
                         counter++;
                       });
                       item.parentElement.title = title;
+                      // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                      const leaderboard = document.getElementById('leaderboard');
+                      leaderboard.removeAttribute('style');
                     });
                 });
             });
