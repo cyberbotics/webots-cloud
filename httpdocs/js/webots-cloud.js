@@ -1901,7 +1901,8 @@ ${deleteProject}`;
             <div class="tile is-parent">
               <div class="tile is-child box">
                 <p class="title">Leaderboard</p>
-                <div class="content" id="leaderboard">
+                <div class="content">
+                  <div id="leaderboard"></div>
                 </div>
               </div>
             </div>
