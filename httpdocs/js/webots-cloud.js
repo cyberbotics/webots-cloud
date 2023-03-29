@@ -1923,7 +1923,7 @@ ${deleteProject}`;
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
         .then(function(data) {
-          project.lastSha = data[0].sha;
+          project.lastSha = data[0] ? data[0].sha : branch;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
           const competitionStorageUrl = `/storage/competition/${username}/${repo}`;
           // preview image
