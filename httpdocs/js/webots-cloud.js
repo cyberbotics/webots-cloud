@@ -2164,8 +2164,9 @@ ${deleteProject}`;
                         counter++;
                       });
                       item.parentElement.title = title;
-                      // the following line is fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
+                      // the following lines are fixing a rare bug where the leaderboard was hidden
                       document.getElementById('leaderboard').parentElement.removeAttribute('style');
+                      document.getElementById('leaderboard').parentElement.removeAttribute('hidden');
                     });
                 });
             });
