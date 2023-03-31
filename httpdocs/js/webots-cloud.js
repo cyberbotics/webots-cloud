@@ -2165,7 +2165,7 @@ ${deleteProject}`;
                       });
                       item.parentElement.title = title;
                       // the following line is fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
-                      document.getElementById('leaderboard').removeAttribute('style');
+                      document.getElementById('leaderboard').parentElement.removeAttribute('style');
                     });
                 });
             });
