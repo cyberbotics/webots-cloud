@@ -23,14 +23,20 @@ $check_url = simulation_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $tag_or_branch, $folder, $world) = $check_url;
-$world_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder$world";
+$world_url = "$raw_githubusercontent_com/$username/$repository/$tag_or_branch$folder$world";
 $world_content = @file_get_contents($world_url);
 if ($world_content === false) {
-  $query = "DELETE FROM project WHERE id=$id";
-  $mysqli->query($query) or error($mysqli->error);
-  if ($mysqli->affected_rows === 0 and $id !== 0)
-    error("Failed to delete simulation with world file '$world'");
-  error("Failed to fetch world file $world");
+  if ($id !== 0) {
+    $query = "DELETE FROM project WHERE id=$id";
+    $mysqli->query($query) or error($mysqli->error);
+    if ($mysqli->affected_rows === 0)
+      error("Failed to delete simulation with world file '$world'");
+  }
+  $error = error_get_last();
+  if ($error === null)
+    error("Failed to fetch world file $world_url");
+  else
+    error("Failed to fetch world file: " . $error['message']);
 }
 
 # check and retrieve information from webots.yaml file

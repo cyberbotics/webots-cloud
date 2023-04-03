@@ -23,7 +23,7 @@ $check_url = proto_check_url($url);
 if (!is_array($check_url))
   error($check_url);
 list($username, $repository, $tag_or_branch, $folder, $proto) = $check_url;
-$proto_url = "https://raw.githubusercontent.com/$username/$repository/$tag_or_branch$folder$proto";
+$proto_url = "$raw_githubusercontent_com/$username/$repository/$tag_or_branch$folder$proto";
 $proto_content = @file_get_contents($proto_url);
 if ($proto_content === false) {
   $query = "DELETE FROM proto WHERE id=$id";
@@ -202,6 +202,7 @@ $answer['total'] = $total;
 die(json_encode($answer));
 
 function get_parent($externprotos, $base_proto, $parent_url) {
+  global $raw_githubusercontent_com;
   $found_parent = false;
   $current_proto_content = false;
   for($i = 0; $i < count($externprotos); $i++) {
@@ -217,7 +218,7 @@ function get_parent($externprotos, $base_proto, $parent_url) {
       if (!is_array($check_url))
         error($check_url);
       list($extern_username, $extern_repository, $extern_tag_or_branch, $extern_folder, $extern_proto) = $check_url;
-      $extern_proto_url = "https://raw.githubusercontent.com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder$extern_proto";
+      $extern_proto_url = "$raw_githubusercontent_com/$extern_username/$extern_repository/$extern_tag_or_branch$extern_folder$extern_proto";
       $extern_proto_content = @file_get_contents($extern_proto_url);
       if ($extern_proto_content === false)
         error("Could not retrieve parent proto with url'$extern_url'");
