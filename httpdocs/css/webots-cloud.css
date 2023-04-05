@@ -599,6 +599,15 @@ nav.pagination>a[disabled] {
   flex-wrap: wrap;
 }
 
+.result-element {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 15px;
+  width: 128px;
+  position: relative;
+  margin-bottom: 30px;
+}
+
 .result-thumbnail {
   width: 128px;
   height: 128px;
