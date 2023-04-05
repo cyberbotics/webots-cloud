@@ -654,7 +654,12 @@ ${deleteProject}`;
               </div>
               <div class="search-results">
                 <div class="result-element">
-                  <img src="https://proto.webots.cloud/images/thumbnail_not_available.jpg"></img>
+                  <img class="result-thumbnail" src="https://proto.webots.cloud/images/thumbnail_not_available.jpg"></img>
+                  <div>Test element </div>
+                </div>
+                <div class="result-element">
+                  <img class="result-thumbnail" src="https://proto.webots.cloud/images/thumbnail_not_available.jpg"></img>
+                  <div>Test element </div>
                 </div>
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">

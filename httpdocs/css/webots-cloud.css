@@ -598,3 +598,8 @@ nav.pagination>a[disabled] {
   display: flex;
   flex-wrap: wrap;
 }
+
+.thumbnail-result {
+  width: 128px;
+  height: 128px;
+}
