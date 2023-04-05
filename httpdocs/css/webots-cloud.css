@@ -597,5 +597,4 @@ nav.pagination>a[disabled] {
 .search-results {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 450px;
 }

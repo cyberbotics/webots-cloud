@@ -653,6 +653,9 @@ ${deleteProject}`;
                 </div>
               </div>
               <div class="search-results">
+                <div class="result-element">
+                  <img src="https://proto.webots.cloud/images/thumbnail_not_available.jpg"></img>
+                </div>
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
