@@ -1443,7 +1443,7 @@ ${deleteProject}`;
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      const url = searchParams.get('url').replace('/blob/main/worlds/', '/blob/competition/worlds/');
+      const url = searchParams.get('url').replace('/blob/competition/worlds/', '/blob/main/worlds/');
       project.competitionUrl = url;
       const context = searchParams.get('context');
       switch (context) {
@@ -1868,7 +1868,8 @@ ${deleteProject}`;
             <div class="tile is-parent">
               <div class="tile is-child box">
                 <p class="title">Leaderboard</p>
-                <div class="content" id="leaderboard">
+                <div class="content">
+                  <div id="leaderboard"></div>
                 </div>
               </div>
             </div>
@@ -1890,7 +1891,7 @@ ${deleteProject}`;
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
         .then(function(data) {
-          project.lastSha = data[0].sha;
+          project.lastSha = data[0] ? data[0].sha : branch;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
           const competitionStorageUrl = `/storage/competition/${username}/${repo}`;
           // preview image
@@ -2100,10 +2101,6 @@ ${deleteProject}`;
                   else if (demoCount > 1)
                     count += ` + ${demoCount} demos`;
                   document.getElementById('competition-participants').innerHTML = count;
-                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
-                  const leaderboard = document.getElementById('leaderboard');
-                  leaderboard.removeAttribute('style');
-                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
@@ -2134,6 +2131,9 @@ ${deleteProject}`;
                         counter++;
                       });
                       item.parentElement.title = title;
+                      // the following lines are fixing a rare bug where the leaderboard was hidden
+                      document.getElementById('leaderboard').parentElement.removeAttribute('style');
+                      document.getElementById('leaderboard').parentElement.removeAttribute('hidden');
                     });
                 });
             });
