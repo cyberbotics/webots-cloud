@@ -593,3 +593,9 @@ nav.pagination>a[disabled] {
   background-color: transparent;
   word-wrap: break-word;
 }
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 450px;
+}

@@ -206,9 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
-
-      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
-        .appendChild(document.createElement('th'));
     }
 
     function updatePagination(tab, current, max) {
@@ -654,6 +651,8 @@ ${deleteProject}`;
                     <i class="fas fa-search" id="proto-search-icon"></i>
                   </span>
                 </div>
+              </div>
+              <div class="search-result">
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
