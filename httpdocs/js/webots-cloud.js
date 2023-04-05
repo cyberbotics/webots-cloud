@@ -723,7 +723,7 @@ ${deleteProject}`;
                   <div>Test element </div>
                 </div><div class="result-element">
                   <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
+                  <div>TinkerbotsCubieBoxWithCrossSlots</div>
                 </div><div class="result-element">
                   <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
                   <div>Test element </div>
