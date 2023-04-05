@@ -1290,7 +1290,7 @@ ${deleteProject}`;
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
               line += '<div>' + githubRow(data.protos[i], true) + '</div>';
-            project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
+
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
               project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
