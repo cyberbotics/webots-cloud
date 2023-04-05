@@ -1293,7 +1293,7 @@ ${deleteProject}`;
 
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
+              // project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteProto(event, project); });
