@@ -696,58 +696,58 @@ ${deleteProject}`;
                 </div><div class="result-element">
                   <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
                   <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
-                </div><div class="result-element">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
                 </div>
                 <div class="result-element">
                   <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
                   <div>Test element that is longer to see the behavior when the title of the element is quite long </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
+                </div><div class="result-element">
+                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
+                  <div>Test element </div>
                 </div>
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
