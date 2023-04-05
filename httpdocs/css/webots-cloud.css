@@ -606,6 +606,7 @@ nav.pagination>a[disabled] {
   width: 128px;
   position: relative;
   margin-bottom: 30px;
+  word-wrap: break-word;
 }
 
 .result-thumbnail {
