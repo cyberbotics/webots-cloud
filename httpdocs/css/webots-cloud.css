@@ -614,6 +614,7 @@ nav.pagination>a {
   word-wrap: break-word;
   background-color: #fff;
   box-sizing: content-box;
+  color: #363636;
 }
 
 .result-thumbnail {
@@ -624,4 +625,8 @@ nav.pagination>a {
 
 .result-title {
   padding: 12px;
+}
+
+.result-title:hover {
+  color: #485fc7;
 }
