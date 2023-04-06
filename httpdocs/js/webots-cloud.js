@@ -335,6 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`
         element += `<img class="result-thumbnail" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
         element += `<div class="result-title">${title}</div>`;
+        element += `<div class="result-version">${data.version}</div>`;
         element +=  `<div class="description-container">
               <p class="thumbnail-description">${data.description}</p>
             </div>`

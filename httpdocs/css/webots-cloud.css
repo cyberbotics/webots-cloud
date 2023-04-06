@@ -627,6 +627,10 @@ nav.pagination>a {
   padding: 12px;
 }
 
+.result-version {
+  padding: 12px;
+}
+
 .result-title:hover {
   color: #485fc7;
 }
