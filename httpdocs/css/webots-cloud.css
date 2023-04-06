@@ -643,11 +643,12 @@ nav.pagination>a {
   position: absolute;
   top: 5px;
   left: 120px;
-  height: 180px;
-  width: 180px;
+  height: 120px;
+  width: 240px;
   background: rgba(38, 38, 38, 1);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px black;
   display: flex;
   overflow: hidden;
+  z-index: 2;
 }
