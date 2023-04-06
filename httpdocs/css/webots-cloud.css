@@ -526,7 +526,7 @@ nav.pagination>a {
 
 .proto-doc .proto-info-array {
   display: grid;
-  border: 1px solid #dbdbdb;
+  border: 1px solid #a7a5a5;
   margin-bottom: 50px;
 }
 
@@ -536,20 +536,20 @@ nav.pagination>a {
 }
 
 .proto-doc .proto-info-array .info-array-cell {
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid #a7a5a5;
   line-height: 50px;
 }
 
 .proto-doc .proto-info-array .first-row-cell {
-  border-top: 1px solid #dbdbdb;
+  border-top: 1px solid #a7a5a5;
 }
 
 .proto-doc .proto-info-array .first-column-cell {
-  border-left: 1px solid #dbdbdb;
+  border-left: 1px solid #a7a5a5;
 }
 
 .proto-doc .proto-info-array .last-column-cell {
-  border-right: 1px solid #dbdbdb;
+  border-right: 1px solid #a7a5a5;
 }
 
 .proto-doc pre {
