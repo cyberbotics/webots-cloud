@@ -603,15 +603,21 @@ nav.pagination>a[disabled] {
 .result-element {
   flex-grow: 0;
   flex-shrink: 0;
-  padding: 15px;
-  width: 128px;
+  width: 192px;
   position: relative;
+  margin: 15px;
   margin-bottom: 30px;
   word-wrap: break-word;
   background-color: #fff;
+  box-sizing: content-box;
 }
 
 .result-thumbnail {
   width: 128px;
   height: 128px;
+  margin-left: 32px
+}
+
+.result-title {
+  padding: 12px;
 }
