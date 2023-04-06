@@ -633,6 +633,8 @@ nav.pagination>a {
 
 .result-element:hover .description-container {
   opacity: 1;
+  transition: all 0.2s ease-in-out;
+  transition-delay: 0.5s;
 }
 
 .description-container {
