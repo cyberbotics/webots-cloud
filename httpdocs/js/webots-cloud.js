@@ -330,6 +330,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
+      if (proto) {
+        let element = '<div class="result-element">'
+        element += `<img class="result-thumbnail" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
+        element += '</div>'
+        return element;
+      }
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
@@ -1289,7 +1295,7 @@ ${deleteProject}`;
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<div>' + githubRow(data.protos[i], true) + '</div>';
+              line += githubRow(data.protos[i], true);
             const protosList = document.getElementById('protos-list');
             protosList.innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
