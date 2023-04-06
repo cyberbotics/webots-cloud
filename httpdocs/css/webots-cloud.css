@@ -631,7 +631,7 @@ nav.pagination>a {
   color: #485fc7;
 }
 
-.result-title:hover~.thumbnail {
+.result-element:hover~.thumbnail {
   opacity: 1;
   transition: all 0.2s ease-in-out;
   transition-delay: 0.5s;
