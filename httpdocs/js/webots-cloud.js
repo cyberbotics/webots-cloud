@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         element += `<img class="result-thumbnail" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
         element += `<div class="result-title">${title}</div>`;
         element +=  `<div class="description-container">
-              <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+              <p class="thumbnail-description">${data.description}</p>
             </div>`
         element += '</a>'
         return element;
