@@ -638,11 +638,15 @@ nav.pagination>a {
 }
 
 .description-container {
+  display: auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1);
   position: absolute;
   top: 5px;
   left: 120px;
   height: 180px;
-  width: 640px;
+  width: 180px;
   background: rgba(38, 38, 38, 1);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px black;
