@@ -631,8 +631,21 @@ nav.pagination>a {
   color: #485fc7;
 }
 
-.result-element:hover~.thumbnail {
+.result-element:hover~.description-container {
   opacity: 1;
   transition: all 0.2s ease-in-out;
   transition-delay: 0.5s;
+}
+
+.description-container {
+  position: absolute;
+  top: 5px;
+  left: 120px;
+  height: 180px;
+  width: 640px;
+  background: rgba(38, 38, 38, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px black;
+  display: flex;
+  overflow: hidden;
 }
