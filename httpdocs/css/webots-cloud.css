@@ -217,7 +217,7 @@ img.competition-flag {
 
 nav.pagination>a[disabled] {
   background-color: #fff;
-  border-color: #dbdbdb;
+  border-color: #979191;
   box-shadow: none;
   opacity: 0.5;
   cursor: not-allowed;
