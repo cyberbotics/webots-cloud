@@ -217,10 +217,14 @@ img.competition-flag {
 
 nav.pagination>a[disabled] {
   background-color: #fff;
-  border-color: #979191;
+  border-color: #a7a5a5;
   box-shadow: none;
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+nav.pagination>a {
+  border-color: #a7a5a5;
 }
 
 .pagination-link.is-current {
