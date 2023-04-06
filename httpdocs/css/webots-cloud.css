@@ -631,7 +631,8 @@ nav.pagination>a {
   color: #485fc7;
 }
 
-.result-element:hover .description-container {
+.result-element:hover {
+  color: red;
   opacity: 1;
 }
 
