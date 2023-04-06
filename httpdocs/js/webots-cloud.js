@@ -671,10 +671,8 @@ ${deleteProject}`;
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-proto">Add a new proto</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-proto">Add a new proto</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
