@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    const pageLimit = 10;
+    const pageLimit = 20;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 

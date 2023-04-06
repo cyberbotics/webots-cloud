@@ -629,6 +629,7 @@ nav.pagination>a {
 
 .result-version {
   padding: 12px;
+  font-size: 0.8em;
 }
 
 .result-title:hover {
