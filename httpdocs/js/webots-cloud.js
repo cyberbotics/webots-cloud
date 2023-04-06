@@ -237,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
+      console.log(nav)
       nav.innerHTML = content.innerHTML;
     }
 
