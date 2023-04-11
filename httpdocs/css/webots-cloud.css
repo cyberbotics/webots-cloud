@@ -622,10 +622,12 @@ nav.pagination>a {
   height: 128px;
   margin-left: 32px;
   margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 .result-title {
   padding: 12px;
+  border-top: #cfcbcb solid 1px
 }
 
 .result-version {
