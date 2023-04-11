@@ -663,11 +663,14 @@ ${deleteProject}`;
                   </span>
                 </div>
               </div>
-              <select class="sort-by-select">
-                <option>A-Z</option>
-                <option>Z-A</option>
-                <option>Views</option>
-              <select>
+              <div class="sort-by-div">
+                <div>Sort By</div>
+                <select class="sort-by-select">
+                  <option>A-Z</option>
+                  <option>Z-A</option>
+                  <option>Views</option>
+                <select>
+              </div>
               <div class="search-results" id="protos-list">
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
