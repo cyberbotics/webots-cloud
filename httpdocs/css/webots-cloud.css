@@ -628,13 +628,13 @@ nav.pagination>a {
 .result-title {
   padding: 12px;
   border-top: #dcdcdc solid 1px;
-  background-color: #f1f1f1;
+  background-color: #f5f5f5;
 }
 
 .result-version {
   padding: 12px;
   font-size: 0.8em;
-  background-color: #f1f1f1;
+  background-color: #f5f5f5;
 }
 
 .result-title:hover {
