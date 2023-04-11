@@ -718,7 +718,7 @@ ${deleteProject}`;
 
     function sortProtoBy(sort) {
       console.log(sort)
-      console.log(sort.target[0].value)
+      console.log(sort.srcElement[0].value)
       setSorts('proto', sort.target[0].value);
       listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
