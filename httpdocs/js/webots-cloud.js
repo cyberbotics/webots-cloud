@@ -717,7 +717,7 @@ ${deleteProject}`;
     }
 
     function sortProtoBy(sort) {
-      console.log(sort)
+      console.log(sort.target[0])
     }
 
     function initSort(sortBy) {
