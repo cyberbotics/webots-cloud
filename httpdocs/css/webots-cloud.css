@@ -650,7 +650,6 @@ nav.pagination>a {
   position: absolute;
   top: 5px;
   left: 120px;
-  height: 120px;
   width: 240px;
   background: rgba(38, 38, 38, 1);
   backdrop-filter: blur(10px);
