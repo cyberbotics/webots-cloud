@@ -663,7 +663,7 @@ ${deleteProject}`;
                   </span>
                 </div>
                 <div class="sort-by-div">
-                  <div>Sort By</div>
+                  Sort By
                   <select class="sort-by-select">
                     <option>A-Z</option>
                     <option>Z-A</option>
