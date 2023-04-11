@@ -620,7 +620,8 @@ nav.pagination>a {
 .result-thumbnail {
   width: 128px;
   height: 128px;
-  margin-left: 32px
+  margin-left: 32px;
+  margin-top: 15px;
 }
 
 .result-title {
