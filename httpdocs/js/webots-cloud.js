@@ -665,10 +665,10 @@ ${deleteProject}`;
                 <div class="sort-by-div">
                   Sort by
                   <select class="sort-by-select">
-                    <option value=title-desc>A-Z</option>
-                    <option value=title-asc>Z-A</option>
                     <option value=viewed-desc>Most viewed</option>
                     <option value=viewed-asc>Less viewed</option>
+                    <option value=title-desc>A-Z</option>
+                    <option value=title-asc>Z-A</option>
                   <select>
                 </div>
               </div>
