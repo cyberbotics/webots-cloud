@@ -664,7 +664,7 @@ ${deleteProject}`;
                 </div>
                 <div class="sort-by-div">
                   Sort by
-                  <select class="sort-by-select">
+                  <select class="sort-by-select" onchange=sortProtoBy(e)>
                     <option>A-Z</option>
                     <option>Z-A</option>
                     <option>Most viewed</option>
@@ -713,6 +713,10 @@ ${deleteProject}`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
+    }
+
+    function sortProtoBy(sort) {
+      console.log(sort)
     }
 
     function initSort(sortBy) {
