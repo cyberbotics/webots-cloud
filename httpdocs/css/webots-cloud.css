@@ -611,7 +611,7 @@ nav.pagination>a {
   position: relative;
   margin: 15px;
   margin-bottom: 30px;
-  word-wrap: break-word;
+  word-wrap: normal;
   background-color: #fff;
   box-sizing: content-box;
   color: #363636;
