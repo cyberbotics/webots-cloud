@@ -665,10 +665,10 @@ ${deleteProject}`;
                 <div class="sort-by-div">
                   Sort by
                   <select class="sort-by-select">
-                    <option value=az>A-Z</option>
-                    <option value=za>Z-A</option>
-                    <option>Most viewed</option>
-                    <option>Less viewed</option>
+                    <option value=title-desc>A-Z</option>
+                    <option value=title-asc>Z-A</option>
+                    <option value=viewed-desc>Most viewed</option>
+                    <option value=viewed-asc>Less viewed</option>
                   <select>
                 </div>
               </div>
@@ -718,6 +718,8 @@ ${deleteProject}`;
 
     function sortProtoBy(sort) {
       console.log(sort.target[0].value)
+      setSorts('proto', sort.target[0].value);
+      listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
 
     function initSort(sortBy) {
