@@ -333,8 +333,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       if (proto) {
         let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`
-        element += `<img class="result-thumbnail" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
-        element += `<div class="result-title" title='${data.description}'>${title}</div>`;
+        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
+        element += `<div class="result-title">${title}</div>`;
         element += `<div class="result-version">${data.version}</div>`;
         element += `<div class="description-container">
               <p class="thumbnail-description">${data.description}</p>
