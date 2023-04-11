@@ -665,8 +665,8 @@ ${deleteProject}`;
                 <div class="sort-by-div">
                   Sort by
                   <select class="sort-by-select">
-                    <option>A-Z</option>
-                    <option>Z-A</option>
+                    <option value=az>A-Z</option>
+                    <option value=za>Z-A</option>
                     <option>Most viewed</option>
                     <option>Less viewed</option>
                   <select>
@@ -717,7 +717,7 @@ ${deleteProject}`;
     }
 
     function sortProtoBy(sort) {
-      console.log(sort.target[0])
+      console.log(sort.target[0].value)
     }
 
     function initSort(sortBy) {
