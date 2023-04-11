@@ -663,3 +663,8 @@ nav.pagination>a {
   overflow: hidden;
   z-index: 2;
 }
+
+.sort-by-div {
+  position: absolute;
+  top: 0px;
+}
