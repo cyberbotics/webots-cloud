@@ -1,6 +1,6 @@
 <?php
-$raw_githubusercontent_com = 'https://rawgithubusercontent.deno.dev';  // FIXME: fixes a strange problem on infomaniak servers
-// $raw_githubusercontent_com = 'https://raw.githubusercontent.com';
+$raw_githubusercontent_com = 'https://raw.githubusercontent.com';
+// $raw_githubusercontent_com = 'https://rawgithubusercontent.deno.dev';  // FIXME: fixes a strange problem on infomaniak servers
 
 function simulation_check_url($url) {
   if (substr($url, 0, 19) !== 'https://github.com/')
