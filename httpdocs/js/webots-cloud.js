@@ -663,11 +663,12 @@ ${deleteProject}`;
                   </span>
                 </div>
                 <div class="sort-by-div">
-                  Sort By
+                  Sort by
                   <select class="sort-by-select">
                     <option>A-Z</option>
                     <option>Z-A</option>
-                    <option>Views</option>
+                    <option>Most viewed</option>
+                    <option>Less viewed</option>
                   <select>
                 </div>
               </div>
