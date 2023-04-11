@@ -664,8 +664,6 @@ ${deleteProject}`;
                 </div>
               </div>
               <div class="search-results" id="protos-list">
-                  <img class="result-thumbnail" src="https://raw.githubusercontent.com/cyberbotics/webots/develop/projects/robots/pal_robotics/tiagopp/protos/icons/Tiagopp.png"></img>
-                  <div>Test element </div>
               </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
