@@ -712,7 +712,7 @@ ${deleteProject}`;
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      document.getElementsByClassName('sort-by-select')[0].onchance = e => sortProtoBy(e);
+      document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
     }
 
