@@ -662,14 +662,14 @@ ${deleteProject}`;
                     <i class="fas fa-search" id="proto-search-icon"></i>
                   </span>
                 </div>
-              </div>
-              <div class="sort-by-div">
-                <div>Sort By</div>
-                <select class="sort-by-select">
-                  <option>A-Z</option>
-                  <option>Z-A</option>
-                  <option>Views</option>
-                <select>
+                <div class="sort-by-div">
+                  <div>Sort By</div>
+                  <select class="sort-by-select">
+                    <option>A-Z</option>
+                    <option>Z-A</option>
+                    <option>Views</option>
+                  <select>
+                </div>
               </div>
               <div class="search-results" id="protos-list">
               </div>
