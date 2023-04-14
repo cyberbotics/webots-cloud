@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     const pageLimit = 10;
+    let protoPageLimit = 20;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -1188,7 +1189,7 @@ ${deleteProject}`;
               const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
               page = total;
               updatePagination('proto', page, total);
 
@@ -1290,7 +1291,7 @@ ${deleteProject}`;
     function listProtos(page, sortBy, searchString) {
       const totalWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
       const availableWidth = totalWidth - 16 - 2 * 48; // 16 is the size of the scrollbar on Chrome
-      const protoPageLimit = Math.floor(availableWidth / 222) * 5; // we want 5 rows
+      protoPageLimit = Math.floor(availableWidth / 222) * 5; // we want 5 rows
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
