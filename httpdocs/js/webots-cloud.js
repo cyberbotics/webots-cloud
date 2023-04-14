@@ -874,7 +874,6 @@ ${deleteProject}`;
       let script;
       let typeName;
       if (proto) {
-        console.log("synchronize github")
         searchString = getSearch('proto');
         script = 'ajax/proto/create.php';
         typeName = 'proto';
@@ -1684,6 +1683,7 @@ ${deleteProject}`;
         deleteButton.id = `delete-${information.id}`;
         deleteButton.title = 'Delete row as administrator';
         updatedContent.appendChild(deleteButton);
+        deleteButton.onclick = _ => deleteProto(_, project);
       }
 
       infoGrid.appendChild(updatedContent);
@@ -1727,6 +1727,30 @@ ${deleteProject}`;
           } else
             project.load(`/run?version=${data.version}&url=${data.url}`);
         });
+    }
+
+    function deleteProto(event, project) {
+      const id = event.target.id.substring(7);
+      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete proto`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/proto/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Proto deletion error`, data.error);
+            else if (data.status === 1)
+              project.load(`/proto`);
+          });
+      });
     }
 
     async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
