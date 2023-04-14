@@ -1223,6 +1223,7 @@ ${deleteProject}`;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             const table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
+            pageLimit = 10;
             table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
             const tbody = table.querySelector(`tbody`);
             tbody.innerHTML = line;
