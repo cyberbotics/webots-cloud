@@ -1288,9 +1288,9 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      console.log(width)
-      const protoPageLimit = 20;
+      const totalWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const availableWidth = totalWidth - 16 - 2 * 48; // 16 is the size of the scrollbar on Chrome
+      const protoPageLimit = Math.floor(availableWidth / 222) * 5; // we want 5 rows
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
