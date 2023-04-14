@@ -1289,7 +1289,7 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      pageLimit = 10;
+      pageLimit = 20;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
