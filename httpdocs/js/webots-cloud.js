@@ -1288,6 +1288,8 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      console.log(width)
       const protoPageLimit = 20;
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
