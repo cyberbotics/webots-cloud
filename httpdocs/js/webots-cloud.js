@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    const pageLimit = 20;
+    let pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -1242,6 +1242,7 @@ ${deleteProject}`;
     }
 
     function listSimulations(type, page, sortBy, searchString) {
+      pageLimit = 10;
       const typeName = (() => {
         if (type === 'D')
           return 'simulation';
@@ -1288,6 +1289,7 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
+      pageLimit = 20;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
