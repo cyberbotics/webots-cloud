@@ -169,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    console.log("HOMEPAGE")
     let pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -409,6 +408,7 @@ ${deleteProject}`;
     }
 
     function mainContainer(project, activeTab) {
+      console.log("mainContainer 1")
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
