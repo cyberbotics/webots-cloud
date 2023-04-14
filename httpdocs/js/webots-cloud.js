@@ -1551,7 +1551,6 @@ ${deleteProject}`;
     }
 
     function loadMd(url, information) {
-      console.log(information)
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1720,7 +1719,7 @@ ${deleteProject}`;
             event.target.classList.remove('fa-spin');
             project.load(`/${typeName}${(2 > 1) ? ('?p=' + 2) : ''}`);
           } else
-            project.load(`run?version=${data.version}&url=${data.url}`);
+            project.load(`/run?version=${data.version}&url=${data.url}`);
         });
     }
 
