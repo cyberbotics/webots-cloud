@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     const pageLimit = 10;
-    let protoPageLimit = 20;
+    const protoPageLimit = 120;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -1289,9 +1289,6 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      const totalWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const availableWidth = totalWidth - 16 - 2 * 48; // 16 is the size of the scrollbar on Chrome
-      protoPageLimit = Math.floor(availableWidth / 222) * 5; // we want 5 rows
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
