@@ -1569,7 +1569,7 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
-              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information.updated);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
@@ -1600,7 +1600,8 @@ ${deleteProject}`;
       return [version, license, licenseUrl];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoURl) {
+    function createProtoArray(version, license, licenseUrl, protoURl, updated) {
+      console.log(updated)
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1796,7 +1797,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information.updated));
     }
 
     // check that the proto is at least from R2023b
