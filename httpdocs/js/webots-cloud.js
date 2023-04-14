@@ -874,6 +874,7 @@ ${deleteProject}`;
       let script;
       let typeName;
       if (proto) {
+        console.log("synchronize github")
         searchString = getSearch('proto');
         script = 'ajax/proto/create.php';
         typeName = 'proto';
