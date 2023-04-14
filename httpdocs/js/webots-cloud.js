@@ -1601,7 +1601,6 @@ ${deleteProject}`;
     }
 
     function createProtoArray(version, license, licenseUrl, protoURl, updated) {
-      console.log(updated)
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1654,6 +1653,21 @@ ${deleteProject}`;
       sourceContentA.style.gridRow = 3;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
+
+      const updatedP = document.createElement('p');
+      updatedP.textContent = 'Updated';
+      updatedP.className = 'info-array-cell first-column-cell';
+      updatedP.style.gridRow = 4;
+      updatedP.style.gridColumn = 1;
+      updatedP.style.backgroundColor = '#fafafa';
+      infoGrid.appendChild(updatedP);
+
+      const updatedContent = document.createElement('div');
+      updatedContent.className = 'info-array-cell last-column-cell';
+      updatedContent.textContent = updated;
+      updatedContent.style.gridRow = 4;
+      updatedContent.style.gridColumn = 2;
+      infoGrid.appendChild(updatedContent);
 
       return infoGrid;
     }
