@@ -1551,6 +1551,7 @@ ${deleteProject}`;
     }
 
     function loadMd(url, information) {
+      console.log(information)
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1569,7 +1570,6 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
-              console.log(information)
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information.updated);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
