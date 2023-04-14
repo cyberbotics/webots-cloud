@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
-    let pageLimit = 10;
+    const pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -1223,7 +1223,6 @@ ${deleteProject}`;
             for (let i = 0; i < data.animations.length; i++)
               line += '<tr>' + animationRow(data.animations[i]) + '</tr>';
             const table = project.content.querySelector(`section[data-content="${typeName}"] > div > table`);
-            pageLimit = 10;
             table.style.marginBottom = (50 * (pageLimit - data.animations.length)) + 'px';
             const tbody = table.querySelector(`tbody`);
             tbody.innerHTML = line;
@@ -1243,7 +1242,6 @@ ${deleteProject}`;
     }
 
     function listSimulations(type, page, sortBy, searchString) {
-      pageLimit = 10;
       const typeName = (() => {
         if (type === 'D')
           return 'simulation';
@@ -1290,11 +1288,11 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      pageLimit = 20;
-      const offset = (page - 1) * pageLimit;
+      const protoPageLimit = 20;
+      const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString })
+        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString })
       })
         .then(function(response) {
           return response.json();
@@ -1314,7 +1312,7 @@ ${deleteProject}`;
               line += githubRow(data.protos[i], true);
             const protosList = document.getElementById('protos-list');
             protosList.innerHTML = line;
-            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
             document.getElementById('proto-search-input').value = searchString;
           }
