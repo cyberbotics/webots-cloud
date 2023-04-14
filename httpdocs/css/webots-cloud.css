@@ -608,7 +608,7 @@ nav.pagination>a {
   margin: 15px;
   margin-bottom: 30px;
   word-wrap: normal;
-  background-color: #fff;
+  background-color: #ffffff80;
   box-sizing: content-box;
   color: #363636;
 }
@@ -640,10 +640,6 @@ nav.pagination>a {
   box-shadow: 5px 5px 5px 0 #ddd;
   text-align: right;
   color: #888;
-}
-
-a.result-element:nth-child(3) {
-  background-color: #ffffff80;
 }
 
 .result-title:hover {
