@@ -1672,7 +1672,7 @@ ${deleteProject}`;
       const updatedButton = document.createElement('i');
       updatedButton.className = 'is-clickable fas fa-sync';
       updatedButton.id = `sync-${information.id}`;
-      updatedButton.dataUrl = information.url;
+      updatedButton.setAttribute('data-url') = protoUrl;
       updatedButton.title = 'Re-synchronize now';
       updatedContent.appendChild(updatedButton);
       updatedButton.onclick = _ => synchronizeProto(_, true);
