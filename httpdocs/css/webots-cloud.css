@@ -20,7 +20,6 @@ body {
   position: absolute;
   top: 3.25rem;
   left: 0;
-  background-color: #fafafa;
 }
 
 /*  Main Container  */
@@ -623,15 +622,24 @@ nav.pagination>a {
 }
 
 .result-title {
-  padding: 12px;
-  border-top: #dcdcdc solid 1px;
-  background-color: #f3f3f3;
+  padding: 0 12px 6px 12px;
+  border-top: #f0f0f0 solid 1px;
+  background-color: #f8f8f8;
+  border-right: #f0f0f0 solid 1px;
+  border-left: #f0f0f0 solid 1px;
+  box-shadow: 5px 5px 5px 0 #ddd;
 }
 
 .result-version {
-  padding: 12px;
-  font-size: 0.8em;
-  background-color: #f3f3f3;
+  padding: 0px 6px 4px 4px;
+  font-size: 0.7em;
+  background-color: #f8f8f8;
+  border-bottom: #f0f0f0 solid 1px;
+  border-right: #f0f0f0 solid 1px;
+  border-left: #f0f0f0 solid 1px;
+  box-shadow: 5px 5px 5px 0 #ddd;
+  text-align: right;
+  color: #888;
 }
 
 .result-title:hover {
