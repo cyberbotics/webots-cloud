@@ -1570,7 +1570,7 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
-              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information.updated);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
@@ -1601,7 +1601,7 @@ ${deleteProject}`;
       return [version, license, licenseUrl];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoURl, updated) {
+    function createProtoArray(version, license, licenseUrl, protoUrl, information) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1647,9 +1647,9 @@ ${deleteProject}`;
       infoGrid.appendChild(sourceP);
 
       const sourceContentA = document.createElement('a');
-      sourceContentA.href = protoURl;
+      sourceContentA.href = protoUrl;
       sourceContentA.className = 'info-array-cell last-column-cell';
-      sourceContentA.textContent = protoURl;
+      sourceContentA.textContent = protoUrl;
       sourceContentA.target = '_blank';
       sourceContentA.style.gridRow = 3;
       sourceContentA.style.gridColumn = 2;
@@ -1665,13 +1665,79 @@ ${deleteProject}`;
 
       const updatedContent = document.createElement('div');
       updatedContent.className = 'info-array-cell last-column-cell';
-      updatedContent.innerHTML = updated + `<i class="is-clickable fas fa-sync" data-url="${protoURl}" title="Re-synchronize now"></i>`;
+      updatedContent.textContent = information.updated;
       updatedContent.style.gridRow = 4;
       updatedContent.style.gridColumn = 2;
+
+      const updatedButton = document.createElement('i');
+      updatedButton.className = 'is-clickable fas fa-sync';
+      updatedButton.id = `sync-${information.id}`;
+      updatedButton.dataUrl = protoUrl;
+      updatedButton.title = 'Re-synchronize now';
+      updatedContent.appendChild(updatedButton);
+      updatedButton.onclick = _ => synchronizeProto(_, true);
 
       infoGrid.appendChild(updatedContent);
 
       return infoGrid;
+    }
+
+    function synchronizeProto(event, proto) {
+      let searchString;
+      let script;
+      let typeName;
+      console.log("synchronize proto")
+      script = 'ajax/proto/create.php';
+      typeName = 'proto';
+
+      const id = event.target.id.substring(5);
+      event.target.classList.add('fa-spin');
+      const url = event.target.getAttribute('data-url');
+      fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data)
+          const old = document.querySelector('#sync-' + id).parentNode.parentNode;
+          const parent = old.parentNode;
+          if (data.error) {
+            let errorMsg = data.error;
+            if (errorMsg.startsWith('YAML file error:')) {
+              errorMsg = errorMsg +
+                `<div class="help">
+                  More information at: <a target="_blank" href="https://cyberbotics.com/doc/guide/webots-cloud#yaml-file">
+                  cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
+                </div>`;
+            }
+            const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
+            dialog.error('Project has been deleted.');
+            dialog.querySelector('form').addEventListener('submit', function(e) {
+              e.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              dialog.close();
+            });
+            event.target.classList.remove('fa-spin');
+            project.load(`/${typeName}${(2 > 1) ? ('?p=' + 2) : ''}`);
+          } else {
+            // const tr = document.createElement('tr');
+            // tr.innerHTML = githubRow(data, proto);
+            // parent.replaceChild(tr, old);
+            // parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
+            // if (parent.querySelector('#delete-' + id) !== null) {
+            //   if (proto)
+            //     parent.querySelector('#delete-' + id).addEventListener('click',
+            //       function(event) { deleteProto(event, project); });
+            //   else
+            //     parent.querySelector('#delete-' + id).addEventListener('click',
+            //       function(event) { deleteSimulation(event, project); });
+            // }
+            //
+            // event.target.classList.remove('fa-spin');
+            // const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+            // updatePagination(typeName, page, total);
+          }
+        });
     }
 
     async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
@@ -1813,7 +1879,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information.updated));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
     }
 
     // check that the proto is at least from R2023b
