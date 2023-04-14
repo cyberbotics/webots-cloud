@@ -1664,9 +1664,10 @@ ${deleteProject}`;
 
       const updatedContent = document.createElement('div');
       updatedContent.className = 'info-array-cell last-column-cell';
-      updatedContent.textContent = updated;
+      updatedContent.innerHTML = updated + `<i class="is-clickable fas fa-sync" data-url="${protoURl}" title="Re-synchronize now"></i>`;
       updatedContent.style.gridRow = 4;
       updatedContent.style.gridColumn = 2;
+
       infoGrid.appendChild(updatedContent);
 
       return infoGrid;
