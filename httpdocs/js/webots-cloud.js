@@ -332,14 +332,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       if (proto) {
-        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`
-        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`
+        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
+        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
         element += `<div class="result-title" title='${title}'>${title}</div>`;
         element += `<div class="result-version">${data.version}</div>`;
         element += `<div class="description-container">
               <p class="thumbnail-description">${data.description}</p>
-            </div>`
-        element += '</a>'
+            </div>`;
+        element += '</a>';
         return element;
       }
       const updated = data.updated.replace(' ',
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">`;
       if (proto)
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`;
       else
         row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
       row += `
@@ -2110,7 +2110,7 @@ ${deleteProject}`;
                       ? "Demo controllers don't compete" : qualified
                         ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
-                    const programming = ["Python", "C", "C++", "Java", "Rust", "ROS 2"].includes(participant.programming)
+                    const programming = ['Python', 'C', 'C++', 'Java', 'Rust', 'ROS 2'].includes(participant.programming)
                       ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
                       'style="height:24px" />'
                       : participant.programming;

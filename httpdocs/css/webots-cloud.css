@@ -530,11 +530,6 @@ nav.pagination>a {
   margin-bottom: 50px;
 }
 
-.proto-doc .proto-info-array a {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 .proto-doc .proto-info-array .info-array-cell {
   border-bottom: 1px solid #a7a5a5;
   line-height: 50px;
@@ -550,6 +545,8 @@ nav.pagination>a {
 
 .proto-doc .proto-info-array .last-column-cell {
   border-right: 1px solid #a7a5a5;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .proto-doc pre {
