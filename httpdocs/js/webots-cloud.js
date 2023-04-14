@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     const pageLimit = 10;
+    const protoPageLimit = 120;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -205,9 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
-        .appendChild(document.createElement('th'));
-
-      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
     }
 
@@ -334,6 +332,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      if (proto) {
+        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
+        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
+        element += `<div class="result-title" title='${title}'>${title}</div>`;
+        element += `<div class="result-version">${data.version}</div>`;
+        element += `<div class="description-container">
+              <p class="thumbnail-description">${data.description}</p>
+            </div>`;
+        element += '</a>';
+        return element;
+      }
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
@@ -349,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">`;
       if (proto)
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`;
       else
         row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
       row += `
@@ -654,40 +663,18 @@ ${deleteProject}`;
                     <i class="fas fa-search" id="proto-search-icon"></i>
                   </span>
                 </div>
+                <div class="sort-by-div">
+                  Sort by
+                  <select class="sort-by-select">
+                    <option value=viewed-desc>Most viewed</option>
+                    <option value=viewed-asc>Less viewed</option>
+                    <option value=title-desc>A-Z</option>
+                    <option value=title-asc>Z-A</option>
+                  <select>
+                </div>
               </div>
-              <table class="table is-striped is-hoverable">
-                <thead>
-                  <tr>
-                  <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
-                      style="text-align:center; min-width: 65px;">
-                      <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-title" title="Title of the proto"
-                      style="min-width: 120px;">
-                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
-                      Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
-                      style="min-width: 85px;">
-                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-updated" title="Last update time"
-                      style="text-align: right;">
-                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              <div class="search-results" id="protos-list">
+              </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
@@ -696,10 +683,8 @@ ${deleteProject}`;
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-proto">Add a new proto</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-proto">Add a new proto</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -728,17 +713,25 @@ ${deleteProject}`;
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
+      document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
+    }
+
+    function sortProtoBy(sort) {
+      setSorts('proto', sort.target.options[sort.target.selectedIndex].value);
+      listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
 
     function initSort(sortBy) {
       if (sortBy && sortBy !== 'default') {
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
-        const sortIcon = columnTitle.querySelector('.sort-icon');
-        columnTitle.querySelector('.sort-icon').style.display = 'inline';
-        if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
-          sortIcon.classList.toggle('fa-sort-down');
-          sortIcon.classList.toggle('fa-sort-up');
+        if (columnTitle) {
+          const sortIcon = columnTitle.querySelector('.sort-icon');
+          columnTitle.querySelector('.sort-icon').style.display = 'inline';
+          if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+          }
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
@@ -926,12 +919,8 @@ ${deleteProject}`;
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
             if (parent.querySelector('#delete-' + id) !== null) {
-              if (proto)
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteProto(event, project); });
-              else
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteSimulation(event, project); });
+              parent.querySelector('#delete-' + id).addEventListener('click',
+                function(event) { deleteSimulation(event, project); });
             }
 
             event.target.classList.remove('fa-spin');
@@ -1200,7 +1189,7 @@ ${deleteProject}`;
               const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
               page = total;
               updatePagination('proto', page, total);
 
@@ -1300,10 +1289,10 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      const offset = (page - 1) * pageLimit;
+      const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString })
+        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString })
       })
         .then(function(response) {
           return response.json();
@@ -1320,16 +1309,10 @@ ${deleteProject}`;
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + githubRow(data.protos[i], true) + '</tr>';
-            project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
-            for (let i = 0; i < data.protos.length; i++) {
-              let id = data.protos[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
-              if (project.content.querySelector('#delete-' + id) !== null)
-                project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function(event) { deleteProto(event, project); });
-            }
-            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              line += githubRow(data.protos[i], true);
+            const protosList = document.getElementById('protos-list');
+            protosList.innerHTML = line;
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
             document.getElementById('proto-search-input').value = searchString;
           }
@@ -1420,30 +1403,6 @@ ${deleteProject}`;
               ModalDialog.run(`Simulation deletion error`, data.error);
             else if (data.status === 1)
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
-          });
-      });
-    }
-
-    function deleteProto(event, project) {
-      const id = event.target.id.substring(7);
-      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
-        `Delete proto`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/delete.php', {
-          method: 'post',
-          body: JSON.stringify({ user: project.id, password: project.password, id: id })
-        })
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            dialog.close();
-            if (data.error)
-              ModalDialog.run(`Proto deletion error`, data.error);
-            else if (data.status === 1)
-              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
           });
       });
     }
@@ -1578,7 +1537,7 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
-              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
@@ -1609,7 +1568,7 @@ ${deleteProject}`;
       return [version, license, licenseUrl];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoURl) {
+    function createProtoArray(version, license, licenseUrl, protoUrl, information) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1655,15 +1614,112 @@ ${deleteProject}`;
       infoGrid.appendChild(sourceP);
 
       const sourceContentA = document.createElement('a');
-      sourceContentA.href = protoURl;
+      sourceContentA.href = protoUrl;
       sourceContentA.className = 'info-array-cell last-column-cell';
-      sourceContentA.textContent = protoURl;
+      sourceContentA.textContent = protoUrl;
       sourceContentA.target = '_blank';
       sourceContentA.style.gridRow = 3;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
 
+      const updatedP = document.createElement('p');
+      updatedP.textContent = 'Updated';
+      updatedP.className = 'info-array-cell first-column-cell';
+      updatedP.style.gridRow = 4;
+      updatedP.style.gridColumn = 1;
+      updatedP.style.backgroundColor = '#fafafa';
+      infoGrid.appendChild(updatedP);
+
+      const updatedContent = document.createElement('div');
+      updatedContent.className = 'info-array-cell last-column-cell';
+      updatedContent.textContent = information.updated;
+      updatedContent.style.gridRow = 4;
+      updatedContent.style.gridColumn = 2;
+
+      const updatedButton = document.createElement('i');
+      updatedButton.className = 'is-clickable fas fa-sync update-proto';
+      updatedButton.id = `sync-${information.id}`;
+      updatedButton.setAttribute('data-url', protoUrl);
+      updatedButton.title = 'Re-synchronize now';
+      updatedContent.appendChild(updatedButton);
+      updatedButton.onclick = _ => synchronizeProto(_, true);
+
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      if (admin) {
+        const deleteButton = document.createElement('i');
+        deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
+        deleteButton.style.color = 'red';
+        deleteButton.id = `delete-${information.id}`;
+        deleteButton.title = 'Delete row as administrator';
+        updatedContent.appendChild(deleteButton);
+        deleteButton.onclick = _ => deleteProto(_, project);
+      }
+
+      infoGrid.appendChild(updatedContent);
+
       return infoGrid;
+    }
+
+    function synchronizeProto(event, proto) {
+      let searchString;
+      let script;
+      let typeName;
+      script = 'ajax/proto/create.php';
+      typeName = 'proto';
+
+      const id = event.target.id.substring(5);
+      event.target.classList.add('fa-spin');
+      const url = event.target.getAttribute('data-url');
+      fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error) {
+            let errorMsg = data.error;
+            if (errorMsg.startsWith('YAML file error:')) {
+              errorMsg = errorMsg +
+                `<div class="help">
+                  More information at: <a target="_blank" href="https://cyberbotics.com/doc/guide/webots-cloud#yaml-file">
+                  cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
+                </div>`;
+            }
+            const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
+            dialog.error('Project has been deleted.');
+            dialog.querySelector('form').addEventListener('submit', function(e) {
+              e.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              dialog.close();
+            });
+            event.target.classList.remove('fa-spin');
+            project.load(`/${typeName}`);
+          } else
+            project.load(`/run?version=${data.version}&url=${data.url}`);
+        });
+    }
+
+    function deleteProto(event, project) {
+      const id = event.target.id.substring(7);
+      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete proto`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/proto/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Proto deletion error`, data.error);
+            else if (data.status === 1)
+              project.load(`/proto`);
+          });
+      });
     }
 
     async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
@@ -1805,7 +1861,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
     }
 
     // check that the proto is at least from R2023b
@@ -2104,7 +2160,7 @@ ${deleteProject}`;
                       ? "Demo controllers don't compete" : qualified
                         ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
-                    const programming = ["Python", "C", "C++", "Java", "Rust", "ROS 2"].includes(participant.programming)
+                    const programming = ['Python', 'C', 'C++', 'Java', 'Rust', 'ROS 2'].includes(participant.programming)
                       ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
                       'style="height:24px" />'
                       : participant.programming;
