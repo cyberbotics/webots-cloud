@@ -1676,6 +1676,16 @@ ${deleteProject}`;
       updatedContent.appendChild(updatedButton);
       updatedButton.onclick = _ => synchronizeProto(_, true);
 
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      if (admin) {
+        const deleteButton = document.createElement('i');
+        deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
+        deleteButton.style.color = 'red';
+        deleteButton.id = `delete-${information.id}`;
+        deleteButton.title = 'Delete row as administrator';
+        updatedContent.appendChild(deleteButton);
+      }
+
       infoGrid.appendChild(updatedContent);
 
       return infoGrid;
