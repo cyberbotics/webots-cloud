@@ -408,7 +408,6 @@ ${deleteProject}`;
     }
 
     function mainContainer(project, activeTab) {
-      console.log("mainContainer 1")
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -1290,7 +1289,7 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      pageLimit = 20;
+      pageLimit = 10;
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
