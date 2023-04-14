@@ -918,12 +918,8 @@ ${deleteProject}`;
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
             if (parent.querySelector('#delete-' + id) !== null) {
-              if (proto)
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteProto(event, project); });
-              else
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteSimulation(event, project); });
+              parent.querySelector('#delete-' + id).addEventListener('click',
+                function(event) { deleteSimulation(event, project); });
             }
 
             event.target.classList.remove('fa-spin');
@@ -1315,12 +1311,6 @@ ${deleteProject}`;
               line += githubRow(data.protos[i], true);
             const protosList = document.getElementById('protos-list');
             protosList.innerHTML = line;
-            for (let i = 0; i < data.protos.length; i++) {
-              let id = data.protos[i].id;
-              if (project.content.querySelector('#delete-' + id) !== null)
-                project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function(event) { deleteProto(event, project); });
-            }
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
             updatePagination('proto', page, total);
             document.getElementById('proto-search-input').value = searchString;
@@ -1412,30 +1402,6 @@ ${deleteProject}`;
               ModalDialog.run(`Simulation deletion error`, data.error);
             else if (data.status === 1)
               project.load(`/simulation${(page > 1) ? ('?p=' + page) : ''}`);
-          });
-      });
-    }
-
-    function deleteProto(event, project) {
-      const id = event.target.id.substring(7);
-      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
-        `Delete proto`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/delete.php', {
-          method: 'post',
-          body: JSON.stringify({ user: project.id, password: project.password, id: id })
-        })
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            dialog.close();
-            if (data.error)
-              ModalDialog.run(`Proto deletion error`, data.error);
-            else if (data.status === 1)
-              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
           });
       });
     }
