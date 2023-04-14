@@ -1685,7 +1685,6 @@ ${deleteProject}`;
       let searchString;
       let script;
       let typeName;
-      console.log("synchronize proto")
       script = 'ajax/proto/create.php';
       typeName = 'proto';
 
@@ -1698,9 +1697,7 @@ ${deleteProject}`;
         })
         .then(function(data) {
           console.log(data)
-          const old = document.querySelector('#sync-' + id).parentNode.parentNode;
-          const parent = old.parentNode;
-          if (data.error) {
+          if (true) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg +
@@ -1717,7 +1714,7 @@ ${deleteProject}`;
               dialog.close();
             });
             event.target.classList.remove('fa-spin');
-            project.load(`/${typeName}${(2 > 1) ? ('?p=' + 2) : ''}`);
+            project.load(`/${typeName}`);
           } else
             project.load(`/run?version=${data.version}&url=${data.url}`);
         });
