@@ -1719,24 +1719,8 @@ ${deleteProject}`;
             });
             event.target.classList.remove('fa-spin');
             project.load(`/${typeName}${(2 > 1) ? ('?p=' + 2) : ''}`);
-          } else {
-            // const tr = document.createElement('tr');
-            // tr.innerHTML = githubRow(data, proto);
-            // parent.replaceChild(tr, old);
-            // parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
-            // if (parent.querySelector('#delete-' + id) !== null) {
-            //   if (proto)
-            //     parent.querySelector('#delete-' + id).addEventListener('click',
-            //       function(event) { deleteProto(event, project); });
-            //   else
-            //     parent.querySelector('#delete-' + id).addEventListener('click',
-            //       function(event) { deleteSimulation(event, project); });
-            // }
-            //
-            // event.target.classList.remove('fa-spin');
-            // const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
-            // updatePagination(typeName, page, total);
-          }
+          } else
+            project.load(`run?version=${data.version}&url=${data.url}`);
         });
     }
 
