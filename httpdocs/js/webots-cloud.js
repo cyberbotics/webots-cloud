@@ -169,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    console.log("HOMEPAGE")
     let pageLimit = 10;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
@@ -1290,7 +1291,6 @@ ${deleteProject}`;
 
     function listProtos(page, sortBy, searchString) {
       pageLimit = 20;
-      console.log("TEST")
       const offset = (page - 1) * pageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
