@@ -1669,7 +1669,7 @@ ${deleteProject}`;
       updatedContent.style.gridColumn = 2;
 
       const updatedButton = document.createElement('i');
-      updatedButton.className = 'is-clickable fas fa-sync';
+      updatedButton.className = 'is-clickable fas fa-sync-proto';
       updatedButton.id = `sync-${information.id}`;
       updatedButton.setAttribute('data-url', protoUrl);
       updatedButton.title = 'Re-synchronize now';
