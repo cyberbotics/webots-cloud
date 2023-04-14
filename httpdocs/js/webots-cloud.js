@@ -1316,7 +1316,6 @@ ${deleteProject}`;
             protosList.innerHTML = line;
             for (let i = 0; i < data.protos.length; i++) {
               let id = data.protos[i].id;
-              // project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
               if (project.content.querySelector('#delete-' + id) !== null)
                 project.content.querySelector('#delete-' + id)
                   .addEventListener('click', function(event) { deleteProto(event, project); });
@@ -1570,6 +1569,7 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
+              console.log(information)
               const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information.updated);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
