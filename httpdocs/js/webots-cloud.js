@@ -1697,7 +1697,8 @@ ${deleteProject}`;
         })
         .then(function(data) {
           console.log(data)
-          if (true) {
+          data.error = "test error"
+          if (data.error) {
             let errorMsg = data.error;
             if (errorMsg.startsWith('YAML file error:')) {
               errorMsg = errorMsg +
