@@ -642,6 +642,10 @@ nav.pagination>a {
   color: #888;
 }
 
+a.result-element:nth-child(3) {
+  background-color: #ffffff80;
+}
+
 .result-title:hover {
   color: #485fc7;
 }
