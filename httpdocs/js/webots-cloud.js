@@ -724,11 +724,13 @@ ${deleteProject}`;
     function initSort(sortBy) {
       if (sortBy && sortBy !== 'default') {
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
-        const sortIcon = columnTitle.querySelector('.sort-icon');
-        columnTitle.querySelector('.sort-icon').style.display = 'inline';
-        if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
-          sortIcon.classList.toggle('fa-sort-down');
-          sortIcon.classList.toggle('fa-sort-up');
+        if (columnTitle) {
+          const sortIcon = columnTitle.querySelector('.sort-icon');
+          columnTitle.querySelector('.sort-icon').style.display = 'inline';
+          if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+          }
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
