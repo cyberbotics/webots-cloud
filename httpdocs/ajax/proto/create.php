@@ -67,7 +67,7 @@ while ($line !== false) {
       } elseif (strtolower(substr($line, 0, 9)) === 'keywords:') {
         $keywords = str_replace('keywords:', '', $line);
         $keywords = explode(',', $keywords);
-        $keywords = array_map(trim, $keywords);
+        $keywords = array_map(function($value){return trim($value)}, $keywords);
         die($keywords);
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
