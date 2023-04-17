@@ -64,6 +64,10 @@ while ($line !== false) {
           error("This proto is either deprecated or hidden and should not be added.");
         elseif (strpos($line, 'no3dView'))
           $no_3d_view = true;
+      } elseif (strtolower(substr($line, 0, 9)) === 'keywords:') {
+        $keywords = str_replace('keywords:', '', $line);
+        $keywords = explode(',', $keywords);
+        $keywords = array_map(trim, $keywords);
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
       elseif (strtolower(substr($line, 0, 7)) === 'license')
