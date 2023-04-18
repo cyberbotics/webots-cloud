@@ -17,5 +17,6 @@ $query = "DELETE FROM proto WHERE id=$id AND EXISTS (SELECT * FROM user WHERE id
 $mysqli->query($query) or error($mysqli->error);
 if ($mysqli->affected_rows === 0)
   error("Could not delete proto");
+$mysqli->query("DELETE FROM proto_tagmap WHERE proto_id=$id") or error($mysqli->error);
 die('{"status":1}');
 ?>
