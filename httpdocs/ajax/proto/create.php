@@ -191,7 +191,7 @@ $id = ($id === 0) ? $mysqli->insert_id : $id;
 
 if ($remove_old_tag)
   $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id AND tag_id NOT IN (SELECT tag_id FROM tags WHERE name IN ('$keywords'))");
-$query = $mysqli->query("INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name IN ('$keywords')") or error($mysqli->error);
+$query = $mysqli->query("INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT proto_tag.tag_id, name FROM proto_tag LEFT JOIN (SELECT tag_id, proto_id FROM proto_tagmap WHERE proto_id = $id) AS J ON proto_tag.tag_id = J.tag_id WHERE proto_id IS NULL) AS R WHERE name IN ('$keywords')") or error($mysqli->error);
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
