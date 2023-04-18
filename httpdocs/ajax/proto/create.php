@@ -68,7 +68,7 @@ while ($line !== false) {
       } elseif (strtolower(substr($line, 0, 9)) === 'keywords:') {
         $keywords = str_replace('keywords:', '', $line);
         $keywords = explode(',', $keywords);
-        $keywords = array_map(function($value){if ($value) return $mysqli->escape_string(trim($value));}, $keywords);
+        $keywords = array_map(function($value){if ($value) return trim($mysqli->escape_string($value));}, $keywords);
         $keywords = join("','", $keywords);
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
