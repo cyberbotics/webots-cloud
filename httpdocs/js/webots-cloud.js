@@ -210,6 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
+      return
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
