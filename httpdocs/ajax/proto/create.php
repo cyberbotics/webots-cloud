@@ -185,8 +185,9 @@ if ($mysqli->affected_rows != 1) {
 }
 
 $id = ($id === 0) ? $mysqli->insert_id : $id;
-$query = $mysqli->query("INSERT IGNORE INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name IN ('$keywords')") or error($mysqli->error);
-
+$query = "INSERT IGNORE INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name IN ('$keywords')";
+$query = $mysqli->query() or error($mysqli->error);
+die($query);
 # return answer
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
