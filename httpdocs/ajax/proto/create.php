@@ -185,7 +185,7 @@ if ($mysqli->affected_rows != 1) {
 }
 
 $remove_old_tag = false;
-if ($id === 0)
+if ($id !== 0)
   $remove_old_tag = true;
 $id = ($id === 0) ? $mysqli->insert_id : $id;
 
