@@ -830,7 +830,6 @@ ${deleteProject}`;
     }
 
     function searchAndSortTable(type, isSearch) {
-      return;
       const url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
@@ -841,7 +840,7 @@ ${deleteProject}`;
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
-
+      return;
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(type), getSearch(type));
       else if (type === 'animation')
