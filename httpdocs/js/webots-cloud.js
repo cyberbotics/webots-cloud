@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function homePage(project) {
     const pageLimit = 10;
+    const protoPageLimit = 120;
 
     let activeTab = document.location.pathname.substring(1) !== '' ? document.location.pathname.substring(1) : 'animation';
 
@@ -205,9 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
       project.content.querySelector('section[data-content="simulation"] > div > table > thead > tr')
-        .appendChild(document.createElement('th'));
-
-      project.content.querySelector('section[data-content="proto"] > div > table > thead > tr')
         .appendChild(document.createElement('th'));
     }
 
@@ -334,6 +332,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      if (proto) {
+        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
+        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
+        element += `<div class="result-title" title='${title}'>${title}</div>`;
+        element += `<div class="result-version">${data.version}</div>`;
+        element += `<div class="description-container">
+              <p class="thumbnail-description">${data.description}</p>
+            </div>`;
+        element += '</a>';
+        return element;
+      }
       const updated = data.updated.replace(' ',
         `<br><i class="is-clickable fas fa-sync" id="sync-${data.id}" data-url="${data.url}" title="Re-synchronize now"></i> `
       );
@@ -342,13 +351,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      const row = `
+      let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
-<td class="title-cell">
-  <a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>
+<td class="title-cell">`;
+      if (proto)
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`;
+      else
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
+      row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
       <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
@@ -650,40 +663,18 @@ ${deleteProject}`;
                     <i class="fas fa-search" id="proto-search-icon"></i>
                   </span>
                 </div>
+                <div class="sort-by-div">
+                  Sort by
+                  <select class="sort-by-select">
+                    <option value=viewed-desc>Most viewed</option>
+                    <option value=viewed-asc>Less viewed</option>
+                    <option value=title-desc>A-Z</option>
+                    <option value=title-asc>Z-A</option>
+                  <select>
+                </div>
               </div>
-              <table class="table is-striped is-hoverable">
-                <thead>
-                  <tr>
-                  <th class="is-clickable column-title" id="proto-sort-stars" title="Number of GitHub stars"
-                      style="text-align: center;">
-                      <i class="far fa-star"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-viewed" title="Views"
-                      style="text-align:center; min-width: 65px;">
-                      <i class="fas fa-chart-column"></i>
-                      <i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-title" title="Title of the proto"
-                      style="min-width: 120px;">
-                      Title<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="column-title" id="proto-sort-title" title="Branch or Tag of the proto">
-                      Branch/Tag
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-version" title="Webots release of the proto"
-                      style="min-width: 85px;">
-                      Version<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                    <th class="is-clickable column-title" id="proto-sort-updated" title="Last update time"
-                      style="text-align: right;">
-                      Updated<i class="sort-icon fa-solid fa-sort-down" style="display: none;"></i>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              <div class="search-results" id="protos-list">
+              </div>
               <div class="empty-search" id="proto-empty-search" style="display: none;">
                 <i class="fas fa-xl fa-search" style="color: lightgrey; padding-right: 10px; position: relative; top: 12px;">
                 </i>
@@ -692,10 +683,8 @@ ${deleteProject}`;
             </div>
             <nav class="pagination is-small is-rounded" role="navigation" aria-label="pagination">
             </nav>
-            <div class="container is-fullhd">
-              <div class="buttons">
-                <button class="button" id="add-a-new-proto">Add a new proto</button>
-              </div>
+            <div class="buttons">
+              <button class="button" id="add-a-new-proto">Add a new proto</button>
             </div>
           </section>
           <section class="section${(activeTab === 'server') ? ' is-active' : ''}" data-content="server">
@@ -724,17 +713,25 @@ ${deleteProject}`;
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
+      document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
+    }
+
+    function sortProtoBy(sort) {
+      setSorts('proto', sort.target.options[sort.target.selectedIndex].value);
+      listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
 
     function initSort(sortBy) {
       if (sortBy && sortBy !== 'default') {
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
-        const sortIcon = columnTitle.querySelector('.sort-icon');
-        columnTitle.querySelector('.sort-icon').style.display = 'inline';
-        if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
-          sortIcon.classList.toggle('fa-sort-down');
-          sortIcon.classList.toggle('fa-sort-up');
+        if (columnTitle) {
+          const sortIcon = columnTitle.querySelector('.sort-icon');
+          columnTitle.querySelector('.sort-icon').style.display = 'inline';
+          if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+            sortIcon.classList.toggle('fa-sort-down');
+            sortIcon.classList.toggle('fa-sort-up');
+          }
         }
       }
       document.querySelectorAll('.column-title').forEach((title) => {
@@ -922,12 +919,8 @@ ${deleteProject}`;
             parent.replaceChild(tr, old);
             parent.querySelector('#sync-' + data.id).addEventListener('click', _ => synchronizeGithub(_, proto));
             if (parent.querySelector('#delete-' + id) !== null) {
-              if (proto)
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteProto(event, project); });
-              else
-                parent.querySelector('#delete-' + id).addEventListener('click',
-                  function(event) { deleteSimulation(event, project); });
+              parent.querySelector('#delete-' + id).addEventListener('click',
+                function(event) { deleteSimulation(event, project); });
             }
 
             event.target.classList.remove('fa-spin');
@@ -1196,7 +1189,7 @@ ${deleteProject}`;
               const tr = '<tr class="has-background-warning-light">' + githubRow(data, true) + '</tr>';
               document.querySelector('section[data-content="simulation"] > div > table > tbody').insertAdjacentHTML(
                 'beforeend', tr);
-              const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
               page = total;
               updatePagination('proto', page, total);
 
@@ -1296,10 +1289,10 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
-      const offset = (page - 1) * pageLimit;
+      const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: pageLimit, sortBy: sortBy, search: searchString })
+        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString })
       })
         .then(function(response) {
           return response.json();
@@ -1316,16 +1309,10 @@ ${deleteProject}`;
               document.getElementById('proto-empty-search').style.display = 'none';
             let line = ``;
             for (let i = 0; i < data.protos.length; i++) // compute the GitHub repo URL from the simulation URL.
-              line += '<tr>' + githubRow(data.protos[i], true) + '</tr>';
-            project.content.querySelector('section[data-content="proto"] > div > table > tbody').innerHTML = line;
-            for (let i = 0; i < data.protos.length; i++) {
-              let id = data.protos[i].id;
-              project.content.querySelector('#sync-' + id).addEventListener('click', _ => synchronizeGithub(_, true));
-              if (project.content.querySelector('#delete-' + id) !== null)
-                project.content.querySelector('#delete-' + id)
-                  .addEventListener('click', function(event) { deleteProto(event, project); });
-            }
-            const total = (data.total === 0) ? 1 : Math.ceil(data.total / pageLimit);
+              line += githubRow(data.protos[i], true);
+            const protosList = document.getElementById('protos-list');
+            protosList.innerHTML = line;
+            const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
             document.getElementById('proto-search-input').value = searchString;
           }
@@ -1420,30 +1407,6 @@ ${deleteProject}`;
       });
     }
 
-    function deleteProto(event, project) {
-      const id = event.target.id.substring(7);
-      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
-        `Delete proto`, 'is-danger');
-      dialog.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/delete.php', {
-          method: 'post',
-          body: JSON.stringify({ user: project.id, password: project.password, id: id })
-        })
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            dialog.close();
-            if (data.error)
-              ModalDialog.run(`Proto deletion error`, data.error);
-            else if (data.status === 1)
-              project.load(`/proto${(page > 1) ? ('?p=' + page) : ''}`);
-          });
-      });
-    }
-
     function whatIsCompetitionPopUp() {
       const content = {};
       content.innerHTML =
@@ -1472,7 +1435,7 @@ ${deleteProject}`;
     if (type === 'demo')
       project.runWebotsView();
     else if (type === 'competition') {
-      const url = searchParams.get('url').replace('/blob/main/worlds/', '/blob/competition/worlds/');
+      const url = searchParams.get('url').replace('/blob/competition/worlds/', '/blob/main/worlds/');
       project.competitionUrl = url;
       const context = searchParams.get('context');
       switch (context) {
@@ -1528,11 +1491,34 @@ ${deleteProject}`;
       const template = document.createElement('template');
       template.innerHTML = contentHtml;
       project.setup('proto', template.content);
-      project.runWebotsView();
-      loadMd(url);
+      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
+        .then(response => response.json())
+        .then(response => {
+          if (response && response.no_3d_view === '0')
+            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
+          else {
+            project.updateProtoAndSimulationViewCount(url);
+            const container = document.getElementById('proto-webots-container');
+
+            const image = document.createElement('img');
+            const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
+              'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+            const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
+            image.src = prefix + imageName;
+            image.style.display = 'block';
+            image.style.margin = 'auto';
+            container.appendChild(image);
+
+            const message = document.createElement('div');
+            message.innerText = 'This proto has no 3D representation.';
+            container.style.height = '150px';
+            container.appendChild(message);
+          }
+          loadMd(url, response);
+        });
     }
 
-    function loadMd(url) {
+    function loadMd(url, information) {
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1551,7 +1537,7 @@ ${deleteProject}`;
             })
             .then(async function(content) {
               const results = parseProtoHeader(proto);
-              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
               populateProtoViewDiv(content, prefix, infoArray);
             }).catch(() => {
@@ -1559,7 +1545,7 @@ ${deleteProject}`;
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(protoURl, proto, protoName, prefix, true);
+                  createMdFromProto(protoURl, proto, protoName, prefix, information);
                 });
             });
         });
@@ -1582,7 +1568,7 @@ ${deleteProject}`;
       return [version, license, licenseUrl];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoURl) {
+    function createProtoArray(version, license, licenseUrl, protoUrl, information) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1628,18 +1614,115 @@ ${deleteProject}`;
       infoGrid.appendChild(sourceP);
 
       const sourceContentA = document.createElement('a');
-      sourceContentA.href = protoURl;
+      sourceContentA.href = protoUrl;
       sourceContentA.className = 'info-array-cell last-column-cell';
-      sourceContentA.textContent = protoURl;
+      sourceContentA.textContent = protoUrl;
       sourceContentA.target = '_blank';
       sourceContentA.style.gridRow = 3;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
 
+      const updatedP = document.createElement('p');
+      updatedP.textContent = 'Updated';
+      updatedP.className = 'info-array-cell first-column-cell';
+      updatedP.style.gridRow = 4;
+      updatedP.style.gridColumn = 1;
+      updatedP.style.backgroundColor = '#fafafa';
+      infoGrid.appendChild(updatedP);
+
+      const updatedContent = document.createElement('div');
+      updatedContent.className = 'info-array-cell last-column-cell';
+      updatedContent.textContent = information.updated;
+      updatedContent.style.gridRow = 4;
+      updatedContent.style.gridColumn = 2;
+
+      const updatedButton = document.createElement('i');
+      updatedButton.className = 'is-clickable fas fa-sync update-proto';
+      updatedButton.id = `sync-${information.id}`;
+      updatedButton.setAttribute('data-url', protoUrl);
+      updatedButton.title = 'Re-synchronize now';
+      updatedContent.appendChild(updatedButton);
+      updatedButton.onclick = _ => synchronizeProto(_, true);
+
+      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+      if (admin) {
+        const deleteButton = document.createElement('i');
+        deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
+        deleteButton.style.color = 'red';
+        deleteButton.id = `delete-${information.id}`;
+        deleteButton.title = 'Delete row as administrator';
+        updatedContent.appendChild(deleteButton);
+        deleteButton.onclick = _ => deleteProto(_, project);
+      }
+
+      infoGrid.appendChild(updatedContent);
+
       return infoGrid;
     }
 
-    function createMdFromProto(protoURl, proto, protoName, prefix, generateAll) {
+    function synchronizeProto(event, proto) {
+      let searchString;
+      let script;
+      let typeName;
+      script = 'ajax/proto/create.php';
+      typeName = 'proto';
+
+      const id = event.target.id.substring(5);
+      event.target.classList.add('fa-spin');
+      const url = event.target.getAttribute('data-url');
+      fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          if (data.error) {
+            let errorMsg = data.error;
+            if (errorMsg.startsWith('YAML file error:')) {
+              errorMsg = errorMsg +
+                `<div class="help">
+                  More information at: <a target="_blank" href="https://cyberbotics.com/doc/guide/webots-cloud#yaml-file">
+                  cyberbotics.com/doc/guide/webots-cloud#yaml-file</a>
+                </div>`;
+            }
+            const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
+            dialog.error('Project has been deleted.');
+            dialog.querySelector('form').addEventListener('submit', function(e) {
+              e.preventDefault();
+              dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+              dialog.close();
+            });
+            event.target.classList.remove('fa-spin');
+            project.load(`/${typeName}`);
+          } else
+            project.load(`/run?version=${data.version}&url=${data.url}`);
+        });
+    }
+
+    function deleteProto(event, project) {
+      const id = event.target.id.substring(7);
+      const dialog = ModalDialog.run(`Really delete proto?`, '<p>There is no way to recover deleted data.</p>', 'Cancel',
+        `Delete proto`, 'is-danger');
+      dialog.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        dialog.querySelector('button[type="submit"]').classList.add('is-loading');
+        fetch('ajax/proto/delete.php', {
+          method: 'post',
+          body: JSON.stringify({ user: project.id, password: project.password, id: id })
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            dialog.close();
+            if (data.error)
+              ModalDialog.run(`Proto deletion error`, data.error);
+            else if (data.status === 1)
+              project.load(`/proto`);
+          });
+      });
+    }
+
+    async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition = '';
@@ -1720,8 +1803,7 @@ ${deleteProject}`;
           fieldString = fieldString.replace(removeCommentRegex, '');
           // remove intial '*field' string
           fieldString = fieldString.replace(removeInitialFieldRegex, '  ');
-          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released');
-
+          fieldString = fieldString.replace('webots://', 'https://raw.githubusercontent.com/cyberbotics/webots/released/');
           // remove unwanted spaces between field type and field name (if needed)
           if (spacesToRemove > 0)
             fieldString = fieldString.replace(fieldType + ' '.repeat(spacesToRemove), fieldType);
@@ -1729,63 +1811,57 @@ ${deleteProject}`;
           fields += fieldString + '\n';
         }
       }
-      fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: protoURl }) })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(async function(content) {
-          const baseType = content.base_type;
-          const description = content.description;
-          file += description + '\n\n';
-          file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
-          file += '```\n';
-          file += protoName + ' {\n';
-          file += fields;
-          file += '}\n';
-          file += '```\n\n';
+      const baseType = information?.base_type;
+      const description = information?.description;
+      file += description + '\n\n';
+      file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+      file += '```\n';
+      file += protoName + ' {\n';
+      file += fields;
+      file += '}\n';
+      file += '```\n\n';
 
-          if (describedField.length > 0) {
-            file += '### ' + protoName + ' Field Description\n\n';
-            for (const [fieldType, fieldName, fielDescription] of describedField) {
-              file += '- `' + fieldName + '` : ' + fielDescription;
-              const isMFField = fieldType.startsWith('MF');
-              if (fieldEnumeration.has(fieldName)) {
-                const values = fieldEnumeration.get(fieldName);
+      if (describedField.length > 0) {
+        file += '### ' + protoName + ' Field Description\n\n';
+        for (const [fieldType, fieldName, fielDescription] of describedField) {
+          file += '- `' + fieldName + '` : ' + fielDescription;
+          const isMFField = fieldType.startsWith('MF');
+          if (fieldEnumeration.has(fieldName)) {
+            const values = fieldEnumeration.get(fieldName);
+            if (isMFField)
+              file += ' This field accept a list of ';
+            else {
+              if (values.length > 1)
+                file += ' This field accepts the following values: ';
+              else
+                file += ' This field accepts the following value: ';
+            }
+
+            for (let i = 0; i < values.length; i++) {
+              const value = values[i].split('{')[0]; // In case of node keep only the type
+              if (i === values.length - 1) {
                 if (isMFField)
-                  file += ' This field accept a list of ';
-                else {
-                  if (values.length > 1)
-                    file += ' This field accepts the following values: ';
-                  else
-                    file += ' This field accepts the following value: ';
-                }
-
-                for (let i = 0; i < values.length; i++) {
-                  const value = values[i].split('{')[0]; // In case of node keep only the type
-                  if (i === values.length - 1) {
-                    if (isMFField)
-                      file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
-                    else
-                      file += '`' + value.trim() + '`.';
-                  } else if (i === values.length - 2) {
-                    if (values.length === 2)
-                      file += '`' + value.trim() + '` and ';
-                    else
-                      file += '`' + value.trim() + '`, and ';
-                  } else
-                    file += '`' + value.trim() + '`, ';
-                }
-              }
-              file += '\n\n';
+                  file += '`' + value.trim() + '` ' + fieldType.replace('MF', '').toLowerCase() + 's.';
+                else
+                  file += '`' + value.trim() + '`.';
+              } else if (i === values.length - 2) {
+                if (values.length === 2)
+                  file += '`' + value.trim() + '` and ';
+                else
+                  file += '`' + value.trim() + '`, and ';
+              } else
+                file += '`' + value.trim() + '`, ';
             }
           }
+          file += '\n\n';
+        }
+      }
 
-          const license = content.license;
-          const licenseUrl = content.license_url;
-          const version = content.version;
-          const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-          populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl));
-        });
+      const license = information?.license;
+      const licenseUrl = information?.license_url;
+      const version = information?.version;
+      const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
     }
 
     // check that the proto is at least from R2023b
@@ -1881,7 +1957,8 @@ ${deleteProject}`;
             <div class="tile is-parent">
               <div class="tile is-child box">
                 <p class="title">Leaderboard</p>
-                <div class="content" id="leaderboard">
+                <div class="content">
+                  <div id="leaderboard"></div>
                 </div>
               </div>
             </div>
@@ -1903,7 +1980,7 @@ ${deleteProject}`;
       fetch(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}&per_page=1`, { cache: 'no-store' })
         .then(function(response) { return response.json(); })
         .then(function(data) {
-          project.lastSha = data[0].sha;
+          project.lastSha = data[0] ? data[0].sha : branch;
           const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${project.lastSha}`;
           const competitionStorageUrl = `/storage/competition/${username}/${repo}`;
           // preview image
@@ -1954,7 +2031,7 @@ ${deleteProject}`;
               const metric = data.match(/metric: ([a-zA-Z-]+)/)[1];
               const hasQualification = data.match(/qualification: ([+-]?[0-9]*[.]?[0-9]+)/);
               const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
-              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() == 't' : true;
+              const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() === 't' : true;
               const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
               const leaderBoard =
@@ -1974,6 +2051,7 @@ ${deleteProject}`;
                         <th class="has-text-centered">Ranking</th>
                         <th class="has-text-centered">Country</th>
                         <th>Name</th>
+                        <th class="has-text-centered">Programming</th>
                         ${performanceColumn}
                         <th class="has-text-centered">Updated</th>
                         <th></th>
@@ -2004,7 +2082,7 @@ ${deleteProject}`;
                     return `<img src="images/flags/${country}.svg" width="32" class="competition-flag">`;
                   }
                   let ranking = 1;
-                  let demo_count = 0;
+                  let demoCount = 0;
                   for (const participant of participants['participants']) {
                     const dateObject = new Date(participant.date);
                     const today = new Date();
@@ -2063,25 +2141,29 @@ ${deleteProject}`;
                       `id="${participant.id}-view" title="${title}">View</button>`;
                     const demo = !participant.private && participant.country === 'demo';
                     if (demo)
-                      demo_count++;
+                      demoCount++;
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     let qualified;
                     if (isNaN(qualification) || demo)
                       qualified = !demo;
                     else if (higherIsBetter)
-                      qualified = ranking - demo_count >= qualification;
+                      qualified = ranking - demoCount >= qualification;
                     else
-                      qualified = ranking - demo_count <= qualification;
+                      qualified = ranking - demoCount <= qualification;
                     const style = qualified
                       ? ''
                       : ' style="background:repeating-linear-gradient(45deg,#ddd,#ddd 21.5px,#eee 21.5px,#eee 43px);"';
-                    let actualRanking = ranking - demo_count;
+                    let actualRanking = ranking - demoCount;
                     const rankingString = demo ? '&mdash;' : actualRanking;
                     const rankingTitle = demo
                       ? "Demo controllers don't compete" : qualified
                         ? 'Qualified for the finals' : 'Not qualified for the finals';
                     const extraStyle = qualified ? '' : ';color:#888;font-size:small';
+                    const programming = ['Python', 'C', 'C++', 'Java', 'Rust', 'ROS 2'].includes(participant.programming)
+                      ? `<img src="images/programming/${participant.programming}.png" title="${participant.programming}" ` +
+                      'style="height:24px" />'
+                      : participant.programming;
                     tableContent.innerHTML = `<tr${style}>
                     <td style="vertical-align:middle;${extraStyle}" class="has-text-centered" title="${rankingTitle}">
                       ${rankingString}
@@ -2089,6 +2171,7 @@ ${deleteProject}`;
                     <td style="vertical-align:middle;font-size:x-large" class="has-text-centered"
                      title="${country}">${flag}</td>
                     <td style="vertical-align:middle;" title="${participant.description}">${link}</td>
+                    <td style="text-align:center;vertical-align:middle;">${programming}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
                     <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
@@ -2099,18 +2182,14 @@ ${deleteProject}`;
                     if (viewButton)
                       viewButton.addEventListener('click', viewEntryRun);
                   }
-                  let count = (participants['participants'].length - demo_count).toString();
-                  if (!isNaN(qualification) && metric == 'ranking')
+                  let count = (participants['participants'].length - demoCount).toString();
+                  if (!isNaN(qualification) && metric === 'ranking')
                     count += '/' + qualification;
-                  if (demo_count == 1)
+                  if (demoCount === 1)
                     count += ' + 1 demo';
-                  else if (demo_count > 1)
-                    count += ` + ${demo_count} demos`;
+                  else if (demoCount > 1)
+                    count += ` + ${demoCount} demos`;
                   document.getElementById('competition-participants').innerHTML = count;
-                  // the following lines are fixing a rare bug observed on Firefox/Windows where the leaderboard was hidden
-                  const leaderboard = document.getElementById('leaderboard');
-                  leaderboard.removeAttribute('style');
-                  leaderboard.removeAttribute('hidden');
 
                   fetch('ajax/project/queue.php', { method: 'post', body: JSON.stringify({ url: project.competitionUrl }) })
                     .then(function(response) { return response.json(); })
@@ -2141,6 +2220,9 @@ ${deleteProject}`;
                         counter++;
                       });
                       item.parentElement.title = title;
+                      // the following lines are fixing a rare bug where the leaderboard was hidden
+                      document.getElementById('leaderboard').parentElement.removeAttribute('style');
+                      document.getElementById('leaderboard').parentElement.removeAttribute('hidden');
                     });
                 });
             });
@@ -2149,7 +2231,7 @@ ${deleteProject}`;
     function viewEntryRun(eventOrId) {
       createCompetitionPageButton();
       const url = project.competitionUrl;
-      const [, , , username, repo, , branch] = url.split('/');
+      const [, , , username, repo, ,] = url.split('/');
       let id;
       if (typeof eventOrId === 'string')
         id = eventOrId;

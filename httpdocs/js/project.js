@@ -125,10 +125,12 @@ export default class Project extends User {
       Project.webotsView = document.querySelector('webots-view');
     }
   }
-  async runWebotsView(data, version) {
+  async runWebotsView(data, version, moveFloor) {
     if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
+      else if (window.location.hostname === 'proto.webots.cloud')
+        version = 'proto';
       else
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
@@ -154,7 +156,7 @@ export default class Project extends User {
         script.id = 'webots-view-version';
         script.src = src;
         script.onload = () => {
-          this._loadContent(data, resolve);
+          this._loadContent(data, resolve, moveFloor);
         };
         script.onerror = () => {
           console.warn(
@@ -164,7 +166,7 @@ export default class Project extends User {
         };
         document.body.appendChild(script);
       } else
-        this._loadContent(data, resolve);
+        this._loadContent(data, resolve, moveFloor);
     });
 
     promise.then(() => {
@@ -184,23 +186,23 @@ export default class Project extends User {
       }
     });
   }
-  _loadContent(data, resolve) {
+  _loadContent(data, resolve, moveFloor) {
     // if data empty -> demo, competition simulation or proto
     // if data is object -> scene or animation
     const url = this.findGetParameter('url');
     const mode = this.findGetParameter('mode');
     const type = this.findGetParameter('type');
     if (!data)
-      this._updateProtoAndSimulationViewCount(url);
+      this.updateProtoAndSimulationViewCount(url);
     if (type === 'competition') {
       const [, , , username, repo, , branch] = this.competitionUrl.split('/');
-      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`
+      const baseUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/preview`;
       const thumbnailUrl = `${baseUrl}/thumbnail.jpg`;
       if (data) {
         // if there is animation data, it is the preview window or a user performance
         if (data.includes('/storage/competition/')) // user performance view
           this.setupWebotsView('run');
-        else  // competition preview
+        else // competition preview
           this.setupPreviewWebotsView();
         Project.webotsView.loadAnimation(`${baseUrl}/scene.x3d`, `${data}/animation.json`, false, this._isMobileDevice(),
           thumbnailUrl);
@@ -231,7 +233,7 @@ export default class Project extends User {
       let rawGithubUrl = 'https://raw.githubusercontent.com/' + urlArray.join('/');
       const thumbnailUrl = rawGithubUrl.replace('.proto', '.jpg');
       this.setupProtoWebotsView();
-      Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl);
+      Project.webotsView.loadProto(rawGithubUrl, undefined, thumbnailUrl, moveFloor);
       resolve();
     } else { // demo simulation
       this.setupWebotsView('run');
@@ -244,7 +246,7 @@ export default class Project extends User {
       resolve();
     }
   }
-  _updateProtoAndSimulationViewCount(url) {
+  updateProtoAndSimulationViewCount(url) {
     const phpFile = url.endsWith('.wbt') ? '/ajax/project/list.php' : '/ajax/proto/list.php';
     fetch(phpFile, { method: 'post', body: JSON.stringify({ url: url }) })
       .then(function(response) {

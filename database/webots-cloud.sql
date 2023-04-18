@@ -44,7 +44,7 @@ CREATE TABLE `project` (
   `type` enum('demo','competition') CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
   `branch` varchar(256) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT 'main',
   `participants` int(11) NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `project`
@@ -96,7 +96,8 @@ CREATE TABLE `proto` (
   `base_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `needs_robot_ancestor` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
   `slot_type` varchar(256) CHARACTER SET utf8mb4 NOT NULL,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `no_3d_view` tinyint(1) NOT NULL,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `proto`

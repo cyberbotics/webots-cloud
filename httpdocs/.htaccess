@@ -11,11 +11,11 @@ RedirectMatch 404 /\.git
 </IfModule>
 
 <ifModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule (.*) /404.php [QSA,L]
-  RewriteCond %{HTTPS} off
-  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule (.*) /404.php [QSA,L]
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 </ifModule>

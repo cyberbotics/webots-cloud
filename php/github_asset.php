@@ -1,4 +1,7 @@
 <?php
+$raw_githubusercontent_com = 'https://raw.githubusercontent.com';
+// $raw_githubusercontent_com = 'https://rawgithubusercontent.deno.dev';  // FIXME: fixes a strange problem on infomaniak servers
+
 function simulation_check_url($url) {
   if (substr($url, 0, 19) !== 'https://github.com/')
     return "The URL should start with 'https://github.com/'";
@@ -47,6 +50,7 @@ function check_url($url, $proto = false) {
 }
 
 function github_check_yaml($check_url, $proto) {
+  global $raw_githubusercontent_com;
   # yaml error return
   function yaml_error($msg) {
     return "YAML file error: $msg";
@@ -58,10 +62,10 @@ function github_check_yaml($check_url, $proto) {
   if (!$index)
     $index = strpos($folder, "/worlds/");
   $yaml_folder = substr($folder, 0, $index);
-  $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yaml";
+  $yaml_url = "$raw_githubusercontent_com/$username/$repository/$version$yaml_folder/webots.yaml";
   $yaml_content = @file_get_contents($yaml_url);
   if ($yaml_content === false) {
-    $yaml_url = "https://raw.githubusercontent.com/$username/$repository/$version$yaml_folder/webots.yml";
+    $yaml_url = "$raw_githubusercontent_com/$username/$repository/$version$yaml_folder/webots.yml";
     $yaml_content = @file_get_contents($yaml_url);
     if ($yaml_content === false)
       return yaml_error("webots.yaml file not found.");
