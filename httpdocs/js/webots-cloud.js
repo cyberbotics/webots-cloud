@@ -210,7 +210,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
-      return
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
@@ -831,6 +830,7 @@ ${deleteProject}`;
     }
 
     function searchAndSortTable(type, isSearch) {
+      return;
       const url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
