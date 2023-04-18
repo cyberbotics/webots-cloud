@@ -47,6 +47,7 @@ $title = '';
 $description = '';
 $license = '';
 $license_url = '';
+$keywords = '';
 $line = strtok($proto_content, "\r\n");
 $version = $mysqli->escape_string(substr($line, 10, 6)); // "#VRML_SIM R2022b utf8" -> "R2022b"
 if (!str_starts_with($version, "R20"))
@@ -68,7 +69,7 @@ while ($line !== false) {
         $keywords = str_replace('keywords:', '', $line);
         $keywords = explode(',', $keywords);
         $keywords = array_map(function($value){return trim($value);}, $keywords);
-        die(json_encode($keywords));
+        $keywords = $mysqli->escape_string(join(",", $keywords));
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
       elseif (strtolower(substr($line, 0, 7)) === 'license')
@@ -154,7 +155,6 @@ if ($base_type === "Slot") {
   }
 }
 
-
 $auth = "Authorization: Basic " . base64_encode("$github_oauth_client_id:$github_oauth_client_secret");
 $context = stream_context_create(['http' => ['method' => 'GET', 'header' => ['User-Agent: PHP', $auth]]]);
 $info_json = @file_get_contents("https://api.github.com/repos/$username/$repository", false, $context);
@@ -184,6 +184,9 @@ if ($mysqli->affected_rows != 1) {
     error("Failed to update the proto");
 }
 
+$id = ($id === 0) ? $mysqli->insert_id : $id;
+$query = $mysqli->query("INSERT IGNORE INTO proto_tagmap ($id, tag_id) SELECT 1, tag_id FROM proto_tag WHERE name IN $keywords") or error($mysqli->error)
+
 # return answer
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
@@ -195,7 +198,7 @@ $count = $result->fetch_array(MYSQLI_ASSOC);
 $total = intval($count['count']);
 
 $answer = array();
-$answer['id'] = ($id === 0) ? $mysqli->insert_id : $id;
+$answer['id'] = $id;
 $answer['url'] = $url;
 $answer['viewed'] = $viewed;
 $answer['stars'] = $stars;
