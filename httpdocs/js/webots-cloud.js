@@ -1314,7 +1314,6 @@ ${deleteProject}`;
             protosList.innerHTML = line;
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
-            // document.getElementById('proto-search-input').value = searchString;
           }
         });
     }
