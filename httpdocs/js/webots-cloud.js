@@ -840,7 +840,7 @@ ${deleteProject}`;
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
-      return;
+
       if (type === 'scene')
         listAnimations('S', scenePage, getSort(type), getSearch(type));
       else if (type === 'animation')
