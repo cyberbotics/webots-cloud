@@ -68,8 +68,12 @@ while ($line !== false) {
       } elseif (strtolower(substr($line, 0, 9)) === 'keywords:') {
         $keywords = str_replace('keywords:', '', $line);
         $keywords = explode(',', $keywords);
-        $keywords = array_map(function($value) use ($mysqli){return $mysqli->escape_string(trim($value));}, $keywords);
-        $keywords = join("','", $keywords);
+        foreach ($keywords as $key) {
+          $key = explode('/', $key);
+          foreach ($key as $tag) {
+            $tag = trim($mysqli->escape_string($key));
+          }
+        }
         die(json_encode($keywords));
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
@@ -191,7 +195,7 @@ if ($id !== 0)
 $id = ($id === 0) ? $mysqli->insert_id : $id;
 
 if ($remove_old_tag)
-  $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id AND tag_id NOT IN (SELECT tag_id FROM proto_tag WHERE name IN ('$keywords'))");
+  $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id)");
 $query = $mysqli->query("INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id) AS joinTable WHERE name=$keyword AND parentName=$parent_keyword") or error($mysqli->error);
 
 # return answer
