@@ -194,7 +194,7 @@ if ($id !== 0)
 $id = ($id === 0) ? $mysqli->insert_id : $id;
 
 if ($remove_old_tag)
-  $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id)");
+  $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id");
 
 $query_with_parent = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
         ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
