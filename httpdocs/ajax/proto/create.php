@@ -198,7 +198,6 @@ if ($remove_old_tag)
 foreach ($keywords as $key) {
   $keyword = $key[0];
   if (count($key) === 2) {
-    die("IF");
     $parent_keyword = $key[1];
     $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
             ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
@@ -206,6 +205,7 @@ foreach ($keywords as $key) {
   } else
     $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name='$keyword'";
 
+  die($query);
   $mysqli->query($query) or error($mysqli->error);
 }
 
