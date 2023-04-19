@@ -74,7 +74,7 @@ while ($line !== false) {
             $tag = trim($mysqli->escape_string($tag));
           }
         }
-        die(json_encode($keywords));
+        die(json_encode($line));
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
         $license_url = trim(preg_replace("/license url\s*:/", '', $line));
       elseif (strtolower(substr($line, 0, 7)) === 'license')
