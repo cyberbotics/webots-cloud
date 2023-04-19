@@ -201,9 +201,11 @@ $query_with_parent = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, ta
         ." AS joinTable WHERE name=$keyword AND parentName=$parent_keyword";
 $query_without_parent = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name=$keyword";
 foreach ($keywords as $key) {
-  if (count($key) === 2)
+  $keyword = $key[0];
+  if (count($key) === 2) {
     $query = $query_with_parent;
-  else
+    $parent_keyword[1];
+  } else
     $query = $query_without_parent;
 
   $mysqli->query($query) or error($mysqli->error);
