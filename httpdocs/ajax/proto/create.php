@@ -208,6 +208,7 @@ foreach ($keywords as $key) {
   array_push($kk, $key);
   $mysqli->query($query) or error($mysqli->error);
 }
+die(json_encode($keywords));
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
