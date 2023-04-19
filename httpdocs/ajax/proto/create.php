@@ -195,7 +195,7 @@ $id = ($id === 0) ? $mysqli->insert_id : $id;
 
 if ($remove_old_tag)
   $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id");
-$kk;
+$kk = array();
 foreach ($keywords as $key) {
   if (count($key) === 2) {
     $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
