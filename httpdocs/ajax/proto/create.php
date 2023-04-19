@@ -195,18 +195,15 @@ $id = ($id === 0) ? $mysqli->insert_id : $id;
 
 if ($remove_old_tag)
   $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id");
-
-$query_with_parent = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
-        ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
-        ." AS joinTable WHERE name=$keyword AND parentName=$parent_keyword";
-$query_without_parent = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name=$keyword";
 foreach ($keywords as $key) {
   $keyword = $key[0];
   if (count($key) === 2) {
-    $query = $query_with_parent;
-    $parent_keyword[1];
+    $parent_keyword = key[1];
+    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
+            ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
+            ." AS joinTable WHERE name=$keyword AND parentName=$parent_keyword";
   } else
-    $query = $query_without_parent;
+    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name=$keyword";
 
   $mysqli->query($query) or error($mysqli->error);
 }
