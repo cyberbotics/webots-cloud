@@ -201,13 +201,12 @@ foreach ($keywords as $key) {
     $parent_keyword = $key[1];
     $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
             ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
-            ." AS joinTable WHERE name=$keyword AND parentName=$parent_keyword";
+            ." AS joinTable WHERE name='$keyword' AND parentName='$parent_keyword'";
   } else
-    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name=$keyword";
+    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name='$keyword'";
 
   $mysqli->query($query) or error($mysqli->error);
 }
-
 
 # return answer
 $search = isset($data->search) ? $data->search : "";
