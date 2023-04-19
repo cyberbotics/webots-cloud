@@ -68,9 +68,9 @@ while ($line !== false) {
       } elseif (strtolower(substr($line, 0, 9)) === 'keywords:') {
         $keywords = str_replace('keywords:', '', $line);
         $keywords = explode(',', $keywords);
-        foreach ($keywords as $key) {
+        foreach ($keywords as &$key) {
           $key = explode('/', $key);
-          foreach ($key as $tag) {
+          foreach ($key as &$tag) {
             $tag = trim($mysqli->escape_string($tag));
           }
         }
