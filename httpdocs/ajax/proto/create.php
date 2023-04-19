@@ -70,9 +70,6 @@ while ($line !== false) {
         $keywords = explode(',', $keywords);
         foreach ($keywords as &$key) {
           $key = explode('/', $key);
-          foreach ($key as &$tag) {
-            $tag = trim($mysqli->escape_string($tag));
-          }
         }
         die(json_encode($keywords));
       } elseif (strtolower(substr($line, 0, 11)) === 'license url')
