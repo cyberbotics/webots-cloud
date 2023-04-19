@@ -71,7 +71,7 @@ while ($line !== false) {
         foreach ($keywords as $key) {
           $key = explode('/', $key);
           foreach ($key as $tag) {
-            $tag = trim($mysqli->escape_string($key));
+            $tag = trim($mysqli->escape_string($tag));
           }
         }
         die(json_encode($keywords));
