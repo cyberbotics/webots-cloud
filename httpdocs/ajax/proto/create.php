@@ -207,7 +207,7 @@ foreach ($keywords as $key) {
   array_push($kk, $key);
   $mysqli->query($query) or error($mysqli->error);
 }
-die($kk);
+die(json_encode($kk));
 # return answer
 $search = isset($data->search) ? $data->search : "";
 $condition = "branch=\"$branch\"";
