@@ -203,7 +203,6 @@ foreach ($keywords as $key) {
   } else
     $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name='$key[0]'";
 
-  die($query);
   $mysqli->query($query) or error($mysqli->error);
 }
 
