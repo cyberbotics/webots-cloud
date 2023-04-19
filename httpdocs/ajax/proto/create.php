@@ -198,15 +198,7 @@ if ($remove_old_tag)
 $kk = array();
 
 foreach ($keywords as $key) {
-  if (count($key) === 2) {
-    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
-            ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
-            ." AS joinTable WHERE name='$key[1]' AND parentName='$key[0]'";
-  } else
-    $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name='$key[0]'";
 
-  array_push($kk, $key);
-  $mysqli->query($query) or error($mysqli->error);
 }
 die(json_encode($keywords));
 
