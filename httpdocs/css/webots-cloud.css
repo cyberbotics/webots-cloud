@@ -685,6 +685,7 @@ nav.pagination>a {
   width: 100%;
   display: flex;
   overflow: auto;
+  min-width: 1000px;
   justify-content: center;
 }
 
