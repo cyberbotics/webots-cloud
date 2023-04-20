@@ -685,8 +685,6 @@ nav.pagination>a {
   width: 100%;
   display: flex;
   overflow: auto;
-  flex-grow: 1;
-  flex-shrink: 0;
   justify-content: center;
 }
 
