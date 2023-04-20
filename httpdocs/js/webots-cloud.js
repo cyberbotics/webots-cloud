@@ -655,21 +655,21 @@ ${deleteProject}`;
           </section>
           <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-div">
-              <div>Robot</div>
-              <div>Sensor</div>
-              <div>Industrial</div>
-              <div>Household</div>
-              <div>Vehicles</div>
-              <div>Furniture</div>
-              <div>Building</div>
-              <div>Animals</div>
-              <div>Exterior</div>
-              <div>Traffic</div>
-              <div>Food</div>
-              <div>Appearance</div>
-              <div>Sport</div>
-              <div>Geometry</div>
-              <div>Floor</div>
+              <span>Robot</span>
+              <span>Sensor</span>
+              <span>Industrial</span>
+              <span>Household</span>
+              <span>Vehicles</span>
+              <span>Furniture</span>
+              <span>Building</span>
+              <span>Animals</span>
+              <span>Exterior</span>
+              <span>Traffic</span>
+              <span>Food</span>
+              <span>Appearance</span>
+              <span>Sport</span>
+              <span>Geometry</span>
+              <span>Floor</span>
             </div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
