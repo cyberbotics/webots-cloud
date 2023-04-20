@@ -654,22 +654,22 @@ ${deleteProject}`;
             </div>
           </section>
           <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
-            <div class="first-tag-div">
-              <span>Robot</span>
-              <span>Sensor</span>
-              <span>Industrial</span>
-              <span>Household</span>
-              <span>Vehicles</span>
-              <span>Furniture</span>
-              <span>Building</span>
-              <span>Animals</span>
-              <span>Exterior</span>
-              <span>Traffic</span>
-              <span>Food</span>
-              <span>Appearance</span>
-              <span>Sport</span>
-              <span>Geometry</span>
-              <span>Floor</span>
+            <div class="first-tag-container">
+              <div class="first-tag">Robot</div>
+              <div class="first-tag">Sensor</div>
+              <div class="first-tag">Industrial</div>
+              <div class="first-tag">Household</div>
+              <div class="first-tag">Vehicles</div>
+              <div class="first-tag">Furniture</div>
+              <div class="first-tag">Building</div>
+              <div class="first-tag">Animals</div>
+              <div class="first-tag">Exterior</div>
+              <div class="first-tag">Traffic</div>
+              <div class="first-tag">Food</div>
+              <div class="first-tag">Appearance</div>
+              <div class="first-tag">Sport</div>
+              <div class="first-tag">Geometry</div>
+              <div class="first-tag">Floor</div>
             </div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">

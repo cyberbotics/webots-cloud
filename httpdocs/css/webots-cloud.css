@@ -680,7 +680,11 @@ nav.pagination>a {
   padding-left: 5px;
 }
 
-.first-tag-div {
+.first-tag-container {
   height: 100px;
   width: 100px;
+}
+
+.first-tag {
+  position: absolute;
 }
