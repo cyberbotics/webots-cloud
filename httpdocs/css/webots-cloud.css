@@ -691,5 +691,11 @@ nav.pagination>a {
 }
 
 .first-tag {
-  padding: 5px;
+    text-align: justify;
+    width: 64;
+}
+
+.first-tag img {
+    display: block;
+    margin: 0 auto;
 }
