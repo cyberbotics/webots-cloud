@@ -682,7 +682,8 @@ nav.pagination>a {
 
 .first-tag-container {
   height: 100px;
-  width: 100px;
+  width: 100%;
+  min-width: 1000px;
 }
 
 .first-tag {
