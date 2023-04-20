@@ -683,8 +683,16 @@ nav.pagination>a {
 .first-tag-container {
   height: 100px;
   width: 100%;
-  min-width: 1000px;
+  display: flex;
+  align-items: center;
+  border-bottom-color: #dbdbdb;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .first-tag {
+  padding: 5px;
 }
