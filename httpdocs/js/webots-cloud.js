@@ -654,7 +654,23 @@ ${deleteProject}`;
             </div>
           </section>
           <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
-            <div class="first-tag-div"></div>
+            <div class="first-tag-div">
+              <div>Robot</div>
+              <div>Sensor</div>
+              <div>Industrial</div>
+              <div>Household</div>
+              <div>Vehicles</div>
+              <div>Furniture</div>
+              <div>Building</div>
+              <div>Animals</div>
+              <div>Exterior</div>
+              <div>Traffic</div>
+              <div>Food</div>
+              <div>Appearance</div>
+              <div>Sport</div>
+              <div>Geometry</div>
+              <div>Floor</div>
+            </div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">

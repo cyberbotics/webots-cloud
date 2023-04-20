@@ -681,5 +681,6 @@ nav.pagination>a {
 }
 
 .first-tag-div {
-  height: 100px; 
+  height: 100px;
+  width: 100px;
 }
