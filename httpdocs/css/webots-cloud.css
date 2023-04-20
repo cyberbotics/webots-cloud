@@ -681,5 +681,5 @@ nav.pagination>a {
 }
 
 .first-tag-div {
-  background-color: grey;
+  height: 100px; 
 }
