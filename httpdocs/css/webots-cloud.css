@@ -684,11 +684,7 @@ nav.pagination>a {
   height: 100px;
   width: 100%;
   display: flex;
-  align-items: center;
-  border-bottom-color: #dbdbdb;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  display: flex;
+  overflow: auto;
   flex-grow: 1;
   flex-shrink: 0;
 }
