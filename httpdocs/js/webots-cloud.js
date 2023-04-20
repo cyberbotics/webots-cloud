@@ -654,6 +654,7 @@ ${deleteProject}`;
             </div>
           </section>
           <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+            <div class="first-tag-div"></div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">

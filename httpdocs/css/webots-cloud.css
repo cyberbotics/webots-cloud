@@ -679,3 +679,7 @@ nav.pagination>a {
 .update-proto {
   padding-left: 5px;
 }
+
+.first-tag-div {
+  background-color: grey;
+}
