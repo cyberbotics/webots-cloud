@@ -656,7 +656,7 @@ ${deleteProject}`;
           </section>
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-container">
-              <div class="first-tag" onclick="listByTag" value="robot"><img src="../images/profile.png"><p>Robot</p></div>
+              <div class="first-tag" value="robot"><img src="../images/profile.png"><p>Robot</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Sensor</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Industrial</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Household</p></div>
@@ -1442,6 +1442,13 @@ ${deleteProject}`;
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
       ModalDialog.run(`What is a competition?`, content.innerHTML);
+    }
+
+    function bindTags() {
+      const tags = document.getElementsByClassName('first-tag');
+      tags?.forEach(tag => {
+        tag.onclick = _ => listByTag(_);
+      });
     }
 
     function listByTag(event) {
