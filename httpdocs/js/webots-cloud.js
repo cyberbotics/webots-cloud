@@ -1445,10 +1445,8 @@ ${deleteProject}`;
     }
 
     function bindTags() {
-      console.log("bind tags")
       const tags = document.getElementsByClassName('first-tag');
-      console.log(tags)
-      if (typeof tag !== 'undefined')
+      if (typeof tags !== 'undefined')
         tags.forEach(tag => {
           tag.onclick = _ => listByTag(_);
           console.log("tagclick")
