@@ -1446,9 +1446,10 @@ ${deleteProject}`;
 
     function bindTags() {
       const tags = document.getElementsByClassName('first-tag');
-      tags?.forEach(tag => {
-        tag.onclick = _ => listByTag(_);
-      });
+      if (typeof tag !== 'undefined')
+        tags.forEach(tag => {
+          tag.onclick = _ => listByTag(_);
+        });
     }
 
     function listByTag(event) {
