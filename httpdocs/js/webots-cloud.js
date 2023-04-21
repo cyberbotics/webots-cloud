@@ -653,7 +653,7 @@ ${deleteProject}`;
               <button class="button" id="what-is-a-competition">What is a competition?</button>
             </div>
           </section>
-          <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+          <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-container">
               <div class="first-tag"><img src="../images/profile.png"><p>Robot</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Sensor</p></div>
