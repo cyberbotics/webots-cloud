@@ -686,11 +686,13 @@ nav.pagination>a {
   display: flex;
   overflow: auto;
   justify-content: center;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .first-tag {
     text-align: center;
-    width: 48px;
+    width: 40px;
     margin: 10px;
     font-size: 0.875rem;
 }
