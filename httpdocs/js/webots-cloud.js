@@ -656,21 +656,21 @@ ${deleteProject}`;
           </section>
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-container">
-              <div class="first-tag" value="robot"><img src="../images/profile.png"><p>Robot</p></div>
-              <div class="first-tag"><img classsrc="../images/profile.png"><p>Sensor</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Industrial</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Household</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Vehicles</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Furniture</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Building</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Animals</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Exterior</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Traffic</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Food</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Appearance</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Sport</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Geometry</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Floor</p></div>
+              <div class="first-tag" title="robot"><img src="../images/profile.png"><p>Robot</p></div>
+              <div class="first-tag" title="sensor"><img src="../images/profile.png"><p>Sensor</p></div>
+              <div class="first-tag" title="Industrial"><img src="../images/profile.png"><p>Industrial</p></div>
+              <div class="first-tag" title="household"><img src="../images/profile.png"><p>Household</p></div>
+              <div class="first-tag" title="vehicles"><img src="../images/profile.png"><p>Vehicles</p></div>
+              <div class="first-tag" title="furniture"><img src="../images/profile.png"><p>Furniture</p></div>
+              <div class="first-tag" title="building"><img src="../images/profile.png"><p>Building</p></div>
+              <div class="first-tag" title="animal"><img src="../images/profile.png"><p>Animal</p></div>
+              <div class="first-tag" title="exterior"><img src="../images/profile.png"><p>Exterior</p></div>
+              <div class="first-tag" title="traffic"><img src="../images/profile.png"><p>Traffic</p></div>
+              <div class="first-tag" title="food"><img src="../images/profile.png"><p>Food</p></div>
+              <div class="first-tag" title="appearance"><img src="../images/profile.png"><p>Appearance</p></div>
+              <div class="first-tag" title="sport"><img src="../images/profile.png"><p>Sport</p></div>
+              <div class="first-tag" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
+              <div class="first-tag" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
             </div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
@@ -1451,7 +1451,7 @@ ${deleteProject}`;
     }
 
     function listByTag(event) {
-      console.log(event)
+      console.log(event.target.title)
     }
   }
 
