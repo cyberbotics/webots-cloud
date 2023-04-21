@@ -658,9 +658,9 @@ ${deleteProject}`;
             <div class="first-tag-container">
               <div class="first-tag" title="robot"><img src="../images/profile.png"><p>Robot</p></div>
               <div class="first-tag" title="sensor"><img src="../images/profile.png"><p>Sensor</p></div>
-              <div class="first-tag" title="Industrial"><img src="../images/profile.png"><p>Industrial</p></div>
+              <div class="first-tag" title="industrial"><img src="../images/profile.png"><p>Industrial</p></div>
               <div class="first-tag" title="household"><img src="../images/profile.png"><p>Household</p></div>
-              <div class="first-tag" title="vehicles"><img src="../images/profile.png"><p>Vehicles</p></div>
+              <div class="first-tag" title="vehicle"><img src="../images/profile.png"><p>Vehicle</p></div>
               <div class="first-tag" title="furniture"><img src="../images/profile.png"><p>Furniture</p></div>
               <div class="first-tag" title="building"><img src="../images/profile.png"><p>Building</p></div>
               <div class="first-tag" title="animal"><img src="../images/profile.png"><p>Animal</p></div>
