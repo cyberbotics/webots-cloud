@@ -692,6 +692,7 @@ nav.pagination>a {
     text-align: center;
     width: 48px;
     margin: 10px;
+    font-size: 0.875rem;
 }
 
 .first-tag img {
