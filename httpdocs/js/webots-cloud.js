@@ -733,6 +733,7 @@ ${deleteProject}`;
       project.setup(title, template.content);
       document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
+      console.log("setup page")
     }
 
     function sortProtoBy(sort) {
@@ -1445,6 +1446,7 @@ ${deleteProject}`;
     }
 
     function bindTags() {
+      console.log("bind tags")
       const tags = document.getElementsByClassName('first-tag');
       if (typeof tag !== 'undefined')
         tags.forEach(tag => {
