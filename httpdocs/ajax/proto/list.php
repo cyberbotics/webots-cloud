@@ -35,11 +35,11 @@
 
   if (isset($data->tag)) {
     #tag with parent
-    if (isset($data->parent_tag))
+    #if (isset($data->parent_tag))
     #SELECT * FROM proto JOIN proto_tagmap on proto.id=proto_tagmap.proto_id JOIN proto_tag as child on proto_tagmap.tag_id=child.tag_id JOIN proto_tag as parent on child.parent_id=parent.tag_id
 
     # the tag has no parent
-    else
+    #else
     #SELECT * FROM proto JOIN proto_tagmap on proto.id=proto_tagmap.proto_id JOIN proto_tag as child on proto_tagmap.tag_id=child.tag_id
   }
   $offset = isset($data->offset) ? intval($data->offset) : 0;
