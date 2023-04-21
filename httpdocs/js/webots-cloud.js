@@ -657,7 +657,7 @@ ${deleteProject}`;
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-container">
               <div class="first-tag" value="robot"><img src="../images/profile.png"><p>Robot</p></div>
-              <div class="first-tag"><img src="../images/profile.png"><p>Sensor</p></div>
+              <div class="first-tag"><img classsrc="../images/profile.png"><p>Sensor</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Industrial</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Household</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Vehicles</p></div>

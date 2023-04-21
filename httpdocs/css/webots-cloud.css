@@ -695,10 +695,16 @@ nav.pagination>a {
     font-size: 0.875rem;
     flex-shrink: 0;
     flex-grow: 0;
+    cursor: pointer;
 }
 
 .first-tag img {
     display: block;
     margin: 0 auto;
     height: 40px;
+    pointer-events: none;
+}
+
+.first-tag p {
+  pointer-events: none;
 }
