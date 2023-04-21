@@ -202,6 +202,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
     listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
     listProtos(protoPage, getSort('proto'), getSearch('proto'));
+    bindTags();
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
@@ -655,7 +656,7 @@ ${deleteProject}`;
           </section>
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-tag-container">
-              <div class="first-tag"><img src="../images/profile.png"><p>Robot</p></div>
+              <div class="first-tag" onclick="listByTag" value="robot"><img src="../images/profile.png"><p>Robot</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Sensor</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Industrial</p></div>
               <div class="first-tag"><img src="../images/profile.png"><p>Household</p></div>
@@ -1441,6 +1442,10 @@ ${deleteProject}`;
           To create your own competition, follow the instructions on <a href="https://github.com/cyberbotics/competition-template"> this repository</a>.
         </div>`;
       ModalDialog.run(`What is a competition?`, content.innerHTML);
+    }
+
+    function listByTag(event) {
+      console.log(event)
     }
   }
 
