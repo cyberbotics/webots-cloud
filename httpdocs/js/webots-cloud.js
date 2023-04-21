@@ -1449,6 +1449,7 @@ ${deleteProject}`;
       if (typeof tag !== 'undefined')
         tags.forEach(tag => {
           tag.onclick = _ => listByTag(_);
+          console.log("tagclick")
         });
     }
 
