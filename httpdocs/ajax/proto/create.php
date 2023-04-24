@@ -11,17 +11,21 @@ $data = json_decode($json);
 require '../../../php/github_oauth.php';
 require '../../../php/database.php';
 require '../../../php/github_asset.php';
-$mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
-if ($mysqli->connect_errno)
-  error("Can't connect to MySQL database: $mysqli->connect_error");
-$mysqli->set_charset('utf8');
-$url = $mysqli->escape_string($data->url);
+$url = $data->url;
 $id = isset($data->id) ? intval($data->id) : 0;
 $search = isset($data->search) ? $data->search : "";
 $answer = create_or_update_proto($url, $id, $search);
 die(json_encode($answer));
 
 function create_or_update_proto($url, $id, $search) {
+  global $raw_githubusercontent_com;
+
+  $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
+  if ($mysqli->connect_errno)
+    error("Can't connect to MySQL database: $mysqli->connect_error");
+  $mysqli->set_charset('utf8');
+  $url = $mysqli->escape_string($url);
+
   # check content
   $check_url = proto_check_url($url);
   if (!is_array($check_url))
