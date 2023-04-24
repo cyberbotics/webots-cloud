@@ -196,7 +196,7 @@ function create_or_update_proto($url, $id, $search) {
   if (is_array($keywords)) {
     foreach ($keywords as $key) {
       if (count($key) === 2) {
-        $query = "INSERT INTO proto_keywordmap (proto_id, keyword_id) SELECT $id, keywordg_id FROM (SELECT keyword.keyword_id, keyword.name AS name, "
+        $query = "INSERT INTO proto_keywordmap (proto_id, keyword_id) SELECT $id, keyword_id FROM (SELECT keyword.keyword_id, keyword.name AS name, "
                 ."parent.name AS parentName FROM proto_keyword AS keyword LEFT JOIN proto_keyword AS parent ON keyword.parent_id=parent.keyword_id)"
                 ." AS joinTable WHERE name='$key[1]' AND parentName='$key[0]'";
       } else
