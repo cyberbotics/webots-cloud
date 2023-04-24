@@ -8,9 +8,6 @@ function error($message) {
 header('Content-Type: application/json');
 $json = file_get_contents('php://input');
 $data = json_decode($json);
-require '../../../php/github_oauth.php';
-require '../../../php/database.php';
-require '../../../php/github_asset.php';
 $url = $data->url;
 $id = isset($data->id) ? intval($data->id) : 0;
 $search = isset($data->search) ? $data->search : "";
@@ -19,6 +16,9 @@ die(json_encode($answer));
 
 function create_or_update_proto($url, $id, $search) {
   global $raw_githubusercontent_com;
+  require '../../../php/github_oauth.php';
+  require '../../../php/github_asset.php';
+  require '../../../php/database.php';
 
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
