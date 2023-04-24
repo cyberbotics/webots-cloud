@@ -185,25 +185,25 @@ function create_or_update_proto($url, $id, $search) {
       error("Failed to update the proto");
   }
 
-  $remove_old_tag = false;
+  $remove_old_keywords = false;
   if ($id !== 0)
-    $remove_old_tag = true;
+    $remove_old_keywords = true;
   $id = ($id === 0) ? $mysqli->insert_id : $id;
 
-  if ($remove_old_tag)
-    $query = $mysqli->query("DELETE FROM proto_tagmap WHERE proto_id = $id");
+  if ($remove_old_keywords)
+    $query = $mysqli->query("DELETE FROM proto_keywordmap WHERE proto_id = $id");
 
   if (is_array($keywords)) {
     foreach ($keywords as $key) {
       if (count($key) === 2) {
-        $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM (SELECT tag.tag_id, tag.name AS name, "
-                ."parent.name AS parentName FROM proto_tag AS tag LEFT JOIN proto_tag AS parent ON tag.parent_id=parent.tag_id)"
+        $query = "INSERT INTO proto_keywordmap (proto_id, keyword_id) SELECT $id, keywordg_id FROM (SELECT keyword.keyword_id, keyword.name AS name, "
+                ."parent.name AS parentName FROM proto_keyword AS keyword LEFT JOIN proto_keyword AS parent ON keyword.parent_id=parent.keyword_id)"
                 ." AS joinTable WHERE name='$key[1]' AND parentName='$key[0]'";
       } else
-        $query = "INSERT INTO proto_tagmap (proto_id, tag_id) SELECT $id, tag_id FROM proto_tag WHERE name='$key[0]'";
+        $query = "INSERT INTO proto_keywordmap (proto_id, keyword_id) SELECT $id, keyword_id FROM proto_keyword WHERE name='$key[0]'";
 
       $mysqli->query($query) or error($mysqli->error);
-    }  
+    }
   }
 
   # return answer
