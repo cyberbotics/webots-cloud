@@ -1687,7 +1687,7 @@ ${deleteProject}`;
       const keywordP = document.createElement('p');
       keywordP.textContent = 'Keywords';
       keywordP.className = 'info-array-cell first-column-cell';
-      keywordP.style.gridRow = 4;
+      keywordP.style.gridRow = 5;
       keywordP.style.gridColumn = 1;
       infoGrid.appendChild(keywordP);
 
@@ -1696,7 +1696,7 @@ ${deleteProject}`;
       keywordContentA.className = 'info-array-cell last-column-cell';
       keywordContentA.textContent = "test keywords";
       keywordContentA.target = '_blank';
-      keywordContentA.style.gridRow = 4;
+      keywordContentA.style.gridRow = 5;
       keywordContentA.style.gridColumn = 2;
       infoGrid.appendChild(keywordContentA);
 
