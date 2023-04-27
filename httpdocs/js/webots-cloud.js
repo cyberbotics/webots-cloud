@@ -655,22 +655,22 @@ ${deleteProject}`;
             </div>
           </section>
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
-            <div class="first-tag-container">
-              <div class="first-tag" title="robot"><img src="../images/profile.png"><p>Robot</p></div>
-              <div class="first-tag" title="sensor"><img src="../images/profile.png"><p>Sensor</p></div>
-              <div class="first-tag" title="industrial"><img src="../images/profile.png"><p>Industrial</p></div>
-              <div class="first-tag" title="household"><img src="../images/profile.png"><p>Household</p></div>
-              <div class="first-tag" title="vehicle"><img src="../images/profile.png"><p>Vehicle</p></div>
-              <div class="first-tag" title="furniture"><img src="../images/profile.png"><p>Furniture</p></div>
-              <div class="first-tag" title="building"><img src="../images/profile.png"><p>Building</p></div>
-              <div class="first-tag" title="animal"><img src="../images/profile.png"><p>Animal</p></div>
-              <div class="first-tag" title="exterior"><img src="../images/profile.png"><p>Exterior</p></div>
-              <div class="first-tag" title="traffic"><img src="../images/profile.png"><p>Traffic</p></div>
-              <div class="first-tag" title="food"><img src="../images/profile.png"><p>Food</p></div>
-              <div class="first-tag" title="appearance"><img src="../images/profile.png"><p>Appearance</p></div>
-              <div class="first-tag" title="sport"><img src="../images/profile.png"><p>Sport</p></div>
-              <div class="first-tag" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
-              <div class="first-tag" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
+            <div class="first-level-keyword-container">
+              <div class="first-level-keyword" title="robot"><img src="../images/profile.png"><p>Robot</p></div>
+              <div class="first-level-keyword" title="sensor"><img src="../images/profile.png"><p>Sensor</p></div>
+              <div class="first-level-keyword" title="industrial"><img src="../images/profile.png"><p>Industrial</p></div>
+              <div class="first-level-keyword" title="household"><img src="../images/profile.png"><p>Household</p></div>
+              <div class="first-level-keyword" title="vehicle"><img src="../images/profile.png"><p>Vehicle</p></div>
+              <div class="first-level-keyword" title="furniture"><img src="../images/profile.png"><p>Furniture</p></div>
+              <div class="first-level-keyword" title="building"><img src="../images/profile.png"><p>Building</p></div>
+              <div class="first-level-keyword" title="animal"><img src="../images/profile.png"><p>Animal</p></div>
+              <div class="first-level-keyword" title="exterior"><img src="../images/profile.png"><p>Exterior</p></div>
+              <div class="first-level-keyword" title="traffic"><img src="../images/profile.png"><p>Traffic</p></div>
+              <div class="first-level-keyword" title="food"><img src="../images/profile.png"><p>Food</p></div>
+              <div class="first-level-keyword" title="appearance"><img src="../images/profile.png"><p>Appearance</p></div>
+              <div class="first-level-keyword" title="sport"><img src="../images/profile.png"><p>Sport</p></div>
+              <div class="first-level-keyword" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
+              <div class="first-level-keyword" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
             </div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
@@ -1445,7 +1445,7 @@ ${deleteProject}`;
     }
 
     function bindTags() {
-      const tags = document.getElementsByClassName('first-tag');
+      const tags = document.getElementsByClassName('first-level-keyword');
       for (let i = 0; i < tags.length; i++)
         tags[i].onclick = _ => listByTag(_);
     }

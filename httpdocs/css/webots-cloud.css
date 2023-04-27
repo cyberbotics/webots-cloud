@@ -680,7 +680,7 @@ nav.pagination>a {
   padding-left: 5px;
 }
 
-.first-tag-container {
+.first-level-keyword-container {
   height: 100px;
   width: 100%;
   display: flex;
@@ -688,7 +688,7 @@ nav.pagination>a {
   justify-content: center;
 }
 
-.first-tag {
+.first-level-keyword {
     text-align: center;
     width: 64px;
     margin: 8px;
@@ -698,13 +698,13 @@ nav.pagination>a {
     cursor: pointer;
 }
 
-.first-tag img {
+.first-level-keyword img {
     display: block;
     margin: 0 auto;
     height: 40px;
     pointer-events: none;
 }
 
-.first-tag p {
+.first-level-keyword p {
   pointer-events: none;
 }
