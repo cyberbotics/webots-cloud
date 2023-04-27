@@ -1684,21 +1684,21 @@ ${deleteProject}`;
 
       infoGrid.appendChild(updatedContent);
 
-      const sourceP = document.createElement('p');
-      sourceP.textContent = 'Keywords';
-      sourceP.className = 'info-array-cell first-column-cell';
-      sourceP.style.gridRow = 4;
-      sourceP.style.gridColumn = 1;
-      infoGrid.appendChild(sourceP);
+      const keywordP = document.createElement('p');
+      keywordP.textContent = 'Keywords';
+      keywordP.className = 'info-array-cell first-column-cell';
+      keywordP.style.gridRow = 4;
+      keywordP.style.gridColumn = 1;
+      infoGrid.appendChild(keywordP);
 
-      const sourceContentA = document.createElement('a');
-      sourceContentA.href = "webot.cloud/proto";
-      sourceContentA.className = 'info-array-cell last-column-cell';
-      sourceContentA.textContent = "test keywords";
-      sourceContentA.target = '_blank';
-      sourceContentA.style.gridRow = 4;
-      sourceContentA.style.gridColumn = 2;
-      infoGrid.appendChild(sourceContentA);
+      const keywordContentA = document.createElement('a');
+      keywordContentA.href = "webot.cloud/proto";
+      keywordContentA.className = 'info-array-cell last-column-cell';
+      keywordContentA.textContent = "test keywords";
+      keywordContentA.target = '_blank';
+      keywordContentA.style.gridRow = 4;
+      keywordContentA.style.gridColumn = 2;
+      infoGrid.appendChild(keywordContentA);
 
       return infoGrid;
     }
