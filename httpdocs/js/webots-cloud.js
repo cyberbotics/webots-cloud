@@ -1728,7 +1728,6 @@ ${deleteProject}`;
                 </div>`;
             }
             const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
-            dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');
