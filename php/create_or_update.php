@@ -6,9 +6,9 @@ function error($message) {
 
 function create_or_update_proto($url, $id, $search) {
   global $raw_githubusercontent_com;
-  require '../../../php/github_oauth.php';
-  require '../../../php/github_asset.php';
-  require '../../../php/database.php';
+  require 'github_oauth.php';
+  require 'github_asset.php';
+  require 'database.php';
 
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
