@@ -20,10 +20,21 @@ function create_or_update_proto($url, $id, $search) {
   $proto_url = "$raw_githubusercontent_com/$username/$repository/$tag_or_branch$folder$proto";
   $proto_content = @file_get_contents($proto_url);
   if ($proto_content === false) {
-    $query = "DELETE FROM proto WHERE id=$id";
-    $mysqli->query($query) or error($mysqli->error);
-    if ($mysqli->affected_rows === 0 and $id !== 0 )
-      error("Failed to delete proto with proto file '$proto'");
+    if ($id != 0) {
+      $query = "SELECT * FROM proto WHERE id=$id";
+      $result = $mysqli->query($query) or error($mysqli->error);
+      $row = $result->fetch_array(MYSQLI_ASSOC);
+      $number_of_failure = $row['not_found'] ;
+      if ($number_of_failure >= 10) {
+        $query = "DELETE FROM proto WHERE id=$id";
+        $mysqli->query($query) or error($mysqli->error);
+        if ($mysqli->affected_rows === 0)
+          error("Failed to delete proto with proto file '$proto'");
+      } else {
+        $number_of_failure++;
+        $query = "UPDATE proto SET not_found=$number_of_failure, last_error=NOW() WHERE id=$id"
+      }
+    }
     error("Failed to fetch proto file $proto");
   }
 
