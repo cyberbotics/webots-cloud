@@ -1,4 +1,6 @@
 <?php # This script refresh all protos
+require 'github_oauth.php';
+require 'github_asset.php';
 require 'database.php';
 require 'create_or_update.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);

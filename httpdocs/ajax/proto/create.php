@@ -1,6 +1,9 @@
 <?php # This script initializes a new proto
 # get content
 header('Content-Type: application/json');
+require '../../../php/github_oauth.php';
+require '../../../php/github_asset.php';
+require '../../../php/database.php';
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 $url = $data->url;
