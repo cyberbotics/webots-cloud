@@ -1,5 +1,6 @@
 <?php # This script refresh all protos
 require 'database.php';
+require 'create_or_update.php';
 $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
 if ($mysqli->connect_errno)
   error("Can't connect to MySQL database: $mysqli->connect_error");
