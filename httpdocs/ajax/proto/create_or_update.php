@@ -192,7 +192,7 @@ function create_or_update_proto($url, $id, $search) {
   else
     $query = "UPDATE proto SET viewed=$viewed, stars=$stars, title=\"$title\", description=\"$description\", "
             ."version=\"$version\", updated=NOW(), license_url=\"$license_url\", license=\"$license\", "
-            ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\", no_3d_view=\"$no_3d_view\" "
+            ."base_type=\"$base_type\", needs_robot_ancestor=\"$needs_robot_ancestor\", slot_type=\"$slot_type\", no_3d_view=\"$no_3d_view\", number_of_failures=0, last_failure=0000-00-00 "
             ."WHERE url=\"$url\" AND id=$id";
   $mysqli->query($query) or error($mysqli->error);
   if ($mysqli->affected_rows != 1) {
