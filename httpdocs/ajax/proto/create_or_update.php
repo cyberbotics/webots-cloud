@@ -24,13 +24,17 @@ function create_or_update_proto($url, $id, $search) {
       $query = "SELECT * FROM proto WHERE id=$id";
       $result = $mysqli->query($query) or error($mysqli->error);
       $row = $result->fetch_array(MYSQLI_ASSOC);
-      $number_of_failure = $row['not_found'] ;
+      $number_of_failure = $row['number_of_failures'] ;
+      $last_failure = $row["last_failure"];
+      $today = date('Y-m-d', time());
+      $today_dt = new DateTime($today);
+      $expire_dt = new DateTime($last_failure);
       if ($number_of_failure >= 10) {
         $query = "DELETE FROM proto WHERE id=$id";
         $mysqli->query($query) or error($mysqli->error);
         if ($mysqli->affected_rows === 0)
           error("Failed to delete proto with proto file '$proto'");
-      } else {
+      } else if ($today_dt > $expire_dt){
         $number_of_failure++;
         $query = "UPDATE proto SET not_found=$number_of_failure, last_error=NOW() WHERE id=$id";
         $mysqli->query($query) or error($mysqli->error);
