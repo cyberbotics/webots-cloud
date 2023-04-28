@@ -6,6 +6,10 @@ function error($message) {
 
 function create_or_update_proto($url, $id, $search) {
   global $raw_githubusercontent_com;
+  global $database_host;
+  global $database_username;
+  global $database_password;
+  global $database_name;
 
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
