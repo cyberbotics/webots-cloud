@@ -33,6 +33,7 @@ function create_or_update_proto($url, $id, $search) {
       } else {
         $number_of_failure++;
         $query = "UPDATE proto SET not_found=$number_of_failure, last_error=NOW() WHERE id=$id";
+        $mysqli->query($query) or error($mysqli->error);
       }
     }
     error("Failed to fetch proto file $proto");
