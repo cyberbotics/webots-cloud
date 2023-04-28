@@ -34,14 +34,14 @@ function create_or_update_proto($url, $id, $search) {
         $mysqli->query($query) or error($mysqli->error);
         if ($mysqli->affected_rows === 0)
           error("Failed to delete proto with proto file '$proto'");
-        error("Failed to fetch proto file $proto, it has been deleted");
+        error("Failed to fetch proto file $proto, it has been deleted.");
       } else if ($today_dt > $expire_dt){
         $number_of_failures++;
         $query = "UPDATE proto SET number_of_failures=$number_of_failures, last_failure=NOW() WHERE id=$id";
         $mysqli->query($query) or error($mysqli->error);
       }
     }
-    error("Failed to fetch proto file $proto");
+    error("Failed to fetch proto file $proto.");
   }
 
   # check and retrieve information from webots.yaml file
