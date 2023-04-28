@@ -36,7 +36,7 @@ function create_or_update_proto($url, $id, $search) {
           error("Failed to delete proto with proto file '$proto'");
       } else if ($today_dt > $expire_dt){
         $number_of_failure++;
-        $query = "UPDATE proto SET not_found=$number_of_failure, last_error=NOW() WHERE id=$id";
+        $query = "UPDATE proto SET number_of_failure=$number_of_failure, last_failure=NOW() WHERE id=$id";
         $mysqli->query($query) or error($mysqli->error);
       }
     }
