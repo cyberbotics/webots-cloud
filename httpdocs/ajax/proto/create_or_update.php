@@ -10,6 +10,8 @@ function create_or_update_proto($url, $id, $search) {
   global $database_username;
   global $database_password;
   global $database_name;
+  global $github_oauth_client_id;
+  global $github_oauth_client_secret;
 
   $mysqli = new mysqli($database_host, $database_username, $database_password, $database_name);
   if ($mysqli->connect_errno)
