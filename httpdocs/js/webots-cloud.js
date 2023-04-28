@@ -1747,7 +1747,7 @@ ${deleteProject}`;
       dialog.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         dialog.querySelector('button[type="submit"]').classList.add('is-loading');
-        fetch('ajax/proto/refresh_protos.php', {
+        fetch('ajax/proto/delete.php', {
           method: 'post',
           body: JSON.stringify({ user: project.id, password: project.password, id: id })
         })
