@@ -191,7 +191,6 @@ function create_or_update_proto($url, $id, $search) {
   $row = $result->fetch_array(MYSQLI_ASSOC);
   $viewed = ($result && $row) ? $row['viewed'] : 0;
   $branch = basename(dirname(__FILE__, 2));
-  die($branch);
   if ($id === 0)
     $query = "INSERT IGNORE INTO proto(url, viewed, stars, title, description, version, branch, license_url, license, "
             ."base_type, needs_robot_ancestor, slot_type, no_3d_view) "
