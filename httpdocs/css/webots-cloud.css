@@ -681,7 +681,7 @@ nav.pagination>a {
 }
 
 .first-level-keyword-container {
-  height: 100px;
+  height: 80px;
   width: 100%;
   display: flex;
   overflow: auto;
@@ -712,4 +712,6 @@ nav.pagination>a {
 .second-level-keyword-container {
   height: 40px;
   width: 100%;
+  margin-bottom: 10px;
+  display: none;
 }
