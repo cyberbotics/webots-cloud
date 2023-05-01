@@ -33,7 +33,7 @@
     $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
   }
 
-  if (isset($data->keyword)) {
+  if (isset($data->keyword) && $data->keyword !== '') {
     $keyword = $mysqli->escape_string($data->keyword);
     #keyword with parent
     #if (isset($data->parent_tag))
