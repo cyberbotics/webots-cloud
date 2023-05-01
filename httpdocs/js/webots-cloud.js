@@ -1683,7 +1683,7 @@ ${deleteProject}`;
       }
 
       infoGrid.appendChild(updatedContent);
-      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: informaiton.id}) })
+      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
         .then(response => response.json())
         .then(data => {
           console.log(data)
