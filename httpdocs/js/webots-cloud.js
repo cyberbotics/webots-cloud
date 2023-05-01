@@ -1708,7 +1708,7 @@ ${deleteProject}`;
           keywordContentA.target = '_blank';
           keywordContentA.style.gridRow = 5;
           keywordContentA.style.gridColumn = 2;
-          infoGrid.appendChild(keywordContentA);
+          infoGrid.appendChild(keywordContentA2);
         });
 
       return infoGrid;
