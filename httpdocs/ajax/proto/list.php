@@ -47,7 +47,7 @@
 
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query .= "$condition GROUP BY proto.id";# ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
+  $query .= "$condition GROUP BY proto.id ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $protos = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
