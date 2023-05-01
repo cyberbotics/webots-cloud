@@ -719,4 +719,5 @@ nav.pagination>a {
 
 .second-level-keyword {
   margin: 10px;
+  cursor: pointer;
 }
