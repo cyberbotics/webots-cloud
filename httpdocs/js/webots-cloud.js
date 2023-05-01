@@ -1712,7 +1712,7 @@ ${deleteProject}`;
             keywordContentDiv.appendChild(keywordContentA);
 
             if (i !== data.length - 1) {
-              const separator = document.createElement('div');
+              const separator = document.createElement('span');
               separator.textContent = ', ';
               keywordContentDiv.appendChild(separator);
             }
