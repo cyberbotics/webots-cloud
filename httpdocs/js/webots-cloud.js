@@ -1704,7 +1704,7 @@ ${deleteProject}`;
 
             const parent = data[i].parent_name;
             let keywordString = data[i].name;
-            if (typeof parent !== 'undefined')
+            if (parent !== 'null')
               keywordString = parent + '/' + keywordString;
             keywordContentA.href = '/proto?keyword=' + keywordString;
             keywordContentA.textContent = 'keywordString';
