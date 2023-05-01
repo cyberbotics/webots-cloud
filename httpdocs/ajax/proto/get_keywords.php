@@ -10,9 +10,8 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  $branch = basename(dirname(__FILE__, 4));
   if (isset($data->id)) {
-    $query = "SELECT child.name, parent.name AS parent_name FROM proto_keywordmap LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE proto_keywordmap.proto_id=$data->id AND branch=\"$branch\"";
+    $query = "SELECT child.name, parent.name AS parent_name FROM proto_keywordmap LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE proto_keywordmap.proto_id=$data->id";
     $result = $mysqli->query($query) or error($mysqli->error);
     $protos = array();
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
