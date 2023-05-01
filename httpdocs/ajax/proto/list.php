@@ -41,7 +41,7 @@
 
     # the keyword has no parent
     #else
-    $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"robot\") AND ";
+    $query = "SELECT DISTINCT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"robot\") AND ";
   } else
     $query = "SELECT * FROM proto WHERE ";
 
