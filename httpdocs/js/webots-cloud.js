@@ -1867,9 +1867,6 @@ ${deleteProject}`;
 
     // check that the proto is at least from R2023b
     function checkProtoVersion(version) {
-      if (!version)
-        return 'R2023b';
-
       const year = version.substring(1, version.length - 2);
       if (year < 2023 || (year === 2023 && version[version.length - 1] === 'a'))
         return 'R2023b';
