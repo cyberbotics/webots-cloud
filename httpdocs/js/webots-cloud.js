@@ -1698,18 +1698,16 @@ ${deleteProject}`;
           keywordContentDiv.style.gridRow = 5;
           keywordContentDiv.style.gridColumn = 2;
           infoGrid.appendChild(keywordContentDiv);
-          console.log(data)
 
           for (let i = 0; i < data.length; i++) {
             const keywordContentA = document.createElement('a');
 
-            // const parent = data[i].parent_name;
-            // const keyword = data[i].name;
-            // let keywordString = ''
-            // if (typeof keyword === 'undefined')
-            //   keywordString = parent;
-            keywordContentA.href = '/proto?keyword=';
-            keywordContentA.textContent = 'test keywords';
+            const parent = data[i].parent_name;
+            let keywordString = data[i].name;
+            if (typeof parent !== 'undefined')
+              keywordString = parent + '/' + keywordString;
+            keywordContentA.href = '/proto?keyword=' + keywordString;
+            keywordContentA.textContent = 'keywordString';
             keywordContentA.target = '_blank';
             keywordContentDiv.appendChild(keywordContentA);
           }
