@@ -714,4 +714,9 @@ nav.pagination>a {
   width: 100%;
   margin-bottom: 10px;
   display: none;
+  text-align: center;
+}
+
+.second-level-keyword {
+  margin: 5px;
 }
