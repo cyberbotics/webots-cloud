@@ -1707,7 +1707,7 @@ ${deleteProject}`;
             if (parent !== 'null')
               keywordString = parent + '/' + keywordString;
             keywordContentA.href = '/proto?keyword=' + keywordString;
-            keywordContentA.textContent = 'keywordString';
+            keywordContentA.textContent = keywordString;
             keywordContentA.target = '_blank';
             keywordContentDiv.appendChild(keywordContentA);
           }
