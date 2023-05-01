@@ -1363,9 +1363,8 @@ ${deleteProject}`;
                 for (let i = 0; i < data.length; i++) {
                   const keywordSpan = document.createElement('span');
                   keywordSpan.className = 'second-level-keyword';
-                  keywordSpan.textContent = data[i];
-                  console.log(data[i])
-                  if (data[i] !== 'other' && data[i] !== 'accessory' && data[i] !== 'extension')
+                  keywordSpan.textContent = data[i].name;
+                  if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
                     container.appendChild(keywordSpan);
                   else
                     atTheEnd.push(keywordSpan);
