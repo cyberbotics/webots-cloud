@@ -1683,27 +1683,26 @@ ${deleteProject}`;
       }
 
       infoGrid.appendChild(updatedContent);
-      console.log(information)
-      // fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
-      //   .then(response => response.json())
-      //   .then(data => {
-      //   });
+      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: informaiton.id}) })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          const keywordP = document.createElement('p');
+          keywordP.textContent = 'Keywords';
+          keywordP.className = 'info-array-cell first-column-cell';
+          keywordP.style.gridRow = 5;
+          keywordP.style.gridColumn = 1;
+          infoGrid.appendChild(keywordP);
 
-      const keywordP = document.createElement('p');
-      keywordP.textContent = 'Keywords';
-      keywordP.className = 'info-array-cell first-column-cell';
-      keywordP.style.gridRow = 5;
-      keywordP.style.gridColumn = 1;
-      infoGrid.appendChild(keywordP);
-
-      const keywordContentA = document.createElement('a');
-      keywordContentA.href = "webot.cloud/proto";
-      keywordContentA.className = 'info-array-cell last-column-cell';
-      keywordContentA.textContent = "test keywords";
-      keywordContentA.target = '_blank';
-      keywordContentA.style.gridRow = 5;
-      keywordContentA.style.gridColumn = 2;
-      infoGrid.appendChild(keywordContentA);
+          const keywordContentA = document.createElement('a');
+          keywordContentA.href = "webot.cloud/proto";
+          keywordContentA.className = 'info-array-cell last-column-cell';
+          keywordContentA.textContent = "test keywords";
+          keywordContentA.target = '_blank';
+          keywordContentA.style.gridRow = 5;
+          keywordContentA.style.gridColumn = 2;
+          infoGrid.appendChild(keywordContentA);
+        });
 
       return infoGrid;
     }
