@@ -33,18 +33,22 @@
     $condition .= " AND LOWER(title) LIKE LOWER('%$searchString%')";
   }
 
-  if (isset($data->tag)) {
-    #tag with parent
+  if (isset($data->keyword)) {
+    $keyword = $mysqli->escape_string($data->keyword);
+    #keyword with parent
     #if (isset($data->parent_tag))
     #SELECT * FROM proto JOIN proto_tagmap on proto.id=proto_tagmap.proto_id JOIN proto_tag as child on proto_tagmap.tag_id=child.tag_id JOIN proto_tag as parent on child.parent_id=parent.tag_id
 
-    # the tag has no parent
+    # the keyword has no parent
     #else
-    #SELECT * FROM proto JOIN proto_tagmap on proto.id=proto_tagmap.proto_id JOIN proto_tag as child on proto_tagmap.tag_id=child.tag_id
-  }
+    $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id WHERE name=$keyword AND ";
+  } else
+    $query = "SELECT * FROM proto WHERE ";
+
+  $query .= "$condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
+
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query = "SELECT * FROM proto WHERE $condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $protos = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
