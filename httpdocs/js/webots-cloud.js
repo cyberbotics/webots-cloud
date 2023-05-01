@@ -1700,14 +1700,15 @@ ${deleteProject}`;
           keywordContentA.target = '_blank';
           keywordContentA.style.gridRow = 5;
           keywordContentA.style.gridColumn = 2;
+          infoGrid.appendChild(keywordContentA);
 
           const keywordContentA2 = document.createElement('a');
-          keywordContentA.href = "webot.cloud/proto";
-          keywordContentA.className = 'info-array-cell last-column-cell';
-          keywordContentA.textContent = "test keywords";
-          keywordContentA.target = '_blank';
-          keywordContentA.style.gridRow = 5;
-          keywordContentA.style.gridColumn = 2;
+          keywordContentA2.href = "webot.cloud/proto";
+          keywordContentA2.className = 'info-array-cell last-column-cell';
+          keywordContentA2.textContent = "test keywords";
+          keywordContentA2.target = '_blank';
+          keywordContentA2.style.gridRow = 5;
+          keywordContentA2.style.gridColumn = 2;
           infoGrid.appendChild(keywordContentA2);
         });
 
