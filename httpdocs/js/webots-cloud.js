@@ -352,6 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
+      const encodedUrl = encodeURIComponent(data.url);
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
@@ -359,9 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">`;
       if (proto)
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}">${title}</a>`;
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}">${title}</a>`;
       else
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${data.url}&type=${data.type}">${title}</a>`;
+        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}&type=${data.type}">${title}</a>`;
       row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
