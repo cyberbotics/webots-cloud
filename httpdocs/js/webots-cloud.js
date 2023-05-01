@@ -1354,10 +1354,9 @@ ${deleteProject}`;
             if (data.error)
               ModalDialog.run('Keyword listing error', data.error);
             else {
-                console.log(data)
-                // const sub_keywords = data.sub_keywords;
+              console.log(data)
                 // const atTheEnd = [];
-                // for (let i = 0; i < sub_keywords.length; i++) {
+                // for (let i = 0; i < data.length; i++) {
                 //
                 // }
             }
