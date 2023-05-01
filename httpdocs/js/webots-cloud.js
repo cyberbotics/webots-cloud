@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let competitionSort = 'default';
 
   let keywordSearch = '';
+  let keywordParentSearch = '';
 
   let sceneSearch = '';
   let animationSearch = '';
@@ -1342,6 +1343,26 @@ ${deleteProject}`;
             updatePagination('proto', page, total);
           }
         });
+
+      if (keywordSearch && keywordSearch !== '') {
+        fetch ('/ajax/proto/sub_keywords.php', {
+          method: 'post',
+          body: JSON.stringify({ parent: keywordSearch })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.error)
+              ModalDialog.run('Keyword listing error', data.error);
+            else {
+                console.log(data)
+                // const sub_keywords = data.sub_keywords;
+                // const atTheEnd = [];
+                // for (let i = 0; i < sub_keywords.length; i++) {
+                //
+                // }
+            }
+          });
+      }
     }
 
     function listServers(page) {

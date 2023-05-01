@@ -10,8 +10,10 @@
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  if (isset($data->id)) {
-    $query = "SELECT child.name, parent.name AS parent_name FROM proto_keywordmap LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE proto_keywordmap.proto_id=$data->id";
+  $branch = basename(dirname(__FILE__, 4));
+  if (isset($data->parent) && $data->parent!= '') {
+    $parent = $mysqli->escape_string($data->parent);
+    $query = "SELECT child.name, COUNT(*) FROM proto LEFT JOIN proto_keywordmap on proto.id = proto_keywordmap.proto_id LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE parent.name=\"$parent\" AND branch=\"$branch\" GROUP BY proto_keywordmap.keyword_id";
     $result = $mysqli->query($query) or error($mysqli->error);
     $protos = array();
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -20,4 +22,3 @@
     die(json_encode($protos));
   }
  ?>
-SELECT child.name, COUNT(*) FROM proto LEFT JOIN proto_keywordmap on proto.id = proto_keywordmap.proto_id LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE parent.name="robot" AND branch="proto" GROUP BY proto_keywordmap.keyword_id
