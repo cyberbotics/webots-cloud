@@ -1306,11 +1306,11 @@ ${deleteProject}`;
         });
     }
 
-    function listProtos(page, sortBy, searchString) {
+    function listProtos(page, sortBy, searchString, keyword) {
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString, keyword: undefined })
+        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString, keyword: keyword })
       })
         .then(function(response) {
           return response.json();
@@ -1451,7 +1451,7 @@ ${deleteProject}`;
     }
 
     function listByTag(event) {
-      console.log(event.target.title)
+      listProtos(protoPage, getSort('proto'), getSearch('proto'), event.target.title);
     }
   }
 
