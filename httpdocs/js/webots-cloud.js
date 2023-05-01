@@ -1345,7 +1345,7 @@ ${deleteProject}`;
         });
 
       if (keywordSearch && keywordSearch !== '') {
-        fetch ('/ajax/proto/sub_keywords.php', {
+        fetch('/ajax/proto/sub_keywords.php', {
           method: 'post',
           body: JSON.stringify({ parent: keywordSearch })
         })
@@ -1354,11 +1354,24 @@ ${deleteProject}`;
             if (data.error)
               ModalDialog.run('Keyword listing error', data.error);
             else {
-              console.log(data)
-                // const atTheEnd = [];
-                // for (let i = 0; i < data.length; i++) {
-                //
-                // }
+              const container = document.getElementsByClassName('second-level-keyword-container')[0];
+              if (data.length > 1) {
+                container.style.display = 'block';
+
+                const atTheEnd = [];
+                // The keywords arrived sorted by number of elements
+                for (let i = 0; i < data.length; i++) {
+                  const keywordSpan = document.createElement('span');
+                  keywordSpan.className = 'second-level-keyword';
+                  keywordSpan.textContent = data[i];
+                  if (data[i] !== 'other' && data[i] !== 'accessory' && data[i] !== 'extension')
+                    container.appendChild(keywordSpan);
+                  else
+                    atTheEnd.push(keywordSpan);
+                }
+                for (let i = 0; i < atTheEnd.length; i++)
+                  container.appendChild(atTheEnd[i]);
+              }
             }
           });
       }
