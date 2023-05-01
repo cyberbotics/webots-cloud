@@ -12,7 +12,7 @@
   $mysqli->set_charset('utf8');
   if (isset($data->id)) {
     $query = "SELECT child.name, parent.name FROM proto_keywordmap LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE proto_keywordmap.proto_id=$data->id";
-    $mysqli->query($query) or error($mysqli->error);
+    $result = $mysqli->query($query) or error($mysqli->error);
     $protos = array();
     while($row = $result->fetch_array(MYSQLI_ASSOC)) {
       array_push($protos, $row);
