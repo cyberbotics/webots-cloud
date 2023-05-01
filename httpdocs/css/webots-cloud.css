@@ -681,7 +681,7 @@ nav.pagination>a {
 }
 
 .first-level-keyword-container {
-  height: 80px;
+  height: 85px;
   width: 100%;
   display: flex;
   overflow: auto;
