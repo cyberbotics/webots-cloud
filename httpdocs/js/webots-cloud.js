@@ -1683,6 +1683,11 @@ ${deleteProject}`;
       }
 
       infoGrid.appendChild(updatedContent);
+      console.log(information)
+      // fetch(script, { method: 'post', body: JSON.stringify({ url: url, id: id, search: searchString }) })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //   });
 
       const keywordP = document.createElement('p');
       keywordP.textContent = 'Keywords';
