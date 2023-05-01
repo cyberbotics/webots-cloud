@@ -675,6 +675,7 @@ ${deleteProject}`;
               <div class="first-level-keyword" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
               <div class="first-level-keyword" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
             </div>
+            <div class="second-level-keyword-container"></div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">

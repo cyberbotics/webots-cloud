@@ -708,3 +708,8 @@ nav.pagination>a {
 .first-level-keyword p {
   pointer-events: none;
 }
+
+.second-level-keyword-container {
+  height: 40px;
+  width: 100%;
+}
