@@ -41,13 +41,13 @@
 
     # the keyword has no parent
     #else
-    $query = "SELECT DISTINCT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"$keyword\") AND ";
+    $query = "SELECT DISTINCT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"$keyword\") GROUP BY proto.id";
   } else
     $query = "SELECT * FROM proto WHERE ";
 
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
-  $query .= "$condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset GROUP BY proto.id";
+  #$query .= "$condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $protos = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
