@@ -1363,7 +1363,7 @@ ${deleteProject}`;
                 for (let i = 0; i < data.length; i++) {
                   const keywordSpan = document.createElement('span');
                   keywordSpan.className = 'second-level-keyword';
-                  keywordSpan.textContent = data[i].name;
+                  keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
                     container.appendChild(keywordSpan);
                   else
