@@ -1710,6 +1710,12 @@ ${deleteProject}`;
             keywordContentA.textContent = keywordString;
             keywordContentA.target = '_blank';
             keywordContentDiv.appendChild(keywordContentA);
+
+            if (i !== data.length - 1) {
+              const separator = document.createElement('div');
+              separator.textContent = ', ';
+              keywordContentDiv.appendChild(separator);
+            }
           }
         });
 
