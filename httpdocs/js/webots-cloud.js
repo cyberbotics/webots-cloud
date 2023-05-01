@@ -1699,18 +1699,13 @@ ${deleteProject}`;
           keywordContentDiv.style.gridColumn = 2;
           infoGrid.appendChild(keywordContentDiv);
 
-          const keywordContentA = document.createElement('a');
-          keywordContentA.href = 'webot.cloud/proto';
-          keywordContentA.textContent = 'test keywords';
-          keywordContentA.target = '_blank';
-          keywordContentDiv.appendChild(keywordContentA);
-
-
-          const keywordContentA2 = document.createElement('a');
-          keywordContentA2.href = "webot.cloud/proto";
-          keywordContentA2.textContent = "test keywords";
-          keywordContentA2.target = '_blank';
-          keywordContentDiv.appendChild(keywordContentA2);
+          for (let i = 0; i < data.length; i++) {
+            const keywordContentA = document.createElement('a');
+            keywordContentA.href = 'webot.cloud/proto';
+            keywordContentA.textContent = 'test keywords';
+            keywordContentA.target = '_blank';
+            keywordContentDiv.appendChild(keywordContentA);
+          }
         });
 
       return infoGrid;
