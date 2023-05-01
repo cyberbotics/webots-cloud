@@ -1355,6 +1355,7 @@ ${deleteProject}`;
               ModalDialog.run('Keyword listing error', data.error);
             else {
               const container = document.getElementsByClassName('second-level-keyword-container')[0];
+              container.innerHTML = '';
               if (data.length > 1) {
                 container.style.display = 'block';
 
@@ -1366,7 +1367,7 @@ ${deleteProject}`;
                   keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                   keywordSpan.onclick = () => {
                     console.log(data[i].name)
-                  }
+                  };
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
                     container.appendChild(keywordSpan);
                   else
