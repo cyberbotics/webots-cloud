@@ -1310,7 +1310,7 @@ ${deleteProject}`;
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString, keyword: '' })
+        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString, keyword: undefined })
       })
         .then(function(response) {
           return response.json();
