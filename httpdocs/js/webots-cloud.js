@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let protoSort = 'default';
   let competitionSort = 'default';
 
+  let keywordSearch = '';
+
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
@@ -202,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
     listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
     listProtos(protoPage, getSort('proto'), getSearch('proto'));
-    bindTags();
+    bindKeywords();
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
@@ -1307,11 +1309,15 @@ ${deleteProject}`;
         });
     }
 
-    function listProtos(page, sortBy, searchString, keyword) {
+    function listProtos(page, sortBy, searchString) {
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString, keyword: keyword })
+        body: JSON.stringify({ offset: offset,
+          limit: protoPageLimit,
+          sortBy: sortBy,
+          search: searchString,
+          keyword: keywordSearch })
       })
         .then(function(response) {
           return response.json();
@@ -1445,14 +1451,15 @@ ${deleteProject}`;
       ModalDialog.run(`What is a competition?`, content.innerHTML);
     }
 
-    function bindTags() {
+    function bindKeywords() {
       const tags = document.getElementsByClassName('first-level-keyword');
       for (let i = 0; i < tags.length; i++)
-        tags[i].onclick = _ => listByTag(_);
+        tags[i].onclick = _ => listByKeyword(_);
     }
 
-    function listByTag(event) {
-      listProtos(protoPage, getSort('proto'), getSearch('proto'), event.target.title);
+    function listByKeyword(event) {
+      keywordSearch = event.target.title;
+      listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
   }
 
