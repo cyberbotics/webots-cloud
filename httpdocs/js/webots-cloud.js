@@ -1358,7 +1358,7 @@ ${deleteProject}`;
               container.innerHTML = '';
               if (data.length > 1) {
                 container.style.display = 'block';
-
+                keywordParentSearch = keywordSearch;
                 const atTheEnd = [];
                 // The keywords arrived sorted by number of elements
                 for (let i = 0; i < data.length; i++) {
@@ -1366,7 +1366,8 @@ ${deleteProject}`;
                   keywordSpan.className = 'second-level-keyword';
                   keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                   keywordSpan.onclick = () => {
-                    console.log(data[i].name)
+                    keywordSearch = data[i].name;
+                    listProtos(protoPage, getSort('proto'), getSearch('proto'));
                   };
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
                     container.appendChild(keywordSpan);
