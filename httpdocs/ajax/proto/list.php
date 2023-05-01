@@ -45,10 +45,9 @@
   } else
     $query = "SELECT * FROM proto WHERE ";
 
-  $query .= "$condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
-
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
+  $query .= "$condition ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
   $result = $mysqli->query($query) or error($mysqli->error);
   $protos = array();
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
