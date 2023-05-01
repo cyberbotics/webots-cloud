@@ -1355,8 +1355,8 @@ ${deleteProject}`;
               ModalDialog.run('Keyword listing error', data.error);
             else {
               const container = document.getElementsByClassName('second-level-keyword-container')[0];
-              container.innerHTML = '';
               if (data.length > 1) {
+                container.innerHTML = '';
                 container.style.display = 'block';
                 keywordParentSearch = keywordSearch;
                 const atTheEnd = [];
