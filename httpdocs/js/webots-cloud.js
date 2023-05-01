@@ -1686,7 +1686,6 @@ ${deleteProject}`;
       fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           const keywordP = document.createElement('p');
           keywordP.textContent = 'Keywords';
           keywordP.className = 'info-array-cell first-column-cell';
@@ -1695,6 +1694,14 @@ ${deleteProject}`;
           infoGrid.appendChild(keywordP);
 
           const keywordContentA = document.createElement('a');
+          keywordContentA.href = "webot.cloud/proto";
+          keywordContentA.className = 'info-array-cell last-column-cell';
+          keywordContentA.textContent = "test keywords";
+          keywordContentA.target = '_blank';
+          keywordContentA.style.gridRow = 5;
+          keywordContentA.style.gridColumn = 2;
+
+          const keywordContentA2 = document.createElement('a');
           keywordContentA.href = "webot.cloud/proto";
           keywordContentA.className = 'info-array-cell last-column-cell';
           keywordContentA.textContent = "test keywords";
