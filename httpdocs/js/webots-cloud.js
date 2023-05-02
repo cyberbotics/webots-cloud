@@ -1861,6 +1861,7 @@ ${deleteProject}`;
       const license = information?.license;
       const licenseUrl = information?.license_url;
       const version = information?.version;
+      console.log(information)
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
       populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
     }
