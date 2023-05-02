@@ -1322,8 +1322,6 @@ ${deleteProject}`;
       if (keywordIsFirst)
         keywordParentSearch = '';
       const offset = (page - 1) * protoPageLimit;
-      console.log(keywordSearch)
-      console.log(keywordParentSearch)
       fetch('/ajax/proto/list.php', {
         method: 'post',
         body: JSON.stringify({ offset: offset,
