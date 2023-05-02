@@ -1455,7 +1455,7 @@ ${deleteProject}`;
       protoContainer(project, searchParams);
 
     function protoContainer(proto, searchParams) {
-      const url = searchParams.get('url');
+      const url = encodeURIComponent(searchParams.get('url'));
       console.log(url)
 
       const urlParts = url.split('/');
