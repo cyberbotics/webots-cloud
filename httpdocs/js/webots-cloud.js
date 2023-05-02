@@ -1324,7 +1324,7 @@ ${deleteProject}`;
           sortBy: sortBy,
           search: searchString,
           keyword: keywordSearch,
-          keywordParentSearch: keywordParentSearch})
+          keyword_parent: keywordParentSearch})
       })
         .then(function(response) {
           return response.json();
