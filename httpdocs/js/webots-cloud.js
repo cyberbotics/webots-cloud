@@ -351,9 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      console.log(data.url)
       const encodedUrl = encodeURIComponent(data.url);
-      console.log(encodedUrl)
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
@@ -1458,6 +1456,8 @@ ${deleteProject}`;
 
     function protoContainer(proto, searchParams) {
       const url = searchParams.get('url');
+      console.log(url)
+
       const urlParts = url.split('/');
       const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
 
