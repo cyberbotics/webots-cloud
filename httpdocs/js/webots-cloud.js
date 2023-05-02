@@ -1528,6 +1528,7 @@ ${deleteProject}`;
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
+      url = "https://raw.githubusercontent.com/cyberbotics/webots/enhancement-keyword-proto/projects/robots/pal_robotics/tiagopp/protos/Tiago++.proto"
       console.log(url)
       fetch(url).then(response => response.text())
         .then(proto => {
