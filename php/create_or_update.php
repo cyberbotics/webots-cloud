@@ -149,8 +149,10 @@ function create_or_update_proto($url, $id, $search) {
     $base_type = $results[1];
     $parent_url = $results[3];
     $found_parent = $results[4];
-    if(!$found_parent)
+    if(!$found_parent) {
       error("Base type: seems like the parent node is missing from the EXTERNPROTO.");
+      return;
+    }
   }
 
   $device_regex = "/(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/";
