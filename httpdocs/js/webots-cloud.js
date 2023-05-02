@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let sort = new URL(document.location.href).searchParams.get('sort')
       ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
     let keyword = new URL(document.location.href).searchParams.get('keyword')
-      ? (new URL(document.location.href).searchParams.get('keyword')).toString() : 'robot';
+      ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
 
     keywordSearch = keyword;
     setPages(activeTab, page);
