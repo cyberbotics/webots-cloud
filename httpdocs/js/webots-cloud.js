@@ -1506,8 +1506,15 @@ ${deleteProject}`;
 
     function bindKeywords() {
       const tags = document.getElementsByClassName('first-level-keyword');
-      for (let i = 0; i < tags.length; i++)
-        tags[i].onclick = _ => listByKeyword(_);
+      for (let i = 0; i < tags.length; i++) {
+        tags[i].onclick = _ => {
+          const alltags = document.getElementsByClassName('first-level-keyword');
+          for (let j = 0; j < alltags.length; j++)
+            alltags[i].classList.remove('is-active');
+          tags[i].classList.add('is-active');
+          listByKeyword(_);
+        };
+      }
     }
 
     function listByKeyword(event) {

@@ -686,9 +686,6 @@ nav.pagination>a {
   display: flex;
   overflow: auto;
   justify-content: center;
-  border-bottom-color: #dbdbdb;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
 }
 
 .first-level-keyword {
@@ -713,8 +710,12 @@ nav.pagination>a {
 }
 
 .first-level-keyword:hover {
-  border-color: #007acc;
   color: #007acc;
+}
+
+.first-level-keyword-container .is-active {
+  color: #007acc;
+  border-bottom: 1px solid #007acc;
 }
 
 .second-level-keyword-container {
