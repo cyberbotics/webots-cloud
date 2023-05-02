@@ -423,7 +423,6 @@ ${deleteProject}`;
     }
 
     function mainContainer(project, activeTab) {
-      console.log("salut")
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
