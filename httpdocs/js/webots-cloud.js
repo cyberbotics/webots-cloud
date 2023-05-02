@@ -1510,7 +1510,7 @@ ${deleteProject}`;
         tags[i].onclick = _ => {
           const alltags = document.getElementsByClassName('first-level-keyword');
           for (let j = 0; j < alltags.length; j++)
-            alltags[i].classList.remove('is-active');
+            alltags[j].classList.remove('is-active');
           tags[i].classList.add('is-active');
           listByKeyword(_);
         };
