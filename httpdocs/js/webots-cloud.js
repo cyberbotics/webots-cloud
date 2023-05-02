@@ -1316,6 +1316,8 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
+      if (keywordIsFirst)
+        keywordParentSearch = '';
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
