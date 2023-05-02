@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let keywordSearch = '';
   let keywordParentSearch = '';
+  let keywordIsFirst = false;
 
   let sceneSearch = '';
   let animationSearch = '';
@@ -1367,6 +1368,7 @@ ${deleteProject}`;
                   keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                   keywordSpan.onclick = () => {
                     keywordSearch = data[i].name;
+                    keywordIsFirst = false;
                     listProtos(protoPage, getSort('proto'), getSearch('proto'));
                   };
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
@@ -1376,7 +1378,8 @@ ${deleteProject}`;
                 }
                 for (let i = 0; i < atTheEnd.length; i++)
                   container.appendChild(atTheEnd[i]);
-              }
+              } else if (keywordIsFirst)
+                container.innerHTML = '';
             }
           });
       }
@@ -1498,6 +1501,7 @@ ${deleteProject}`;
 
     function listByKeyword(event) {
       keywordSearch = event.target.title;
+      keywordIsFirst = true;
       listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
   }
