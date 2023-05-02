@@ -33,7 +33,6 @@ function create_or_update_proto($url, $id, $search) {
       $query = "SELECT * FROM proto WHERE id=$id";
       $result = $mysqli->query($query) or error($mysqli->error);
       $row = $result->fetch_array(MYSQLI_ASSOC);
-      die($row);
       $number_of_failures = $row['number_of_failures'];
       $last_failure = $row["last_failure"];
       $today = date('Y-m-d', time());
