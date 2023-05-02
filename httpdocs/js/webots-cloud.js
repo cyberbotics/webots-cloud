@@ -676,7 +676,7 @@ ${deleteProject}`;
               <div class="first-level-keyword" title="vehicle"><img src="../images/proto/vehicle.png"><p>Vehicle</p></div>
               <div class="first-level-keyword" title="furniture"><img src="../images/proto/furniture.png"><p>Furniture</p></div>
               <div class="first-level-keyword" title="building"><img src="../images/proto/building.png"><p>Building</p></div>
-              <div class="first-level-keyword" title="animal"><img src="../images/profile.png"><p>Animal</p></div>
+              <div class="first-level-keyword" title="animal"><img src="../images/proto/animal.png"><p>Animal</p></div>
               <div class="first-level-keyword" title="exterior"><img src="../images/profile.png"><p>Exterior</p></div>
               <div class="first-level-keyword" title="traffic"><img src="../images/profile.png"><p>Traffic</p></div>
               <div class="first-level-keyword" title="food"><img src="../images/profile.png"><p>Food</p></div>
