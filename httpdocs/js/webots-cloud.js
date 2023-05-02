@@ -188,7 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
       ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
 
     if (keyword.includes('/')) {
-
+      keyword = keyword.split('/');
+      keywordParentSearch = keyword[0];
+      keywordSearch = keyword[1];
     } else
       keywordSearch = keyword;
     setPages(activeTab, page);
