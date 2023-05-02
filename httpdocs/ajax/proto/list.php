@@ -38,12 +38,11 @@
     #keyword with parent
     if (isset($data->keyword_parent) && $data->keyword_parent !== '') {
       $keyword_parent = $mysqli->escape_string($data->keyword_parent);
-      $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent on child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword_parent\" AND child.name=\"$keyword\") AND ";
+      $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword as parent on child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword_parent\" AND child.name=\"$keyword\") AND ";
     }
-
     # the keyword has no parent
     else
-      $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"$keyword\") AND ";
+      $query = "SELECT * FROM proto JOIN proto_keywordmap on proto.id=proto_keywordmap.proto_id JOIN proto_keyword as child on proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword as parent ON child.parent_id=parent.keyword_id WHERE (parent.name=\"$keyword\" OR child.name=\"$keyword\") AND ";
   } else
     $query = "SELECT * FROM proto WHERE ";
 
