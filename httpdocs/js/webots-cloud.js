@@ -423,6 +423,7 @@ ${deleteProject}`;
     }
 
     function mainContainer(project, activeTab) {
+      console.log("salut")
       const template = document.createElement('template');
       template.innerHTML =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -670,7 +671,7 @@ ${deleteProject}`;
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
             <div class="first-level-keyword-container">
               <div class="first-level-keyword" title="robot"><img src="../images/proto/robot.png"><p>Robot</p></div>
-              <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor1.png"><p>Sensor</p></div>
+              <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor.png"><p>Sensor</p></div>
               <div class="first-level-keyword" title="industrial"><img src="../images/profile.png"><p>Industrial</p></div>
               <div class="first-level-keyword" title="household"><img src="../images/profile.png"><p>Household</p></div>
               <div class="first-level-keyword" title="vehicle"><img src="../images/profile.png"><p>Vehicle</p></div>
