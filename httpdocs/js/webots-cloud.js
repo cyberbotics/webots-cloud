@@ -671,16 +671,16 @@ ${deleteProject}`;
             <div class="first-level-keyword-container">
               <div class="first-level-keyword" title="robot"><img src="../images/proto/robot.png"><p>Robot</p></div>
               <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor1.png"><p>Sensor</p></div>
-              <div class="first-level-keyword" title="industrial"><img src="../images/proto/factory.png"><p>Industrial</p></div>
+              <div class="first-level-keyword" title="industrial"><img src="../images/proto/industrial.png"><p>Industrial</p></div>
               <div class="first-level-keyword" title="household"><img src="../images/proto/household.png"><p>Household</p></div>
               <div class="first-level-keyword" title="vehicle"><img src="../images/proto/vehicle.png"><p>Vehicle</p></div>
               <div class="first-level-keyword" title="furniture"><img src="../images/proto/furniture.png"><p>Furniture</p></div>
               <div class="first-level-keyword" title="building"><img src="../images/proto/building.png"><p>Building</p></div>
               <div class="first-level-keyword" title="animal"><img src="../images/proto/animal.png"><p>Animal</p></div>
-              <div class="first-level-keyword" title="exterior"><img src="../images/profile.png"><p>Exterior</p></div>
-              <div class="first-level-keyword" title="traffic"><img src="../images/profile.png"><p>Traffic</p></div>
-              <div class="first-level-keyword" title="food"><img src="../images/profile.png"><p>Food</p></div>
-              <div class="first-level-keyword" title="appearance"><img src="../images/profile.png"><p>Appearance</p></div>
+              <div class="first-level-keyword" title="exterior"><img src="../images/proto/exterior.png"><p>Exterior</p></div>
+              <div class="first-level-keyword" title="traffic"><img src="../images/proto/traffic.png"><p>Traffic</p></div>
+              <div class="first-level-keyword" title="food"><img src="../images/proto/food.png"><p>Food</p></div>
+              <div class="first-level-keyword" title="appearance"><img src="../images/proto/appearance.png"><p>Appearance</p></div>
               <div class="first-level-keyword" title="sport"><img src="../images/profile.png"><p>Sport</p></div>
               <div class="first-level-keyword" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
               <div class="first-level-keyword" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
