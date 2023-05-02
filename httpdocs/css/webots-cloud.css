@@ -628,6 +628,7 @@ nav.pagination>a {
   border-right: #f0f0f0 solid 1px;
   border-left: #f0f0f0 solid 1px;
   box-shadow: 5px 5px 5px 0 #ddd;
+  overflow: hidden;
 }
 
 .result-version {
