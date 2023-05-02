@@ -9,6 +9,7 @@ $data = json_decode($json);
 $url = $data->url;
 $id = isset($data->id) ? intval($data->id) : 0;
 $search = isset($data->search) ? $data->search : "";
+$continue_on_error = false;
 require '../../../php/create_or_update.php';
 $answer = create_or_update_proto($url, $id, $search);
 die(json_encode($answer));

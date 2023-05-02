@@ -1,7 +1,9 @@
 <?php # This script initializes a new proto
 # exit and error message
 function error($message) {
-  die("{\"error\":\"$message\"}");
+  global $continue_on_error;
+  if (!$continue_on_error)
+    die("{\"error\":\"$message\"}");
 }
 
 function create_or_update_proto($url, $id, $search) {
