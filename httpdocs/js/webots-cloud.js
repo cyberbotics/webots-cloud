@@ -1455,9 +1455,7 @@ ${deleteProject}`;
       protoContainer(project, searchParams);
 
     function protoContainer(proto, searchParams) {
-      const url = encodeURIComponent(searchParams.get('url'));
-      console.log(url)
-
+      const url = searchParams.get('url');
       const urlParts = url.split('/');
       const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
 
@@ -1530,6 +1528,7 @@ ${deleteProject}`;
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
+      console.log(url)
       fetch(url).then(response => response.text())
         .then(proto => {
           fetch(mdUrl)
