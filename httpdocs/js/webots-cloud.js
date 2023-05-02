@@ -184,9 +184,10 @@ document.addEventListener('DOMContentLoaded', function() {
       ? (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
     let sort = new URL(document.location.href).searchParams.get('sort')
       ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
-    console.log(homePage)
-    // let keyword = new URL(document.location.href).searchParams.get('sort')
-    //   ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
+    let keyword = new URL(document.location.href).searchParams.get('keyword')
+      ? (new URL(document.location.href).searchParams.get('keyword')).toString() : 'robot';
+
+    keywordSearch = keyword;
     setPages(activeTab, page);
     setSorts(activeTab, sort);
     setSearches(activeTab, search);
@@ -1322,7 +1323,8 @@ ${deleteProject}`;
           limit: protoPageLimit,
           sortBy: sortBy,
           search: searchString,
-          keyword: keywordSearch })
+          keyword: keywordSearch,
+          keywordParentSearch: keywordParentSearch})
       })
         .then(function(response) {
           return response.json();
