@@ -187,7 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let keyword = new URL(document.location.href).searchParams.get('keyword')
       ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
 
-    keywordSearch = keyword;
+    if (keyword.includes('/')) {
+
+    } else
+      keywordSearch = keyword;
     setPages(activeTab, page);
     setSorts(activeTab, sort);
     setSearches(activeTab, search);
@@ -1319,6 +1322,8 @@ ${deleteProject}`;
       if (keywordIsFirst)
         keywordParentSearch = '';
       const offset = (page - 1) * protoPageLimit;
+      console.log(keywordSearch)
+      console.log(keywordParentSearch)
       fetch('/ajax/proto/list.php', {
         method: 'post',
         body: JSON.stringify({ offset: offset,
