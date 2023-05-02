@@ -682,8 +682,8 @@ ${deleteProject}`;
               <div class="first-level-keyword" title="food"><img src="../images/proto/food.png"><p>Food</p></div>
               <div class="first-level-keyword" title="appearance"><img src="../images/proto/appearance.png"><p>Appearance</p></div>
               <div class="first-level-keyword" title="sport"><img src="../images/proto/sport.png"><p>Sport</p></div>
-              <div class="first-level-keyword" title="geometry"><img src="../images/profile.png"><p>Geometry</p></div>
-              <div class="first-level-keyword" title="floor"><img src="../images/profile.png"><p>Floor</p></div>
+              <div class="first-level-keyword" title="geometry"><img src="../images/proto/geometry.png"><p>Geometry</p></div>
+              <div class="first-level-keyword" title="floor"><img src="../images/proto/floor.png"><p>Floor</p></div>
             </div>
             <div class="second-level-keyword-container"></div>
             <div class="table-container">
