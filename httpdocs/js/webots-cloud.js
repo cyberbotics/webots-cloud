@@ -1528,8 +1528,6 @@ ${deleteProject}`;
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       const mdUrl = prefix + protoName.toLowerCase() + '.md';
-      url = "https://raw.githubusercontent.com/cyberbotics/webots/enhancement-keyword-proto/projects/robots/pal_robotics/tiagopp/protos/Tiago++.proto"
-      console.log(url)
       fetch(url).then(response => response.text())
         .then(proto => {
           fetch(mdUrl)
@@ -1863,7 +1861,6 @@ ${deleteProject}`;
       const license = information?.license;
       const licenseUrl = information?.license_url;
       const version = information?.version;
-      console.log(information)
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
       populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
     }
