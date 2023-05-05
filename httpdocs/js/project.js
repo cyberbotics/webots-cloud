@@ -129,6 +129,8 @@ export default class Project extends User {
     if (!version || typeof version === 'undefined') {
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
+      else if (window.location.hostname === 'proto.webots.cloud')
+        version = 'proto';
       else
         version = data && data.version ? data.version : this.findGetParameter('version');
     }
