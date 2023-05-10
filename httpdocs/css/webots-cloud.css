@@ -651,6 +651,7 @@ nav.pagination>a {
 
 .result-views img {
   width: 16px;
+  padding-left: 3px;
 }
 
 .result-version {
