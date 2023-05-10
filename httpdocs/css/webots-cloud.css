@@ -643,7 +643,8 @@ nav.pagination>a {
 }
 
 .result-views {
-  text-align: left;
+  position: absolute;
+  left: 12px;
 }
 
 .result-version {
