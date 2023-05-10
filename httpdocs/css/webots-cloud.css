@@ -645,6 +645,8 @@ nav.pagination>a {
 .result-views {
   position: absolute;
   left: 12px;
+  display: flex;
+  align-items:center;
 }
 
 .result-views img {
