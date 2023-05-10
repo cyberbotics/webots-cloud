@@ -333,6 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       if (proto) {
+        console.log(data)
         let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
         element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
         element += `<div class="result-title" title='${title}'>${title}</div>`;
