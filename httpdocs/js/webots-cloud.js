@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
         element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
         element += `<div class="result-title" title='${title}'>${title}</div>`;
         element += `<div class="result-details">`;
-        element += `<div class="result-views">${data.viewed}`;
+        element += `<div class="result-views"><div>${data.viewed}</div>`;
         element += `<img src="images/views.png"/></div>`;
         element += `<div class="result-version">${data.version}</div>`;
         element += `</div>`;
