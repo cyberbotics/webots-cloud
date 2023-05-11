@@ -35,6 +35,7 @@
 
   $query = "SELECT * FROM proto ";
   $query_count = "SELECT COUNT(*) AS count FROM proto";
+  $middle_part;
   if (isset($data->keyword) && $data->keyword !== '') {
     $keyword = $mysqli->escape_string($data->keyword);
     #keyword with parent
@@ -50,7 +51,7 @@
 
   $query .= $middle_part;
   $query_count -= $middle_part;
-  
+
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
   $query .= "$condition GROUP BY proto.id ORDER BY $parameter $order LIMIT $limit OFFSET $offset";
