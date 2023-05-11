@@ -631,7 +631,7 @@ nav.pagination>a {
   overflow: hidden;
 }
 
-.result-version {
+.result-details {
   padding: 0px 6px 4px 4px;
   font-size: 0.7em;
   background-color: #f8f8f8;
@@ -639,8 +639,24 @@ nav.pagination>a {
   border-right: #f0f0f0 solid 1px;
   border-left: #f0f0f0 solid 1px;
   box-shadow: 5px 5px 5px 0 #ddd;
-  text-align: right;
   color: #888;
+}
+
+.result-views {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items:center;
+}
+
+.result-views img {
+  width: 16px;
+  padding-right: 4px;
+  opacity: 0.6;
+}
+
+.result-version {
+  text-align: right;
 }
 
 .result-title:hover {
