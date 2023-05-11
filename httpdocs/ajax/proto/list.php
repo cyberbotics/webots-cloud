@@ -34,7 +34,7 @@
   }
 
   $query = "SELECT * FROM proto ";
-  $query_count = "SELECT COUNT(*) AS count FROM proto";
+  $query_count = "SELECT COUNT(*) AS count FROM proto ";
   $middle_part = '';
   if (isset($data->keyword) && $data->keyword !== '') {
     $keyword = $mysqli->escape_string($data->keyword);
