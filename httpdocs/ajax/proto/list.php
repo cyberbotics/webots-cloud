@@ -50,7 +50,7 @@
     $middle_part .= "WHERE ";
 
   $query .= $middle_part;
-  $query_count -= $middle_part;
+  $query_count .= $middle_part;
 
   $offset = isset($data->offset) ? intval($data->offset) : 0;
   $limit = isset($data->limit) ? intval($data->limit) : 10;
