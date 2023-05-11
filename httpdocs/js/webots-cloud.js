@@ -225,7 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
-      console.log(tab)
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
@@ -1356,6 +1355,7 @@ ${deleteProject}`;
               line += githubRow(data.protos[i], true);
             const protosList = document.getElementById('protos-list');
             protosList.innerHTML = line;
+            console.log(data.total)
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
           }
