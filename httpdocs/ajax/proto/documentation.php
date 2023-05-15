@@ -11,7 +11,6 @@
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
   $branch = basename(dirname(__FILE__, 4));
-  die ($data->url);
   $url = $mysqli->escape_string($data->url);
   $condition = "branch=\"$branch\" AND url=\"$url\"";
   $query = "SELECT base_type, description, version, license, license_url, no_3d_view, needs_robot_ancestor, updated, id FROM proto WHERE $condition";
