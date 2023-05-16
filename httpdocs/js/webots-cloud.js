@@ -1458,7 +1458,7 @@ ${deleteProject}`;
     function protoContainer(proto, searchParams) {
       const url = searchParams.get('url');
       const urlParts = url.split('/');
-      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+      const protoName = decodeURIComponent(urlParts[urlParts.length - 1].split('.proto')[0]);
 
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
