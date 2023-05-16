@@ -355,6 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
+      console.log(data.url)
       const encodedUrl = encodeURIComponent(data.url);
       let row = `
 <td class="has-text-centered">
