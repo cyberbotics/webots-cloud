@@ -1081,7 +1081,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="${(type === 'D') ? demoExample : competitionExample}">
               ${(type === 'D') ? demoExample : competitionExample}
             </a>
@@ -1146,7 +1146,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto">
               https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto
             </a>
