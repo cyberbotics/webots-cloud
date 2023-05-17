@@ -1352,7 +1352,6 @@ ${deleteProject}`;
               line += githubRow(data.protos[i], true);
             const protosList = document.getElementById('protos-list');
             protosList.innerHTML = line;
-            console.log(data.total)
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
           }
