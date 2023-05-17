@@ -345,8 +345,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      const encodedUrl = encodeURIComponent(data.url);
       if (proto) {
-        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
+        let element = `<a href="/run?version=${data.version}&url=${encodedUrl}" class="result-element">`;
         element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
         element += `<div class="result-title" title='${title}'>${title}</div>`;
         element += `<div class="result-details">`;
@@ -368,17 +369,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      const encodedUrl = encodeURIComponent(data.url);
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">`;
-      if (proto)
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}">${title}</a>`;
-      else
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}&type=${data.type}">${title}</a>`;
+      row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}&type=${data.type}">${title}</a>`;
       row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
@@ -1115,7 +1112,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="${(type === 'D') ? demoExample : competitionExample}">
               ${(type === 'D') ? demoExample : competitionExample}
             </a>
@@ -1180,7 +1177,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto">
               https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto
             </a>
@@ -1557,7 +1554,7 @@ ${deleteProject}`;
     function protoContainer(proto, searchParams) {
       const url = searchParams.get('url');
       const urlParts = url.split('/');
-      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+      const protoName = decodeURIComponent(urlParts[urlParts.length - 1].split('.proto')[0]);
 
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
