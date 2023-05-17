@@ -60,6 +60,7 @@
   $query_count .= $end_part;
   $result = $mysqli->query($query) or error($mysqli->error);
   $protos = array();
+  die($query_count);
   while($row = $result->fetch_array(MYSQLI_ASSOC)) {
     settype($row['id'], 'integer');
     settype($row['viewed'], 'integer');
