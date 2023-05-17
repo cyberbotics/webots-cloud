@@ -1379,6 +1379,7 @@ ${deleteProject}`;
                   keywordSpan.onclick = () => {
                     keywordSearch = data[i].name;
                     keywordIsFirst = false;
+                    setPages('proto', 1);
                     listProtos(protoPage, getSort('proto'), getSearch('proto'));
                   };
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
@@ -1519,6 +1520,7 @@ ${deleteProject}`;
     function listByKeyword(event) {
       keywordSearch = event.target.title;
       keywordIsFirst = true;
+      setPages('proto', 1);
       listProtos(protoPage, getSort('proto'), getSearch('proto'));
     }
   }
