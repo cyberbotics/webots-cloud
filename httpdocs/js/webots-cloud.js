@@ -226,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
       const hrefKeyword = keywordSearch ? '?keyword=' + keywordSearch : '';
+      console.log(hrefKeyword);
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
