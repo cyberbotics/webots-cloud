@@ -223,17 +223,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
-      const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
-      let previousOption = hrefSort === '' ? '?' : '&';
-      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? previousOption + 'search=' + getSearch(tab) : '';
-      let hrefKeyword = '';
-      if (activeTab === 'proto' && keywordSearch !== '') {
-        hrefKeyword = '?keyword=';
-        if (keywordIsFirst)
-          hrefKeyword += keywordSearch;
-        else
-          hrefKeyword += keywordParentSearch + '/' + keywordSearch;
-      }
       // The url is used only to generate the correct list of parameters
       const url = new URL('https://example.com');
       if (getSort(tab) && getSort(tab) !== 'default')
@@ -251,12 +240,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
+      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
+        : `" aria-label="Goto page 1" href="${tab + url.search}$"`;
       url.searchParams.set('p', current - 1);
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${tab + url.search}"`;
       url.searchParams.set('p', current + 1);
       const nextDisabled = (current === max) ? ' disabled' : ` href="${tab + url.search}"`;
-      const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -271,9 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (i === current)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
-        else
+        else {
+          url.searchParams.set('p', i);
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
-            href="${tab}?p=${i}${hrefSort}${hrefSearch}${hrefKeyword}">${i}</a></li>`;
+            href="${tab + url.search}">${i}</a></li>`;
+        }
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
