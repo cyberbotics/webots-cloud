@@ -201,30 +201,33 @@ document.addEventListener('DOMContentLoaded', function() {
     mainContainer(project, activeTab);
     initTabs();
     initSort(sort, activeTab);
-
-    if (keywordParentSearch !== '' && !keywordIsFirst) {
-      let tags = document.getElementsByClassName('first-level-keyword');
-      for (let i = 0; i < tags.length; i++) {
-        if (tags[i].title === keywordParentSearch) {
-          tags[i].classList.add('is-active');
-          break;
+    if (keywordSearch && keywordSearch !== '') {
+      setSubKeywords().then(() => {
+        if (keywordParentSearch !== '' && !keywordIsFirst) {
+          let tags = document.getElementsByClassName('first-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordParentSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
+          tags = document.getElementsByClassName('second-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
+        } else if (keywordSearch !== '' && keywordIsFirst) {
+          const tags = document.getElementsByClassName('first-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
         }
-      }
-      tags = document.getElementsByClassName('second-level-keyword');
-      for (let i = 0; i < tags.length; i++) {
-        if (tags[i].title === keywordSearch) {
-          tags[i].classList.add('is-active');
-          break;
-        }
-      }
-    } else if (keywordSearch !== '' && keywordIsFirst) {
-      const tags = document.getElementsByClassName('first-level-keyword');
-      for (let i = 0; i < tags.length; i++) {
-        if (tags[i].title === keywordSearch) {
-          tags[i].classList.add('is-active');
-          break;
-        }
-      }
+      });
     }
 
     initSearch(search);
@@ -1432,7 +1435,7 @@ ${deleteProject}`;
     }
 
     function setSubKeywords() {
-      fetch('/ajax/proto/sub_keywords.php', {
+      return fetch('/ajax/proto/sub_keywords.php', {
         method: 'post',
         body: JSON.stringify({ parent: keywordSearch })
       })
