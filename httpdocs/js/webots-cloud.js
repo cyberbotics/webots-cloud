@@ -745,12 +745,14 @@ ${deleteProject}`;
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
+      document.getElementsByClassName('sort-by-select')[0].onchange = e =>
+        sortProtoBy(e.target.options[e.target.selectedIndex].value);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
     }
 
     function sortProtoBy(sort) {
-      setSorts('proto', sort.target.options[sort.target.selectedIndex].value);
+      console.log(sort)
+      setSorts('proto', sort);
       searchAndSortTable('proto');
     }
 
