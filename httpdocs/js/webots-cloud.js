@@ -874,7 +874,6 @@ ${deleteProject}`;
     }
 
     function searchAndSortTable(type, isSearch) {
-      console.log("search and sort table")
       const url = new URL(document.location.origin + document.location.pathname);
       if (getPage(type) !== 1 && !isSearch)
         url.searchParams.append('p', getPage(type));
