@@ -759,6 +759,7 @@ ${deleteProject}`;
       if (sortBy && sortBy !== 'default') {
         if (activeTab === 'proto') {
           const options = document.getElementsByClassName('sort-by-select')[0].getElementsByTagName('option');
+          console.log(options)
           options.forEach(option => {
             if (option.value === sortBy)
               option.selected = 'selected';
