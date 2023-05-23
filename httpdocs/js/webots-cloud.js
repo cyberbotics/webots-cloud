@@ -860,6 +860,7 @@ ${deleteProject}`;
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
 
+          console.log(activeTab)
           if (activeTab === 'proto' && keywordSearch !== '') {
             let keyword = '';
             if (keywordIsFirst)
