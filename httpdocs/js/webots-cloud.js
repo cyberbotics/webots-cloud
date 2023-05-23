@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
         else {
+          console.log(i)
           url.searchParams.set('p', i);
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab + url.search}">${i}</a></li>`;
