@@ -751,7 +751,7 @@ ${deleteProject}`;
 
     function sortProtoBy(sort) {
       setSorts('proto', sort.target.options[sort.target.selectedIndex].value);
-      listProtos(protoPage, getSort('proto'), getSearch('proto'));
+      searchAndSortTable('proto');
     }
 
     function initSort(sortBy) {
