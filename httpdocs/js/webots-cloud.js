@@ -1445,6 +1445,7 @@ ${deleteProject}`;
             ModalDialog.run('Keyword listing error', data.error);
           else {
             const container = document.getElementsByClassName('second-level-keyword-container')[0];
+            console.log(data)
             if (data.length > 1) {
               container.innerHTML = '';
               container.style.display = 'block';
