@@ -839,6 +839,7 @@ ${deleteProject}`;
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
+      console.log(keywordSearch)
       TABS.forEach((tab) => {
         tab.addEventListener('click', (e) => {
           const selected = tab.getAttribute('data-tab');
