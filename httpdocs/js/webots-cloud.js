@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
       ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
 
     console.log(sort)
+    console.log(keyword)
     if (keyword.includes('/')) {
       keyword = keyword.split('/');
       keywordParentSearch = keyword[0];
