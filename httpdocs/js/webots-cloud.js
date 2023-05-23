@@ -758,7 +758,7 @@ ${deleteProject}`;
     function initSort(sortBy, activeTab) {
       if (sortBy && sortBy !== 'default') {
         if (activeTab === 'proto') {
-          const options = document.getElementById('personlist').getElementsByTagName('option');
+          const options = document.getElementsByClassName('sort-by-select')[0].getElementsByTagName('option');
           options.forEach(option => {
             if (option.value === sortBy)
               option.selected = 'selected';
