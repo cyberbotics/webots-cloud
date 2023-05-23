@@ -187,8 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let keyword = new URL(document.location.href).searchParams.get('keyword')
       ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
 
-    console.log(sort)
-    console.log(keyword)
     if (keyword.includes('/')) {
       keyword = keyword.split('/');
       keywordParentSearch = keyword[0];
@@ -236,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
+      let url = new URL(tab);
+      console.log(url)
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
