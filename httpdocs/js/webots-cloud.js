@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab + url.search}$"`;
+        : `" aria-label="Goto page 1" href="${tab + url.search}"`;
       url.searchParams.set('p', current - 1);
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${tab + url.search}"`;
       url.searchParams.set('p', current + 1);
@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
         else {
-          console.log(i)
           url.searchParams.set('p', i);
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab + url.search}">${i}</a></li>`;
