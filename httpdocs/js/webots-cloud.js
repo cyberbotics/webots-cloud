@@ -840,7 +840,6 @@ ${deleteProject}`;
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
       TABS.forEach((tab) => {
-        console.log("init tabs")
         tab.addEventListener('click', (e) => {
           const selected = tab.getAttribute('data-tab');
           document.querySelector('a.navbar-item').href = `/${selected}`;
@@ -860,6 +859,15 @@ ${deleteProject}`;
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
+
+          if (activeTab === 'proto' && keywordSearch !== '') {
+            let keyword = '';
+            if (keywordIsFirst)
+              keyword = keywordSearch;
+            else
+              keyword = keywordParentSearch + '/' + keywordSearch;
+            url.searchParams.append('keyword', keyword);
+          }
           updateSearchIcon(activeTab);
           window.history.pushState(null, '', (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
