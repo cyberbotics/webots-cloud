@@ -742,6 +742,10 @@ nav.pagination>a {
   text-align: center;
 }
 
+.second-level-keyword-container .is-active {
+  color: #007acc;
+}
+
 .second-level-keyword {
   margin: 10px;
   cursor: pointer;
