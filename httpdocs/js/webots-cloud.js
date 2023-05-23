@@ -751,7 +751,6 @@ ${deleteProject}`;
     }
 
     function sortProtoBy(sort) {
-      console.log(sort)
       setSorts('proto', sort);
       searchAndSortTable('proto');
     }
@@ -759,7 +758,11 @@ ${deleteProject}`;
     function initSort(sortBy, activeTab) {
       if (sortBy && sortBy !== 'default') {
         if (activeTab === 'proto') {
-          console.log("init proto sort")
+          const options = document.getElementById('personlist').getElementsByTagName('option');
+          options.forEach(option => {
+            if (option.value === sortBy)
+              option.selected = 'selected';
+          });
         } else {
           const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
           if (columnTitle) {
