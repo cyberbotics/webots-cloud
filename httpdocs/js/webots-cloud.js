@@ -234,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
-      console.log(tab)
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
@@ -260,6 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab}?p=${i}${hrefSort}${hrefSearch}${hrefKeyword}">${i}</a></li>`;
+        console.log(content.innerHTML)
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
