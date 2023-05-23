@@ -191,7 +191,9 @@ document.addEventListener('DOMContentLoaded', function() {
       keyword = keyword.split('/');
       keywordParentSearch = keyword[0];
       let tags = document.getElementsByClassName('first-level-keyword');
+      console.log(tags)
       for (let i = 0; i < tags.length; i++) {
+        console.log("search tag")
         if (tags[i].title === keywordParentSearch) {
           tags[i].classList.add('is-active');
           break;
