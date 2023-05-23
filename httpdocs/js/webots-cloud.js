@@ -224,7 +224,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
-      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
+      let previousOption = hrefSort === '' ? '?' : '&';
+      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? previousOption + 'search=' + getSearch(tab) : '';
       let hrefKeyword = '';
       if (activeTab === 'proto' && keywordSearch !== '') {
         hrefKeyword = '?keyword=';
