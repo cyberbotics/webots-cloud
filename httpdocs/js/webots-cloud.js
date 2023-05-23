@@ -234,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
-      console.log("test hook")
       // The url is used only to generate the correct list of parameters
       const url = new URL('https://example.com');
       if (getSort(tab) && getSort(tab) !== 'default')
@@ -253,9 +252,9 @@ document.addEventListener('DOMContentLoaded', function() {
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       url.searchParams.set('p', current - 1);
-      const previousDisabled = (current === 1) ? ' disabled' : ` href="${'/' + tab + url.search}"`;
-      const nextDisabled = (current === max) ? ' disabled'
-        : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}${hrefKeyword}"`;
+      const previousDisabled = (current === 1) ? ' disabled' : ` href="${tab + url.search}"`;
+      url.searchParams.set('p', current + 1);
+      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab + url.search}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
         : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       content.innerHTML =
