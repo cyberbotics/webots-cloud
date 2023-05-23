@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
-
+      console.log("test hook")
       // The url is used only to generate the correct list of parameters
       const url = new URL('https://example.com');
       if (getSort(tab) && getSort(tab) !== 'default')
