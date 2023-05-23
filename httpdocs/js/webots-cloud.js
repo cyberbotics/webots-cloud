@@ -1427,49 +1427,52 @@ ${deleteProject}`;
           }
         });
 
-      if (keywordSearch && keywordSearch !== '') {
-        fetch('/ajax/proto/sub_keywords.php', {
-          method: 'post',
-          body: JSON.stringify({ parent: keywordSearch })
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.error)
-              ModalDialog.run('Keyword listing error', data.error);
-            else {
-              const container = document.getElementsByClassName('second-level-keyword-container')[0];
-              if (data.length > 1) {
-                container.innerHTML = '';
-                container.style.display = 'block';
-                keywordParentSearch = keywordSearch;
-                const atTheEnd = [];
-                // The keywords arrived sorted by number of elements
-                for (let i = 0; i < data.length; i++) {
-                  const keywordSpan = document.createElement('span');
-                  keywordSpan.className = 'second-level-keyword';
-                  keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
-                  keywordSpan.onclick = () => {
-                    const alltags = document.getElementsByClassName('second-level-keyword');
-                    for (let j = 0; j < alltags.length; j++)
-                      alltags[j].classList.remove('is-active');
-                    keywordSpan.classList.add('is-active');
-                    keywordSearch = data[i].name;
-                    keywordIsFirst = false;
-                    setPages('proto', 1);
-                    searchAndSortTable('proto');
-                  };
-                  if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
-                    container.appendChild(keywordSpan);
-                  else
-                    atTheEnd.push(keywordSpan);
-                }
-                for (let i = 0; i < atTheEnd.length; i++)
-                  container.appendChild(atTheEnd[i]);
-              } else if (keywordIsFirst)
-                container.innerHTML = '';
-            }
-          });
-      }
+      if (keywordSearch && keywordSearch !== '')
+        setSubKeywords();
+    }
+
+    function setSubKeywords() {
+      fetch('/ajax/proto/sub_keywords.php', {
+        method: 'post',
+        body: JSON.stringify({ parent: keywordSearch })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error)
+            ModalDialog.run('Keyword listing error', data.error);
+          else {
+            const container = document.getElementsByClassName('second-level-keyword-container')[0];
+            if (data.length > 1) {
+              container.innerHTML = '';
+              container.style.display = 'block';
+              keywordParentSearch = keywordSearch;
+              const atTheEnd = [];
+              // The keywords arrived sorted by number of elements
+              for (let i = 0; i < data.length; i++) {
+                const keywordSpan = document.createElement('span');
+                keywordSpan.className = 'second-level-keyword';
+                keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
+                keywordSpan.onclick = () => {
+                  const alltags = document.getElementsByClassName('second-level-keyword');
+                  for (let j = 0; j < alltags.length; j++)
+                    alltags[j].classList.remove('is-active');
+                  keywordSpan.classList.add('is-active');
+                  keywordSearch = data[i].name;
+                  keywordIsFirst = false;
+                  setPages('proto', 1);
+                  searchAndSortTable('proto');
+                };
+                if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
+                  container.appendChild(keywordSpan);
+                else
+                  atTheEnd.push(keywordSpan);
+              }
+              for (let i = 0; i < atTheEnd.length; i++)
+                container.appendChild(atTheEnd[i]);
+            } else if (keywordIsFirst)
+              container.innerHTML = '';
+          }
+        });
     }
 
     function listServers(page) {
