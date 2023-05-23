@@ -884,9 +884,13 @@ ${deleteProject}`;
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
       if (type === 'proto' && keywordSearch !== '') {
-        console.log(keywordParentSearch)
+        let keyword = '';
+        if (keywordIsFirst)
+          keyword = keywordSearch;
+        else
+          keyword = keywordParentSearch + '/' + keywordSearch;
 
-        // url.searchParams.append(keyword)
+        url.searchParams.append('keyword', keyword);
       }
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
 
