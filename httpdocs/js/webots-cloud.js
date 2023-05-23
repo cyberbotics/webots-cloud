@@ -883,7 +883,7 @@ ${deleteProject}`;
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
-
+      console.log(type)
       if (type === 'proto')
         console.log(keywordSearch)
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
