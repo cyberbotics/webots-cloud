@@ -223,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
-
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       let previousOption = hrefSort === '' ? '?' : '&';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? previousOption + 'search=' + getSearch(tab) : '';
@@ -235,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
-      
+
       // The url is used only to generate the correct list of parameters
       const url = new URL('https://example.com');
       if (getSort(tab) && getSort(tab) !== 'default')
