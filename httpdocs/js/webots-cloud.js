@@ -840,6 +840,7 @@ ${deleteProject}`;
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
       TABS.forEach((tab) => {
+        console.log("init tabs")
         tab.addEventListener('click', (e) => {
           const selected = tab.getAttribute('data-tab');
           document.querySelector('a.navbar-item').href = `/${selected}`;
