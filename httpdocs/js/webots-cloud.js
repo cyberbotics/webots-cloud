@@ -839,7 +839,6 @@ ${deleteProject}`;
       const TABS = [...document.querySelectorAll('#tabs li')];
       const CONTENT = [...document.querySelectorAll('#tab-content section')];
       const ACTIVE_CLASS = 'is-active';
-      console.log(keywordSearch)
       TABS.forEach((tab) => {
         tab.addEventListener('click', (e) => {
           const selected = tab.getAttribute('data-tab');
@@ -1394,8 +1393,7 @@ ${deleteProject}`;
                   keywordSpan.onclick = () => {
                     keywordSearch = data[i].name;
                     keywordIsFirst = false;
-                    setPages('proto', 1);
-                    listProtos(protoPage, getSort('proto'), getSearch('proto'));
+                    searchAndSortTable('proto');
                   };
                   if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
                     container.appendChild(keywordSpan);
@@ -1535,8 +1533,7 @@ ${deleteProject}`;
     function listByKeyword(event) {
       keywordSearch = event.target.title;
       keywordIsFirst = true;
-      setPages('proto', 1);
-      listProtos(protoPage, getSort('proto'), getSearch('proto'));
+      searchAndSortTable('proto');
     }
   }
 
