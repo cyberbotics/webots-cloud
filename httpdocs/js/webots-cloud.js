@@ -225,14 +225,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePagination(tab, current, max) {
       const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
       const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
+      let hrefKeyword = '';
+      if (activeTab === 'proto' && keywordSearch !== '') {
+        hrefKeyword = '?keyword=';
+        if (keywordIsFirst)
+          hrefKeyword += keywordSearch;
+        else
+          hrefKeyword += keywordParentSearch + '/' + keywordSearch;
+      }
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
+        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       const nextDisabled = (current === max) ? ' disabled'
-        : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}"`;
+        : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}"`;
+        : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -249,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ` aria-current="page">${i}</a></li>`;
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
-            href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
+            href="${tab}?p=${i}${hrefSort}${hrefSearch}${hrefKeyword}">${i}</a></li>`;
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
@@ -859,8 +867,6 @@ ${deleteProject}`;
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
-
-          console.log(activeTab)
           if (activeTab === 'proto' && keywordSearch !== '') {
             let keyword = '';
             if (keywordIsFirst)
