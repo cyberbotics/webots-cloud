@@ -223,6 +223,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
+
+      const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
+      let previousOption = hrefSort === '' ? '?' : '&';
+      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? previousOption + 'search=' + getSearch(tab) : '';
+      let hrefKeyword = '';
+      if (activeTab === 'proto' && keywordSearch !== '') {
+        hrefKeyword = '?keyword=';
+        if (keywordIsFirst)
+          hrefKeyword += keywordSearch;
+        else
+          hrefKeyword += keywordParentSearch + '/' + keywordSearch;
+      }
+      
       // The url is used only to generate the correct list of parameters
       const url = new URL('https://example.com');
       if (getSort(tab) && getSort(tab) !== 'default')
