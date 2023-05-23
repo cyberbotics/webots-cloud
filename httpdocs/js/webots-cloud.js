@@ -223,21 +223,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
-      const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
-      let previousOption = hrefSort === '' ? '?' : '&';
-      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? previousOption + 'search=' + getSearch(tab) : '';
-      let hrefKeyword = '';
-      if (activeTab === 'proto' && keywordSearch !== '') {
-        hrefKeyword = '?keyword=';
+      // The url is used only to generate the correct list of parameters
+      const url = new URL('https://example.com');
+      if (getSort(tab) && getSort(tab) !== 'default')
+        url.searchParams.append('sort', getSort(tab));
+      if (getSearch(tab) && getSearch(tab) !== '')
+        url.searchParams.append('search', getSearch(tab));
+      if (tab === 'proto' && keywordSearch !== '') {
+        let keyword = '';
         if (keywordIsFirst)
-          hrefKeyword += keywordSearch;
+          keyword = keywordSearch;
         else
-          hrefKeyword += keywordParentSearch + '/' + keywordSearch;
+          keyword = keywordParentSearch + '/' + keywordSearch;
+        url.searchParams.append('keyword', keyword);
       }
+
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
-      const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}${hrefKeyword}"`;
+      url.searchParams.set('p', current - 1);
+      const previousDisabled = (current === 1) ? ' disabled' : ` href="${'/' + tab + url.search}"`;
       const nextDisabled = (current === max) ? ' disabled'
         : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}${hrefKeyword}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
@@ -259,7 +263,6 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
             href="${tab}?p=${i}${hrefSort}${hrefSearch}${hrefKeyword}">${i}</a></li>`;
-        console.log(content.innerHTML)
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
