@@ -234,8 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else
           hrefKeyword += keywordParentSearch + '/' + keywordSearch;
       }
-      let url = new URL(tab);
-      console.log(url)
+      console.log(tab)
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
       const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
