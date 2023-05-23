@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function homePage(project) {
+    console.log("homePage")
     const pageLimit = 10;
     const protoPageLimit = 120;
 
