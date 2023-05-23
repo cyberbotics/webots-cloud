@@ -755,6 +755,7 @@ ${deleteProject}`;
     }
 
     function initSort(sortBy) {
+      console.log(sortBy)
       if (sortBy && sortBy !== 'default') {
         const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
         if (columnTitle) {
