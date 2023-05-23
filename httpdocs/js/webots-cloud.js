@@ -759,11 +759,13 @@ ${deleteProject}`;
       if (sortBy && sortBy !== 'default') {
         if (activeTab === 'proto') {
           const options = document.getElementsByClassName('sort-by-select')[0].getElementsByTagName('option');
-          console.log(options)
-          options.forEach(option => {
-            if (option.value === sortBy)
+          for (let i = 0; i < options.length; i++) {
+            const option = options[i];
+            if (option.value === sortBy) {
               option.selected = 'selected';
-          });
+              break;
+            }
+          }
         } else {
           const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
           if (columnTitle) {
