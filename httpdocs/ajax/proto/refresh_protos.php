@@ -11,7 +11,7 @@ if ($_GET['password'] === $refresh_password) {
   if ($mysqli->connect_errno)
     error("Can't connect to MySQL database: $mysqli->connect_error");
   $mysqli->set_charset('utf8');
-  $result = $mysqli->query('SELECT id, url FROM proto where branch="proto"') or error($mysqli->error);
+  $result = $mysqli->query('SELECT id, url FROM proto') or error($mysqli->error);
   $continue_on_error = true;
   while($row = $result->fetch_array(MYSQLI_ASSOC))
     create_or_update_proto($row['url'], $row['id'], '');
