@@ -191,8 +191,10 @@ document.addEventListener('DOMContentLoaded', function() {
       keyword = keyword.split('/');
       keywordParentSearch = keyword[0];
       keywordSearch = keyword[1];
-    } else
+    } else {
       keywordSearch = keyword;
+      keywordIsFirst = true;
+    }
 
     setPages(activeTab, page);
     setSorts(activeTab, sort);
@@ -226,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
               break;
             }
           }
-          keywordIsFirst = true;
         }
       });
     }
