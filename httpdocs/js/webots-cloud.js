@@ -207,6 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
       setSubKeywords().then(() => {
         console.log("set highlight")
         if (keywordParentSearch !== '' && !keywordIsFirst) {
+          console.log("right")
           let tags = document.getElementsByClassName('first-level-keyword');
           for (let i = 0; i < tags.length; i++) {
             if (tags[i].title === keywordParentSearch) {
