@@ -1460,6 +1460,7 @@ ${deleteProject}`;
               for (let i = 0; i < data.length; i++) {
                 const keywordSpan = document.createElement('span');
                 keywordSpan.className = 'second-level-keyword';
+                keywordSpan.title = data[i].name;
                 keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                 keywordSpan.onclick = () => {
                   const alltags = document.getElementsByClassName('second-level-keyword');
