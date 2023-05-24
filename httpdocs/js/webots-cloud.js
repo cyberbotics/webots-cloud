@@ -1460,8 +1460,11 @@ ${deleteProject}`;
                 keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
                 keywordSpan.onclick = () => {
                   const alltags = document.getElementsByClassName('second-level-keyword');
-                  for (let j = 0; j < alltags.length; j++)
+                  for (let j = 0; j < alltags.length; j++) {
+                    console.log("remove")
                     alltags[j].classList.remove('is-active');
+                  }
+                  console.log("add")
                   keywordSpan.classList.add('is-active');
                   keywordSearch = data[i].name;
                   keywordIsFirst = false;
