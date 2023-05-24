@@ -205,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initSort(sort, activeTab);
     if (keywordSearch && keywordSearch !== '') {
       setSubKeywords().then(() => {
-        console.log("set highlight")
         if (keywordParentSearch !== '' && !keywordIsFirst) {
           let tags = document.getElementsByClassName('first-level-keyword');
           for (let i = 0; i < tags.length; i++) {
@@ -215,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
           }
           tags = document.getElementsByClassName('second-level-keyword');
-          console.log(tags)
           for (let i = 0; i < tags.length; i++) {
             if (tags[i].title === keywordSearch) {
               tags[i].classList.add('is-active');
@@ -1479,7 +1477,6 @@ ${deleteProject}`;
               }
               for (let i = 0; i < atTheEnd.length; i++)
                 container.appendChild(atTheEnd[i]);
-              console.log("sub_keywords set");
             } else if (keywordIsFirst)
               container.innerHTML = '';
           }
