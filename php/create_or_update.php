@@ -303,9 +303,8 @@ function get_parent($externprotos, $base_proto, $parent_url) {
   }
   if (!$found_parent) {
     $str = '';
-    for($i = 0; $i < count($externprotos); $i++) {
+    for($i = 0; $i < count($externprotos); $i++)
       $str .= $externprotos[$i][0];
-    }
     error(" $str base: $base_proto parent_url: $parent_url");
   }
   return array($externprotos, $base_proto, $current_proto_content, $parent_url, $found_parent);
