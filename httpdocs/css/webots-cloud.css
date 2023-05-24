@@ -695,3 +695,58 @@ nav.pagination>a {
 .update-proto {
   padding-left: 5px;
 }
+
+.first-level-keyword-container {
+  height: 85px;
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  justify-content: center;
+}
+
+.first-level-keyword {
+    text-align: center;
+    width: 64px;
+    margin: 8px;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    cursor: pointer;
+}
+
+.first-level-keyword img {
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    pointer-events: none;
+}
+
+.first-level-keyword p {
+  pointer-events: none;
+}
+
+.first-level-keyword:hover {
+  color: #007acc;
+}
+
+.first-level-keyword-container .is-active {
+  color: #007acc;
+  border-bottom: 1px solid #007acc;
+}
+
+.second-level-keyword-container {
+  height: 40px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: none;
+  text-align: center;
+}
+
+.second-level-keyword-container .is-active {
+  color: #007acc;
+}
+
+.second-level-keyword {
+  margin: 10px;
+  cursor: pointer;
+}
