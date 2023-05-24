@@ -1429,6 +1429,9 @@ ${deleteProject}`;
             updatePagination('proto', page, total);
           }
         });
+
+      if (keywordSearch && keywordSearch !== '' && keywordIsFirst)
+        setSubKeywords();
     }
 
     function setSubKeywords() {
