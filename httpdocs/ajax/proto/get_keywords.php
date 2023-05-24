@@ -14,9 +14,8 @@
     $query = "SELECT child.name, parent.name AS parent_name FROM proto_keywordmap LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE proto_keywordmap.proto_id=$data->id";
     $result = $mysqli->query($query) or error($mysqli->error);
     $protos = array();
-    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+    while($row = $result->fetch_array(MYSQLI_ASSOC))
       array_push($protos, $row);
-    }
     die(json_encode($protos));
   }
  ?>
