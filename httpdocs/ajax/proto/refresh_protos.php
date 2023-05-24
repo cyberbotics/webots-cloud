@@ -13,8 +13,7 @@ if ($_GET['password'] === $refresh_password) {
   $mysqli->set_charset('utf8');
   $result = $mysqli->query('SELECT id, url FROM proto where branch="proto"') or error($mysqli->error);
   $continue_on_error = true;
-  while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+  while($row = $result->fetch_array(MYSQLI_ASSOC))
     create_or_update_proto($row['url'], $row['id'], '');
-  }
 }
 ?>
