@@ -91,9 +91,8 @@ function create_or_update_proto($url, $id, $search) {
           $kk = array();
           foreach ($keywords as $key) {
             $key = explode('/', $key);
-            foreach ($key as &$tag) {
+            foreach ($key as &$tag)
               $tag = trim($mysqli->escape_string($tag));
-            }
             array_push($kk, $key);
           }
           $keywords = $kk;
