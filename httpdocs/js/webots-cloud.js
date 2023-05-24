@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
               break;
             }
           }
+          keywordIsFirst = true;
         } else if (keywordSearch !== '' && keywordIsFirst) {
           const tags = document.getElementsByClassName('first-level-keyword');
           for (let i = 0; i < tags.length; i++) {
