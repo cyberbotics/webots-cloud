@@ -1437,8 +1437,6 @@ ${deleteProject}`;
 
     function setSubKeywords() {
       let keyword = keywordIsFirst ? keywordSearch : keywordParentSearch;
-      console.log(keywordSearch)
-      console.log(keywordParentSearch)
       console.log(keywordIsFirst);
       return fetch('/ajax/proto/sub_keywords.php', {
         method: 'post',
