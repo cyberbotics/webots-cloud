@@ -1450,7 +1450,8 @@ ${deleteProject}`;
             if (data.length > 1) {
               container.innerHTML = '';
               container.style.display = 'block';
-              keywordParentSearch = keywordSearch;
+              if (keywordIsFirst)
+                keywordParentSearch = keywordSearch;
               const atTheEnd = [];
               // The keywords arrived sorted by number of elements
               for (let i = 0; i < data.length; i++) {
