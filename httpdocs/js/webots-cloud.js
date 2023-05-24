@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSort(sort, activeTab);
     if (keywordSearch && keywordSearch !== '') {
       setSubKeywords().then(() => {
+        console.log("set highlight")
         if (keywordParentSearch !== '' && !keywordIsFirst) {
           let tags = document.getElementsByClassName('first-level-keyword');
           for (let i = 0; i < tags.length; i++) {
@@ -1438,7 +1439,6 @@ ${deleteProject}`;
 
     function setSubKeywords() {
       let keyword = keywordIsFirst ? keywordSearch : keywordParentSearch;
-      console.log(keywordIsFirst);
       return fetch('/ajax/proto/sub_keywords.php', {
         method: 'post',
         body: JSON.stringify({ parent: keyword })
@@ -1449,7 +1449,6 @@ ${deleteProject}`;
             ModalDialog.run('Keyword listing error', data.error);
           else {
             const container = document.getElementsByClassName('second-level-keyword-container')[0];
-            console.log(data)
             if (data.length > 1) {
               container.innerHTML = '';
               container.style.display = 'block';
@@ -1478,6 +1477,7 @@ ${deleteProject}`;
               }
               for (let i = 0; i < atTheEnd.length; i++)
                 container.appendChild(atTheEnd[i]);
+              console.log("sub_keywords set");
             } else if (keywordIsFirst)
               container.innerHTML = '';
           }
