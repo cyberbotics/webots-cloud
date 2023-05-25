@@ -696,16 +696,11 @@ nav.pagination>a {
   padding-left: 5px;
 }
 
-.first-level-keyword-scroll {
-  margin: auto;
-  max-width: 100%;
-  overflow: auto;
-}
-
 .first-level-keyword-container {
   height: 85px;
   width: 100%;
   display: flex;
+  overflow: auto;
   justify-content: center;
 }
 
