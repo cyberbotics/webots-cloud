@@ -49,12 +49,13 @@ function check_url($url, $proto = false) {
   return array($username, $repository, $tag_or_branch, $folder, $world_or_proto);
 }
 
+# yaml error return
+function yaml_error($msg) {
+  return "YAML file error: $msg";
+}
+
 function github_check_yaml($check_url, $proto) {
   global $raw_githubusercontent_com;
-  # yaml error return
-  function yaml_error($msg) {
-    return "YAML file error: $msg";
-  }
 
   # get file from github
   list($username, $repository, $version, $folder, $world_or_proto) = $check_url;

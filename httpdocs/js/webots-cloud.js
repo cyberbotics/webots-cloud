@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let protoSort = 'default';
   let competitionSort = 'default';
 
+  let keywordSearch = '';
+  let keywordParentSearch = '';
+  let keywordIsFirst = false;
+
   let sceneSearch = '';
   let animationSearch = '';
   let simulationSearch = '';
@@ -180,6 +184,17 @@ document.addEventListener('DOMContentLoaded', function() {
       ? (new URL(document.location.href).searchParams.get('search')).toString() : getSearch(activeTab);
     let sort = new URL(document.location.href).searchParams.get('sort')
       ? (new URL(document.location.href).searchParams.get('sort')).toString() : getSort(activeTab);
+    let keyword = new URL(document.location.href).searchParams.get('keyword')
+      ? (new URL(document.location.href).searchParams.get('keyword')).toString() : '';
+
+    if (keyword.includes('/')) {
+      keyword = keyword.split('/');
+      keywordParentSearch = keyword[0];
+      keywordSearch = keyword[1];
+    } else {
+      keywordSearch = keyword;
+      keywordIsFirst = true;
+    }
 
     setPages(activeTab, page);
     setSorts(activeTab, sort);
@@ -187,7 +202,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mainContainer(project, activeTab);
     initTabs();
-    initSort(sort);
+    initSort(sort, activeTab);
+    if (keywordSearch && keywordSearch !== '') {
+      setSubKeywords().then(() => {
+        if (keywordParentSearch !== '' && !keywordIsFirst) {
+          let tags = document.getElementsByClassName('first-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordParentSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
+          tags = document.getElementsByClassName('second-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
+        } else if (keywordSearch !== '' && keywordIsFirst) {
+          const tags = document.getElementsByClassName('first-level-keyword');
+          for (let i = 0; i < tags.length; i++) {
+            if (tags[i].title === keywordSearch) {
+              tags[i].classList.add('is-active');
+              break;
+            }
+          }
+        }
+      });
+    }
+
     initSearch(search);
     updateSearchIcon();
 
@@ -202,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
     listSimulations('D', simulationPage, getSort('simulation'), getSearch('simulation'));
     listSimulations('C', competitionPage, getSort('competition'), getSearch('competition'));
     listProtos(protoPage, getSort('proto'), getSearch('proto'));
+    bindKeywords();
     listServers(serverPage);
 
     if (project.email && project.email.endsWith('@cyberbotics.com')) {
@@ -210,15 +255,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePagination(tab, current, max) {
-      const hrefSort = getSort(tab) && getSort(tab) !== 'default' ? '?sort=' + getSort(tab) : '';
-      const hrefSearch = getSearch(tab) && getSearch(tab) !== '' ? '?search=' + getSearch(tab) : '';
+      // The url is used only to generate the correct list of parameters
+      const url = new URL('https://example.com');
+      if (getSort(tab) && getSort(tab) !== 'default')
+        url.searchParams.append('sort', getSort(tab));
+      if (getSearch(tab) && getSearch(tab) !== '')
+        url.searchParams.append('search', getSearch(tab));
+      if (tab === 'proto' && keywordSearch !== '') {
+        let keyword = '';
+        if (keywordIsFirst)
+          keyword = keywordSearch;
+        else
+          keyword = keywordParentSearch + '/' + keywordSearch;
+        url.searchParams.append('keyword', keyword);
+      }
+
       const nav = document.querySelector(`section[data-content="${tab}"] > nav`);
       const content = {};
-      const previousDisabled = (current === 1) ? ' disabled' : ` href="${(current === 2)
-        ? ('/' + tab) : ('/' + tab + '?p=' + (current - 1))}${hrefSort}${hrefSearch}"`;
-      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab}?p=${current + 1}${hrefSort}${hrefSearch}"`;
       const oneIsCurrent = (current === 1) ? ' is-current" aria-label="Page 1" aria-current="page"'
-        : `" aria-label="Goto page 1" href="${tab}${hrefSort}${hrefSearch}"`;
+        : `" aria-label="Goto page 1" href="${tab + url.search}"`;
+      url.searchParams.set('p', current - 1);
+      const previousDisabled = (current === 1) ? ' disabled' : ` href="${tab + url.search}"`;
+      url.searchParams.set('p', current + 1);
+      const nextDisabled = (current === max) ? ' disabled' : ` href="${tab + url.search}"`;
       content.innerHTML =
         `<a class="pagination-previous"${previousDisabled}>Previous</a>
         <ul class="pagination-list"><li>
@@ -233,9 +292,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (i === current)
           content.innerHTML += `<li><a class="pagination-link is-current" aria-label="Page ${i}"` +
             ` aria-current="page">${i}</a></li>`;
-        else
+        else {
+          url.searchParams.set('p', i);
           content.innerHTML += `<li><a class="pagination-link" aria-label="Goto page ${i}"
-            href="${tab}?p=${i}${hrefSort}${hrefSearch}">${i}</a></li>`;
+            href="${tab + url.search}">${i}</a></li>`;
+        }
       }
       content.innerHTML += `</ul>` + `<a class="pagination-next"${nextDisabled}>Next page</a>`;
       nav.innerHTML = content.innerHTML;
@@ -332,11 +393,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
+      const encodedUrl = encodeURIComponent(data.url);
       if (proto) {
-        let element = `<a href="/run?version=${data.version}&url=${data.url}" class="result-element">`;
+        let element = `<a href="/run?version=${data.version}&url=${encodedUrl}" class="result-element">`;
         element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
         element += `<div class="result-title" title='${title}'>${title}</div>`;
+        element += `<div class="result-details">`;
+        element += `<div class="result-views"><img src="images/views.png"/>`;
+        element += `<div>${data.viewed}</div></div>`;
         element += `<div class="result-version">${data.version}</div>`;
+        element += `</div>`;
         element += `<div class="description-container">
               <p class="thumbnail-description">${data.description}</p>
             </div>`;
@@ -351,17 +417,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const deleteProject = admin ? `<td class="has-text-centered">${deleteIcon}</td>` : ``;
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
       const secondColumn = (data.type === 'competition') ? data.participants : data.viewed;
-      const encodedUrl = encodeURIComponent(data.url);
       let row = `
 <td class="has-text-centered">
   <a class="has-text-dark" href="${repository}/stargazers" target="_blank" title="GitHub stars">${data.stars}</a>
 </td>
 <td class="has-text-centered"><a class="has-text-dark" target="_blank"> ${secondColumn}</a></td>
 <td class="title-cell">`;
-      if (proto)
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}">${title}</a>`;
-      else
-        row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}&type=${data.type}">${title}</a>`;
+      row += `<a class="table-title has-text-dark" href="/run?version=${data.version}&url=${encodedUrl}&type=${data.type}">${title}</a>`;
       row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
@@ -654,7 +716,23 @@ ${deleteProject}`;
               <button class="button" id="what-is-a-competition">What is a competition?</button>
             </div>
           </section>
-          <section class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+          <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
+            <div class="first-level-keyword-container">
+              <div class="first-level-keyword" title="robot"><img src="../images/proto/robot.png"><p>Robot</p></div>
+              <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor.png"><p>Sensor</p></div>
+              <div class="first-level-keyword" title="actuator"><img src="../images/proto/actuator.png"><p>Actuator</p></div>
+              <div class="first-level-keyword" title="industrial"><img src="../images/proto/industrial.png"><p>Industrial</p></div>
+              <div class="first-level-keyword" title="household"><img src="../images/proto/household.png"><p>Household</p></div>
+              <div class="first-level-keyword" title="vehicle"><img src="../images/proto/vehicle.png"><p>Vehicle</p></div>
+              <div class="first-level-keyword" title="furniture"><img src="../images/proto/furniture.png"><p>Furniture</p></div>
+              <div class="first-level-keyword" title="building"><img src="../images/proto/building.png"><p>Building</p></div>
+              <div class="first-level-keyword" title="animal"><img src="../images/proto/animal.png"><p>Animal</p></div>
+              <div class="first-level-keyword" title="exterior"><img src="../images/proto/exterior.png"><p>Exterior</p></div>
+              <div class="first-level-keyword" title="traffic"><img src="../images/proto/traffic.png"><p>Traffic</p></div>
+              <div class="first-level-keyword" title="appearance"><img src="../images/proto/appearance.png"><p>Appearance</p></div>
+              <div class="first-level-keyword" title="primitive"><img src="../images/proto/primitive.png"><p>Primitive</p></div>
+            </div>
+            <div class="second-level-keyword-container"></div>
             <div class="table-container">
               <div class="search-bar" style="max-width: 280px; padding-bottom: 20px;">
                 <div class="control has-icons-right">
@@ -714,24 +792,36 @@ ${deleteProject}`;
         </div>`;
       const title = (document.location.pathname.length > 1) ? document.location.pathname.substring(1) : 'home';
       project.setup(title, template.content);
-      document.getElementsByClassName('sort-by-select')[0].onchange = e => sortProtoBy(e);
+      document.getElementsByClassName('sort-by-select')[0].onchange = e =>
+        sortProtoBy(e.target.options[e.target.selectedIndex].value);
       document.getElementById('what-is-a-competition').onclick = whatIsCompetitionPopUp;
     }
 
     function sortProtoBy(sort) {
-      setSorts('proto', sort.target.options[sort.target.selectedIndex].value);
-      listProtos(protoPage, getSort('proto'), getSearch('proto'));
+      setSorts('proto', sort);
+      searchAndSortTable('proto');
     }
 
-    function initSort(sortBy) {
+    function initSort(sortBy, activeTab) {
       if (sortBy && sortBy !== 'default') {
-        const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
-        if (columnTitle) {
-          const sortIcon = columnTitle.querySelector('.sort-icon');
-          columnTitle.querySelector('.sort-icon').style.display = 'inline';
-          if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
-            sortIcon.classList.toggle('fa-sort-down');
-            sortIcon.classList.toggle('fa-sort-up');
+        if (activeTab === 'proto') {
+          const options = document.getElementsByClassName('sort-by-select')[0].getElementsByTagName('option');
+          for (let i = 0; i < options.length; i++) {
+            const option = options[i];
+            if (option.value === sortBy) {
+              option.selected = 'selected';
+              break;
+            }
+          }
+        } else {
+          const columnTitle = document.getElementById(activeTab + '-sort-' + sortBy.split('-')[0]);
+          if (columnTitle) {
+            const sortIcon = columnTitle.querySelector('.sort-icon');
+            columnTitle.querySelector('.sort-icon').style.display = 'inline';
+            if (sortBy.split('-')[1] === 'asc' && sortIcon.classList.contains('fa-sort-down')) {
+              sortIcon.classList.toggle('fa-sort-down');
+              sortIcon.classList.toggle('fa-sort-up');
+            }
           }
         }
       }
@@ -816,6 +906,14 @@ ${deleteProject}`;
             url.searchParams.append('sort', getSort(activeTab));
           if (getSearch(activeTab) && getSearch(activeTab) !== '')
             url.searchParams.append('search', getSearch(activeTab));
+          if (activeTab === 'proto' && keywordSearch !== '') {
+            let keyword = '';
+            if (keywordIsFirst)
+              keyword = keywordSearch;
+            else
+              keyword = keywordParentSearch + '/' + keywordSearch;
+            url.searchParams.append('keyword', keyword);
+          }
           updateSearchIcon(activeTab);
           window.history.pushState(null, '', (url.pathname + url.search).toString());
           document.head.querySelector('#title').innerHTML = 'webots.cloud - ' + activeTab;
@@ -840,6 +938,15 @@ ${deleteProject}`;
         url.searchParams.append('sort', getSort(type));
       if (getSearch(type) && getSearch(type) !== '')
         url.searchParams.append('search', getSearch(type));
+      if (type === 'proto' && keywordSearch !== '') {
+        let keyword = '';
+        if (keywordIsFirst)
+          keyword = keywordSearch;
+        else
+          keyword = keywordParentSearch + '/' + keywordSearch;
+
+        url.searchParams.append('keyword', keyword);
+      }
       window.history.replaceState(null, '', (url.pathname + url.search).toString());
 
       if (type === 'scene')
@@ -1080,7 +1187,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="${(type === 'D') ? demoExample : competitionExample}">
               ${(type === 'D') ? demoExample : competitionExample}
             </a>
@@ -1145,7 +1252,7 @@ ${deleteProject}`;
               <i class="fab fa-github"></i>
             </span>
           </div>
-          <div class="help">Blob reference in a public GitHub repository, including tag information, for example:<br>
+          <div class="help">Blob reference to a public GitHub repository, including tag information, for example:<br>
             <a target="_blank" href="https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto">
               https://github.com/cyberbotics/webots/blob/R2022b/projects/robots/dji/mavic/protos/Mavic2Pro.proto
             </a>
@@ -1290,10 +1397,17 @@ ${deleteProject}`;
     }
 
     function listProtos(page, sortBy, searchString) {
+      if (keywordIsFirst)
+        keywordParentSearch = '';
       const offset = (page - 1) * protoPageLimit;
       fetch('/ajax/proto/list.php', {
         method: 'post',
-        body: JSON.stringify({ offset: offset, limit: protoPageLimit, sortBy: sortBy, search: searchString })
+        body: JSON.stringify({ offset: offset,
+          limit: protoPageLimit,
+          sortBy: sortBy,
+          search: searchString,
+          keyword: keywordSearch,
+          keyword_parent: keywordParentSearch})
       })
         .then(function(response) {
           return response.json();
@@ -1315,7 +1429,56 @@ ${deleteProject}`;
             protosList.innerHTML = line;
             const total = (data.total === 0) ? 1 : Math.ceil(data.total / protoPageLimit);
             updatePagination('proto', page, total);
-            document.getElementById('proto-search-input').value = searchString;
+          }
+        });
+
+      if (keywordSearch && keywordSearch !== '' && keywordIsFirst)
+        setSubKeywords();
+    }
+
+    function setSubKeywords() {
+      let keyword = keywordIsFirst ? keywordSearch : keywordParentSearch;
+      return fetch('/ajax/proto/sub_keywords.php', {
+        method: 'post',
+        body: JSON.stringify({ parent: keyword })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error)
+            ModalDialog.run('Keyword listing error', data.error);
+          else {
+            const container = document.getElementsByClassName('second-level-keyword-container')[0];
+            if (data.length > 1) {
+              container.innerHTML = '';
+              container.style.display = 'block';
+              if (keywordIsFirst)
+                keywordParentSearch = keywordSearch;
+              const atTheEnd = [];
+              // The keywords arrived sorted by number of elements
+              for (let i = 0; i < data.length; i++) {
+                const keywordSpan = document.createElement('span');
+                keywordSpan.className = 'second-level-keyword';
+                keywordSpan.title = data[i].name;
+                keywordSpan.textContent = data[i].name.charAt(0).toUpperCase() + data[i].name.slice(1);
+                keywordSpan.onclick = () => {
+                  const alltags = document.getElementsByClassName('second-level-keyword');
+                  for (let j = 0; j < alltags.length; j++)
+                    alltags[j].classList.remove('is-active');
+                  keywordSpan.classList.add('is-active');
+                  keywordSearch = data[i].name;
+                  keywordIsFirst = false;
+                  setPages('proto', 1);
+                  searchAndSortTable('proto');
+                };
+                if (data[i].name !== 'other' && data[i].name !== 'accessory' && data[i].name !== 'extension')
+                  container.appendChild(keywordSpan);
+                else
+                  atTheEnd.push(keywordSpan);
+              }
+              for (let i = 0; i < atTheEnd.length; i++)
+                container.appendChild(atTheEnd[i]);
+            } else if (keywordIsFirst)
+              container.innerHTML = '';
           }
         });
     }
@@ -1427,6 +1590,26 @@ ${deleteProject}`;
         </div>`;
       ModalDialog.run(`What is a competition?`, content.innerHTML);
     }
+
+    function bindKeywords() {
+      const tags = document.getElementsByClassName('first-level-keyword');
+      for (let i = 0; i < tags.length; i++) {
+        tags[i].onclick = _ => {
+          const alltags = document.getElementsByClassName('first-level-keyword');
+          for (let j = 0; j < alltags.length; j++)
+            alltags[j].classList.remove('is-active');
+          tags[i].classList.add('is-active');
+          listByKeyword(_);
+        };
+      }
+    }
+
+    function listByKeyword(event) {
+      keywordSearch = event.target.title;
+      keywordIsFirst = true;
+      setPages('proto', 1);
+      searchAndSortTable('proto');
+    }
   }
 
   function runPage(project) {
@@ -1457,7 +1640,7 @@ ${deleteProject}`;
     function protoContainer(proto, searchParams) {
       const url = searchParams.get('url');
       const urlParts = url.split('/');
-      const protoName = urlParts[urlParts.length - 1].split('.proto')[0];
+      const protoName = decodeURIComponent(urlParts[urlParts.length - 1].split('.proto')[0]);
 
       const contentHtml =
         `<div id="tabs" class="tabs is-centered is-small-medium">
@@ -1657,6 +1840,41 @@ ${deleteProject}`;
       }
 
       infoGrid.appendChild(updatedContent);
+      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
+        .then(response => response.json())
+        .then(data => {
+          const keywordP = document.createElement('p');
+          keywordP.textContent = 'Keywords';
+          keywordP.className = 'info-array-cell first-column-cell';
+          keywordP.style.gridRow = 5;
+          keywordP.style.gridColumn = 1;
+          infoGrid.appendChild(keywordP);
+
+          const keywordContentDiv = document.createElement('div');
+          keywordContentDiv.className = 'info-array-cell last-column-cell';
+          keywordContentDiv.style.gridRow = 5;
+          keywordContentDiv.style.gridColumn = 2;
+          infoGrid.appendChild(keywordContentDiv);
+
+          for (let i = 0; i < data.length; i++) {
+            const keywordContentA = document.createElement('a');
+
+            const parent = data[i].parent_name;
+            let keywordString = data[i].name;
+            if (parent !== null)
+              keywordString = parent + '/' + keywordString;
+            keywordContentA.href = '/proto?keyword=' + keywordString;
+            keywordContentA.textContent = keywordString;
+            keywordContentA.target = '_blank';
+            keywordContentDiv.appendChild(keywordContentA);
+
+            if (i !== data.length - 1) {
+              const separator = document.createElement('span');
+              separator.textContent = ', ';
+              keywordContentDiv.appendChild(separator);
+            }
+          }
+        });
 
       return infoGrid;
     }
@@ -1686,7 +1904,6 @@ ${deleteProject}`;
                 </div>`;
             }
             const dialog = ModalDialog.run('Project deletion from synchronization', errorMsg);
-            dialog.error('Project has been deleted.');
             dialog.querySelector('form').addEventListener('submit', function(e) {
               e.preventDefault();
               dialog.querySelector('button[type="submit"]').classList.add('is-loading');

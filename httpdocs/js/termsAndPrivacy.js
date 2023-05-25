@@ -10,7 +10,7 @@ export default class TermsAndPrivacy {
             <h1 class="title pb-3"><i class="fa-solid fa-sm fa-shield-halved"></i> Terms of Service</h1>
             <ul>
               <li>Effective: 7 July 2022</li>
-              <li>Last updated: 7 July 2022</li>
+              <li>Last updated: 11 May 2023</li>
             </ul>
             <p>The <a target="_blank" href="https://webots.cloud">webots.cloud</a> website is created, developed and operated by
               Cyberbotics Sàrl, headquartered at EPFL Innovation Park, Building C, 1015 Lausanne, Switzerland, registered
@@ -28,11 +28,14 @@ export default class TermsAndPrivacy {
                 in 3D.</li>
               <li>Upload any Webots animation (<a target="_blank" href="animation">animation</a>) and
                 play it back in 3D.</li>
+              <li>Refer to a GitHub repository containing a Webots PROTO (<a target="_blank" href="proto">proto</a>) and
+                visualize it.</li>
+              <li>Refer to a GibHub repository containing a Webots competition scenario (<a target="_blank"
+                href="competition">competition</a>) and run it.
               <li>Refer to a GitHub repository containing a Webots simulation (<a target="_blank"
                 href="simulation">simulation</a>), run it in the cloud and visualize the result in real
                 time.</li>
-              <li>Register your own server (<a target="_blank" href="server">server</a>) to run the
-                simulations.</Li>
+              <li>Register your own server (<a target="_blank" href="server">server</a>) to run simulations.</Li>
             </ul>
             <h2 class="subtitle pt-4">Your content</h2>
             <p>Your content includes the scenes, animations and simulations you provide. You are the owner of your content.
