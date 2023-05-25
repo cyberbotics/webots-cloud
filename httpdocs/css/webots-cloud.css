@@ -712,6 +712,9 @@ nav.pagination>a {
     display: block;
     min-width: 1090px;
   }
+  .first-level-keyword {
+    display: inline-block;
+  }
 }
 
 .first-level-keyword {
