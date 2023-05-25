@@ -704,6 +704,15 @@ nav.pagination>a {
   justify-content: center;
 }
 
+@media screen and (max-width: 1200px) .first-level-keyword-scroll {
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 1200px) .first-level-keyword-container {
+  display: block;
+  min-width: 1090px;
+}
+
 .first-level-keyword {
     text-align: center;
     width: 64px;
