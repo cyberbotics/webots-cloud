@@ -1680,8 +1680,9 @@ ${deleteProject}`;
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
-          console.log(response)
-          if (response && response.no_3d_view === '0')
+          if (!response) {
+            console.log("must load proto from scratch")
+          } else if (response.no_3d_view === '0')
             project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
           else {
             project.updateProtoAndSimulationViewCount(url);
