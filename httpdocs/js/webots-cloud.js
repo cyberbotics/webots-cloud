@@ -717,20 +717,22 @@ ${deleteProject}`;
             </div>
           </section>
           <section style="padding-top: 20px" class="section${(activeTab === 'proto') ? ' is-active' : ''}" data-content="proto">
-            <div class="first-level-keyword-container">
-              <div class="first-level-keyword" title="robot"><img src="../images/proto/robot.png"><p>Robot</p></div>
-              <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor.png"><p>Sensor</p></div>
-              <div class="first-level-keyword" title="actuator"><img src="../images/proto/actuator.png"><p>Actuator</p></div>
-              <div class="first-level-keyword" title="industrial"><img src="../images/proto/industrial.png"><p>Industrial</p></div>
-              <div class="first-level-keyword" title="household"><img src="../images/proto/household.png"><p>Household</p></div>
-              <div class="first-level-keyword" title="vehicle"><img src="../images/proto/vehicle.png"><p>Vehicle</p></div>
-              <div class="first-level-keyword" title="furniture"><img src="../images/proto/furniture.png"><p>Furniture</p></div>
-              <div class="first-level-keyword" title="building"><img src="../images/proto/building.png"><p>Building</p></div>
-              <div class="first-level-keyword" title="animal"><img src="../images/proto/animal.png"><p>Animal</p></div>
-              <div class="first-level-keyword" title="exterior"><img src="../images/proto/exterior.png"><p>Exterior</p></div>
-              <div class="first-level-keyword" title="traffic"><img src="../images/proto/traffic.png"><p>Traffic</p></div>
-              <div class="first-level-keyword" title="appearance"><img src="../images/proto/appearance.png"><p>Appearance</p></div>
-              <div class="first-level-keyword" title="primitive"><img src="../images/proto/primitive.png"><p>Primitive</p></div>
+            <div class="first-level-keyword-scroll">
+              <div class="first-level-keyword-container">
+                <div class="first-level-keyword" title="robot"><img src="../images/proto/robot.png"><p>Robot</p></div>
+                <div class="first-level-keyword" title="sensor"><img src="../images/proto/sensor.png"><p>Sensor</p></div>
+                <div class="first-level-keyword" title="actuator"><img src="../images/proto/actuator.png"><p>Actuator</p></div>
+                <div class="first-level-keyword" title="industrial"><img src="../images/proto/industrial.png"><p>Industrial</p></div>
+                <div class="first-level-keyword" title="household"><img src="../images/proto/household.png"><p>Household</p></div>
+                <div class="first-level-keyword" title="vehicle"><img src="../images/proto/vehicle.png"><p>Vehicle</p></div>
+                <div class="first-level-keyword" title="furniture"><img src="../images/proto/furniture.png"><p>Furniture</p></div>
+                <div class="first-level-keyword" title="building"><img src="../images/proto/building.png"><p>Building</p></div>
+                <div class="first-level-keyword" title="animal"><img src="../images/proto/animal.png"><p>Animal</p></div>
+                <div class="first-level-keyword" title="exterior"><img src="../images/proto/exterior.png"><p>Exterior</p></div>
+                <div class="first-level-keyword" title="traffic"><img src="../images/proto/traffic.png"><p>Traffic</p></div>
+                <div class="first-level-keyword" title="appearance"><img src="../images/proto/appearance.png"><p>Appearance</p></div>
+                <div class="first-level-keyword" title="primitive"><img src="../images/proto/primitive.png"><p>Primitive</p></div>
+              </div>
             </div>
             <div class="second-level-keyword-container"></div>
             <div class="table-container">
