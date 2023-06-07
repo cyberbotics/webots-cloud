@@ -1807,7 +1807,7 @@ ${deleteProject}`;
           licenseUrl = line.substring(line.indexOf('license url:') + 13);
         else if (notInDatabase && !line.startsWith('# tags:') && !line.startsWith('# keywords:') &&
           !line.startsWith('# documentation url:') && !line.startsWith('#template language:'))
-          description += line.substring(2); // remove the '# '
+          description += line.substring(1); // remove the '#'
       }
 
       return [version, license, licenseUrl, description];
