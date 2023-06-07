@@ -2084,7 +2084,10 @@ ${deleteProject}`;
       const baseType = information?.base_type;
       const description = information?.description;
       file += description + '\n\n';
-      file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+      if (notInDatabase && !baseNodeList.includes(baseType))
+        file += 'Derived from ' + baseType + '.\n\n';
+      else
+        file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
       file += '```\n';
       file += protoName + ' {\n';
       file += fields;
