@@ -1680,11 +1680,7 @@ ${deleteProject}`;
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
-          if (!response) {
-            console.log("must load proto from scratch")
-          } else if (response.no_3d_view === '0')
-            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
-          else {
+          if (response && response.no_3d_view === '0') {
             project.updateProtoAndSimulationViewCount(url);
             const container = document.getElementById('proto-webots-container');
 
@@ -1701,7 +1697,9 @@ ${deleteProject}`;
             message.innerText = 'This proto has no 3D representation.';
             container.style.height = '150px';
             container.appendChild(message);
-          }
+          } else
+            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
+
           loadMd(url, response);
         });
     }
