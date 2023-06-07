@@ -1805,7 +1805,7 @@ ${deleteProject}`;
       return [version, license, licenseUrl];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoUrl, information) {
+    function createProtoArray(version, license, licenseUrl, protoUrl, information, notInDatabase) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1859,27 +1859,29 @@ ${deleteProject}`;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
 
-      const updatedP = document.createElement('p');
-      updatedP.textContent = 'Updated';
-      updatedP.className = 'info-array-cell first-column-cell';
-      updatedP.style.gridRow = 4;
-      updatedP.style.gridColumn = 1;
-      updatedP.style.backgroundColor = '#fafafa';
-      infoGrid.appendChild(updatedP);
+      if (!notInDatabase) {
+        const updatedP = document.createElement('p');
+        updatedP.textContent = 'Updated';
+        updatedP.className = 'info-array-cell first-column-cell';
+        updatedP.style.gridRow = 4;
+        updatedP.style.gridColumn = 1;
+        updatedP.style.backgroundColor = '#fafafa';
+        infoGrid.appendChild(updatedP);
 
-      const updatedContent = document.createElement('div');
-      updatedContent.className = 'info-array-cell last-column-cell';
-      updatedContent.textContent = information.updated;
-      updatedContent.style.gridRow = 4;
-      updatedContent.style.gridColumn = 2;
+        const updatedContent = document.createElement('div');
+        updatedContent.className = 'info-array-cell last-column-cell';
+        updatedContent.textContent = information.updated;
+        updatedContent.style.gridRow = 4;
+        updatedContent.style.gridColumn = 2;
 
-      const updatedButton = document.createElement('i');
-      updatedButton.className = 'is-clickable fas fa-sync update-proto';
-      updatedButton.id = `sync-${information.id}`;
-      updatedButton.setAttribute('data-url', protoUrl);
-      updatedButton.title = 'Re-synchronize now';
-      updatedContent.appendChild(updatedButton);
-      updatedButton.onclick = _ => synchronizeProto(_, true);
+        const updatedButton = document.createElement('i');
+        updatedButton.className = 'is-clickable fas fa-sync update-proto';
+        updatedButton.id = `sync-${information.id}`;
+        updatedButton.setAttribute('data-url', protoUrl);
+        updatedButton.title = 'Re-synchronize now';
+        updatedContent.appendChild(updatedButton);
+        updatedButton.onclick = _ => synchronizeProto(_, true);  
+      }
 
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       if (admin) {
@@ -1893,41 +1895,43 @@ ${deleteProject}`;
       }
 
       infoGrid.appendChild(updatedContent);
-      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
-        .then(response => response.json())
-        .then(data => {
-          const keywordP = document.createElement('p');
-          keywordP.textContent = 'Keywords';
-          keywordP.className = 'info-array-cell first-column-cell';
-          keywordP.style.gridRow = 5;
-          keywordP.style.gridColumn = 1;
-          infoGrid.appendChild(keywordP);
+      if (!notInDatabase) {
+        fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
+          .then(response => response.json())
+          .then(data => {
+            const keywordP = document.createElement('p');
+            keywordP.textContent = 'Keywords';
+            keywordP.className = 'info-array-cell first-column-cell';
+            keywordP.style.gridRow = 5;
+            keywordP.style.gridColumn = 1;
+            infoGrid.appendChild(keywordP);
 
-          const keywordContentDiv = document.createElement('div');
-          keywordContentDiv.className = 'info-array-cell last-column-cell';
-          keywordContentDiv.style.gridRow = 5;
-          keywordContentDiv.style.gridColumn = 2;
-          infoGrid.appendChild(keywordContentDiv);
+            const keywordContentDiv = document.createElement('div');
+            keywordContentDiv.className = 'info-array-cell last-column-cell';
+            keywordContentDiv.style.gridRow = 5;
+            keywordContentDiv.style.gridColumn = 2;
+            infoGrid.appendChild(keywordContentDiv);
 
-          for (let i = 0; i < data.length; i++) {
-            const keywordContentA = document.createElement('a');
+            for (let i = 0; i < data.length; i++) {
+              const keywordContentA = document.createElement('a');
 
-            const parent = data[i].parent_name;
-            let keywordString = data[i].name;
-            if (parent !== null)
-              keywordString = parent + '/' + keywordString;
-            keywordContentA.href = '/proto?keyword=' + keywordString;
-            keywordContentA.textContent = keywordString;
-            keywordContentA.target = '_blank';
-            keywordContentDiv.appendChild(keywordContentA);
+              const parent = data[i].parent_name;
+              let keywordString = data[i].name;
+              if (parent !== null)
+                keywordString = parent + '/' + keywordString;
+              keywordContentA.href = '/proto?keyword=' + keywordString;
+              keywordContentA.textContent = keywordString;
+              keywordContentA.target = '_blank';
+              keywordContentDiv.appendChild(keywordContentA);
 
-            if (i !== data.length - 1) {
-              const separator = document.createElement('span');
-              separator.textContent = ', ';
-              keywordContentDiv.appendChild(separator);
+              if (i !== data.length - 1) {
+                const separator = document.createElement('span');
+                separator.textContent = ', ';
+                keywordContentDiv.appendChild(separator);
+              }
             }
-          }
-        });
+          });
+      }
 
       return infoGrid;
     }
@@ -2120,7 +2124,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information, true));
     }
 
     // check that the proto is at least from R2023b
