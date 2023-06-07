@@ -1757,7 +1757,7 @@ ${deleteProject}`;
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
           const baseType = proto.matchAll(baseTypeRegex);
-          console.log(baseType);
+          console.log(proto);
           // project.runWebotsView(undefined, headers[0], ;
         });
       console.log(protoURl)
