@@ -1752,17 +1752,15 @@ ${deleteProject}`;
 
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
-      console.log(url)
       fetch(url).then(response => response.text())
         .then(proto => {
           const headers = parseProtoHeader(proto);
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
-          // const baseType = proto.matchAll(baseTypeRegex);
-          console.log(proto);
+          const baseType = proto.match(baseTypeRegex);
+          console.log(baseType)
           // project.runWebotsView(undefined, headers[0], ;
         });
-      console.log(protoURl)
     }
 
     function parseProtoHeader(proto) {
