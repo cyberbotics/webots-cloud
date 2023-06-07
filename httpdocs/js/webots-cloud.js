@@ -27,6 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
   let competitionSearch = '';
   let delaySearch = false;
 
+  const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
+    'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
+    'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
+    'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
+    'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
+    'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
+    'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
+    'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
+    'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
+    'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
+    'Material', 'Pose'];
+
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -1681,9 +1693,9 @@ ${deleteProject}`;
         .then(response => response.json())
         .then(response => {
           // The requested proto is not in the database
-          if (!response) {
+          if (!response)
             loadProtoFromScratch(url);
-          } else {
+          else {
             if (response.no_3d_view === '0') {
             project.updateProtoAndSimulationViewCount(url);
             const container = document.getElementById('proto-webots-container');
@@ -1758,7 +1770,8 @@ ${deleteProject}`;
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
           const baseType = proto.match(baseTypeRegex);
-          console.log(baseType)
+          if (baseNodeList.includes(baseType))
+            console.log("IS base node")
           // project.runWebotsView(undefined, headers[0], ;
         });
     }
@@ -2010,18 +2023,6 @@ ${deleteProject}`;
 
       const cleaningRegex = /^\s*(.*?ield)\s+([^ \{]*)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)((\n*( {4}| {2}\]).*)*)/gm;
       const isDescriptionRegex = /Is\s`([a-zA-Z]*).([a-zA-Z]*)`./g;
-
-      const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
-        'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
-        'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
-        'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
-        'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
-        'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
-        'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
-        'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
-        'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
-        'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
-        'Material'];
 
       // create the final cleaned PROTO header
       matches = fieldsDefinition.matchAll(cleaningRegex);
