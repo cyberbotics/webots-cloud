@@ -1693,9 +1693,12 @@ ${deleteProject}`;
         .then(response => response.json())
         .then(response => {
           // The requested proto is not in the database
-          if (!response)
+          if (!response) {
             loadProtoFromScratch(url);
-          else {
+            // global variable telling webotsJS that it is forbidden to open the add node dialog
+            window.webotsJSPreventAddNode = true;
+          } else {
+            window.webotsJSPreventAddNode = false;
             if (response.no_3d_view === '1') {
               project.updateProtoAndSimulationViewCount(url);
               const container = document.getElementById('proto-webots-container');
@@ -1779,7 +1782,6 @@ ${deleteProject}`;
           } else
             needsRobotAncestor = true;
 
-          document.webots.notReleasedProto = true;
           project.runWebotsView(undefined, headers[0], needsRobotAncestor);
 
           const information = {};
