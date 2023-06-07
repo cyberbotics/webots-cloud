@@ -1806,7 +1806,7 @@ ${deleteProject}`;
         else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
           licenseUrl = line.substring(line.indexOf('license url:') + 13);
         else if (notInDatabase && !line.startsWith('# tags:') && !line.startsWith('# keywords:') &&
-          !line.startsWith('# documentation url:'))
+          !line.startsWith('# documentation url:') && !line.startsWith('#template language:'))
           description += line.substring(2); // remove the '# '
       }
 
