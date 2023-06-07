@@ -1747,6 +1747,7 @@ ${deleteProject}`;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
         url = url.replace('blob/', '');
+        url = url.replace('tree/', '');
       }
 
       const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
