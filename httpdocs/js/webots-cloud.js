@@ -1779,6 +1779,7 @@ ${deleteProject}`;
           } else
             needsRobotAncestor = true;
 
+          document.webots.notReleasedProto = true;
           project.runWebotsView(undefined, headers[0], needsRobotAncestor);
 
           const information = {};
