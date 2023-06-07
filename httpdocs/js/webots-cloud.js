@@ -1766,7 +1766,7 @@ ${deleteProject}`;
       const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       fetch(url).then(response => response.text())
         .then(proto => {
-          const headers = parseProtoHeader(proto);
+          const headers = parseProtoHeader(proto, true);
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
           const baseType = proto.match(baseTypeRegex)[1];
@@ -1780,16 +1780,21 @@ ${deleteProject}`;
             needsRobotAncestor = true;
 
           project.runWebotsView(undefined, headers[0], needsRobotAncestor);
+
           const information = {};
           information.version = headers[0];
           information.license = headers[1];
           information.license_url = headers[2];
-          createMdFromProto(protoURl, proto, protoName, prefix, information);
+          information.description = headers[3];
+          information.base_type = baseType;
+
+          createMdFromProto(protoURl, proto, protoName, prefix, information, true);
         });
     }
 
-    function parseProtoHeader(proto) {
+    function parseProtoHeader(proto, notInDatabase) {
       let version, license, licenseUrl;
+      let description = '';
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
           break;
@@ -1800,9 +1805,11 @@ ${deleteProject}`;
           license = line.substring(line.indexOf('license:') + 9);
         else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
           licenseUrl = line.substring(line.indexOf('license url:') + 13);
+        else if (notInDatabase && !line.startsWith('# tags:') && !line.startsWith('# keywords:'))
+          description += line;
       }
 
-      return [version, license, licenseUrl];
+      return [version, license, licenseUrl, description];
     }
 
     function createProtoArray(version, license, licenseUrl, protoUrl, information, notInDatabase) {
@@ -1996,7 +2003,7 @@ ${deleteProject}`;
       });
     }
 
-    async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
+    async function createMdFromProto(protoURl, proto, protoName, prefix, information, notInDatabase) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition = '';
@@ -2123,7 +2130,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information, true));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information, notInDatabase));
     }
 
     // check that the proto is at least from R2023b
