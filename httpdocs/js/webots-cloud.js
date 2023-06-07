@@ -1880,22 +1880,21 @@ ${deleteProject}`;
         updatedButton.setAttribute('data-url', protoUrl);
         updatedButton.title = 'Re-synchronize now';
         updatedContent.appendChild(updatedButton);
-        updatedButton.onclick = _ => synchronizeProto(_, true);  
-      }
+        updatedButton.onclick = _ => synchronizeProto(_, true);
 
-      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
-      if (admin) {
-        const deleteButton = document.createElement('i');
-        deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
-        deleteButton.style.color = 'red';
-        deleteButton.id = `delete-${information.id}`;
-        deleteButton.title = 'Delete row as administrator';
-        updatedContent.appendChild(deleteButton);
-        deleteButton.onclick = _ => deleteProto(_, project);
-      }
+        const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+        if (admin) {
+          const deleteButton = document.createElement('i');
+          deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
+          deleteButton.style.color = 'red';
+          deleteButton.id = `delete-${information.id}`;
+          deleteButton.title = 'Delete row as administrator';
+          updatedContent.appendChild(deleteButton);
+          deleteButton.onclick = _ => deleteProto(_, project);
+        }
 
-      infoGrid.appendChild(updatedContent);
-      if (!notInDatabase) {
+        infoGrid.appendChild(updatedContent);
+
         fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
           .then(response => response.json())
           .then(data => {
