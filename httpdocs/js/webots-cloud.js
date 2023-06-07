@@ -1680,7 +1680,11 @@ ${deleteProject}`;
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
-          if (response && response.no_3d_view === '0') {
+          // The requested proto is not in the database
+          if (!response) {
+            loadProtoFromScratch(url);
+          } else {
+            if (response.no_3d_view === '0') {
             project.updateProtoAndSimulationViewCount(url);
             const container = document.getElementById('proto-webots-container');
 
@@ -1697,10 +1701,11 @@ ${deleteProject}`;
             message.innerText = 'This proto has no 3D representation.';
             container.style.height = '150px';
             container.appendChild(message);
-          } else
-            project.runWebotsView(undefined, undefined, response?.needs_robot_ancestor);
+            } else
+              project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
 
-          loadMd(url, response);
+            loadMd(url, response);
+          }
         });
     }
 
@@ -1735,6 +1740,26 @@ ${deleteProject}`;
                 });
             });
         });
+    }
+
+    function loadProtoFromScratch(url) {
+      const protoURl = url;
+      if (url.includes('github.com')) {
+        url = url.replace('github.com', 'raw.githubusercontent.com');
+        url = url.replace('blob/', '');
+      }
+
+      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
+      const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
+      fetch(url).then(response => response.text())
+        .then(proto => {
+          const headers = parseProtoHeader(proto);
+
+          const baseType = proto.match('/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/');
+          console.log(baseType);
+          // project.runWebotsView(undefined, headers[0], ;
+        });
+      console.log(protoURl)
     }
 
     function parseProtoHeader(proto) {
