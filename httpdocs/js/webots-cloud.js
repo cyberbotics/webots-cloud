@@ -1780,6 +1780,11 @@ ${deleteProject}`;
             needsRobotAncestor = true;
 
           project.runWebotsView(undefined, headers[0], needsRobotAncestor);
+          const information = {};
+          information.version = headers[0];
+          information.license = headers[1];
+          information.license_url = headers[2];
+          createMdFromProto(protoURl, proto, protoName, prefix, information);
         });
     }
 
