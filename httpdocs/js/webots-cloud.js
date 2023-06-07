@@ -1770,16 +1770,16 @@ ${deleteProject}`;
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
           const baseType = proto.match(baseTypeRegex)[1];
-          let needs_robot_ancestor = false;
+          let needsRobotAncestor = false;
           if (baseNodeList.includes(baseType)) {
             if (['Solid', 'Pose', 'Group'].includes(baseType)) {
-              const device_regex = /(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/;
-              needs_robot_ancestor = proto.match(device_regex) != null;
-              console.log(needs_robot_ancestor)
+              const deviceRegex = /(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/;
+              needsRobotAncestor = proto.match(deviceRegex) != null;
             }
           } else
-            needs_robot_ancestor = true;
-          // project.runWebotsView(undefined, headers[0], ;
+            needsRobotAncestor = true;
+
+          project.runWebotsView(undefined, headers[0], needsRobotAncestor);
         });
     }
 
