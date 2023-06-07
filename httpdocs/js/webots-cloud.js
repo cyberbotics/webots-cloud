@@ -1755,7 +1755,7 @@ ${deleteProject}`;
         .then(proto => {
           const headers = parseProtoHeader(proto);
 
-          const baseType = proto.match(/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/);
+          const baseType = proto.matchAll(/(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/);
           console.log(baseType);
           // project.runWebotsView(undefined, headers[0], ;
         });
