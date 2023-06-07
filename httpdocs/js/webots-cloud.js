@@ -27,6 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
   let competitionSearch = '';
   let delaySearch = false;
 
+  const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
+    'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
+    'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
+    'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
+    'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
+    'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
+    'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
+    'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
+    'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
+    'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
+    'Material', 'Pose'];
+
   Project.run('webots.cloud', footer(), [
     {
       url: '/',
@@ -1680,27 +1692,35 @@ ${deleteProject}`;
       fetch('ajax/proto/documentation.php', { method: 'post', body: JSON.stringify({ url: url }) })
         .then(response => response.json())
         .then(response => {
-          if (response && response.no_3d_view === '0')
-            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
-          else {
-            project.updateProtoAndSimulationViewCount(url);
-            const container = document.getElementById('proto-webots-container');
+          // The requested proto is not in the database
+          if (!response) {
+            loadProtoFromScratch(url);
+            // global variable telling webotsJS that it is forbidden to open the add node dialog
+            window.webotsJSPreventAddNode = true;
+          } else {
+            window.webotsJSPreventAddNode = false;
+            if (response.no_3d_view === '1') {
+              project.updateProtoAndSimulationViewCount(url);
+              const container = document.getElementById('proto-webots-container');
 
-            const image = document.createElement('img');
-            const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
-              'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
-            const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
-            image.src = prefix + imageName;
-            image.style.display = 'block';
-            image.style.margin = 'auto';
-            container.appendChild(image);
+              const image = document.createElement('img');
+              const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
+                'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+              const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
+              image.src = prefix + imageName;
+              image.style.display = 'block';
+              image.style.margin = 'auto';
+              container.appendChild(image);
 
-            const message = document.createElement('div');
-            message.innerText = 'This proto has no 3D representation.';
-            container.style.height = '150px';
-            container.appendChild(message);
+              const message = document.createElement('div');
+              message.innerText = 'This proto has no 3D representation.';
+              container.style.height = '150px';
+              container.appendChild(message);
+            } else
+              project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
+
+            loadMd(url, response);
           }
-          loadMd(url, response);
         });
     }
 
@@ -1737,8 +1757,47 @@ ${deleteProject}`;
         });
     }
 
-    function parseProtoHeader(proto) {
+    function loadProtoFromScratch(url) {
+      const protoURl = url;
+      if (url.includes('github.com')) {
+        url = url.replace('github.com', 'raw.githubusercontent.com');
+        url = url.replace('blob/', '');
+        url = url.replace('tree/', '');
+      }
+
+      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
+      const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
+      fetch(url).then(response => response.text())
+        .then(proto => {
+          const headers = parseProtoHeader(proto, true);
+
+          const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
+          const baseType = proto.match(baseTypeRegex)[1];
+          let needsRobotAncestor = false;
+          if (baseNodeList.includes(baseType)) {
+            if (['Solid', 'Pose', 'Group'].includes(baseType)) {
+              const deviceRegex = /(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/;
+              needsRobotAncestor = proto.match(deviceRegex) != null;
+            }
+          } else
+            needsRobotAncestor = true;
+
+          project.runWebotsView(undefined, headers[0], needsRobotAncestor);
+
+          const information = {};
+          information.version = headers[0];
+          information.license = headers[1];
+          information.license_url = headers[2];
+          information.description = headers[3];
+          information.base_type = baseType;
+
+          createMdFromProto(protoURl, proto, protoName, prefix, information, true);
+        });
+    }
+
+    function parseProtoHeader(proto, notInDatabase) {
       let version, license, licenseUrl;
+      let description = '';
       for (const line of proto.split('\n')) {
         if (!line.startsWith('#'))
           break;
@@ -1749,12 +1808,15 @@ ${deleteProject}`;
           license = line.substring(line.indexOf('license:') + 9);
         else if (line.startsWith('# license url:') || line.startsWith('#license url:'))
           licenseUrl = line.substring(line.indexOf('license url:') + 13);
+        else if (notInDatabase && !line.startsWith('# tags:') && !line.startsWith('# keywords:') &&
+          !line.startsWith('# documentation url:') && !line.startsWith('# template language:'))
+          description += line.substring(1); // remove the '#'
       }
 
-      return [version, license, licenseUrl];
+      return [version, license, licenseUrl, description];
     }
 
-    function createProtoArray(version, license, licenseUrl, protoUrl, information) {
+    function createProtoArray(version, license, licenseUrl, protoUrl, information, notInDatabase) {
       const infoGrid = document.createElement('div');
       infoGrid.className = 'proto-info-array';
 
@@ -1808,75 +1870,78 @@ ${deleteProject}`;
       sourceContentA.style.gridColumn = 2;
       infoGrid.appendChild(sourceContentA);
 
-      const updatedP = document.createElement('p');
-      updatedP.textContent = 'Updated';
-      updatedP.className = 'info-array-cell first-column-cell';
-      updatedP.style.gridRow = 4;
-      updatedP.style.gridColumn = 1;
-      updatedP.style.backgroundColor = '#fafafa';
-      infoGrid.appendChild(updatedP);
+      if (!notInDatabase) {
+        const updatedP = document.createElement('p');
+        updatedP.textContent = 'Updated';
+        updatedP.className = 'info-array-cell first-column-cell';
+        updatedP.style.gridRow = 4;
+        updatedP.style.gridColumn = 1;
+        updatedP.style.backgroundColor = '#fafafa';
+        infoGrid.appendChild(updatedP);
 
-      const updatedContent = document.createElement('div');
-      updatedContent.className = 'info-array-cell last-column-cell';
-      updatedContent.textContent = information.updated;
-      updatedContent.style.gridRow = 4;
-      updatedContent.style.gridColumn = 2;
+        const updatedContent = document.createElement('div');
+        updatedContent.className = 'info-array-cell last-column-cell';
+        updatedContent.textContent = information.updated;
+        updatedContent.style.gridRow = 4;
+        updatedContent.style.gridColumn = 2;
 
-      const updatedButton = document.createElement('i');
-      updatedButton.className = 'is-clickable fas fa-sync update-proto';
-      updatedButton.id = `sync-${information.id}`;
-      updatedButton.setAttribute('data-url', protoUrl);
-      updatedButton.title = 'Re-synchronize now';
-      updatedContent.appendChild(updatedButton);
-      updatedButton.onclick = _ => synchronizeProto(_, true);
+        const updatedButton = document.createElement('i');
+        updatedButton.className = 'is-clickable fas fa-sync update-proto';
+        updatedButton.id = `sync-${information.id}`;
+        updatedButton.setAttribute('data-url', protoUrl);
+        updatedButton.title = 'Re-synchronize now';
+        updatedContent.appendChild(updatedButton);
+        updatedButton.onclick = _ => synchronizeProto(_, true);
 
-      const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
-      if (admin) {
-        const deleteButton = document.createElement('i');
-        deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
-        deleteButton.style.color = 'red';
-        deleteButton.id = `delete-${information.id}`;
-        deleteButton.title = 'Delete row as administrator';
-        updatedContent.appendChild(deleteButton);
-        deleteButton.onclick = _ => deleteProto(_, project);
-      }
+        const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
+        if (admin) {
+          const deleteButton = document.createElement('i');
+          deleteButton.className = 'is-clickable far fa-trash-alt fa-sm update-proto';
+          deleteButton.style.color = 'red';
+          deleteButton.id = `delete-${information.id}`;
+          deleteButton.title = 'Delete row as administrator';
+          updatedContent.appendChild(deleteButton);
+          deleteButton.onclick = _ => deleteProto(_, project);
+        }
 
-      infoGrid.appendChild(updatedContent);
-      fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
-        .then(response => response.json())
-        .then(data => {
-          const keywordP = document.createElement('p');
-          keywordP.textContent = 'Keywords';
-          keywordP.className = 'info-array-cell first-column-cell';
-          keywordP.style.gridRow = 5;
-          keywordP.style.gridColumn = 1;
-          infoGrid.appendChild(keywordP);
+        infoGrid.appendChild(updatedContent);
 
-          const keywordContentDiv = document.createElement('div');
-          keywordContentDiv.className = 'info-array-cell last-column-cell';
-          keywordContentDiv.style.gridRow = 5;
-          keywordContentDiv.style.gridColumn = 2;
-          infoGrid.appendChild(keywordContentDiv);
+        fetch('ajax/proto/get_keywords.php', { method: 'post', body: JSON.stringify({id: information.id}) })
+          .then(response => response.json())
+          .then(data => {
+            const keywordP = document.createElement('p');
+            keywordP.textContent = 'Keywords';
+            keywordP.className = 'info-array-cell first-column-cell';
+            keywordP.style.gridRow = 5;
+            keywordP.style.gridColumn = 1;
+            infoGrid.appendChild(keywordP);
 
-          for (let i = 0; i < data.length; i++) {
-            const keywordContentA = document.createElement('a');
+            const keywordContentDiv = document.createElement('div');
+            keywordContentDiv.className = 'info-array-cell last-column-cell';
+            keywordContentDiv.style.gridRow = 5;
+            keywordContentDiv.style.gridColumn = 2;
+            infoGrid.appendChild(keywordContentDiv);
 
-            const parent = data[i].parent_name;
-            let keywordString = data[i].name;
-            if (parent !== null)
-              keywordString = parent + '/' + keywordString;
-            keywordContentA.href = '/proto?keyword=' + keywordString;
-            keywordContentA.textContent = keywordString;
-            keywordContentA.target = '_blank';
-            keywordContentDiv.appendChild(keywordContentA);
+            for (let i = 0; i < data.length; i++) {
+              const keywordContentA = document.createElement('a');
 
-            if (i !== data.length - 1) {
-              const separator = document.createElement('span');
-              separator.textContent = ', ';
-              keywordContentDiv.appendChild(separator);
+              const parent = data[i].parent_name;
+              let keywordString = data[i].name;
+              if (parent !== null)
+                keywordString = parent + '/' + keywordString;
+              keywordContentA.href = '/proto?keyword=' + keywordString;
+              keywordContentA.textContent = keywordString;
+              keywordContentA.target = '_blank';
+              keywordContentDiv.appendChild(keywordContentA);
+
+              if (i !== data.length - 1) {
+                const separator = document.createElement('span');
+                separator.textContent = ', ';
+                keywordContentDiv.appendChild(separator);
+              }
             }
-          }
-        });
+          });
+      }
 
       return infoGrid;
     }
@@ -1942,7 +2007,7 @@ ${deleteProject}`;
       });
     }
 
-    async function createMdFromProto(protoURl, proto, protoName, prefix, information) {
+    async function createMdFromProto(protoURl, proto, protoName, prefix, information, notInDatabase) {
       const fieldRegex = /\[\n((.*\n)*)\]/mg;
       let matches = proto.matchAll(fieldRegex);
       let fieldsDefinition = '';
@@ -1985,18 +2050,6 @@ ${deleteProject}`;
       const cleaningRegex = /^\s*(.*?ield)\s+([^ \{]*)(\s+)([^ ]*)\s+([^#\n]*)(#?)(.*)((\n*( {4}| {2}\]).*)*)/gm;
       const isDescriptionRegex = /Is\s`([a-zA-Z]*).([a-zA-Z]*)`./g;
 
-      const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
-        'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
-        'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
-        'HingeJointParameters', 'Hinge2Joint', 'LinearMotor', 'Sphere', 'JointParameters', 'TrackWheel', 'Appearance',
-        'HingeJoint', 'DirectionalLight', 'Accelerometer', 'Viewpoint', 'Speaker', 'IndexedLineSet', 'PointSet', 'Damping',
-        'ImmersionProperties', 'Robot', 'Lidar', 'DistanceSensor', 'Camera', 'Lens', 'Altimeter', 'Color', 'Transform',
-        'Recognition', 'Connector', 'Propeller', 'LensFlare', 'BallJointParameters', 'TextureTransform', 'IndexedFaceSet',
-        'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
-        'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
-        'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
-        'Material'];
-
       // create the final cleaned PROTO header
       matches = fieldsDefinition.matchAll(cleaningRegex);
       const removeCommentRegex = /\s*(#.*)/mg;
@@ -2034,7 +2087,10 @@ ${deleteProject}`;
       const baseType = information?.base_type;
       const description = information?.description;
       file += description + '\n\n';
-      file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
+      if (notInDatabase && !baseNodeList.includes(baseType))
+        file += 'Derived from ' + baseType + '.\n\n';
+      else
+        file += 'Derived from [' + baseType + '](https://cyberbotics.com/doc/reference/' + baseType?.toLowerCase() + ').\n\n';
       file += '```\n';
       file += protoName + ' {\n';
       file += fields;
@@ -2081,7 +2137,7 @@ ${deleteProject}`;
       const licenseUrl = information?.license_url;
       const version = information?.version;
       const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(version) + '/proto_viewer.js');
-      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information));
+      populateProtoViewDiv(file, prefix, createProtoArray(version, license, licenseUrl, protoURl, information, notInDatabase));
     }
 
     // check that the proto is at least from R2023b
