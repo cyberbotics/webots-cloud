@@ -1769,7 +1769,7 @@ ${deleteProject}`;
           const headers = parseProtoHeader(proto);
 
           const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
-          const baseType = proto.match(baseTypeRegex);
+          const baseType = proto.match(baseTypeRegex)[1];
           if (baseNodeList.includes(baseType))
             console.log("IS base node")
           // project.runWebotsView(undefined, headers[0], ;
