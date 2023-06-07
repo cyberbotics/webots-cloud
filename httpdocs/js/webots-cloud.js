@@ -1696,23 +1696,23 @@ ${deleteProject}`;
           if (!response)
             loadProtoFromScratch(url);
           else {
-            if (response.no_3d_view === '0') {
-            project.updateProtoAndSimulationViewCount(url);
-            const container = document.getElementById('proto-webots-container');
+            if (response.no_3d_view === '1') {
+              project.updateProtoAndSimulationViewCount(url);
+              const container = document.getElementById('proto-webots-container');
 
-            const image = document.createElement('img');
-            const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
-              'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
-            const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
-            image.src = prefix + imageName;
-            image.style.display = 'block';
-            image.style.margin = 'auto';
-            container.appendChild(image);
+              const image = document.createElement('img');
+              const prefix = url.substr(0, url.lastIndexOf('/') + 1).replace('github.com',
+                'raw.githubusercontent.com').replace('/blob', '') + 'icons/';
+              const imageName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '.png');
+              image.src = prefix + imageName;
+              image.style.display = 'block';
+              image.style.margin = 'auto';
+              container.appendChild(image);
 
-            const message = document.createElement('div');
-            message.innerText = 'This proto has no 3D representation.';
-            container.style.height = '150px';
-            container.appendChild(message);
+              const message = document.createElement('div');
+              message.innerText = 'This proto has no 3D representation.';
+              container.style.height = '150px';
+              container.appendChild(message);
             } else
               project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
 
