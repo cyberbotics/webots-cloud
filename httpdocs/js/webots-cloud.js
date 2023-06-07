@@ -1698,7 +1698,7 @@ ${deleteProject}`;
             container.style.height = '150px';
             container.appendChild(message);
           } else
-            project.runWebotsView(undefined, undefined, response.needs_robot_ancestor);
+            project.runWebotsView(undefined, undefined, response?.needs_robot_ancestor);
 
           loadMd(url, response);
         });
