@@ -138,7 +138,7 @@ function create_or_update_proto($url, $id, $search) {
     'LensFlare', 'TrackWheel', 'PBRAppearance', 'Shape', 'Altimeter', 'PositionSensor', 'Connector', 'HingeJoint', 'Plane',
     'Brake', 'Appearance', 'ElevationGrid', 'BallJointParameters', 'Fluid', 'Robot', 'SolidReference', 'Sphere', 'Skin',
     'IndexedLineSet', 'ImmersionProperties', 'JointParameters', 'Focus', 'SliderJoint', 'Emitter', 'Hinge2Joint', 'BallJoint',
-    'LightSensor', 'Display', 'Billboard', 'Charger'];
+    'LightSensor', 'Display', 'Billboard', 'Charger', 'Pose'];
 
   # search for the base type
   $parent_url = $url;
