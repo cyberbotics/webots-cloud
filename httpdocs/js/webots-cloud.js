@@ -1790,8 +1790,8 @@ ${deleteProject}`;
           information.license_url = headers[2];
           information.description = headers[3];
           information.base_type = baseType;
-
-          createMdFromProto(protoURl, proto, protoName, prefix, information, true);
+          loadMd(protoURl, information);
+          // createMdFromProto(protoURl, proto, protoName, prefix, information, true);
         });
     }
 
