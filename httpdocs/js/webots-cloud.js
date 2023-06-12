@@ -1765,8 +1765,6 @@ ${deleteProject}`;
         url = url.replace('tree/', '');
       }
 
-      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
-      const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       fetch(url).then(response => response.text())
         .then(proto => {
           const headers = parseProtoHeader(proto, true);
@@ -1791,7 +1789,6 @@ ${deleteProject}`;
           information.description = headers[3];
           information.base_type = baseType;
           loadMd(protoURl, information, true);
-          // createMdFromProto(protoURl, proto, protoName, prefix, information, true);
         });
     }
 
