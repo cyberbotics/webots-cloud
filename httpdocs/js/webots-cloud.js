@@ -1724,7 +1724,7 @@ ${deleteProject}`;
         });
     }
 
-    function loadMd(url, information) {
+    function loadMd(url, information, notInDatabase) {
       const protoURl = url;
       if (url.includes('github.com')) {
         url = url.replace('github.com', 'raw.githubusercontent.com');
@@ -1742,16 +1742,16 @@ ${deleteProject}`;
               return response.text();
             })
             .then(async function(content) {
-              const results = parseProtoHeader(proto);
-              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information);
+              const results = parseProtoHeader(proto, notInDatabase);
+              const infoArray = createProtoArray(results[0], results[1], results[2], protoURl, information, notInDatabase);
               const { populateProtoViewDiv } = await import('https://cyberbotics.com/wwi/' + checkProtoVersion(results[0]) + '/proto_viewer.js');
-              populateProtoViewDiv(content, prefix, infoArray);
+              populateProtoViewDiv(content, prefix, infoArray, notInDatabase);
             }).catch(() => {
               // No md file, so we read the description from the proto file
               fetch(url)
                 .then(response => response.text())
                 .then(content => {
-                  createMdFromProto(protoURl, proto, protoName, prefix, information);
+                  createMdFromProto(protoURl, proto, protoName, prefix, information, notInDatabase);
                 });
             });
         });
@@ -1765,8 +1765,6 @@ ${deleteProject}`;
         url = url.replace('tree/', '');
       }
 
-      const prefix = url.substr(0, url.lastIndexOf('/') + 1) + 'docs/';
-      const protoName = url.substr(url.lastIndexOf('/') + 1).replace('.proto', '');
       fetch(url).then(response => response.text())
         .then(proto => {
           const headers = parseProtoHeader(proto, true);
@@ -1790,8 +1788,7 @@ ${deleteProject}`;
           information.license_url = headers[2];
           information.description = headers[3];
           information.base_type = baseType;
-
-          createMdFromProto(protoURl, proto, protoName, prefix, information, true);
+          loadMd(protoURl, information, true);
         });
     }
 
