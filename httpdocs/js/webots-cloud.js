@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'Normal', 'Fog', 'Display', 'TouchSensor', 'Shape', 'TextureCoordinate', 'Box', 'ImageTexture', 'Radio', 'CadShape',
     'Plane', 'RangeFinder', 'Physics', 'SpotLight', 'Brake', 'PointLight', 'PositionSensor', 'Zoom', 'InertialUnit',
     'LightSensor', 'Gyro', 'Receiver', 'Microphone', 'Solid', 'Billboard', 'Fluid', 'Muscle', 'Group', 'Skin',
-    'Material', 'Pose'];
+    'Material', 'Pose', 'VacuumGripper'];
 
   Project.run('webots.cloud', footer(), [
     {
@@ -1774,7 +1774,7 @@ ${deleteProject}`;
           let needsRobotAncestor = false;
           if (baseNodeList.includes(baseType)) {
             if (['Solid', 'Pose', 'Group'].includes(baseType)) {
-              const deviceRegex = /(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/;
+              const deviceRegex = /(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*|\s+VacuumGripper\s)/;
               needsRobotAncestor = proto.match(deviceRegex) != null;
             }
           } else
