@@ -35,10 +35,10 @@ if (isset($_FILES['participants'])) {
     die('Error: participant.json should be stored at first folder level');
 } elseif (isset($_FILES['animation'])) {
   $file = $_FILES['animation'];
-  if ($file['name'] != 'animation.json')
-    die('Error: animation file should be named animation.json');
+  if ($file['name'] != 'animation.json' && $file['name'] != 'friendly.json' && $file['name'] != 'friend.txt')
+    die('Error: uploaded file should be named animation.json, friendly.json or friend.txt');
   if ($c != 2)
-    die('Error: animation.json should be stored at second folder level');
+    die('Error: uploaded file should be stored at second folder level');
 } else
   die('Error: unsupported file upload');
 
