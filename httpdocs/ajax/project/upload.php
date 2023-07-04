@@ -39,7 +39,7 @@ if (isset($_FILES['participants'])) {
   if ($file['name'] != 'animation.json')
     die('Error: uploaded animation should be named animation.json');
   if ($c != 2)
-    die('Error: uploaded animation.json file should be stored at second folder level');
+    die('Error: animation.json should be stored at second folder level');
 } else
   die('Error: unsupported file upload');
 
