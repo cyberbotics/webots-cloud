@@ -20,7 +20,8 @@ if ($c > 2)
   die('Error: path with too many folders');
 elseif ($c == 2) {
   $folder = $path[0];
-  if (!is_numeric($folder) || intval($folder) != $folder || $folder[0] == '-')
+  $number = $folder[0] == 'f' ? substr($folder, 1) : $folder;
+  if (!is_numeric($number) || intval($number) != $number || $number[0] == '-')
     die('Error: bad folder name: ' . $folder);
   $target_folder .= '/' . $folder;
 }
@@ -35,8 +36,8 @@ if (isset($_FILES['participants'])) {
     die('Error: participant.json should be stored at first folder level');
 } elseif (isset($_FILES['animation'])) {
   $file = $_FILES['animation'];
-  if ($file['name'] != 'animation.json' && $file['name'] != 'friendly.json' && $file['name'] != 'friend.txt')
-    die('Error: uploaded file should be named animation.json, friendly.json or friend.txt');
+  if ($file['name'] != 'animation.json')
+    die('Error: uploaded file should be named animation.json');
   if ($c != 2)
     die('Error: uploaded file should be stored at second folder level');
 } else
