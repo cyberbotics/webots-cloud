@@ -20,7 +20,8 @@ if ($c > 2)
   die('Error: path with too many folders');
 elseif ($c == 2) {
   $folder = $path[0];
-  if (!is_numeric($folder) || intval($folder) != $folder || $folder[0] == '-')
+  $number = $folder[0] == 'f' ? substr($folder, 1) : $folder;
+  if (!is_numeric($number) || intval($number) != $number || $number[0] == '-')
     die('Error: bad folder name: ' . $folder);
   $target_folder .= '/' . $folder;
 }

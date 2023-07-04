@@ -2306,7 +2306,8 @@ ${deleteProject}`;
               const hasHigherIsBetter = data.match(/higher-is-better: ([(?:true|false)])/);
               const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() === 't' : true;
               const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
-              const performanceColumn = (metric === 'ranking') ? `` : `<th class="has-text-centered">Performance</th>`;
+              const performanceColumn = (metric === 'ranking') ? '' : '<th class="has-text-centered">Performance</th>';
+              const friendlyGame = (metric === 'ranking') ? '<th></th>' : ''
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
                 <div class="table-container rankings-table mx-auto">
@@ -2328,6 +2329,7 @@ ${deleteProject}`;
                         ${performanceColumn}
                         <th class="has-text-centered">Updated</th>
                         <th></th>
+                        ${friendlyGame}
                       </tr>
                     </thead>
                     <tbody id="rankings-table">
@@ -2408,13 +2410,25 @@ ${deleteProject}`;
                     const title = (metric === 'ranking')
                       ? `Game lost by ${participant.name}`
                       : `Performance of ${participant.name}`;
-                    const button = (metric === 'ranking' && ranking === 1)
+                    const officialGame = (metric === 'ranking' && ranking === 1)
                       ? `<span style="font-size:x-large" title="${participant.name} is the best!">&#127942;</span>`
-                      : `<button class="button is-small is-primary" style="background-color: #007acc;"` +
+                      : `<button class="button is-small is-primary" style="background-color: #007acc;" ` +
                       `id="${participant.id}-view" title="${title}">View</button>`;
                     const demo = !participant.private && participant.country === 'demo';
                     if (demo)
                       demoCount++;
+                    const friendlyGameTitle = participant.hasOwnProperty('friend')
+                      ? (participant.friend.result == 'W' ? 'Won' : 'Lost')
+                        + ` friendly test game versus ${participant.friend.name}`
+                      : 'Friendly test game not available';
+                    const friendlyGameColor = participant.hasOwnProperty('friend')
+                      ? (participant.friend.result == 'W' ? '8f8' : 'f88')
+                      : '888';
+                    const friendlyGameId = participant.hasOwnProperty('friend') ? ` id="f${participant.id}-view"` : '';
+                    const friendlyGameLine = (metric !== 'ranking') ? '' : '<td style="vertical-align:middle;" ' +
+                      'class="has-text-centered">' + (demo ? '' : '<button class="button is-small is-primary" ' +
+                      `style="background-color: #${friendlyGameColor};"${friendlyGameId} ` +
+                      `title="${friendlyGameTitle}">Test</button>`) + '</td>';
                     const flag = demo ? '<span style="font-size:small">demo</span>' : getFlag(participant.country);
                     const country = demo ? 'Open-source demo controller' : countryCodes[participant.country.toUpperCase()];
                     let qualified;
@@ -2447,13 +2461,17 @@ ${deleteProject}`;
                     <td style="text-align:center;vertical-align:middle;">${programming}</td>
                     ${performanceLine}
                     <td style="vertical-align:middle;" class="has-text-centered" title="Log file">${date}</td>
-                    <td style="vertical-align:middle;" class="has-text-centered">${button}</td>
+                    <td style="vertical-align:middle;" class="has-text-centered">${officialGame}</td>
+                    ${friendlyGameLine}
                   </tr>`;
                     ranking++;
                     document.getElementById('rankings-table').appendChild(tableContent.content.firstChild);
-                    const viewButton = document.getElementById(participant.id + '-view');
-                    if (viewButton)
-                      viewButton.addEventListener('click', viewEntryRun);
+                    const officialGameButton = document.getElementById(participant.id + '-view');
+                    if (officialGameButton)
+                      officialGameButton.addEventListener('click', viewEntryRun);
+                    const friendlyGameButton = document.getElementById('f' + participant.id + '-view');
+                    if (friendlyGameButton)
+                      friendlyGameButton.addEventListener('click', viewEntryRun);
                   }
                   let count = (participants['participants'].length - demoCount).toString();
                   if (!isNaN(qualification) && metric === 'ranking')
