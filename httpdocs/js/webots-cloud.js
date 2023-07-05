@@ -1095,12 +1095,12 @@ ${deleteProject}`;
       content.innerHTML += `<div class="field">
           <label class="label">Webots scene</label>
           <div class="control has-icons-left">
-            <input id="scene-file" name="scene-file" class="input" type="file" required accept=".x3d">
+            <input id="scene-file" name="scene-file" class="input" type="file" required accept=".w3d">
             <span class="icon is-small is-left">
               <i class="fas fa-upload"></i>
             </span>
           </div>
-          <div class="help">Upload the Webots X3D scene file: <em>scene.x3d</em></div>
+          <div class="help">Upload the Webots W3D scene file: <em>scene.w3d</em></div>
         </div>
         <div class="field">
           <label class="label">Webots thumbnail</label>
@@ -1769,7 +1769,7 @@ ${deleteProject}`;
         .then(proto => {
           const headers = parseProtoHeader(proto, true);
 
-          const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/
+          const baseTypeRegex = /(?:\]\s*)\{\s*(?:\%\<[\s\S]*?(?:\>\%\s*))?(?:DEF\s+[^\s]+)?\s+([a-zA-Z0-9\_\-\+]+)\s*\{/;
           const baseType = proto.match(baseTypeRegex)[1];
           let needsRobotAncestor = false;
           if (baseNodeList.includes(baseType)) {
@@ -2307,7 +2307,7 @@ ${deleteProject}`;
               const higherIsBetter = hasHigherIsBetter ? hasHigherIsBetter[1][0].toLowerCase() === 't' : true;
               const qualification = hasQualification ? parseFloat(hasQualification[1]) : NaN;
               const performanceColumn = (metric === 'ranking') ? '' : '<th class="has-text-centered">Performance</th>';
-              const friendlyGame = (metric === 'ranking') ? '<th></th>' : ''
+              const friendlyGame = (metric === 'ranking') ? '<th></th>' : '';
               const leaderBoard =
                 `<section class="section is-active" data-content="rankings" style="padding: 0">
                 <div class="table-container rankings-table mx-auto">
@@ -2418,11 +2418,11 @@ ${deleteProject}`;
                     if (demo)
                       demoCount++;
                     const friendlyGameTitle = participant.hasOwnProperty('friend')
-                      ? (participant.friend.result == 'W' ? 'Won' : 'Lost')
-                        + ` friendly test game versus ${participant.friend.name}`
+                      ? (participant.friend.result === 'W' ? 'Won' : 'Lost') +
+                        ` friendly test game versus ${participant.friend.name}`
                       : 'Friendly test game not available';
                     const friendlyGameColor = participant.hasOwnProperty('friend')
-                      ? (participant.friend.result == 'W' ? '292' : 'c33')
+                      ? (participant.friend.result === 'W' ? '292' : 'c33')
                       : '888';
                     const friendlyGameId = participant.hasOwnProperty('friend') ? ` id="f${participant.id}-view"` : '';
                     const friendlyGameLine = (metric !== 'ranking') ? '' : '<td style="vertical-align:middle;" ' +

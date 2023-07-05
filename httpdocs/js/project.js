@@ -204,7 +204,7 @@ export default class Project extends User {
           this.setupWebotsView('run');
         else // competition preview
           this.setupPreviewWebotsView();
-        Project.webotsView.loadAnimation(`${baseUrl}/scene.x3d`, `${data}/animation.json`, false, this._isMobileDevice(),
+        Project.webotsView.loadAnimation(`${baseUrl}/scene.w3d`, `${data}/animation.json`, false, this._isMobileDevice(),
           thumbnailUrl);
         resolve();
       } else {
@@ -222,10 +222,10 @@ export default class Project extends User {
       const reference = 'storage' + data.url.substring(data.url.lastIndexOf('/'));
       this.setupWebotsView(data.duration > 0 ? 'animation' : 'scene', data);
       if (data.duration > 0) {
-        Project.webotsView.loadAnimation(`${reference}/scene.x3d`, `${reference}/animation.json`, false,
+        Project.webotsView.loadAnimation(`${reference}/scene.w3d`, `${reference}/animation.json`, false,
           this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       } else
-        Project.webotsView.loadScene(`${reference}/scene.x3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
+        Project.webotsView.loadScene(`${reference}/scene.w3d`, this._isMobileDevice(), `${reference}/thumbnail.jpg`);
       resolve();
     } else if (url.endsWith('.proto')) {
       let urlArray = url.substring(19).split('/');

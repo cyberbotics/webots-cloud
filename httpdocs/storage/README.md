@@ -3,7 +3,7 @@
 This folder contains a series of subfolders containing scenes and animations.
 Each subfolder contains the following files and folder:
 
-- scene.x3d
+- scene.w3d
 - animation.json (only for animations)
 - textures/*.[jpg|png|hdr]
 

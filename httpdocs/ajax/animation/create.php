@@ -106,9 +106,9 @@
   }
   fclose($file);
   if ($world_info === false)
-    error('Missing WorldInfo title in x3d file');
+    error('Missing WorldInfo title in w3d file');
   if (!isset($version))
-    error('Missing version meta header node in x3d file');
+    error('Missing version meta header node in w3d file');
 
   // determine duration
   if ($animation) {
@@ -153,7 +153,7 @@
   mkdir($folder);
   if ($animation && !move_uploaded_file($_FILES['animation-file']['tmp_name'], "$folder/animation.json"))
     error('Cannot move animation file.');
-  if (!move_uploaded_file($_FILES['scene-file']['tmp_name'], "$folder/scene.x3d"))
+  if (!move_uploaded_file($_FILES['scene-file']['tmp_name'], "$folder/scene.w3d"))
     error('Cannot move scene file.');
   if ($thumbnailAvailable && !move_uploaded_file($_FILES['thumbnail-file']['tmp_name'], "$folder/thumbnail.jpg"))
     error('Cannot move thumbnail file.');
