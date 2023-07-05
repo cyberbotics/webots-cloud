@@ -2422,7 +2422,7 @@ ${deleteProject}`;
                         + ` friendly test game versus ${participant.friend.name}`
                       : 'Friendly test game not available';
                     const friendlyGameColor = participant.hasOwnProperty('friend')
-                      ? (participant.friend.result == 'W' ? '8f8' : 'f88')
+                      ? (participant.friend.result == 'W' ? '292' : 'c33')
                       : '888';
                     const friendlyGameId = participant.hasOwnProperty('friend') ? ` id="f${participant.id}-view"` : '';
                     const friendlyGameLine = (metric !== 'ranking') ? '' : '<td style="vertical-align:middle;" ' +
