@@ -2417,8 +2417,8 @@ ${deleteProject}`;
                     const demo = !participant.private && participant.country === 'demo';
                     if (demo)
                       demoCount++;
-                    const friendlyGameTitle = participant.name + ' ' + participant.hasOwnProperty('friend')
-                      ? (participant.friend.result == 'W' ? 'won' : 'lost')
+                    const friendlyGameTitle = participant.hasOwnProperty('friend')
+                      ? (participant.name + ' ' + participant.friend.result == 'W' ? 'won' : 'lost')
                         + ` friendly test game versus ${participant.friend.name}`
                       : 'Friendly test game not available';
                     const friendlyGameColor = participant.hasOwnProperty('friend')
