@@ -126,8 +126,9 @@ export default class Project extends User {
     }
   }
   async runWebotsView(data, version, moveFloor) {
-    console.log("test")
     if (!version || typeof version === 'undefined') {
+      console.log("wow")
+
       if (window.location.hostname === 'testing.webots.cloud')
         version = 'testing';
       else if (window.location.hostname === 'proto.webots.cloud')
