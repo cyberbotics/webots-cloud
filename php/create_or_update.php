@@ -138,7 +138,7 @@ function create_or_update_proto($url, $id, $search) {
     'LensFlare', 'TrackWheel', 'PBRAppearance', 'Shape', 'Altimeter', 'PositionSensor', 'Connector', 'HingeJoint', 'Plane',
     'Brake', 'Appearance', 'ElevationGrid', 'BallJointParameters', 'Fluid', 'Robot', 'SolidReference', 'Sphere', 'Skin',
     'IndexedLineSet', 'ImmersionProperties', 'JointParameters', 'Focus', 'SliderJoint', 'Emitter', 'Hinge2Joint', 'BallJoint',
-    'LightSensor', 'Display', 'Billboard', 'Charger'];
+    'LightSensor', 'Display', 'Billboard', 'Charger', 'Pose', 'VacuumGripper'];
 
   # search for the base type
   $parent_url = $url;
@@ -154,9 +154,9 @@ function create_or_update_proto($url, $id, $search) {
     }
   }
 
-  $device_regex = "/(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*)/";
+  $device_regex = "/(\s+Brake\s*|\s+LinearMotor\s*|\s+PositionSensor\s*|\s+RotationalMotor\s*|\s+Skin\s*|\s+Accelerometer\s*|\s+Altimeter\s*|\s+Camera\s*|\s+Compass\s*|\s+Compass\s*|\s+Display\s*|\s+DistanceSensor\s*|\s+Emitter\s*|\s+GPS\s*|\s+Gyro\s*|\s+InertialUnit\s*|\s+LED\s*|\s+Lidar\s*|\s+LightSensor\s*|\s+Pen\s*|\s+Radar\s*|\s+RangeFinder\s*|\s+Receiver\s*|\s+Speaker\s*|\s+TouchSensor\s*|\s+Track\s*|\s+VacuumGripper\s*)/";
   $needs_robot_ancestor = 0;
-  if (in_array($base_type, ['Solid', 'Transform', 'Group']))
+  if (in_array($base_type, ['Solid', 'Pose', 'Group']))
     $needs_robot_ancestor = preg_match($device_regex, $proto_content);
 
   $slot_type = '';

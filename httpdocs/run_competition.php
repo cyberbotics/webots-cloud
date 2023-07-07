@@ -4,11 +4,12 @@ require '../php/token.php';
 require '../php/database.php';
 require '../php/github_api.php';
 
-function repository_dispatch($organizer_repository, $participant_repository) {
+function repository_dispatch($organizer_repository, $participant_repository, $opponent_repository) {
   global $webots_cloud_token;
   $http_code = 0;
   $json = github_api('repos/' . $organizer_repository . '/dispatches', $webots_cloud_token, $http_code, false,
-                     '{"event_type": "run_trigger", "client_payload": {"repository": "'. $participant_repository .'"}}');
+                     '{"event_type": "run_trigger", "client_payload": {"repository": "'. $participant_repository .
+                     '", "opponent": "' . $opponent_repository . '"}}');
   if ($http_code == 204)
     echo 'Success: sent repository dispatch to https://github.com/' . $organizer_repository. '/actions';
   else {
@@ -87,6 +88,8 @@ foreach($json->participants as $p) {
   $repository = explode('/', $p->repository);
   if ($p->private && $repository[0] == $participant_repository[0] && $repository[1] != $participant_repository[1])
     die("Error: Participant already has an entry in the competition: " . $p->repository);
+  if (isset($_POST['opponent']) && $p->name == $_POST['opponent'])
+    $opponent = $p->repository;
 }
 
 $branch = basename(dirname(__FILE__, 2));
@@ -102,12 +105,12 @@ if (isset($_POST['organizer_repo_token'])) {
   $mysqli->query($query) or die($mysqli->error);
   if ($mysqli->affected_rows === 0)
     die("Error: could not delete repository dispatch queue for $participant");
-  $query = "SELECT participant FROM queue WHERE project=$project_id ORDER BY `date` ASC";  # pick the oldest entry from the queue (FIFO)
+  $query = "SELECT participant, opponent FROM queue WHERE project=$project_id ORDER BY `date` ASC";  # pick the oldest entry from the queue (FIFO)
   $result = $mysqli->query($query) or die($mysqli->error);
   $next = $result->fetch_array(MYSQLI_ASSOC);
   if ($next) {
     $participant = $next['participant'];
-    repository_dispatch($organizer, $participant);
+    repository_dispatch($organizer, $participant, $next['opponent']);
     $query = "UPDATE queue SET participant='R:$participant' WHERE project=$project_id AND participant='$participant'";  # mark it running (R:)
     $mysqli->query($query) or die($mysqli->error);
     die("Success: running next job from queue: " . $participant);
@@ -129,11 +132,16 @@ if ($total == 0)
   $running = 'R:';
 else
   $running = '';
-$query = "INSERT IGNORE INTO queue(project, participant) VALUES($project_id, '$running$participant')";
+if (isset($opponent))
+  $query = "INSERT IGNORE INTO queue(project, participant, opponent) VALUES($project_id, '$running$participant', '$opponent')";
+else {
+  $query = "INSERT IGNORE INTO queue(project, participant) VALUES($project_id, '$running$participant')";
+  $opponent = '';
+}
 $mysqli->query($query) or die($mysqli->error);
 
 if ($total == 0)
-  repository_dispatch($organizer, $participant);
+  repository_dispatch($organizer, $participant, $opponent);
 elseif ($mysqli->affected_rows == 1)
   die("Success: job added to the repository dispatch queue.");
 else
