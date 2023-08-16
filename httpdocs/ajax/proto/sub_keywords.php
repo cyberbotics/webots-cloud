@@ -13,8 +13,10 @@
   $branch = basename(dirname(__FILE__, 4));
   if (isset($data->parent) && $data->parent!= '') {
     $parent = $mysqli->escape_string($data->parent);
-    $query = "SELECT child.name FROM proto LEFT JOIN proto_keywordmap on proto.id = proto_keywordmap.proto_id LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE parent.name=\"$parent\" AND branch=\"$branch\" GROUP BY proto_keywordmap.keyword_id ORDER BY COUNT(*) DESC, child.name ASC";
-    $result = $mysqli->query($query) or error($mysqli->error);
+    $query = $mysqli->prepare("SELECT child.name FROM proto LEFT JOIN proto_keywordmap on proto.id = proto_keywordmap.proto_id LEFT JOIN proto_keyword AS child ON proto_keywordmap.keyword_id=child.keyword_id LEFT JOIN proto_keyword AS parent ON child.parent_id=parent.keyword_id WHERE parent.name=? AND branch=? GROUP BY proto_keywordmap.keyword_id ORDER BY COUNT(*) DESC, child.name ASC");
+    $query->bind_param("ss", $parent, $branch);
+    $query->execute();
+    $result = $query->get_result();
     $protos = array();
     while($row = $result->fetch_array(MYSQLI_ASSOC))
       array_push($protos, $row);
