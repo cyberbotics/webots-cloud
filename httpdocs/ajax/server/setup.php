@@ -2,9 +2,10 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
-  function gethostbynamel6($host, $try_a = false) { # adapted from https://www.php.net/manual/en/function.gethostbyname.php
+  function gethostbynamel6($host) { # adapted from https://www.php.net/manual/en/function.gethostbyname.php
     $dns6 = dns_get_record($host, DNS_AAAA);
     $dns4 = dns_get_record($host, DNS_A);
+    $dns = array_merge($dns4, $dns6);
     $ip6 = array();
     $ip4 = array();
     foreach ($dns as $record) {
