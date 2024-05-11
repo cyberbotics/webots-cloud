@@ -2,6 +2,25 @@
   function error($message) {
     die("{\"error\":\"$message\"}");
   }
+  function gethostbynamel6($host, $try_a = false) { # adapted from https://www.php.net/manual/en/function.gethostbyname.php
+    $dns6 = dns_get_record($host, DNS_AAAA);
+    $dns4 = dns_get_record($host, DNS_A);
+    $ip6 = array();
+    $ip4 = array();
+    foreach ($dns as $record) {
+      if ($record["type"] == "A")
+        $ip4[] = $record["ip"];
+      if ($record["type"] == "AAAA")
+        $ip6[] = $record["ipv6"];
+    }
+    if (count($ip6) < 1) {
+      if (count($ip4) < 1)
+        return false;
+      else
+        return $ip4;
+    } else
+      return $ip6;
+  }
   function get_server_from_url($url) {
     $start = strpos($url, '://') + 3;
     $slash = strpos($url, '/', $start);
@@ -28,7 +47,7 @@
     error('Missing url parameter.' . $json);
   $server = get_server_from_url($url);
   $remote  = $_SERVER['REMOTE_ADDR'];  # IP address of the client machine
-  $ips = gethostbynamel($server);
+  $ips = gethostbynamel6($server);
   $found = False;
   if (is_array($ips))
     foreach ($ips as $ip)
