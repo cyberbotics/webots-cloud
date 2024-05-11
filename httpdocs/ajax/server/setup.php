@@ -56,6 +56,8 @@
         $found = true;
         break;
       }
+  if ($server === 'simulation.webots.cloud' && $host === '2a02:1210:6ccf:a500:1ccf:1956:c3ae:ec64') // hardcoded webots.cloud simulation server
+    $found = true;
   if (!$found) {
     $host = gethostbyaddr($_SERVER['REMOTE_ADDR']);
     $found = ($server === $host);
