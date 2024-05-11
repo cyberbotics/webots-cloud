@@ -48,7 +48,7 @@
     error('Missing url parameter.' . $json);
   $server = get_server_from_url($url);
   $remote  = $_SERVER['REMOTE_ADDR'];  # IP address of the client machine
-  $ips = gethostbynamel6($server);
+  $ips = gethostbynamel($server);
   $found = False;
   if (is_array($ips))
     foreach ($ips as $ip)
