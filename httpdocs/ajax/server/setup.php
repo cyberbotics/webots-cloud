@@ -57,7 +57,7 @@
   $allowedRepositories = explode(',', $_POST['allowedRepositories']);
   $query = "INSERT INTO server(url, share) VALUES(\"$url\", $share) ON DUPLICATE KEY UPDATE share=$share, started=NOW(), id=LAST_INSERT_ID(id)";
   #Disable automatic addition of server to avoid adding servers that don't work.
-  #$mysqli->query($query) or error($mysqli->error);
+  $mysqli->query($query) or error($mysqli->error);
   $server_id = $mysqli->insert_id;
   $branch = basename(dirname(__FILE__, 4));
 
