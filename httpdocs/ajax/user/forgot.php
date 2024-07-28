@@ -31,7 +31,7 @@
            . "you account.</p>"
            . "<p>This link will expires in 72 hours.</p>"
            . "<p>Best regards,</p><p><a href=\"https://webots.cloud\">webots.cloud</a></p>\n";
-  $header = "From: support@cyberbotics.com\r\n"
+  $header = "From: info@webots.cloud\r\n"
           . "Reply-To: Olivier.Michel@cyberbotics.com\r\n"
           . "Cc: Olivier.Michel@cyberbotics.com\r\n"
           . "MIME-Version: 1.0\r\n"
