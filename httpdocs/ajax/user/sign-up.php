@@ -31,7 +31,7 @@
           . "Cc: Olivier.Michel@cyberbotics.com\r\n"
           . "MIME-Version: 1.0\r\n"
           . "Content-type: text/html;charset=UTF-8\r\n"
-          . "Message-ID: $messageId\r\n"
+          . "Message-ID: $messageId\r\n";
   mail($email, $subject, $message, $header);
   echo json_encode($data);
 ?>
