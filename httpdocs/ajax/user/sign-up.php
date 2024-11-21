@@ -25,12 +25,13 @@
            . "activate your account.</p>"
            . "<p>This link will expires in 72 hours.</p>"
            . "<p>Best regards,</p><p><a href=\"https://webots.cloud\">webots.cloud</a></p>\n";
+  $messageId = time() . '-' . md5('info@webots.cloud' . $email) . '@webots.cloud';
   $header = "From: info@webots.cloud\r\n"
           . "Reply-To: Olivier.Michel@cyberbotics.com\r\n"
           . "Cc: Olivier.Michel@cyberbotics.com\r\n"
           . "MIME-Version: 1.0\r\n"
           . "Content-type: text/html;charset=UTF-8\r\n"
-          . sprintf("Message-ID: <%s.%s@%s>\r\n", base_convert(microtime(), 10, 36), base_convert(bin2hex(openssl_random_pseudo_bytes(8)), 16, 36), 'webots.cloud');
+          . "Message-ID: $messageId\r\n"
   mail($email, $subject, $message, $header);
   echo json_encode($data);
 ?>
