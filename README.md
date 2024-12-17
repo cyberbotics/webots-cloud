@@ -107,6 +107,26 @@ type: competition
 publish: true
 ```
 
-# Setup of a Simulation Server Infrastructure
+## Run webots.cloud Locally
+
+```bash
+docker run --rm -p "8088:80" -v ${PWD}/php:/php -v ${PWD}/httpdocs:/app -v ${PWD}/mysql:/var/lib/mysql mattrayner/lamp:latest-1804
+```
+
+The webots.cloud website is now available at:
+http://localhost:8088/
+
+and you can access PhpMyAdmin at:
+http://localhost:8088/phpmyadmin/
+
+> **Note**: The username is `admin` and the password is randomly generated, shown in the console output (e.g. `You can now connect to this MySQL Server with y6yHUcJaK1fw`)
+
+You will also need to import the database and create a new config file:
+- Use [this link](http://localhost:8088/phpmyadmin/index.php?route=/server/databases&server=1) to create a new database called `webots-cloud`.
+- Use [this link](http://localhost:8088/phpmyadmin/index.php?route=/database/import&db=webots-cloud) to import the database from the file [`database/webots-cloud.sql`](database/webots-cloud.sql).
+- Create a new config out of the [`php/database.php.template`](httpdocs/php/database.php.template) template.
+
+
+## Setup of a Simulation Server Infrastructure
 
 Follow the instructions [here](https://cyberbotics.com/doc/guide/web-server).
