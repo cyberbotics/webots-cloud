@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const admin = project.email ? project.email.endsWith('@cyberbotics.com') : false;
       const typeName = (data.duration === 0) ? 'scene' : 'animation';
-      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url;
+      const url = data.url.startsWith('https://webots.cloud') ? document.location.origin + data.url.substring(20) : data.url.substring(18);
       const thumbnailUrl = url.slice(0, url.lastIndexOf('/')) + '/storage' + url.slice(url.lastIndexOf('/')) + '/thumbnail.jpg';
       const defaultThumbnailUrl = document.location.origin + '/images/thumbnail_not_available.jpg';
       const versionUrl = `https://github.com/cyberbotics/webots/releases/tag/${data.version}`;
