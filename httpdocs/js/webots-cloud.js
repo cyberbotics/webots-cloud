@@ -27,6 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let competitionSearch = '';
   let delaySearch = false;
 
+  // HTML encode some attributes. This is not enough to sanitize HTML (e.g. javascript:alert(1) in URLs)
+  const escapeHtml = (unsafe) => {
+    return unsafe
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+    };
+
   const baseNodeList = ['WorldInfo', 'Hinge2JointParameters', 'PBRAppearance', 'ContactProperties', 'SolidReference',
     'Charger', 'Capsule', 'Mesh', 'Background', 'BallJoint', 'Focus', 'RotationalMotor', 'ElevationGrid', 'Pen',
     'Cylinder', 'GPS', 'SliderJoint', 'Compass', 'Emitter', 'Track', 'Cone', 'LED', 'Slot', 'Radar', 'Coordinate',
@@ -406,17 +416,20 @@ document.addEventListener('DOMContentLoaded', function() {
       const repository = `https://github.com/${words[0]}/${words[1]}`;
       const title = data.title === '' ? '<i>anonymous</i>' : data.title;
       const encodedUrl = encodeURIComponent(data.url);
+      if (!DOMPurify.isValidAttribute('img', 'src', thumbnailUrl))
+        thumbnailUrl = defaultThumbnailUrl;
+
       if (proto) {
-        let element = `<a href="/run?version=${data.version}&url=${encodedUrl}" class="result-element">`;
-        element += `<img class="result-thumbnail" title='${data.description}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
-        element += `<div class="result-title" title='${title}'>${title}</div>`;
+        let element = `<a href="/run?version=${DOMPurify.sanitize(data.version)}&url=${encodedUrl}" class="result-element">`;
+        element += `<img class="result-thumbnail" title='${escapeHtml(data.description)}' src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>`;
+        element += `<div class="result-title" title='${DOMPurify.sanitize(title)}'>${DOMPurify.sanitize(title)}</div>`;
         element += `<div class="result-details">`;
         element += `<div class="result-views"><img src="images/views.png"/>`;
-        element += `<div>${data.viewed}</div></div>`;
-        element += `<div class="result-version">${data.version}</div>`;
+        element += `<div>${DOMPurify.sanitize(data.viewed)}</div></div>`;
+        element += `<div class="result-version">${DOMPurify.sanitize(data.version)}</div>`;
         element += `</div>`;
         element += `<div class="description-container">
-              <p class="thumbnail-description">${data.description}</p>
+              <p class="thumbnail-description">${DOMPurify.sanitize(data.description)}</p>
             </div>`;
         element += '</a>';
         return element;
@@ -439,13 +452,13 @@ document.addEventListener('DOMContentLoaded', function() {
       row += `
   <div class="thumbnail">
     <div class="thumbnail-container">
-      <img class="thumbnail-image" src="${thumbnailUrl}" onerror="this.src='${defaultThumbnailUrl}';"/>
-      <p class="thumbnail-description">${data.description}<div class="thumbnail-description-fade"/></p>
+      <img class="thumbnail-image" src="${DOMPurify.sanitize(thumbnailUrl)}" onerror="this.src='${defaultThumbnailUrl}';"/>
+      <p class="thumbnail-description">${DOMPurify.sanitize(data.description)}<div class="thumbnail-description-fade"/></p>
     </div>
   </div>
 </td>
-<td><a class="has-text-dark" href="${data.url}" target="_blank" title="View GitHub repository">${words[3]}</a></td>
-<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${data.version}</a></td>
+<td><a class="has-text-dark" href="${DOMPurify.sanitize(data.url)}" target="_blank" title="View GitHub repository">${words[3]}</a></td>
+<td><a class="has-text-dark" href="${versionUrl}" target="_blank" title="View Webots release">${DOMPurify.sanitize(data.version)}</a></td>
 <td class="has-text-right is-size-7" title="Last synchronization with GitHub">${updated}</td>
 ${deleteProject}`;
       return row;
@@ -1338,7 +1351,7 @@ ${deleteProject}`;
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any ' + typeName + 's.';
-              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
+              document.getElementById(typeName + '-empty-search-text').innerHTML = DOMPurify.sanitize(message);
               document.getElementById(typeName + '-empty-search').style.display = 'flex';
             } else
               document.getElementById(typeName + '-empty-search').style.display = 'none';
@@ -1386,7 +1399,7 @@ ${deleteProject}`;
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any simulations.';
-              document.getElementById(typeName + '-empty-search-text').innerHTML = message;
+              document.getElementById(typeName + '-empty-search-text').innerHTML = DOMPurify.sanitize(message);
               document.getElementById(typeName + '-empty-search').style.display = 'flex';
             } else
               document.getElementById(typeName + '-empty-search').style.display = 'none';
@@ -1432,7 +1445,7 @@ ${deleteProject}`;
           else {
             if (data.total === 0 && searchString) {
               const message = 'Your search - <strong>' + searchString + '</strong> - did not match any protos.';
-              document.getElementById('proto-empty-search-text').innerHTML = message;
+              document.getElementById('proto-empty-search-text').innerHTML = DOMPurify.sanitize(message);
               document.getElementById('proto-empty-search').style.display = 'flex';
             } else
               document.getElementById('proto-empty-search').style.display = 'none';
@@ -1681,7 +1694,7 @@ ${deleteProject}`;
       </div>
       <div class="container is-widescreen">
         <section class="section is-active">
-        <h1 class='proto-title'>${protoName}</h1>
+        <h1 class='proto-title'>${DOMPurify.sanitize(protoName)}</h1>
         <div id='proto-webots-container'></div>
         <div class='proto-doc'></div>
         </section>
@@ -2199,7 +2212,7 @@ ${deleteProject}`;
                 <p class="title">Information</p>
                 <p id="competition-information-description" style="margin-bottom: 25px;"></p>
                 <div class="content">
-                  ${information}
+                  ${DOMPurify.sanitize(information)}
                 </div>
                 <a class="button is-primary" id="try-competition" style="background-color: #007acc;" href="${tryLink}"
                  title="Run the simulation and program the robot online">
@@ -2210,7 +2223,7 @@ ${deleteProject}`;
                   Register
                 </a>
                 <a class="button is-primary" id="submit-entry" style="background-color: #007acc;"
-                 href="${repository}/discussions"
+                 href="${DOMPurify.sanitize(repository)}/discussions"
                  title="Discuss with the organizers and the other competitors">
                   Discuss
                 </a>
@@ -2277,22 +2290,14 @@ ${deleteProject}`;
               var readme = new DOMParser().parseFromString(data, 'text/html');
 
               const title = readme.getElementById('title').innerText.replace(/^[#\s]*/, '').replace(/[\s]*$/, '');
-              document.getElementById('competition-title').innerHTML = title;
+              document.getElementById('competition-title').innerHTML = DOMPurify.sanitize(title);
               const description = readme.getElementById('description').innerText.trim();
-              document.getElementById('competition-information-description').innerHTML = description;
+              document.getElementById('competition-information-description').innerHTML = DOMPurify.sanitize(description);
               const information = readme.getElementById('information').innerText.trim().split('\n');
-              const escapeHtml = (unsafe) => {
-                return unsafe
-                  .replaceAll('&', '&amp;')
-                  .replaceAll('<', '&lt;')
-                  .replaceAll('>', '&gt;')
-                  .replaceAll('"', '&quot;')
-                  .replaceAll("'", '&#039;');
-              };
               for (let i = information.length - 1; i >= 0; i--) {
                 const array = information[i].split(': ');
                 const name = escapeHtml(array[0].substring(2)); // skip "- "
-                const value = escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>');
+                const value = DOMPurify.sanitize(escapeHtml(array[1]).replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" target="_blank">$1</a>'),{ ADD_ATTR: ['target'] });
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${name}:</td><td style="font-weight: bold;">${value}</td>`;
                 document.getElementById('competition-information').prepend(tr);
@@ -2551,13 +2556,13 @@ ${deleteProject}`;
     }
     function registerPopUp() {
       const content = {};
-      content.innerHTML =
+      content.innerHTML = DOMPurify.sanitize(
         `<div class="field">
           <p style="padding-bottom:15px;">
            To register, you will need to create your own robot controller on GitHub.
            Follow the instructions on the <a href="${project.competitionUrl.split('/blob')[0]}#readme">repository of the competition organizer</a>.
           </p>
-        </div>`;
+        </div>`);
       ModalDialog.run(`Register to the competition`, content.innerHTML);
     }
   }
